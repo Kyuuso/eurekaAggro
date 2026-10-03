@@ -145,7 +145,12 @@ public class OverlayRenderer
             // Filter out mobs that are too low level to aggro the player (unless exempted)
             if (config.FilterSafeMobs)
             {
-                bool isExempt = (config.AlwaysShowDragons && data.AggroType == AggroType.Sound) ||
+                // Only actual lethal Sleeping Dragons (Voidragons, Slumbering Dragons) are exempted regardless of level
+                bool isDragon = data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
+                                data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
+                                data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
+
+                bool isExempt = (config.AlwaysShowDragons && isDragon) ||
                                 (config.AlwaysShowUndead && data.AggroType == AggroType.Blood) ||
                                 (config.AlwaysShowSprites && data.AggroType == AggroType.Magic);
 
