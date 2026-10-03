@@ -85,8 +85,9 @@ public class PluginConfiguration : IPluginConfiguration
 
     /// <summary>
     /// When true, filters out lower-level monsters that will not aggro you.
+    /// Defaults to false so radars show all monsters regardless of player level.
     /// </summary>
-    public bool FilterSafeMobs { get; set; } = true;
+    public bool FilterSafeMobs { get; set; } = false;
 
     /// <summary>
     /// When true, automatically detects and synchronizes your character's Elemental Level in real time
@@ -205,6 +206,14 @@ public class PluginConfiguration : IPluginConfiguration
         {
             FillShapes = false;
             Version = 2;
+            Save();
+        }
+
+        // Migrate to version 3: disable level filtering by default so mobs in lower zones are always visible
+        if (Version < 3)
+        {
+            FilterSafeMobs = false;
+            Version = 3;
             Save();
         }
     }

@@ -271,6 +271,17 @@ public class OverlayRenderer
 
                         DrawVisionCone3D(drawList, mob.Position, mob.Rotation, totalRadius, data.SightRadian, borderColor, fillColor, config.FillShapes, 20);
                     }
+
+                    // In FFXIV Eureka, sight monsters also trigger aggro if touched within close proximity from behind
+                    if (config.ShowProximityCircles)
+                    {
+                        float touchRadius = mob.HitboxRadius + 1.8f + config.SafetyMargin;
+                        var colProxi = GetDangerColor(data.DangerLevel);
+                        var borderColor = ImGui.ColorConvertFloat4ToU32(colProxi);
+                        var fillColor = ImGui.ColorConvertFloat4ToU32(new Vector4(colProxi.X, colProxi.Y, colProxi.Z, config.FillOpacity));
+
+                        DrawGroundCircle3D(drawList, mob.Position, touchRadius, borderColor, fillColor, config.FillShapes, 24);
+                    }
                     break;
             }
 
