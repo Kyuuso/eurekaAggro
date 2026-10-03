@@ -196,10 +196,10 @@ public class MobDatabase
             return (AggroType.Proximity, 10.2f);
         }
 
-        // 6. Sound aggro (360-degree detection on running, walking is 100% safe)
-        // Dragons & Drakes (Sleeping dragons, Voidragons)
-        if (lower.Contains("dragon") || lower.Contains("wyrm") || lower.Contains("drake") ||
-            lower.Contains("voidragon") || lower.Contains("slumbering") || lower.Contains("fafnir"))
+        // Sleeping Dragons (Sound aggro: running triggers, walking is 100% safe)
+        // Awake patrolling dragons (Biasts, Vouivres, Wyverns, Drakes) have eyes and use standard Sight aggro!
+        if (lower.Contains("void dragon") || lower.Contains("voidragon") ||
+            lower.Contains("slumbering") || lower.Contains("sleeping"))
         {
             return (AggroType.Sound, 10.5f);
         }

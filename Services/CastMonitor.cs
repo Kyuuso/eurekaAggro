@@ -74,7 +74,11 @@ public class CastMonitor
 
         // Priority 1: Current target
         var target = targetManager.Target;
-        if (target is IBattleChara targetChara && targetChara.IsCasting && targetChara.CurrentHp > 0)
+        if (target is IBattleChara targetChara &&
+            targetChara.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc &&
+            !(targetChara is Dalamud.Game.ClientState.Objects.SubKinds.IPlayerCharacter) &&
+            targetChara.IsCasting &&
+            targetChara.CurrentHp > 0)
         {
             ProcessEnemyCast(targetChara);
             return;
@@ -91,7 +95,10 @@ public class CastMonitor
         IBattleChara? activeCaster = null;
         foreach (var obj in objectTable)
         {
-            if (obj is IBattleChara enemy && enemy.GameObjectId != player.GameObjectId)
+            if (obj is IBattleChara enemy &&
+                enemy.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc &&
+                !(enemy is Dalamud.Game.ClientState.Objects.SubKinds.IPlayerCharacter) &&
+                enemy.GameObjectId != player.GameObjectId)
             {
                 if (enemy.IsCasting && enemy.CurrentHp > 0)
                 {

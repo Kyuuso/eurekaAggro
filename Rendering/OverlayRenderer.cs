@@ -26,9 +26,6 @@ public class OverlayRenderer
     private readonly MobDatabase mobDatabase;
     private readonly PluginConfiguration config;
 
-    // Pre-allocated static screen point buffer to guarantee zero GC heap allocations during 3D rendering
-    private readonly Vector2[] screenPointsBuffer = new Vector2[128];
-
     // Player speed tracking for walk vs run detection
     private Vector3 lastPlayerPosition = Vector3.Zero;
     private DateTime lastPositionTime = DateTime.UtcNow;
@@ -351,7 +348,6 @@ public class OverlayRenderer
         int segments = 36)
     {
         segments = Math.Clamp(segments, 16, 120);
-        int count = 0;
         float step = (float)(2 * Math.PI / segments);
 
         bool hasCenter = false;
@@ -363,36 +359,28 @@ public class OverlayRenderer
 
         for (int i = 0; i < segments; i++)
         {
-            float ang = i * step;
-            var pos3D = new Vector3(
-                center.X + radius * (float)Math.Sin(ang),
+            float ang1 = i * step;
+            float ang2 = (i + 1) * step;
+
+            var p1_3D = new Vector3(
+                center.X + radius * (float)Math.Sin(ang1),
                 center.Y,
-                center.Z + radius * (float)Math.Cos(ang)
+                center.Z + radius * (float)Math.Cos(ang1)
+            );
+            var p2_3D = new Vector3(
+                center.X + radius * (float)Math.Sin(ang2),
+                center.Y,
+                center.Z + radius * (float)Math.Cos(ang2)
             );
 
-            if (gameGui.WorldToScreen(pos3D, out var pos2D))
+            if (gameGui.WorldToScreen(p1_3D, out var s1) && gameGui.WorldToScreen(p2_3D, out var s2))
             {
-                screenPointsBuffer[count++] = pos2D;
+                if (fill && fillColor != 0 && hasCenter)
+                {
+                    drawList.AddTriangleFilled(center2D, s1, s2, fillColor);
+                }
+                drawList.AddLine(s1, s2, borderColor, config.BorderThickness);
             }
-        }
-
-        if (count < 3) return;
-
-        // Only draw fill triangles if explicitly requested and center is on screen
-        if (fill && fillColor != 0 && hasCenter)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                drawList.AddTriangleFilled(center2D, screenPointsBuffer[i], screenPointsBuffer[(i + 1) % count], fillColor);
-            }
-        }
-
-        // Clean hollow boundary loop
-        for (int i = 0; i < count; i++)
-        {
-            var p1 = screenPointsBuffer[i];
-            var p2 = screenPointsBuffer[(i + 1) % count];
-            drawList.AddLine(p1, p2, borderColor, config.BorderThickness);
         }
     }
 
@@ -407,47 +395,62 @@ public class OverlayRenderer
         bool fill,
         int segments = 24)
     {
-        if (!gameGui.WorldToScreen(center, out var center2D)) return;
-
         segments = Math.Clamp(segments, 8, 100);
-        int count = 0;
 
         float halfAngle = fovAngle / 2.0f;
         float startAngle = rotation - halfAngle;
-        float step = fovAngle / segments;
+        float endAngle = rotation + halfAngle;
 
-        for (int i = 0; i <= segments; i++)
+        bool hasCenter = gameGui.WorldToScreen(center, out var center2D);
+
+        // 1. Left bounding ray from center to left arc limit
+        var left3D = new Vector3(
+            center.X + radius * (float)Math.Sin(startAngle),
+            center.Y,
+            center.Z + radius * (float)Math.Cos(startAngle)
+        );
+        if (hasCenter && gameGui.WorldToScreen(left3D, out var left2D))
         {
-            float ang = startAngle + i * step;
-            var pos3D = new Vector3(
-                center.X + radius * (float)Math.Sin(ang),
+            drawList.AddLine(center2D, left2D, borderColor, config.BorderThickness);
+        }
+
+        // 2. Right bounding ray from center to right arc limit
+        var right3D = new Vector3(
+            center.X + radius * (float)Math.Sin(endAngle),
+            center.Y,
+            center.Z + radius * (float)Math.Cos(endAngle)
+        );
+        if (hasCenter && gameGui.WorldToScreen(right3D, out var right2D))
+        {
+            drawList.AddLine(center2D, right2D, borderColor, config.BorderThickness);
+        }
+
+        // 3. Frontal arc segments
+        float step = fovAngle / segments;
+        for (int i = 0; i < segments; i++)
+        {
+            float ang1 = startAngle + i * step;
+            float ang2 = startAngle + (i + 1) * step;
+
+            var p1_3D = new Vector3(
+                center.X + radius * (float)Math.Sin(ang1),
                 center.Y,
-                center.Z + radius * (float)Math.Cos(ang)
+                center.Z + radius * (float)Math.Cos(ang1)
+            );
+            var p2_3D = new Vector3(
+                center.X + radius * (float)Math.Sin(ang2),
+                center.Y,
+                center.Z + radius * (float)Math.Cos(ang2)
             );
 
-            if (gameGui.WorldToScreen(pos3D, out var p2D))
+            if (gameGui.WorldToScreen(p1_3D, out var s1) && gameGui.WorldToScreen(p2_3D, out var s2))
             {
-                screenPointsBuffer[count++] = p2D;
+                if (fill && fillColor != 0 && hasCenter)
+                {
+                    drawList.AddTriangleFilled(center2D, s1, s2, fillColor);
+                }
+                drawList.AddLine(s1, s2, borderColor, config.BorderThickness);
             }
         }
-
-        if (count < 2) return;
-
-        // Fill only if explicitly requested
-        if (fill && fillColor != 0)
-        {
-            for (int i = 0; i < count - 1; i++)
-            {
-                drawList.AddTriangleFilled(center2D, screenPointsBuffer[i], screenPointsBuffer[i + 1], fillColor);
-            }
-        }
-
-        // Clean hollow outline: Left ray from mob, arc perimeter, and Right ray back to mob
-        drawList.AddLine(center2D, screenPointsBuffer[0], borderColor, config.BorderThickness);
-        for (int i = 0; i < count - 1; i++)
-        {
-            drawList.AddLine(screenPointsBuffer[i], screenPointsBuffer[i + 1], borderColor, config.BorderThickness);
-        }
-        drawList.AddLine(screenPointsBuffer[count - 1], center2D, borderColor, config.BorderThickness);
     }
 }
