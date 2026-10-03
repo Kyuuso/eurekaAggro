@@ -18,6 +18,7 @@ public class MainWindow
     private readonly PluginConfiguration config;
     private readonly MobDatabase mobDatabase;
     private readonly ActionDatabase actionDatabase;
+    private readonly EurekaEnvironmentService environmentService;
     private readonly IClientState clientState;
 
     public bool IsOpen = false;
@@ -29,11 +30,13 @@ public class MainWindow
         PluginConfiguration config,
         MobDatabase mobDatabase,
         ActionDatabase actionDatabase,
+        EurekaEnvironmentService environmentService,
         IClientState clientState)
     {
         this.config = config;
         this.mobDatabase = mobDatabase;
         this.actionDatabase = actionDatabase;
+        this.environmentService = environmentService;
         this.clientState = clientState;
     }
 
@@ -87,7 +90,13 @@ public class MainWindow
         {
             int effectiveLvl = EurekaLevelService.GetEffectiveElementalLevel(territoryId, config.AutoDetectElementalLevel, config.PlayerElementalLevel);
             string mode = config.AutoDetectElementalLevel ? "Auto-synced" : "Manual";
+            string weather = environmentService.GetCurrentWeatherName();
+            int etHour = EurekaEnvironmentService.GetEorzeaHour();
+            string timeStr = $"{etHour:D2}:00 ET ({(EurekaEnvironmentService.IsNight() ? "Night" : "Day")})";
+
             ImGui.TextColored(new Vector4(0.2f, 1.0f, 0.3f, 1.0f), $"[Active in Eureka | Elemental Lv. {effectiveLvl} ({mode})]");
+            ImGui.SameLine();
+            ImGui.TextDisabled($"| Weather: {weather} | {timeStr}");
         }
         else
         {
@@ -258,6 +267,23 @@ public class MainWindow
                 config.DragonWalkSpeedThreshold = walkSpeed;
                 config.Save();
             }
+
+            bool autoWalk = config.AutoWalkNearDragons;
+            if (ImGui.Checkbox("Auto-walk near Sleeping Dragons (prevents accidental running aggro)", ref autoWalk))
+            {
+                config.AutoWalkNearDragons = autoWalk;
+                config.Save();
+            }
+
+            if (config.AutoWalkNearDragons)
+            {
+                float autoDist = config.AutoWalkDistance;
+                if (ImGui.SliderFloat("Auto-walk activation range", ref autoDist, 8.0f, 20.0f, "%.1f m"))
+                {
+                    config.AutoWalkDistance = autoDist;
+                    config.Save();
+                }
+            }
         }
 
         bool blood = config.ShowBloodCircles;
@@ -322,6 +348,13 @@ public class MainWindow
         if (ImGui.Checkbox("Show floating name, aggro type, and distance labels above monsters", ref labels))
         {
             config.ShowMobLabels = labels;
+            config.Save();
+        }
+
+        bool mutation = config.ShowMutationStatus;
+        if (ImGui.Checkbox("Show Mutation / Adaptation tracker above eligible mobs (weather/time based)", ref mutation))
+        {
+            config.ShowMutationStatus = mutation;
             config.Save();
         }
 

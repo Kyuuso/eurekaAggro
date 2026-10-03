@@ -113,6 +113,22 @@ public class PluginConfiguration : IPluginConfiguration
     public bool AlwaysShowDragons { get; set; } = true;
 
     /// <summary>
+    /// When enabled, automatically engages Walk mode (IsWalking) when running near Sleeping Dragons.
+    /// Restores running automatically once safely out of range.
+    /// </summary>
+    public bool AutoWalkNearDragons { get; set; } = true;
+
+    /// <summary>
+    /// Proximity distance in meters to automatically trigger Walk mode near Sleeping Dragons (defaults to 12.0m).
+    /// </summary>
+    public float AutoWalkDistance { get; set; } = 12.0f;
+
+    /// <summary>
+    /// Displays real-time mutation and adaptation availability indicators above eligible monsters based on active weather and Eorzea time.
+    /// </summary>
+    public bool ShowMutationStatus { get; set; } = true;
+
+    /// <summary>
     /// When level filtering is enabled, always keep showing Undead / Ashkin (Blood aggro).
     /// </summary>
     public bool AlwaysShowUndead { get; set; } = true;

@@ -24,6 +24,7 @@ public class OverlayRenderer
     private readonly IClientState clientState;
     private readonly IObjectTable objectTable;
     private readonly MobDatabase mobDatabase;
+    private readonly EurekaEnvironmentService environmentService;
     private readonly PluginConfiguration config;
 
     // Player speed tracking for walk vs run detection
@@ -31,17 +32,22 @@ public class OverlayRenderer
     private DateTime lastPositionTime = DateTime.UtcNow;
     private float currentSpeed = 0.0f;
 
+    // Tracks whether the plugin automatically engaged walk mode near dragons
+    private bool wasAutoWalkForced = false;
+
     public OverlayRenderer(
         IGameGui gameGui,
         IClientState clientState,
         IObjectTable objectTable,
         MobDatabase mobDatabase,
+        EurekaEnvironmentService environmentService,
         PluginConfiguration config)
     {
         this.gameGui = gameGui;
         this.clientState = clientState;
         this.objectTable = objectTable;
         this.mobDatabase = mobDatabase;
+        this.environmentService = environmentService;
         this.config = config;
     }
 
@@ -87,6 +93,9 @@ public class OverlayRenderer
             clientState.TerritoryType,
             config.AutoDetectElementalLevel,
             config.PlayerElementalLevel);
+
+        // Track whether any Sleeping Dragon is within auto-walk danger range
+        bool anySleepingDragonNear = false;
 
         foreach (var obj in objectTable)
         {
@@ -143,11 +152,11 @@ public class OverlayRenderer
             if (config.FilterSafeMobs)
             {
                 // Only actual lethal Sleeping Dragons (Voidragons, Slumbering Dragons) are exempted regardless of level
-                bool isDragon = data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
-                                data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
-                                data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
+                bool isDragonCheck = data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
+                                     data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
+                                     data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
 
-                bool isExempt = (config.AlwaysShowDragons && isDragon) ||
+                bool isExempt = (config.AlwaysShowDragons && isDragonCheck) ||
                                 (config.AlwaysShowUndead && data.AggroType == AggroType.Blood) ||
                                 (config.AlwaysShowSprites && data.AggroType == AggroType.Magic);
 
@@ -182,12 +191,21 @@ public class OverlayRenderer
                                         data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
                                         data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
 
+                        if (isDragon && distance <= config.AutoWalkDistance)
+                        {
+                            anySleepingDragonNear = true;
+                        }
+
                         // Alert when running near sound-detecting monsters
                         if (gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.4f, 0), out var pWarn))
                         {
                             if (isDragon)
                             {
-                                if (distance <= totalRadius + 4.0f && isRunning)
+                                if (wasAutoWalkForced && distance <= config.AutoWalkDistance)
+                                {
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1f, 0.4f, 1f)), "✔ AUTO-WALK ENGAGED (SAFE)");
+                                }
+                                else if (distance <= totalRadius + 4.0f && isRunning)
                                 {
                                     drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.2f, 0.2f, 1f)), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
                                 }
@@ -322,6 +340,50 @@ public class OverlayRenderer
                     string levelPrefix = mobLevel > 0 ? $"Lv.{mobLevel} " : string.Empty;
                     string fullText = $"{levelPrefix}{data.Name} {typeLabel} ({distance:F1}m)";
                     drawList.AddText(pText - new Vector2(30, 0), textCol, fullText);
+
+                    // Real-time Mutation & Adaptation triggers
+                    if (config.ShowMutationStatus)
+                    {
+                        var mut = environmentService.CheckMutation(data.Name);
+                        if (mut.CanMutate)
+                        {
+                            if (mut.IsActiveNow)
+                            {
+                                var mutCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1.0f, 0.9f, 1.0f));
+                                drawList.AddText(pText - new Vector2(30, -14), mutCol, $"🧬 CAN MUTATE NOW: {mut.HintMessage}");
+                            }
+                            else
+                            {
+                                var dimCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.65f, 0.65f, 0.65f, 0.75f));
+                                drawList.AddText(pText - new Vector2(30, -14), dimCol, $"[Mutates: {mut.HintMessage}]");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Auto-walk safety trigger for Sleeping Dragons
+        if (config.AutoWalkNearDragons)
+        {
+            unsafe
+            {
+                var ctrl = FFXIVClientStructs.FFXIV.Client.Game.Control.Control.Instance();
+                if (ctrl != null)
+                {
+                    if (anySleepingDragonNear)
+                    {
+                        if (!ctrl->IsWalking)
+                        {
+                            ctrl->IsWalking = true;
+                            wasAutoWalkForced = true;
+                        }
+                    }
+                    else if (wasAutoWalkForced)
+                    {
+                        ctrl->IsWalking = false;
+                        wasAutoWalkForced = false;
+                    }
                 }
             }
         }

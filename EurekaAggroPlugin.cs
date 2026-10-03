@@ -33,12 +33,14 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     [PluginService] internal static IGameGui GameGui { get; private set; } = null!;
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
     [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
+    [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
 
     // Internal components
     private readonly PluginConfiguration configuration;
     private readonly MobDatabase mobDatabase;
     private readonly ActionDatabase actionDatabase;
+    private readonly EurekaEnvironmentService environmentService;
     private readonly CastMonitor castMonitor;
     private readonly OverlayRenderer overlayRenderer;
     private readonly MainWindow mainWindow;
@@ -56,11 +58,12 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
 
         mobDatabase = new MobDatabase(PluginLog, configDir);
         actionDatabase = new ActionDatabase(PluginLog, configDir);
+        environmentService = new EurekaEnvironmentService(DataManager, ClientState);
 
         castMonitor = new CastMonitor(ClientState, TargetManager, ObjectTable, ChatGui, actionDatabase, configuration);
-        overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, configuration);
+        overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, configuration);
 
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, ClientState);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState);
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
 
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
