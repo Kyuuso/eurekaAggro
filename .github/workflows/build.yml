@@ -25,6 +25,22 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Extract plugin version
+        shell: pwsh
+        run: |
+          $manifest = Get-Content EurekaAggro.json -Raw | ConvertFrom-Json
+          $rawVer = $manifest.AssemblyVersion
+          if ([string]::IsNullOrWhiteSpace($rawVer)) { $rawVer = "1.0.0.0" }
+          
+          # Short tag version: e.g. 1.0.0 from 1.0.0.0
+          $parts = $rawVer.Split('.')
+          $tagVer = if ($parts.Length -ge 3) { "$($parts[0]).$($parts[1]).$($parts[2])" } else { $rawVer }
+          $tagName = "v$tagVer"
+          
+          echo "PLUGIN_VERSION=$rawVer" >> $env:GITHUB_ENV
+          echo "TAG_NAME=$tagName" >> $env:GITHUB_ENV
+          Write-Host "Target version: $rawVer (Tag: $tagName)"
+
       - name: Download and extract Dalamud
         shell: pwsh
         run: |
@@ -47,16 +63,21 @@ jobs:
           Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "package/"
           Copy-Item -Path "bin/Release/EurekaAggro.pdb" -Destination "package/"
           Copy-Item -Path "bin/Release/EurekaAggro.deps.json" -Destination "package/"
+          
+          # Generic latest.zip for continuous update links
           Compress-Archive -Path "package/*" -DestinationPath "latest.zip" -Force
+          
+          # Versioned zip for release archives
+          Compress-Archive -Path "package/*" -DestinationPath "EurekaAggro-${{ env.TAG_NAME }}.zip" -Force
 
-      - name: Create or Update GitHub Release
+      - name: Create or Update Versioned GitHub Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest' }}
-          name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'Latest Release' }}
+          tag_name: ${{ env.TAG_NAME }}
+          name: Release ${{ env.TAG_NAME }}
           files: |
             latest.zip
+            EurekaAggro-${{ env.TAG_NAME }}.zip
             bin/Release/EurekaAggro.json
           generate_release_notes: true
 
@@ -77,8 +98,16 @@ jobs:
           Copy-Item -Path "latest.zip" -Destination "public_repo/plugins/EurekaAggro/latest.zip" -Force
           Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro.json" -Force
           
+          # Update version in pluginmaster.json so Dalamud client prompts update
+          $pmPath = "public_repo/pluginmaster.json"
+          if (Test-Path $pmPath) {
+              $pmRaw = Get-Content $pmPath -Raw
+              $pmUpdated = $pmRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
+              Set-Content -Path $pmPath -Value $pmUpdated -Encoding utf8
+          }
+          
           # Commit and push changes
           cd public_repo
-          git add plugins/EurekaAggro/latest.zip plugins/EurekaAggro/EurekaAggro.json
-          git commit -m "Auto-update EurekaAggro plugin release" || echo "No changes to commit"
+          git add pluginmaster.json plugins/EurekaAggro/latest.zip plugins/EurekaAggro/EurekaAggro.json
+          git commit -m "Auto-update EurekaAggro plugin release to ${{ env.TAG_NAME }} (${{ env.PLUGIN_VERSION }})" || echo "No changes to commit"
           git push origin main || git push origin master
