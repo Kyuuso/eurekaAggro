@@ -3,7 +3,7 @@
   "Name": "Eureka Aggro",
   "InternalName": "EurekaAggro",
   "AssemblyVersion": "1.0.0.0",
-  "Description": "Radar y visualizador de rango de aggro para Eureka (Anemos, Pagos, Pyros, Hydatos). Conos de visión, detección de dragones dormidos por sonido (¡camina!), aggro por sangre/vida baja, sprites por magia y alertas de habilidades.",
+  "Description": "Aggro and danger radius visualizer for Eureka (Anemos, Pagos, Pyros, Hydatos). Vision cones, sleeping dragon sound aggro detection (walk!), low HP blood aggro, sprite magic aggro, and cast alerts.",
   "ApplicableVersion": "any",
   "DalamudApiLevel": 15,
   "Tags": [

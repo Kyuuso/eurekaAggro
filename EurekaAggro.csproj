@@ -18,7 +18,7 @@
     <DalamudLibPath Condition="'$(DalamudLibPath)' == ''">C:\Users\shuns\AppData\Roaming\XIVLauncher\addon\Hooks\15.0.3.6</DalamudLibPath>
   </PropertyGroup>
 
-  <!-- Referencias a los ensamblados de Dalamud 15 -->
+  <!-- References to Dalamud 15 assemblies -->
   <ItemGroup>
     <Reference Include="Dalamud">
       <HintPath>$(DalamudLibPath)\Dalamud.dll</HintPath>
@@ -54,14 +54,14 @@
     </Reference>
   </ItemGroup>
 
-  <!-- Manifiesto del plugin para Dalamud -->
+  <!-- Plugin manifest for Dalamud -->
   <ItemGroup>
     <None Update="EurekaAggro.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <!-- Recursos incrustados para Eureka -->
+  <!-- Embedded resources for Eureka -->
   <ItemGroup>
     <EmbeddedResource Include="Recursos\DB.json" />
     <EmbeddedResource Include="Recursos\DDCheckDB.json" />

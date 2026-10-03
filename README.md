@@ -1,14 +1,14 @@
 # EurekaAggro
 
-Plugin para Dalamud (FFXIV) especializado en Eureka (**Anemos, Pagos, Pyros, Hydatos** y **Baldesion Arsenal**).
+Dalamud plugin for FFXIV tailored specifically for Eureka (**Anemos, Pagos, Pyros, Hydatos**, and the **Baldesion Arsenal**).
 
-## Características principales
+## Key Features
 
-- **Taxonomía precisa de aggro**:
-  - 🦻 **Sound (Oído)**: Cono 360°, 10.5m. Caminar (walk) es 100% seguro. Mobs como dragones durmientes (`slumbering dragon`, `voidragon`), piranus/ogrebons, artrópodos/cangrejos/arañas, sanguijuelas y topos.
-  - 🌀 **Proximity (Proximidad)**: Cono 360°, 10.2m. Atacan siempre que entres en rango (slimes, plantas, cactuars, mandrágoras, gólems, constructos).
-  - 🩸 **Blood (Sangre)**: Cono 360°, 25.0m. Detectan si el jugador tiene menos del 80% HP (espectros, zombis, cadáveres, skatenes).
-  - ✨ **Magic (Magia)**: Cono 360°, 18.0m. Detectan si se castea un hechizo dentro del rango (sprites y elementales).
-  - 👁️ **Sight (Vista)**: Cono frontal ~100°, 10.2m. Pasar por detrás o a los lados es seguro.
-- **Filtro inteligente de nivel elemental**: Oculta mobs que ya no representen peligro según tu nivel elemental actual (configurable manual o automático).
-- **Rendimiento de alto nivel**: Sin allocations de heap en el bucle de dibujado, seguro contra memory leaks.
+- **Precise Aggro Taxonomy**:
+  - 🦻 **Sound**: 360° detection, 10.5m radius. Walking is 100% safe. Covers sleeping dragons (`slumbering dragon`, `voidragon`), piranus/ogrebons, amphibians, arthropods (crabs, spiders), blind burrowers (worms, leeches, moles), and shelled mollusks.
+  - 🌀 **Proximity**: 360° detection, 10.2m radius. Attacks regardless of walking or running (slimes, carnivorous plants, cactuars, mandragoras, golems, magitek constructs).
+  - 🩸 **Blood**: 360° detection, 25.0m radius. Detects players with HP < 80% (ashkin, wraiths, specters, corpses, skeletons, zombies, dullahans).
+  - ✨ **Magic**: 360° detection, 18.0m radius. Detects spellcasting within range (sprites and elementals).
+  - 👁️ **Sight**: Frontal cone (~100°), 10.2m range. Passing behind or to the sides is safe (beasts, birds, ungulates, reptiles).
+- **Smart Elemental Level Filtering**: Automatically or manually hides non-threatening monsters based on your current elemental level.
+- **Zero-Allocation Rendering**: High-performance overlay rendering with zero heap allocations during the render loop.
