@@ -237,7 +237,7 @@ public class MainWindow
         ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Eureka Aggro Mechanics & Distances:");
 
         bool sound = config.ShowSoundCircles;
-        if (ImGui.Checkbox("Sleeping Dragons: Sound detection (Warns running vs walking)", ref sound))
+        if (ImGui.Checkbox("Sound Aggro (Dragons, Crabs, Amphibians - Walk to avoid)", ref sound))
         {
             config.ShowSoundCircles = sound;
             config.Save();
@@ -246,7 +246,7 @@ public class MainWindow
         if (config.ShowSoundCircles)
         {
             float dragonDist = config.DragonRunAggroDistance;
-            if (ImGui.SliderFloat("Dragon running aggro distance", ref dragonDist, 8.0f, 15.0f, "%.1f m"))
+            if (ImGui.SliderFloat("Sound running aggro distance", ref dragonDist, 8.0f, 15.0f, "%.1f m"))
             {
                 config.DragonRunAggroDistance = dragonDist;
                 config.Save();
@@ -326,7 +326,7 @@ public class MainWindow
         }
 
         bool fill = config.FillShapes;
-        if (ImGui.Checkbox("Fill cones and circles with semi-transparent color", ref fill))
+        if (ImGui.Checkbox("Fill cones and circles (unchecked = clean hollow outlines)", ref fill))
         {
             config.FillShapes = fill;
             config.Save();

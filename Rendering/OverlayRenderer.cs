@@ -150,30 +150,42 @@ public class OverlayRenderer
             switch (data.AggroType)
             {
                 case AggroType.Sound:
-                    // SLEEPING DRAGONS IN EUREKA: Running wakes them, walking is 100% safe!
+                    // Sound aggro in Eureka: Running wakes/triggers them, walking is 100% safe!
                     if (config.ShowSoundCircles)
                     {
                         var colDragon = config.ColorDragonSound;
                         var borderColor = ImGui.ColorConvertFloat4ToU32(colDragon);
                         var fillColor = ImGui.ColorConvertFloat4ToU32(new Vector4(colDragon.X, colDragon.Y, colDragon.Z, config.FillOpacity));
 
-                        // Outer danger circle (triggered when running)
+                        // Single clean sound aggro circle
                         DrawGroundCircle3D(drawList, mob.Position, totalRadius, borderColor, fillColor, config.FillShapes, 36);
 
-                        // Inner walk radius (always safe)
-                        var colWalk = ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1.0f, 0.2f, 0.8f));
-                        DrawGroundCircle3D(drawList, mob.Position, Math.Max(totalRadius - 0.6f, 1.0f), colWalk, 0, false, 36);
+                        // Check if mob is actually a sleeping dragon (e.g. slumbering dragon, voidragon)
+                        bool isDragon = data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
+                                        data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
+                                        data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
 
-                        // Dynamic status text based on player movement speed
-                        if (gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.6f, 0), out var pWarn))
+                        // Alert when running near sound-detecting monsters
+                        if (gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.4f, 0), out var pWarn))
                         {
-                            if (distance <= totalRadius + 5.0f && isRunning)
+                            if (isDragon)
                             {
-                                drawList.AddText(pWarn - new Vector2(70, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.2f, 0.2f, 1f)), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+                                if (distance <= totalRadius + 4.0f && isRunning)
+                                {
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.2f, 0.2f, 1f)), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+                                }
+                                else if (distance <= totalRadius + 1.5f)
+                                {
+                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, "✔ SLEEPING DRAGON (SAFE)");
+                                }
                             }
                             else
                             {
-                                drawList.AddText(pWarn - new Vector2(60, 0), borderColor, isRunning ? "⚠ SLEEPING DRAGON (WALK TO AVOID)" : "✔ SLEEPING DRAGON (WALKING - SAFE)");
+                                // Non-dragon sound monsters (Clipper, Karlabos, Piranu, Crabs, etc.)
+                                if (distance <= totalRadius + 3.0f && isRunning)
+                                {
+                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.35f, 0.2f, 1f)), "⚠ SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+                                }
                             }
                         }
                     }
@@ -305,11 +317,18 @@ public class OverlayRenderer
         uint borderColor,
         uint fillColor,
         bool fill,
-        int segments = 32)
+        int segments = 36)
     {
-        segments = Math.Clamp(segments, 12, 120);
+        segments = Math.Clamp(segments, 16, 120);
         int count = 0;
         float step = (float)(2 * Math.PI / segments);
+
+        bool hasCenter = false;
+        Vector2 center2D = Vector2.Zero;
+        if (fill && fillColor != 0)
+        {
+            hasCenter = gameGui.WorldToScreen(center, out center2D);
+        }
 
         for (int i = 0; i < segments; i++)
         {
@@ -328,14 +347,16 @@ public class OverlayRenderer
 
         if (count < 3) return;
 
-        if (fill && fillColor != 0)
+        // Only draw fill triangles if explicitly requested and center is on screen
+        if (fill && fillColor != 0 && hasCenter)
         {
-            for (int i = 1; i < count - 1; i++)
+            for (int i = 0; i < count; i++)
             {
-                drawList.AddTriangleFilled(screenPointsBuffer[0], screenPointsBuffer[i], screenPointsBuffer[i + 1], fillColor);
+                drawList.AddTriangleFilled(center2D, screenPointsBuffer[i], screenPointsBuffer[(i + 1) % count], fillColor);
             }
         }
 
+        // Clean hollow boundary loop
         for (int i = 0; i < count; i++)
         {
             var p1 = screenPointsBuffer[i];
@@ -353,13 +374,12 @@ public class OverlayRenderer
         uint borderColor,
         uint fillColor,
         bool fill,
-        int segments = 20)
+        int segments = 24)
     {
         if (!gameGui.WorldToScreen(center, out var center2D)) return;
 
         segments = Math.Clamp(segments, 8, 100);
-        screenPointsBuffer[0] = center2D;
-        int count = 1;
+        int count = 0;
 
         float halfAngle = fovAngle / 2.0f;
         float startAngle = rotation - halfAngle;
@@ -380,21 +400,23 @@ public class OverlayRenderer
             }
         }
 
-        if (count < 3) return;
+        if (count < 2) return;
 
+        // Fill only if explicitly requested
         if (fill && fillColor != 0)
         {
-            for (int i = 1; i < count - 1; i++)
+            for (int i = 0; i < count - 1; i++)
             {
                 drawList.AddTriangleFilled(center2D, screenPointsBuffer[i], screenPointsBuffer[i + 1], fillColor);
             }
         }
 
-        for (int i = 0; i < count; i++)
+        // Clean hollow outline: Left ray from mob, arc perimeter, and Right ray back to mob
+        drawList.AddLine(center2D, screenPointsBuffer[0], borderColor, config.BorderThickness);
+        for (int i = 0; i < count - 1; i++)
         {
-            var p1 = screenPointsBuffer[i];
-            var p2 = screenPointsBuffer[(i + 1) % count];
-            drawList.AddLine(p1, p2, borderColor, config.BorderThickness);
+            drawList.AddLine(screenPointsBuffer[i], screenPointsBuffer[i + 1], borderColor, config.BorderThickness);
         }
+        drawList.AddLine(screenPointsBuffer[count - 1], center2D, borderColor, config.BorderThickness);
     }
 }

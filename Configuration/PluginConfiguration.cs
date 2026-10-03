@@ -149,9 +149,9 @@ public class PluginConfiguration : IPluginConfiguration
     public bool ShowMagicWarnings { get; set; } = true;
 
     /// <summary>
-    /// Fill 3D ground circles and cones with semi-transparent colors.
+    /// Fill 3D ground circles and cones with semi-transparent colors (false = clean hollow outlines).
     /// </summary>
-    public bool FillShapes { get; set; } = true;
+    public bool FillShapes { get; set; } = false;
 
     /// <summary>
     /// Fill opacity for shapes (0.05 to 0.8).
