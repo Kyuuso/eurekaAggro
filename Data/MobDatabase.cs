@@ -248,6 +248,20 @@ public class MobDatabase
     }
 
 
+    /// <summary>
+    /// Checks whether a name corresponds to a player pet, summon, or companion.
+    /// </summary>
+    public static bool IsPlayerPetOrCompanion(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return false;
+        var lower = name.ToLowerInvariant();
+        return lower.Contains("carbuncle") || lower.Contains("eos") || lower.Contains("selene") ||
+               lower.Contains("titan-egi") || lower.Contains("ifrit-egi") || lower.Contains("garuda-egi") ||
+               lower.Contains("bahamut") || lower.Contains("phoenix") || lower.Contains("automaton") ||
+               lower.Contains("chocobo") || lower.Contains("seraph") || lower.Contains("living shadow") ||
+               lower.Contains("esteem");
+    }
+
     private void LoadUserOverrides()
     {
         try
@@ -261,6 +275,14 @@ public class MobDatabase
                 if (uint.TryParse(prop.Name, out var id) && prop.Value is JObject data)
                 {
                     var mob = ParseMob(data);
+
+                    // Purge any player pets or summons that may have been erroneously recorded previously
+                    if (IsPlayerPetOrCompanion(mob.Name))
+                    {
+                        isDirty = true;
+                        continue;
+                    }
+
                     if (mob.AggroType == AggroType.Sight)
                     {
                         var (inferred, defaultD) = ClassifyEurekaMob(mob.Name);
@@ -359,6 +381,17 @@ public class MobDatabase
 
     public MobData GetOrRegister(uint baseId, string name, float hitboxRadius)
     {
+        if (IsPlayerPetOrCompanion(name))
+        {
+            return new MobData
+            {
+                Name = name,
+                AggroType = AggroType.Sight,
+                DangerLevel = DangerLevel.Easy,
+                AggroDistance = 0f
+            };
+        }
+
         if (Mobs.TryGetValue(baseId, out var existing))
         {
             if (existing.HitboxRadius <= 0.05f && hitboxRadius > 0.05f)

@@ -199,6 +199,14 @@ public class PluginConfiguration : IPluginConfiguration
     public void Initialize(IDalamudPluginInterface pi)
     {
         pluginInterface = pi;
+
+        // Migrate to version 2: enforce clean hollow outlines (no fills) by default
+        if (Version < 2)
+        {
+            FillShapes = false;
+            Version = 2;
+            Save();
+        }
     }
 
     public void Save()

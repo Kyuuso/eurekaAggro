@@ -96,8 +96,22 @@ public class OverlayRenderer
             if (obj is not IBattleChara mob || mob.GameObjectId == player.GameObjectId) continue;
             if (mob.CurrentHp <= 0 || !mob.IsTargetable) continue;
 
-            // Only process battle NPCs
+            // Only process battle NPCs (never players, minions, or event objects)
             if (mob is IPlayerCharacter || mob.ObjectKind != ObjectKind.BattleNpc) continue;
+
+            // Never process player summons (Carbuncle, fairies, Egi, Bahamut, etc.) or companion chocobos
+            if (mob.OwnerId != 0) continue;
+            if (obj is IBattleNpc bNpc && (bNpc.BattleNpcKind == BattleNpcSubKind.Pet ||
+                                           bNpc.BattleNpcKind == BattleNpcSubKind.Buddy ||
+                                           bNpc.BattleNpcKind == BattleNpcSubKind.LovmMinion ||
+                                           bNpc.BattleNpcKind == BattleNpcSubKind.NpcPartyMember))
+            {
+                continue;
+            }
+
+            // Name-based safety guard against pets and summons
+            var mobName = mob.Name.TextValue;
+            if (MobDatabase.IsPlayerPetOrCompanion(mobName)) continue;
 
             var distance = Vector3.Distance(playerPos, mob.Position);
             if (distance > config.DetectionRange) continue;
