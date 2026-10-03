@@ -100,7 +100,8 @@ public class OverlayRenderer
             if (mob is IPlayerCharacter || mob.ObjectKind != ObjectKind.BattleNpc) continue;
 
             // Never process player summons (Carbuncle, fairies, Egi, Bahamut, etc.) or companion chocobos
-            if (mob.OwnerId != 0) continue;
+            // In FFXIV, unowned wild monsters have OwnerId 0 or 0xE000_0000 / 0xFFFF_FFFF.
+            if (mob.OwnerId != 0 && mob.OwnerId != 0xE000_0000 && mob.OwnerId != 0xFFFF_FFFF) continue;
             if (obj is IBattleNpc bNpc && (bNpc.BattleNpcKind == BattleNpcSubKind.Pet ||
                                            bNpc.BattleNpcKind == BattleNpcSubKind.Buddy ||
                                            bNpc.BattleNpcKind == BattleNpcSubKind.LovmMinion ||
