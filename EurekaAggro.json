@@ -1,0 +1,21 @@
+{
+  "Author": "Kyuuso",
+  "Name": "Eureka Aggro",
+  "InternalName": "EurekaAggro",
+  "AssemblyVersion": "1.0.0.0",
+  "Description": "Radar y visualizador de rango de aggro para Eureka (Anemos, Pagos, Pyros, Hydatos). Conos de visión, detección de dragones dormidos por sonido (¡camina!), aggro por sangre/vida baja, sprites por magia y alertas de habilidades.",
+  "ApplicableVersion": "any",
+  "DalamudApiLevel": 15,
+  "Tags": [
+    "eureka",
+    "aggro",
+    "anemos",
+    "pagos",
+    "pyros",
+    "hydatos",
+    "dragons",
+    "sound",
+    "radar",
+    "sight"
+  ]
+}

@@ -1,0 +1,3918 @@
+{
+  "channeling": {
+    "967": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Bhoot",
+      "name": "Blizzard",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "3577": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Balmung Azuresky",
+      "name": "Fire IV",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6326": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Sprite",
+      "name": "Fire",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6327": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Deathmouse",
+      "name": "Scamper",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6330": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Bat",
+      "name": "Ultrasonics",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6331": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Coblyn",
+      "name": "Shatter",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6332": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Hippocerf",
+      "name": "Shriek",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6334": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Hornet",
+      "name": "Final Sting",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6336": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Ziz",
+      "name": "Slumber Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6337": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Lost Goblin",
+      "name": "Bomb Toss",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6338": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Lost Goblin",
+      "name": "Bomb Toss",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6339": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Dung Beetle",
+      "name": "Rhino Attack",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6342": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Toad",
+      "name": "Labored Leap",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6345": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Ninki Nanka",
+      "name": "Brackish Drop",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6348": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Morbol",
+      "name": "Bad Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6349": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Pudding",
+      "name": "Golden Tongue",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6350": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Pudding",
+      "name": "Thunder",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6351": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Uwabami",
+      "name": "Stone Gaze",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6352": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Biloko",
+      "name": "The Wood Remembers",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6353": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Puk",
+      "name": "Fireball",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6354": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Drake",
+      "name": "Smoldering Scales",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6355": {
+      "alertMessage": "avoid",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Adamantoise",
+      "name": "Tortoise Stomp",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6356": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Peiste",
+      "name": "Stone Gaze",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6358": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Spriggan",
+      "name": "Haste",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6359": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Centaur",
+      "name": "Berserk",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6360": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Centaur",
+      "name": "Rear",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6361": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Effigy",
+      "name": "Wild Horn",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6362": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Marolith",
+      "name": "Dark Blizzard III",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6363": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Dullahan",
+      "name": "Iron Justice",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6364": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Minotaur",
+      "name": "111-tonze Swing",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6365": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Skatene",
+      "name": "Chirp",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6366": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Bogy",
+      "name": "Curse",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6367": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Hecteyes",
+      "name": "Hex Eye",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6368": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Ogre",
+      "name": "Heartburn",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6369": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Mummy",
+      "name": "Rotting Bandages",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6370": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Eye",
+      "name": "Eyes on Me",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6371": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Dahak",
+      "name": "Tail Drive",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6372": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Monk",
+      "name": "Sucker",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6373": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Monk",
+      "name": "Flood",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6374": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Troubadour",
+      "name": "Dark",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6375": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Taurus",
+      "name": "Voidblood",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6377": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Succubus",
+      "name": "Void Fire II",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6378": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Succubus",
+      "name": "Dark Mist",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6379": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Catoblepas",
+      "name": "Quarry Lake",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6382": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nightmare Gnat",
+      "name": "Thunderstrike",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6386": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Bhoot",
+      "name": "Paralyze III",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6388": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Persona",
+      "name": "Paralyze III",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6391": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Dark Dragon",
+      "name": "Chaos Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6396": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Mimic",
+      "name": "Deathtrap",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6397": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Mimic",
+      "name": "Infatuation",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6398": {
+      "alertMessage": "run away",
+      "interruptable": false,
+      "los": false,
+      "mob": "Edda Blackbosom",
+      "name": "In Health",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6399": {
+      "alertMessage": "under boss",
+      "interruptable": false,
+      "los": false,
+      "mob": "Edda Blackbosom",
+      "name": "In Health",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6400": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Edda Blackbosom",
+      "name": "Dark Harvest",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6402": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Edda Blackbosom",
+      "name": "Black Honeymoon",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6403": {
+      "alertMessage": "look away",
+      "interruptable": false,
+      "los": false,
+      "mob": "Edda Blackbosom",
+      "name": "Cold Feet",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6410": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Wraith",
+      "name": "Scream",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6417": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Deathgaze",
+      "name": "Stormwind",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6418": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Deathgaze",
+      "name": "Bombination",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6419": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Deathgaze",
+      "name": "Lumisphere",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6420": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Deathgaze",
+      "name": "Aero Blast",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6422": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Spurge",
+      "name": "Acid Mist",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6423": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Spurge",
+      "name": "Gold Dust",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6424": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Spurge",
+      "name": "Leafstorm",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6425": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Spurge",
+      "name": "Rotten Stench",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6429": {
+      "alertMessage": "go center",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ningishzida",
+      "name": "Fear Itself",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6430": {
+      "alertMessage": "avoid",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ixtab",
+      "name": "Ancient Eruption",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6431": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ixtab",
+      "name": "Entropic Flame",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6432": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ixtab",
+      "name": "Shadow Flare",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6433": {
+      "alertMessage": "Regen pot",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ixtab",
+      "name": "Scream",
+      "regen": true,
+      "silence": false,
+      "stun": false
+    },
+    "6434": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ixtab",
+      "name": "Accursed Pox",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6435": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Bhoot",
+      "name": "Tornado",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6441": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Spriggan",
+      "name": "Blizzard",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6442": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Eye",
+      "name": "Stone",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6443": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Nightmare Monk",
+      "name": "Water",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6872": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nybeth Obdilord",
+      "name": "Abyss",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6874": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nybeth Obdilord",
+      "name": "Shackle",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6876": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Nybeth Obdilord",
+      "name": "Summon Darkness",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6903": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Roselet",
+      "name": "Swift Sough",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6939": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Deepeye",
+      "name": "Hypnotize",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6941": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Gremlin",
+      "name": "Bad-mouth",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6942": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Gremlin",
+      "name": "Fire II",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6943": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Imp",
+      "name": "Ice Spikes",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6944": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Anubys",
+      "name": "Spellsword",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6945": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Soulflayer",
+      "name": "Mind Blast",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6947": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Taurus",
+      "name": "Frightful Roar",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6948": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Arch Demon",
+      "name": "Abyssal Swing",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6950": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Palace Vodoriga",
+      "name": "Terror Eye",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "6952": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Idol",
+      "name": "Neck Splinter",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6953": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Pot",
+      "name": "Mysterious Light",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6954": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Lindwurm",
+      "name": "Foul Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6956": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Tyrannosaur",
+      "name": "Primordial Bark",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6957": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Diplocaulus",
+      "name": "Foregone Gleam",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6960": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Croc",
+      "name": "Flatten",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6961": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Mylodon",
+      "name": "Slowball",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6963": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Sarcosuchus",
+      "name": "Critical Bite",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6964": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Blade",
+      "name": "Third Leg Forward",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6965": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Vinegaroon",
+      "name": "Third Leg Back",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6966": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Pteranodon",
+      "name": "Lightning Bolt",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6968": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Aurochs",
+      "name": "Seismic Rift",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6970": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Bird of the Palace",
+      "name": "Revelation",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6971": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Cyclops",
+      "name": "100-tonze Swing",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6972": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Cyclops",
+      "name": "Eye of the Beholder",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6973": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Sasquatch",
+      "name": "Ripe Banana",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6974": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Sasquatch",
+      "name": "Stool Pelt",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6975": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Bear",
+      "name": "Savage Swipe",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6976": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Coeurl",
+      "name": "Megablaster",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6977": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Dhalmel",
+      "name": "Whiplash",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6980": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Lion",
+      "name": "Cry",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "6986": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Flood Dragon",
+      "name": "Granite Rain",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6987": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Flame Dragon",
+      "name": "Fireball",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6988": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Worm",
+      "name": "Sand Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6992": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Eruca",
+      "name": "Incinerate",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6993": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Gallimimus",
+      "name": "Flash Evaporation",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6996": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Wamoura",
+      "name": "Poison Dust",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6997": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Chimera",
+      "name": "The Lion's Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6998": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Chimera",
+      "name": "The Ram's Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "6999": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Palace Chimera",
+      "name": "The Dragon's Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7000": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Squirrel",
+      "name": "Scamper",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7003": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Gaelicat",
+      "name": "Yowl",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7006": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Ziz",
+      "name": "Numbing Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7009": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Leech",
+      "name": "Drowning Mist",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7010": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Bifericeras",
+      "name": "Palsynyxis",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7014": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Diplocaulus",
+      "name": "Mucin",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7015": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Ochu",
+      "name": "Gold Dust",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7016": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Morbol",
+      "name": "Bad Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7020": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Biloko",
+      "name": "Stoneskin",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7021": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Pteroc",
+      "name": "Tail Chase",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7023": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Biast",
+      "name": "Electrify",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7025": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Basilisk",
+      "name": "Body Slam",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7027": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Spriggan",
+      "name": "Fast Boulder",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7028": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Urolith",
+      "name": "Tornado",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7030": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Mummy",
+      "name": "Rotting Bandages",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7031": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Ahriman",
+      "name": "Level 5 Petrify",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7033": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Monk",
+      "name": "Flood",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7034": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Catoblepas",
+      "name": "Eye of the Stunted",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7035": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Catoblepas",
+      "name": "Jettatura",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7041": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Succubus",
+      "name": "Void Fire IV",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7042": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Onyx Dragon",
+      "name": "Miasma Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7043": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Onyx Dragon",
+      "name": "Evil Eye",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7048": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Mylodon",
+      "name": "Snow Flurry",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7049": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Devilet",
+      "name": "Void Blizzard",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7050": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Shabti",
+      "name": "Death's Door",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7053": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Arch Demon",
+      "name": "Abyssal Transfixion",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7055": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Marolith",
+      "name": "Isle Drop",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7057": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Tursus",
+      "name": "Chilling Cyclone",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7060": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Bird of the Deep Palace",
+      "name": "Tropical Wind",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7061": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Snowclops",
+      "name": "Glower",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7067": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Grenade",
+      "name": "Hypothermal Combustion",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7072": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Claw",
+      "name": "Tail Screw",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7075": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Vindthurs",
+      "name": "Freezeover",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7076": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Vindthurs",
+      "name": "Plain Pound",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7078": {
+      "alertMessage": "out",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Garm",
+      "name": "The Ram's Voice",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7079": {
+      "alertMessage": "in",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Garm",
+      "name": "The Dragon's Voice",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7080": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Bicephalus",
+      "name": "Catapult",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7082": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Knight",
+      "name": "Death Spiral",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7084": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Deep Palace Fachan",
+      "name": "Level 5 Death",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7089": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "The Black Rider",
+      "name": "Valfodr",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7091": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Yaquaru",
+      "name": "Douse",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7094": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Yaquaru",
+      "name": "Electrogenesis",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7095": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gudanna",
+      "name": "Thunderbolt",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7096": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gudanna",
+      "name": "Charybdis",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7098": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gudanna",
+      "name": "Trounce",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7099": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gudanna",
+      "name": "Ecliptic Meteor",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7101": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "The Godmother",
+      "name": "Sap",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7102": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "The Godmother",
+      "name": "Massive Burst",
+      "regen": true,
+      "silence": false,
+      "stun": false
+    },
+    "7103": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "The Godfather",
+      "name": "Massive Burst",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7104": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Giddy Bomb",
+      "name": "Hypothermal Combustion",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7105": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Grey Bomb",
+      "name": "Burst",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7108": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Tisiphone",
+      "name": "Dark Mist",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7109": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Tisiphone",
+      "name": "Void Fire IV",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7116": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Flame Dragon",
+      "name": "Fireball",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7119": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Spriggan",
+      "name": "Fast Boulder",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7121": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Deep Palace Succubus",
+      "name": "Void Fire IV",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "7129": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Alicanto",
+      "name": "Stormwind",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7130": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Alicanto",
+      "name": "Bombination",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7131": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Alicanto",
+      "name": "Lumisphere",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7132": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Alicanto",
+      "name": "Aero Blast",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7134": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kirtimukha",
+      "name": "Acid Mist",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7135": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kirtimukha",
+      "name": "Gold Dust",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7136": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kirtimukha",
+      "name": "Leafstorm",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7137": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kirtimukha",
+      "name": "Rotten Stench",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7141": {
+      "alertMessage": "go center",
+      "interruptable": false,
+      "los": false,
+      "mob": "Alfard",
+      "name": "Fear Itself",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7142": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Ah Puch",
+      "name": "Ancient Eruption",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7153": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Tisiphone",
+      "name": "Blood Rain",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7156": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Todesritter",
+      "name": "Valfodr",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7158": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Yulunggu",
+      "name": "Douse",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7161": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Yulunggu",
+      "name": "Electrogenesis",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7162": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Dendainsonne",
+      "name": "Thunderbolt",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7163": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Dendainsonne",
+      "name": "Charybdis",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7165": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Dendainsonne",
+      "name": "Trounce",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7166": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Dendainsonne",
+      "name": "Ecliptic Meteor",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7169": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "The Godfather",
+      "name": "Sap",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7170": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Lava Bomb",
+      "name": "Flashthoom",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "7171": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Remedy Bomb",
+      "name": "Hypothermal Combustion",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11290": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Hiruko",
+      "name": "Cloud Call",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11291": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Hiruko",
+      "name": "Shiko",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11292": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Hiruko",
+      "name": "Lightning Strike",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11293": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Hiruko",
+      "name": "Supercell",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11876": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Mojabune",
+      "name": "Amorphous Applause",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11877": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Mojabune",
+      "name": "Overtow",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11878": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Mojabune",
+      "name": "Concussive Oscillation",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11899": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Beccho",
+      "name": "Psycho Squama",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11900": {
+      "alertMessage": "look away",
+      "interruptable": false,
+      "los": false,
+      "mob": "Beccho",
+      "name": "Neuro Squama",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11902": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Bhima",
+      "name": "Tornado",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11903": {
+      "alertMessage": "avoid",
+      "interruptable": false,
+      "los": false,
+      "mob": "Bhima",
+      "name": "Ancient Aero II",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11904": {
+      "alertMessage": "blow away",
+      "interruptable": false,
+      "los": false,
+      "mob": "Bhima",
+      "name": "Ancient Aero III",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11905": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Bhima",
+      "name": "Ancient Aero",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11919": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gozu",
+      "name": "Rusting Claw",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11920": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gozu",
+      "name": "Words of Woe",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11921": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gozu",
+      "name": "The Spin",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11922": {
+      "alertMessage": "look away",
+      "interruptable": false,
+      "los": false,
+      "mob": "Gozu",
+      "name": "Eye of the Fire",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11925": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Suikazura",
+      "name": "Firewalker",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11926": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Suikazura",
+      "name": "Topple",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11927": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Suikazura",
+      "name": "Fire II",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11928": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Suikazura",
+      "name": "Ancient Flare",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11968": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Bombfish",
+      "name": "1000 Spines",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "11970": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Coralshell",
+      "name": "Bubble Shower",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11971": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Coralshell",
+      "name": "Bubble Bath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11972": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Gyuki",
+      "name": "Aqua Blast",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11974": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Kraken",
+      "name": "Water III",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "11976": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Ango",
+      "name": "Flounder",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11977": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Matamata",
+      "name": "Scalding Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11978": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Matamata",
+      "name": "Embalming Earth",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "11981": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shark",
+      "name": "Jaws",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "11982": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Amikiri",
+      "name": "Shuck",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "11983": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Yumemi",
+      "name": "Static Charge",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "11984": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Yumemi",
+      "name": "Blanket Thunder",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "11985": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kajigakaka",
+      "name": "Heavensward Howl",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "11987": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kajigakaka",
+      "name": "Lunar Cry",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12099": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Katasharin",
+      "name": "Crimson Mandate",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12100": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Wanyudo",
+      "name": "Midnight Mandate",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12103": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hatamoto",
+      "name": "Tenka Goken",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12174": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Onibi",
+      "name": "Blinding Burst",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12175": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Onibi",
+      "name": "Fire",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12176": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Halgai",
+      "name": "Cure",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12178": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Dhruva",
+      "name": "Aetherial Spark",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12179": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Dhruva",
+      "name": "Tornado",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12180": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Dhruva",
+      "name": "Tornado",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12182": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Sai Taisui",
+      "name": "Malediction of Water",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12184": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tenaga",
+      "name": "Ovation",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12185": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Keukegen",
+      "name": "Implosive Curse",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12186": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Yuki",
+      "name": "Enter Night",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12189": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tengu",
+      "name": "Isso",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12191": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Koja",
+      "name": "1000 Barbs",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12193": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Menreiki",
+      "name": "Paralyze III",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12194": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shikubi",
+      "name": "Hypothermal Combustion",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12195": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Ichijama",
+      "name": "Scream",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12196": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Ichijama",
+      "name": "Accursed Pox",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12197": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Ichijama",
+      "name": "Accursed Pox",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12200": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Yuki-tokage",
+      "name": "Chilling Cyclone",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12201": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Yuki-tokage",
+      "name": "Ice Dispenser",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12203": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kenko",
+      "name": "Slabber",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12205": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kenko",
+      "name": "Predator Claws",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12206": {
+      "alertMessage": "in puddle",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kenko",
+      "name": "Hound out of Hell",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12207": {
+      "alertMessage": "drop puddle",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kenko",
+      "name": "Innerspace",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12208": {
+      "alertMessage": "out puddle",
+      "interruptable": false,
+      "los": false,
+      "mob": "Kenko",
+      "name": "Ululation",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12211": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Onra",
+      "name": "Meteor Impact",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12213": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Onra",
+      "name": "Burning Rave",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12214": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Onra",
+      "name": "Ancient Quaga",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12215": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Onra",
+      "name": "Aura Cannon",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12216": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Onra",
+      "name": "Knuckle Press",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12217": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Yuki-tokage",
+      "name": "Ice Dispenser",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12218": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Mammoth",
+      "name": "Wooly Inspiration",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12221": {
+      "alertMessage": "avoid",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Tofu",
+      "name": "Blizzard",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12222": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Tofu",
+      "name": "Golden Tongue",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12224": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Jujishi",
+      "name": "Freefall",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12226": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Yuki-otoko",
+      "name": "Frozen Mist",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12227": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Yuki-otoko",
+      "name": "Northerlies",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12258": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Yak",
+      "name": "Horrisonous Blast",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12261": {
+      "alertMessage": "look away",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hyoga",
+      "name": "Eyeshine",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12262": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hyoga",
+      "name": "Absolute Zero",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12263": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hyozan",
+      "name": "Ice Guillotine",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12265": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shiro-jishi",
+      "name": "Cry",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12270": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Nuppeppo",
+      "name": "Footwork",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12272": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Nuppeppo",
+      "name": "Featherfoot",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12274": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Jubokko",
+      "name": "Stoneskin",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12275": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Ganseki",
+      "name": "Stone",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12276": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Jaki",
+      "name": "Charybdis",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12281": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Jinba",
+      "name": "Allagan Fear",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12282": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Kyozo",
+      "name": "Filoplumage",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12283": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Kyozo",
+      "name": "Gust",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12291": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Gozu",
+      "name": "128-tonze Swing",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12293": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Gozu",
+      "name": "32-tonze Swipe",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12312": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Quivering Coffer",
+      "name": "Deathtrap",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12313": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Quivering Coffer",
+      "name": "Malice",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12315": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Korpokkur",
+      "name": "Spiritus",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12316": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Shizuku",
+      "name": "Water",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12317": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shiomushi",
+      "name": "Shatter",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12318": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hakagiri",
+      "name": "Scale Ripple",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12320": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Unkiu",
+      "name": "Flush",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12321": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Apa",
+      "name": "Water III",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12322": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Otokage",
+      "name": "Nightmarish Light",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12323": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Otokage",
+      "name": "Garish Light",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12324": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tatsunoko",
+      "name": "Hydrate",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12326": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shioname",
+      "name": "Saltstorm",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12327": {
+      "alertMessage": "avoid",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Amagoi",
+      "name": "Tortoise Stomp",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12330": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Namazu",
+      "name": "Tingle",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12333": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Aomino",
+      "name": "Hydrocannon",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12337": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Hornbill",
+      "name": "Gust",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12338": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Hornbill",
+      "name": "Gust",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12340": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hanya",
+      "name": "Auto Crossbow",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12341": {
+      "alertMessage": "Enrage",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Harakiri",
+      "name": "Harakiri",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12342": {
+      "alertMessage": "Enrage",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Onmitsu",
+      "name": "Harakiri",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12343": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Onmitsu",
+      "name": "Juji Shuriken",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12345": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Mokin",
+      "name": "Bloodcurdling Caw",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12346": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Mokin",
+      "name": "Yolk Shower",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12347": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Kiyofusa",
+      "name": "Helm Crack",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12350": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shishi",
+      "name": "Cry",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12352": {
+      "alertMessage": "Enrage",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Onmitsu",
+      "name": "Harakiri",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12354": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Vanara",
+      "name": "Butcher",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12357": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Dogu",
+      "name": "Shifting Light",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12358": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Saikoro",
+      "name": "Tornado",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12360": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Dhara",
+      "name": "Plain Pound",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12361": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Sekizo",
+      "name": "Plaincracker",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12362": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Sekizo",
+      "name": "Rockslide",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12363": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Sekiban",
+      "name": "Epigraph",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12365": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Sekiban",
+      "name": "Trembling Epigraph",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12368": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Iseki",
+      "name": "Neck Splinter",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12369": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Aka-ishi",
+      "name": "Wild Horn",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12370": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Monoiwa",
+      "name": "Boulder Toss",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12371": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Iseki",
+      "name": "Isle Drop",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12373": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Kuro-usagi",
+      "name": "Rockslide",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12374": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Kuro-usagi",
+      "name": "Earthen Heart",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12376": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Sekizo",
+      "name": "Plaincracker",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12383": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tokagekiba",
+      "name": "Berserk",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12384": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tokagekiba",
+      "name": "Rear",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12386": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Kongorei",
+      "name": "Assault Cannon",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12389": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tesso",
+      "name": "The Hand",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12390": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Maruishi",
+      "name": "Auto-cannons",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12391": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shabti",
+      "name": "Spellsword",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12392": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Gowan",
+      "name": "Electromagnetism",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12393": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Gowan",
+      "name": "Headspin",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12397": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Naga",
+      "name": "Calcifying Mist",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12398": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Naga",
+      "name": "Baleful Roar",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12399": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tetsu-kyojin",
+      "name": "Grand Strike",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12400": {
+      "alertMessage": "avoid",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Tetsu-kyojin",
+      "name": "Magitek Ray",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12401": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Dokyu",
+      "name": "Incinerate",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12402": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Dokyu",
+      "name": "Wrecking Ball",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12407": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Onryo",
+      "name": "Accursed Sigh",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12408": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Jellyfish",
+      "name": "Numbing Tendrils",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12409": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Jellyfish",
+      "name": "Irritating Tendrils",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12411": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Doguzeri",
+      "name": "Swift Sough",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12412": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Kosodegai",
+      "name": "Palsynyxis",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12415": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hashiri-dokoro",
+      "name": "Atropine Spore",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12416": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hashiri-dokoro",
+      "name": "Frond Fatale",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12417": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hashiri-dokoro",
+      "name": "Soul Vacuum",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12418": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Penghou",
+      "name": "Gold Dust",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12419": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Jubokko",
+      "name": "The Wood Remembers",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12420": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Morbol",
+      "name": "Quaver",
+      "regen": false,
+      "silence": false,
+      "stun": true
+    },
+    "12421": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Morbol",
+      "name": "Offal Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12422": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Chizakura",
+      "name": "Creeping Ivy",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12423": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Chizakura",
+      "name": "Entangle",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12431": {
+      "alertMessage": "out",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Mukai-inu",
+      "name": "The Ram's Voice",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12432": {
+      "alertMessage": "in",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Mukai-inu",
+      "name": "The Dragon's Voice",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12433": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Mukai-inu",
+      "name": "The Lion's Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12434": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Mukai-inu",
+      "name": "The Ram's Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12435": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Mukai-inu",
+      "name": "The Dragon's Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12438": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Rowan",
+      "name": "Ripe Banana",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12439": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Matanga",
+      "name": "Hurl",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12440": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Matanga",
+      "name": "Spin",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12442": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Gozu",
+      "name": "Hex",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12444": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Gozu",
+      "name": "11-tonze Swipe",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12446": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Ryukotsu",
+      "name": "Rock of Ages",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12447": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Ryukotsu",
+      "name": "Rock of Ages",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12449": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Ryujin",
+      "name": "Firewater",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12450": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Ryujin",
+      "name": "Elbow Drop",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12451": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hitotsume",
+      "name": "Glower",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12452": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Hitotsume",
+      "name": "100-tonze Swing",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12453": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Enko",
+      "name": "Plain Pound",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12457": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Araragi",
+      "name": "Moldy Phlegm",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12458": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Araragi",
+      "name": "Goobbue's Grief",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12461": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Koki",
+      "name": "Vile Utterance",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12462": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Koki",
+      "name": "Spiral Spin",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12464": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Garula",
+      "name": "Heave",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12485": {
+      "alertMessage": "Hide",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Garula",
+      "name": "Disorienting Groan",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12488": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Shinzei",
+      "name": "Anoxic Breath",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    },
+    "12489": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Shinzei",
+      "name": "Thunder II",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12493": {
+      "alertMessage": "",
+      "interruptable": true,
+      "los": false,
+      "mob": "Heavenly Rakshasa",
+      "name": "Fireball",
+      "regen": false,
+      "silence": true,
+      "stun": false
+    },
+    "12508": {
+      "alertMessage": "",
+      "interruptable": false,
+      "los": false,
+      "mob": "Heavenly Rakshasa",
+      "name": "Ripper Claw",
+      "regen": false,
+      "silence": false,
+      "stun": false
+    }
+  },
+  "hohMaps": {
+    "770": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    },
+    "771": {
+      "endingFloor": 20,
+      "startingFloor": 11
+    },
+    "772": {
+      "endingFloor": 30,
+      "startingFloor": 21
+    },
+    "773": {
+      "endingFloor": 40,
+      "startingFloor": 31
+    },
+    "774": {
+      "endingFloor": 50,
+      "startingFloor": 41
+    },
+    "775": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    },
+    "782": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    },
+    "783": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    },
+    "784": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    },
+    "785": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    }
+  },
+  "potdMaps": {
+    "561": {
+      "endingFloor": 10,
+      "startingFloor": 1
+    },
+    "562": {
+      "endingFloor": 20,
+      "startingFloor": 11
+    },
+    "563": {
+      "endingFloor": 30,
+      "startingFloor": 21
+    },
+    "564": {
+      "endingFloor": 40,
+      "startingFloor": 31
+    },
+    "565": {
+      "endingFloor": 50,
+      "startingFloor": 41
+    },
+    "593": {
+      "endingFloor": 60,
+      "startingFloor": 51
+    },
+    "594": {
+      "endingFloor": 70,
+      "startingFloor": 61
+    },
+    "595": {
+      "endingFloor": 80,
+      "startingFloor": 71
+    },
+    "596": {
+      "endingFloor": 90,
+      "startingFloor": 81
+    },
+    "597": {
+      "endingFloor": 100,
+      "startingFloor": 91
+    },
+    "598": {
+      "endingFloor": 110,
+      "startingFloor": 101
+    },
+    "599": {
+      "endingFloor": 120,
+      "startingFloor": 111
+    },
+    "600": {
+      "endingFloor": 130,
+      "startingFloor": 121
+    },
+    "601": {
+      "endingFloor": 140,
+      "startingFloor": 131
+    },
+    "602": {
+      "endingFloor": 150,
+      "startingFloor": 141
+    },
+    "603": {
+      "endingFloor": 160,
+      "startingFloor": 151
+    },
+    "604": {
+      "endingFloor": 170,
+      "startingFloor": 161
+    },
+    "605": {
+      "endingFloor": 180,
+      "startingFloor": 171
+    },
+    "606": {
+      "endingFloor": 190,
+      "startingFloor": 181
+    },
+    "607": {
+      "endingFloor": 200,
+      "startingFloor": 191
+    }
+  }
+}

@@ -1,0 +1,3174 @@
+{
+  "bronzeChest": {
+    "782": true,
+    "783": true,
+    "784": true,
+    "785": true,
+    "786": true,
+    "787": true,
+    "788": true,
+    "789": true,
+    "790": true,
+    "802": true,
+    "803": true,
+    "804": true,
+    "1036": true,
+    "1037": true,
+    "1038": true,
+    "1039": true,
+    "1040": true,
+    "1041": true,
+    "1042": true,
+    "1043": true,
+    "1044": true,
+    "1045": true,
+    "1046": true,
+    "1047": true,
+    "1048": true,
+    "1049": true,
+    "1050": true,
+    "1051": true
+  },
+  "goldChest": {
+    "2007358": true
+  },
+  "mobs": {
+    "2566": {
+      "aggroDistance": 11.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.69999998807907,
+      "name": "Mimic",
+      "sightRadian": 1.74533
+    },
+    "4578": {
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "name": "Grey Bomb"
+    },
+    "4580": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "",
+      "hitRadius": 1.2000000476837,
+      "name": "Lava Bomb",
+      "sightRadian": 1.74533
+    },
+    "4975": {
+      "aggroDistance": 9.1999999880791,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.30000001192093,
+      "name": "Palace Deathmouse",
+      "sightRadian": 1.6580627893946
+    },
+    "4976": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Palace Antelope",
+      "sightRadian": 1.74533
+    },
+    "4977": {
+      "aggroDistance": 9.8799999773502,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.32000002264977,
+      "name": "Palace Bat",
+      "sightRadian": 1.74533
+    },
+    "4978": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6500000953674,
+      "name": "Palace Coblyn",
+      "sightRadian": 1.74533
+    },
+    "4979": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Palace Hippocerf",
+      "sightRadian": 1.74533
+    },
+    "4980": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Palace Beetle",
+      "sightRadian": 1.74533
+    },
+    "4981": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.40000000596046,
+      "name": "Palace Hornet",
+      "sightRadian": 1.74533
+    },
+    "4982": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Palace Yarzon",
+      "sightRadian": 1.74533
+    },
+    "4983": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Palace Ziz",
+      "sightRadian": 1.74533
+    },
+    "4984": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.69999998807907,
+      "name": "Lost Goblin",
+      "sightRadian": 1.74533
+    },
+    "4985": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Palace Dung Beetle",
+      "sightRadian": 1.74533
+    },
+    "4986": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 6,
+      "name": "Palace Deathgaze",
+      "sightRadian": 1.74533
+    },
+    "4987": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Living Whelk",
+      "sightRadian": 1.74533
+    },
+    "4988": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5600000619888,
+      "name": "Palace Uragnite",
+      "sightRadian": 1.74533
+    },
+    "4989": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Palace Toad",
+      "sightRadian": 1.74533
+    },
+    "4990": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.2000000476837,
+      "name": "Palace Slime",
+      "sightRadian": 1.74533
+    },
+    "4991": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7000000476837,
+      "name": "Palace Ninki Naka",
+      "sightRadian": 1.74533
+    },
+    "4992": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Palace Nanka",
+      "sightRadian": 1.74533
+    },
+    "4993": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2800000905991,
+      "name": "Palace Ochu",
+      "sightRadian": 1.74533
+    },
+    "4994": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Palace Seeding",
+      "sightRadian": 1.74533
+    },
+    "4995": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7999999523163,
+      "name": "Palace Morbol",
+      "sightRadian": 1.74533
+    },
+    "4996": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Palace Pudding",
+      "sightRadian": 1.74533
+    },
+    "4997": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.0800000429153,
+      "name": "Palace Cobra",
+      "sightRadian": 1.74533
+    },
+    "4998": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5199999809265,
+      "name": "Palace Biloko",
+      "sightRadian": 1.74533
+    },
+    "4999": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.6000001430511,
+      "name": "Spurge",
+      "sightRadian": 1.74533
+    },
+    "5000": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Palace Puk",
+      "sightRadian": 1.74533
+    },
+    "5001": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Palace Drake",
+      "sightRadian": 1.74533
+    },
+    "5002": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.5,
+      "name": "Palace Adamantoise",
+      "sightRadian": 1.74533
+    },
+    "5003": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2000000476837,
+      "name": "Palace Peiste",
+      "sightRadian": 1.74533
+    },
+    "5004": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Palace Wivre",
+      "sightRadian": 1.74533
+    },
+    "5005": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Palace Spriggan",
+      "sightRadian": 1.74533
+    },
+    "5006": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Palace Centaur",
+      "sightRadian": 1.74533
+    },
+    "5007": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.4800002574921,
+      "name": "Palace Effigy",
+      "sightRadian": 1.74533
+    },
+    "5008": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.6999998092651,
+      "name": "Palace Marolith",
+      "sightRadian": 1.74533
+    },
+    "5009": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Palace Dullahan",
+      "sightRadian": 1.74533
+    },
+    "5010": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.7999999523163,
+      "name": "Palace Minotaur",
+      "sightRadian": 1.74533
+    },
+    "5011": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Palace Skatene",
+      "sightRadian": 1.74533
+    },
+    "5012": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.8000001907349,
+      "name": "Ningishzida",
+      "sightRadian": 1.74533
+    },
+    "5013": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Nightmare Bogy",
+      "sightRadian": 1.74533
+    },
+    "5014": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.4400000572205,
+      "name": "Nightmare Hecteyes",
+      "sightRadian": 1.74533
+    },
+    "5015": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Nightmare Ogre",
+      "sightRadian": 1.74533
+    },
+    "5016": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Nightmare Mummy",
+      "sightRadian": 1.74533
+    },
+    "5017": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.0800000429153,
+      "name": "Nightmare Eye",
+      "sightRadian": 1.74533
+    },
+    "5018": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Nightmare Dahak",
+      "sightRadian": 1.74533
+    },
+    "5019": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Nightmare Monk",
+      "sightRadian": 1.74533
+    },
+    "5020": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Nightmare Troubadour",
+      "sightRadian": 1.74533
+    },
+    "5021": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Nightmare Haagenti",
+      "sightRadian": 1.74533
+    },
+    "5022": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1,
+      "name": "Nightmare Succubus",
+      "sightRadian": 1.74533
+    },
+    "5023": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5299999713898,
+      "name": "Nightmare Catoblepas",
+      "sightRadian": 1.74533
+    },
+    "5024": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Nightmare Gourmand",
+      "sightRadian": 1.74533
+    },
+    "5025": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.7999999523163,
+      "name": "Ixtab",
+      "sightRadian": 1.74533
+    },
+    "5026": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.90000003576279,
+      "name": "Nightmare Gnat",
+      "sightRadian": 1.74533
+    },
+    "5027": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Nightmare Demon",
+      "sightRadian": 1.74533
+    },
+    "5028": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2999999523163,
+      "name": "Nightmare Gargoyle",
+      "sightRadian": 1.74533
+    },
+    "5029": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Nightmare Knight",
+      "sightRadian": 1.74533
+    },
+    "5030": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Nightmare Bhoot",
+      "sightRadian": 1.74533
+    },
+    "5031": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7000000476837,
+      "name": "Nightmare Hellhound",
+      "sightRadian": 1.74533
+    },
+    "5032": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Nightmare Persona",
+      "sightRadian": 1.74533
+    },
+    "5033": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Nightmare Bloodguard",
+      "sightRadian": 1.74533
+    },
+    "5034": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4,
+      "name": "Nightmare Dragon",
+      "sightRadian": 1.74533
+    },
+    "5035": {
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "name": "Nightmare Manticore"
+    },
+    "5036": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Nightmare Wraith",
+      "sightRadian": 1.74533
+    },
+    "5037": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.75,
+      "name": "Nightmare Gravekeeper",
+      "sightRadian": 1.74533
+    },
+    "5038": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Edda Blackbosom",
+      "sightRadian": 1.74533
+    },
+    "5041": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.5100000500679,
+      "name": "Pygmaioi",
+      "sightRadian": 1.74533
+    },
+    "5046": {
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "name": "Duskwight Lancer"
+    },
+    "5047": {
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "name": "Sword-swinging Adventurer"
+    },
+    "5048": {
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "name": "Staff-spinning Adventurer"
+    },
+    "5049": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.5,
+      "name": "Spear-shaking Adventurer",
+      "sightRadian": 1.74533
+    },
+    "5051": {
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "name": "Roughspun Ruffian"
+    },
+    "5284": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "",
+      "hitRadius": 0.5,
+      "name": "Corrupted Centurion",
+      "sightRadian": 1.74533
+    },
+    "5285": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.4199998378754,
+      "name": "Gangrenous Gigant",
+      "sightRadian": 1.74533
+    },
+    "5291": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "",
+      "hitRadius": 0.5,
+      "name": "Blackening Marketeer",
+      "sightRadian": 1.74533
+    },
+    "5292": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "",
+      "hitRadius": 0.5,
+      "name": "Bloated Conjurer",
+      "sightRadian": 1.74533
+    },
+    "5299": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.45000001788139,
+      "name": "Palace Deepeye",
+      "sightRadian": 1.74533
+    },
+    "5300": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Palace Gremlin",
+      "sightRadian": 1.74533
+    },
+    "5301": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.45000001788139,
+      "name": "Palace Imp",
+      "sightRadian": 1.74533
+    },
+    "5302": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Palace Anubys",
+      "sightRadian": 1.74533
+    },
+    "5303": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Palace Soulflayer",
+      "sightRadian": 1.74533
+    },
+    "5304": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Palace Taurus",
+      "sightRadian": 1.74533
+    },
+    "5305": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.5,
+      "name": "Palace Arch Demon",
+      "sightRadian": 1.74533
+    },
+    "5306": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Palace Vodoriga",
+      "sightRadian": 1.74533
+    },
+    "5307": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.210000038147,
+      "name": "Palace Idol",
+      "sightRadian": 1.74533
+    },
+    "5308": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.75,
+      "name": "Palace Pot",
+      "sightRadian": 1.74533
+    },
+    "5309": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.9199998378754,
+      "name": "The Black Rider",
+      "sightRadian": 1.74533
+    },
+    "5311": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Palace Raptor",
+      "sightRadian": 1.74533
+    },
+    "5312": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4500000476837,
+      "name": "Palace Tyrannosaur",
+      "sightRadian": 1.74533
+    },
+    "5313": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.2400002479553,
+      "name": "Palace Diplocaulus",
+      "sightRadian": 1.74533
+    },
+    "5314": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Palace Triceratops",
+      "sightRadian": 1.74533
+    },
+    "5315": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Palace Croc",
+      "sightRadian": 1.74533
+    },
+    "5316": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Palace Mylodon",
+      "sightRadian": 1.74533
+    },
+    "5317": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Palace Elbst",
+      "sightRadian": 1.74533
+    },
+    "5318": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.7799999713898,
+      "name": "Palace Sarcosuchus",
+      "sightRadian": 1.74533
+    },
+    "5319": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4500000476837,
+      "name": "Palace Blade",
+      "sightRadian": 1.74533
+    },
+    "5320": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Palace Pteranodon",
+      "sightRadian": 1.74533
+    },
+    "5321": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 5.75,
+      "name": "Yaquaru",
+      "sightRadian": 1.74533
+    },
+    "5322": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Palace Bandersnatch",
+      "sightRadian": 1.74533
+    },
+    "5323": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.2000000476837,
+      "name": "Palace Aurochs",
+      "sightRadian": 1.74533
+    },
+    "5324": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Bird of the Palace",
+      "sightRadian": 1.74533
+    },
+    "5325": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7999999523163,
+      "name": "Palace Cyclops",
+      "sightRadian": 1.74533
+    },
+    "5326": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Palace Sasquatch",
+      "sightRadian": 1.74533
+    },
+    "5327": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7000000476837,
+      "name": "Palace Bear",
+      "sightRadian": 1.74533
+    },
+    "5328": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.1499998569489,
+      "name": "Palace Coeurl",
+      "sightRadian": 1.74533
+    },
+    "5329": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Palace Dhalmel",
+      "sightRadian": 1.74533
+    },
+    "5330": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Palace Lion",
+      "sightRadian": 1.74533
+    },
+    "5331": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.8799998760223,
+      "name": "Palace Anzu",
+      "sightRadian": 1.74533
+    },
+    "5332": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6500000953674,
+      "name": "Palace Wolf",
+      "sightRadian": 1.74533
+    },
+    "5333": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 11.60000038147,
+      "name": "Gudanna",
+      "sightRadian": 1.74533
+    },
+    "5334": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 0.60000002384186,
+      "name": "Palace Bomb",
+      "sightRadian": 1.74533
+    },
+    "5335": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Palace Wamouracampa",
+      "sightRadian": 1.74533
+    },
+    "5336": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4500000476837,
+      "name": "Palace Vinegaroon",
+      "sightRadian": 1.74533
+    },
+    "5337": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 5,
+      "name": "Flame Dragon",
+      "sightRadian": 1.74533
+    },
+    "5338": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Palace Worm",
+      "sightRadian": 1.74533
+    },
+    "5339": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Palace Claw",
+      "sightRadian": 1.74533
+    },
+    "5340": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Palace Eruca",
+      "sightRadian": 1.74533
+    },
+    "5341": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Palace Gallimimus",
+      "sightRadian": 1.74533
+    },
+    "5342": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5600000619888,
+      "name": "Palace Hapalit",
+      "sightRadian": 1.74533
+    },
+    "5343": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Palace Wamoura",
+      "sightRadian": 1.74533
+    },
+    "5344": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.7000000476837,
+      "name": "Palace Chimera",
+      "sightRadian": 1.74533
+    },
+    "5345": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.75,
+      "name": "The Godmother",
+      "sightRadian": 1.74533
+    },
+    "5346": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Palace Mummy",
+      "sightRadian": 1.74533
+    },
+    "5347": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Palace Corse",
+      "sightRadian": 1.74533
+    },
+    "5348": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 5,
+      "name": "Dark Dragon",
+      "sightRadian": 1.74533
+    },
+    "5349": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Palace Knight",
+      "sightRadian": 1.74533
+    },
+    "5350": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Palace Roselet",
+      "sightRadian": 1.74533
+    },
+    "5351": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.40000000596046,
+      "name": "Palace Swarm",
+      "sightRadian": 1.74533
+    },
+    "5352": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Palace Gourmand",
+      "sightRadian": 1.74533
+    },
+    "5353": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Palace Iron Corse",
+      "sightRadian": 1.74533
+    },
+    "5354": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Palace Wraith",
+      "sightRadian": 1.74533
+    },
+    "5355": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.75,
+      "name": "Palace Gravekeeper",
+      "sightRadian": 1.74533
+    },
+    "5356": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Nybeth Obdilord",
+      "sightRadian": 1.74533
+    },
+    "5357": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Giant Corse",
+      "sightRadian": 1.74533
+    },
+    "5358": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Bicephalic Corse",
+      "sightRadian": 1.74533
+    },
+    "5359": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Iron Corse",
+      "sightRadian": 1.74533
+    },
+    "5360": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.30000001192093,
+      "name": "Deep Palace Squirrel",
+      "sightRadian": 1.74533
+    },
+    "5361": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Deep Palace Stag",
+      "sightRadian": 1.74533
+    },
+    "5362": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Deep Palace Gaelicat",
+      "sightRadian": 1.74533
+    },
+    "5363": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6500000953674,
+      "name": "Deep Palace Doblyn",
+      "sightRadian": 1.74533
+    },
+    "5364": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Deep Palace Hippogryph",
+      "sightRadian": 1.74533
+    },
+    "5365": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Deep Palace Ladybug",
+      "sightRadian": 1.74533
+    },
+    "5366": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 0.40000000596046,
+      "name": "Deep Palace Hornet",
+      "sightRadian": 1.74533
+    },
+    "5367": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Deep Palace Yarzon",
+      "sightRadian": 1.74533
+    },
+    "5368": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Deep Palace Ziz",
+      "sightRadian": 1.74533
+    },
+    "5369": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.69999998807907,
+      "name": "Goblin Adventurer",
+      "sightRadian": 1.74533
+    },
+    "5370": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Deep Palace Dung Beetle",
+      "sightRadian": 1.74533
+    },
+    "5371": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 6,
+      "name": "Alicanto",
+      "sightRadian": 1.74533
+    },
+    "5372": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Deep Palace Leech",
+      "sightRadian": 1.74533
+    },
+    "5373": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5600000619888,
+      "name": "Deep Palace Bifericeras",
+      "sightRadian": 1.74533
+    },
+    "5374": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.4000000953674,
+      "name": "Deep Palace Gigantoad",
+      "sightRadian": 1.74533
+    },
+    "5375": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Slime",
+      "sightRadian": 1.74533
+    },
+    "5376": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7000000476837,
+      "name": "Deep Palace Nanka",
+      "sightRadian": 1.74533
+    },
+    "5377": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 5.4000000953674,
+      "name": "Deep Palace Salamander",
+      "sightRadian": 1.74533
+    },
+    "5378": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2800000905991,
+      "name": "Deep Palace Ochu",
+      "sightRadian": 1.74533
+    },
+    "5379": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Deep Palace Seedling",
+      "sightRadian": 1.74533
+    },
+    "5380": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.7999999523163,
+      "name": "Deep Palace Morbol",
+      "sightRadian": 1.74533
+    },
+    "5381": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Pudding",
+      "sightRadian": 1.74533
+    },
+    "5382": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.0800000429153,
+      "name": "Deep Palace Cobra",
+      "sightRadian": 1.74533
+    },
+    "5383": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5199999809265,
+      "name": "Deep Palace Biloko",
+      "sightRadian": 1.74533
+    },
+    "5384": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.6000001430511,
+      "name": "Kirtimukha",
+      "sightRadian": 1.74533
+    },
+    "5385": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Deep Palace Pteroc",
+      "sightRadian": 1.74533
+    },
+    "5386": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Deep Palace Biast",
+      "sightRadian": 1.74533
+    },
+    "5387": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.5,
+      "name": "Deep Palace Adamantoise",
+      "sightRadian": 1.74533
+    },
+    "5388": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2000000476837,
+      "name": "Deep Palace Basilisk",
+      "sightRadian": 1.74533
+    },
+    "5389": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 3,
+      "name": "Deep Palace Wivre",
+      "sightRadian": 1.74533
+    },
+    "5390": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Deep Palace Spriggan",
+      "sightRadian": 1.74533
+    },
+    "5391": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Deep Palace Centaur",
+      "sightRadian": 1.74533
+    },
+    "5392": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.4800002574921,
+      "name": "Deep Palace Effigy",
+      "sightRadian": 1.74533
+    },
+    "5393": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.6999998092651,
+      "name": "Deep Palace Urolith",
+      "sightRadian": 1.74533
+    },
+    "5394": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Dullahan",
+      "sightRadian": 1.74533
+    },
+    "5395": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.7999999523163,
+      "name": "Deep Palace Minotaur",
+      "sightRadian": 1.74533
+    },
+    "5396": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Deep Palace Skatene",
+      "sightRadian": 1.74533
+    },
+    "5397": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.8000001907349,
+      "name": "Alfard",
+      "sightRadian": 1.74533
+    },
+    "5398": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Deep Palace Soul",
+      "sightRadian": 1.74533
+    },
+    "5399": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.4400000572205,
+      "name": "Deep Palace Hecteyes",
+      "sightRadian": 1.74533
+    },
+    "5400": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Deep Palace Ogre",
+      "sightRadian": 1.74533
+    },
+    "5401": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Deep Palace Mummy",
+      "sightRadian": 1.74533
+    },
+    "5402": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.0800000429153,
+      "name": "Deep Palace Ahriman",
+      "sightRadian": 1.74533
+    },
+    "5403": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Deep Palace Dahak",
+      "sightRadian": 1.74533
+    },
+    "5404": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Deep Palace Monk",
+      "sightRadian": 1.74533
+    },
+    "5405": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Troubador",
+      "sightRadian": 1.74533
+    },
+    "5406": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Deep Palace Taurus",
+      "sightRadian": 1.74533
+    },
+    "5407": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Deep Palace Guard",
+      "sightRadian": 1.74533
+    },
+    "5408": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5299999713898,
+      "name": "Deep Palace Catoblepas",
+      "sightRadian": 1.74533
+    },
+    "5409": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Deep Palace Gourmand",
+      "sightRadian": 1.74533
+    },
+    "5410": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.7999999523163,
+      "name": "Ah Puch",
+      "sightRadian": 1.74533
+    },
+    "5412": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.90000003576279,
+      "name": "Deep Palace Ked",
+      "sightRadian": 1.74533
+    },
+    "5413": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Demon",
+      "sightRadian": 1.74533
+    },
+    "5414": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.2999999523163,
+      "name": "Deep Palace Gargoyle",
+      "sightRadian": 1.74533
+    },
+    "5415": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Danger",
+      "hitRadius": 0.80000001192093,
+      "name": "Deep Palace Knight",
+      "sightRadian": 1.74533
+    },
+    "5416": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.0800000429153,
+      "name": "Deep Palace Bhoot",
+      "sightRadian": 1.74533
+    },
+    "5417": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7000000476837,
+      "name": "Deep Palace Hellhound",
+      "sightRadian": 1.74533
+    },
+    "5418": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Persona",
+      "sightRadian": 1.74533
+    },
+    "5419": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1,
+      "name": "Deep Palace Succubus",
+      "sightRadian": 1.74533
+    },
+    "5420": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4,
+      "name": "Onyx Dragon",
+      "sightRadian": 1.74533
+    },
+    "5421": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2000000476837,
+      "name": "Deep Palace Manticore",
+      "sightRadian": 1.74533
+    },
+    "5422": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.7999999523163,
+      "name": "Deep Palace Wraith",
+      "sightRadian": 1.74533
+    },
+    "5423": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.75,
+      "name": "Deep Palace Keeper",
+      "sightRadian": 1.74533
+    },
+    "5424": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Tisiphone",
+      "sightRadian": 1.74533
+    },
+    "5429": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.30000001192093,
+      "name": "Deep Palace Deepeye",
+      "sightRadian": 1.74533
+    },
+    "5430": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Deep Palace Gremlin",
+      "sightRadian": 1.74533
+    },
+    "5431": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.45000001788139,
+      "name": "Deep Palace Devilet",
+      "sightRadian": 1.74533
+    },
+    "5432": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Deep Palace Shabti",
+      "sightRadian": 1.74533
+    },
+    "5433": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Deep Palace Soulflayer",
+      "sightRadian": 1.74533
+    },
+    "5434": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Deep Palace Arch Demon",
+      "sightRadian": 1.74533
+    },
+    "5435": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Deep Palace Abaia",
+      "sightRadian": 1.74533
+    },
+    "5436": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.5500001907349,
+      "name": "Deep Palace Marolith",
+      "sightRadian": 1.74533
+    },
+    "5437": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.5,
+      "name": "Deep Palace Pot",
+      "sightRadian": 1.74533
+    },
+    "5438": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.9199998378754,
+      "name": "Todesritter",
+      "sightRadian": 1.74533
+    },
+    "5439": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Deep Palace Lindwurm",
+      "sightRadian": 1.74533
+    },
+    "5440": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4500000476837,
+      "name": "Deep Palace Archaeosaur",
+      "sightRadian": 1.74533
+    },
+    "5441": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.2400002479553,
+      "name": "Deep Palace Diplocaulus",
+      "sightRadian": 1.74533
+    },
+    "5442": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 3,
+      "name": "Deep Palace Triceratops",
+      "sightRadian": 1.74533
+    },
+    "5443": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.4000000953674,
+      "name": "Deep Palace Croc",
+      "sightRadian": 1.74533
+    },
+    "5444": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Deep Palace Mylodon",
+      "sightRadian": 1.74533
+    },
+    "5445": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Deep Palace Tursus",
+      "sightRadian": 1.74533
+    },
+    "5446": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.8600001335144,
+      "name": "Deep Palace Sarcosuchus",
+      "sightRadian": 1.74533
+    },
+    "5447": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4500000476837,
+      "name": "Deep Palace Vinegaroon",
+      "sightRadian": 1.74533
+    },
+    "5448": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7999999523163,
+      "name": "Deep Palace Pteranodon",
+      "sightRadian": 1.74533
+    },
+    "5449": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 5.75,
+      "name": "Yulunggu",
+      "sightRadian": 1.74533
+    },
+    "5450": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.5,
+      "name": "Deep Palace Bandersnatch",
+      "sightRadian": 1.74533
+    },
+    "5451": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 4,
+      "name": "Deep Palace Wisent",
+      "sightRadian": 1.74533
+    },
+    "5452": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.6800000667572,
+      "name": "Bird of the Deep Palace",
+      "sightRadian": 1.74533
+    },
+    "5453": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 4,
+      "name": "Deep Palace Snowclops",
+      "sightRadian": 1.74533
+    },
+    "5454": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 3.5999999046326,
+      "name": "Deep Palace Sasquatch",
+      "sightRadian": 1.74533
+    },
+    "5455": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7000000476837,
+      "name": "Deep Palace Bear",
+      "sightRadian": 1.74533
+    },
+    "5456": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.1499998569489,
+      "name": "Deep Palace Black Coeurl",
+      "sightRadian": 1.74533
+    },
+    "5457": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Deep Palace Dhalmel",
+      "sightRadian": 1.74533
+    },
+    "5458": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Deep Palace Lion",
+      "sightRadian": 1.74533
+    },
+    "5459": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 3.5999999046326,
+      "name": "Deep Palace Anzu",
+      "sightRadian": 1.74533
+    },
+    "5460": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 1.6500000953674,
+      "name": "Deep Palace Wolf",
+      "sightRadian": 1.74533
+    },
+    "5461": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 11.60000038147,
+      "name": "Dendainsonne",
+      "sightRadian": 1.74533
+    },
+    "5462": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "",
+      "hitRadius": 0.60000002384186,
+      "name": "Deep Palace Grenade",
+      "sightRadian": 1.74533
+    },
+    "5463": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.6000000238419,
+      "name": "Deep Palace Wamouracampa",
+      "sightRadian": 1.74533
+    },
+    "5464": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "",
+      "hitRadius": 5,
+      "name": "Flood Dragon",
+      "sightRadian": 1.74533
+    },
+    "5465": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Caution",
+      "hitRadius": 3.6000001430511,
+      "name": "Deep Palace Worm",
+      "sightRadian": 1.74533
+    },
+    "5466": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "",
+      "hitRadius": 2.5,
+      "name": "Deep Palace Claw",
+      "sightRadian": 1.74533
+    },
+    "5467": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Danger",
+      "hitRadius": 1.5,
+      "name": "Deep Palace Crawler",
+      "sightRadian": 1.74533
+    },
+    "5468": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "",
+      "hitRadius": 1.5600000619888,
+      "name": "Deep Palace Vindthurs",
+      "sightRadian": 1.74533
+    },
+    "5469": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.6000000238419,
+      "name": "Deep Palace Wamoura",
+      "sightRadian": 1.74533
+    },
+    "5470": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "",
+      "hitRadius": 4.4400000572205,
+      "name": "Deep Palace Garm",
+      "sightRadian": 1.74533
+    },
+    "5471": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "",
+      "hitRadius": 3.75,
+      "name": "The Godfather",
+      "sightRadian": 1.74533
+    },
+    "5472": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "",
+      "hitRadius": 0.51999998092651,
+      "name": "Deep Palace Trap",
+      "sightRadian": 1.74533
+    },
+    "5473": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.0800000429153,
+      "name": "Deep Palace Fachan",
+      "sightRadian": 1.74533
+    },
+    "5474": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "",
+      "hitRadius": 1.8999999761581,
+      "name": "Deep Palace Bicephalus",
+      "sightRadian": 1.74533
+    },
+    "5475": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.8999999761581,
+      "name": "Deep Palace Iron Corse",
+      "sightRadian": 1.74533
+    },
+    "5477": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Giddy Bomb",
+      "sightRadian": 1.74533
+    },
+    "5479": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Palace Spirit",
+      "sightRadian": 1.74533
+    },
+    "5480": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Deep Palace Sprite",
+      "sightRadian": 1.74533
+    },
+    "7262": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Heavenly Naked Yumemi",
+      "sightRadian": 1.74533
+    },
+    "7263": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Heavenly Mutsu",
+      "sightRadian": 1.74533
+    },
+    "7264": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8000000715256,
+      "name": "Heavenly Bombfish",
+      "sightRadian": 1.74533
+    },
+    "7265": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.8000000715256,
+      "name": "Heavenly Onryo",
+      "sightRadian": 1.74533
+    },
+    "7266": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.2000000476837,
+      "name": "Heavenly Coralshell",
+      "sightRadian": 1.74533
+    },
+    "7267": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.5,
+      "name": "Heavenly Gyuki",
+      "sightRadian": 1.74533
+    },
+    "7268": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6800000667572,
+      "name": "Heavenly Uwabami",
+      "sightRadian": 1.74533
+    },
+    "7269": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Heavenly Kraken",
+      "sightRadian": 1.74533
+    },
+    "7270": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Heavenly Ango",
+      "sightRadian": 1.74533
+    },
+    "7271": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.0500001907349,
+      "name": "Heavenly Matamata",
+      "sightRadian": 1.74533
+    },
+    "7272": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.3000001907349,
+      "name": "Heavenly Shark",
+      "sightRadian": 1.74533
+    },
+    "7273": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Heavenly Amikiri",
+      "sightRadian": 1.74533
+    },
+    "7274": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Heavenly Yumemi",
+      "sightRadian": 1.74533
+    },
+    "7275": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Heavenly Korpokkur",
+      "sightRadian": 1.74533
+    },
+    "7276": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Heavenly Shizuku",
+      "sightRadian": 1.74533
+    },
+    "7277": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2000000476837,
+      "name": "Heavenly Shiomushi",
+      "sightRadian": 1.74533
+    },
+    "7278": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2999999523163,
+      "name": "Heavenly Hakagiri",
+      "sightRadian": 1.74533
+    },
+    "7279": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.6400001049042,
+      "name": "Heavenly Unkiu",
+      "sightRadian": 1.74533
+    },
+    "7280": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.9200000762939,
+      "name": "Heavenly Apa",
+      "sightRadian": 1.74533
+    },
+    "7281": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7000000476837,
+      "name": "Heavenly Otokage",
+      "sightRadian": 1.74533
+    },
+    "7282": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.75,
+      "name": "Heavenly Tatsunoko",
+      "sightRadian": 1.74533
+    },
+    "7283": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Heavenly Shioname",
+      "sightRadian": 1.74533
+    },
+    "7284": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4,
+      "name": "Heavenly Amagoi",
+      "sightRadian": 1.74533
+    },
+    "7285": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.54000002145767,
+      "name": "Heavenly Namazu",
+      "sightRadian": 1.74533
+    },
+    "7286": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Heavenly Hand",
+      "sightRadian": 1.74533
+    },
+    "7287": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Heavenly Aomino",
+      "sightRadian": 1.74533
+    },
+    "7288": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.40000000596046,
+      "name": "Heavenly Onibi",
+      "sightRadian": 1.74533
+    },
+    "7289": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.0500000715256,
+      "name": "Heavenly Halgai",
+      "sightRadian": 1.74533
+    },
+    "7290": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.9200000762939,
+      "name": "Heavenly Dhruva",
+      "sightRadian": 1.74533
+    },
+    "7291": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.9499999284744,
+      "name": "Heavenly Sai Taisui",
+      "sightRadian": 1.74533
+    },
+    "7292": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.64999997615814,
+      "name": "Heavenly Hatamoto",
+      "sightRadian": 1.74533
+    },
+    "7293": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Heavenly Tenaga",
+      "sightRadian": 1.74533
+    },
+    "7294": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8000000715256,
+      "name": "Heavenly Keukegen",
+      "sightRadian": 1.74533
+    },
+    "7295": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Yuki",
+      "sightRadian": 1.74533
+    },
+    "7296": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Heavenly Tengu",
+      "sightRadian": 1.74533
+    },
+    "7297": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Heavenly Koja",
+      "sightRadian": 1.74533
+    },
+    "7298": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Katasharin",
+      "sightRadian": 1.74533
+    },
+    "7299": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Heavenly Menreiki",
+      "sightRadian": 1.74533
+    },
+    "7300": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Wanyudo",
+      "sightRadian": 1.74533
+    },
+    "7301": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3200000524521,
+      "name": "Heavenly Gedan",
+      "sightRadian": 1.74533
+    },
+    "7302": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Heavenly Hornbill",
+      "sightRadian": 1.74533
+    },
+    "7303": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2400000095367,
+      "name": "Heavenly Hanya",
+      "sightRadian": 1.74533
+    },
+    "7304": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Heavenly Harakiri",
+      "sightRadian": 1.74533
+    },
+    "7305": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Onmitsu",
+      "sightRadian": 1.74533
+    },
+    "7306": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Heavenly Moko",
+      "sightRadian": 1.74533
+    },
+    "7307": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.90000003576279,
+      "name": "Heavenly Mokin",
+      "sightRadian": 1.74533
+    },
+    "7308": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Heavenly Kiyofusa",
+      "sightRadian": 1.74533
+    },
+    "7309": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8199999332428,
+      "name": "Heavenly Ashigaru",
+      "sightRadian": 1.74533
+    },
+    "7310": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.5,
+      "name": "Heavenly Shishi",
+      "sightRadian": 1.74533
+    },
+    "7312": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.1999998092651,
+      "name": "Heavenly Vanara",
+      "sightRadian": 1.74533
+    },
+    "7313": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7249999046326,
+      "name": "Heavenly Dogu",
+      "sightRadian": 1.74533
+    },
+    "7314": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Heavenly Saikoro",
+      "sightRadian": 1.74533
+    },
+    "7315": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Ganseki",
+      "sightRadian": 1.74533
+    },
+    "7316": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Heavenly Dhara",
+      "sightRadian": 1.74533
+    },
+    "7317": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.1000000238419,
+      "name": "Heavenly Sekizo",
+      "sightRadian": 1.74533
+    },
+    "7318": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Heavenly Sekiban",
+      "sightRadian": 1.74533
+    },
+    "7319": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Heavenly Saikoro",
+      "sightRadian": 1.74533
+    },
+    "7320": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5500001907349,
+      "name": "Heavenly Iseki",
+      "sightRadian": 1.74533
+    },
+    "7321": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.0599999427795,
+      "name": "Heavenly Aka-ishi",
+      "sightRadian": 1.74533
+    },
+    "7322": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Heavenly Monoiwa",
+      "sightRadian": 1.74533
+    },
+    "7323": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5500001907349,
+      "name": "Heavenly Iseki",
+      "sightRadian": 1.74533
+    },
+    "7324": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.2000000476837,
+      "name": "Heavenly Kuro-usagi",
+      "sightRadian": 1.74533
+    },
+    "7325": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6500000953674,
+      "name": "Heavenly Sekizo",
+      "sightRadian": 1.74533
+    },
+    "7326": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.6000001430511,
+      "name": "Heavenly Mizumimizu",
+      "sightRadian": 1.74533
+    },
+    "7327": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Heavenly Kamanari",
+      "sightRadian": 1.74533
+    },
+    "7328": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Heavenly Kamakiri",
+      "sightRadian": 1.74533
+    },
+    "7329": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Heavenly Tokagekiba",
+      "sightRadian": 1.74533
+    },
+    "7330": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 0.72000002861023,
+      "name": "Heavenly Kongorei",
+      "sightRadian": 1.74533
+    },
+    "7331": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1,
+      "name": "Heavenly Tesso",
+      "sightRadian": 1.74533
+    },
+    "7332": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 2,
+      "name": "Heavenly Maruishi",
+      "sightRadian": 1.74533
+    },
+    "7333": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.75,
+      "name": "Heavenly Karakuri",
+      "sightRadian": 1.74533
+    },
+    "7334": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6500000953674,
+      "name": "Heavenly Shabti",
+      "sightRadian": 1.74533
+    },
+    "7335": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3999999761581,
+      "name": "Heavenly Gowan",
+      "sightRadian": 1.74533
+    },
+    "7336": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Rachimonai",
+      "sightRadian": 1.74533
+    },
+    "7337": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 1.7999999523163,
+      "name": "Heavenly Naga",
+      "sightRadian": 1.74533
+    },
+    "7338": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5,
+      "name": "Heavenly Tetsu-kyojin",
+      "sightRadian": 1.74533
+    },
+    "7339": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Heavenly Dokyu",
+      "sightRadian": 1.74533
+    },
+    "7340": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Caution",
+      "hitRadius": 0.90000003576279,
+      "name": "Heavenly Wakakusa",
+      "sightRadian": 1.74533
+    },
+    "7341": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.75,
+      "name": "Heavenly Mannenso",
+      "sightRadian": 1.74533
+    },
+    "7342": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6500000953674,
+      "name": "Heavenly Iwamushi",
+      "sightRadian": 1.74533
+    },
+    "7343": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.75,
+      "name": "Heavenly Jellyfish",
+      "sightRadian": 1.74533
+    },
+    "7344": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sound",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.80000001192093,
+      "name": "Heavenly Doguzeri",
+      "sightRadian": 1.74533
+    },
+    "7345": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Heavenly Kosodegai",
+      "sightRadian": 1.74533
+    },
+    "7346": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.4399999380112,
+      "name": "Heavenly Shitaibana",
+      "sightRadian": 1.74533
+    },
+    "7347": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Heavenly Hashiri-dokoro",
+      "sightRadian": 1.74533
+    },
+    "7348": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2800000905991,
+      "name": "Heavenly Penghou",
+      "sightRadian": 1.74533
+    },
+    "7349": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.5199999809265,
+      "name": "Heavenly Jubokko",
+      "sightRadian": 1.74533
+    },
+    "7350": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.5,
+      "name": "Heavenly Morbol",
+      "sightRadian": 1.74533
+    },
+    "7351": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.6000000238419,
+      "name": "Heavenly Chizakura",
+      "sightRadian": 1.74533
+    },
+    "7352": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.60000002384186,
+      "name": "Heavenly Shikubi",
+      "sightRadian": 1.74533
+    },
+    "7353": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.7999999523163,
+      "name": "Heavenly Ichijama",
+      "sightRadian": 1.74533
+    },
+    "7354": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2999999523163,
+      "name": "Heavenly Noyagi",
+      "sightRadian": 1.74533
+    },
+    "7355": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.3200000524521,
+      "name": "Heavenly Okami",
+      "sightRadian": 1.74533
+    },
+    "7356": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.8799998760223,
+      "name": "Heavenly Yuki-tokage",
+      "sightRadian": 1.74533
+    },
+    "7357": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.8000001907349,
+      "name": "Heavenly Mammoth",
+      "sightRadian": 1.74533
+    },
+    "7358": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.2000000476837,
+      "name": "Heavenly Tofu",
+      "sightRadian": 1.74533
+    },
+    "7359": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.7599999904633,
+      "name": "Heavenly Jujishi",
+      "sightRadian": 1.74533
+    },
+    "7360": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4699997901917,
+      "name": "Heavenly Yuki-otoko",
+      "sightRadian": 1.74533
+    },
+    "7361": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4,
+      "name": "Heavenly Yak",
+      "sightRadian": 1.74533
+    },
+    "7362": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.25,
+      "name": "Heavenly Hyoga",
+      "sightRadian": 1.74533
+    },
+    "7363": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Heavenly Hyozan",
+      "sightRadian": 1.74533
+    },
+    "7364": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.5,
+      "name": "Heavenly Shiro-jishi",
+      "sightRadian": 1.74533
+    },
+    "7365": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.7000000476837,
+      "name": "Heavenly Mukai-inu",
+      "sightRadian": 1.74533
+    },
+    "7366": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.5999999046326,
+      "name": "Heavenly Rowan",
+      "sightRadian": 1.74533
+    },
+    "7367": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 1.8999999761581,
+      "name": "Heavenly Matanga",
+      "sightRadian": 1.74533
+    },
+    "7368": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 3.2000000476837,
+      "name": "Heavenly Gozu",
+      "sightRadian": 1.74533
+    },
+    "7369": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4,
+      "name": "Heavenly Ryukotsu",
+      "sightRadian": 1.74533
+    },
+    "7370": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.039999961853,
+      "name": "Heavenly Ryujin",
+      "sightRadian": 1.74533
+    },
+    "7371": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 3.2000000476837,
+      "name": "Heavenly Hitotsume",
+      "sightRadian": 1.74533
+    },
+    "7372": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.039999961853,
+      "name": "Heavenly Enko",
+      "sightRadian": 1.74533
+    },
+    "7373": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.8999999761581,
+      "name": "Heavenly Araragi",
+      "sightRadian": 1.74533
+    },
+    "7374": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2,
+      "name": "Heavenly Koki",
+      "sightRadian": 1.74533
+    },
+    "7375": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.7999999523163,
+      "name": "Heavenly Garula",
+      "sightRadian": 1.74533
+    },
+    "7376": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 3.2000000476837,
+      "name": "Heavenly Shinzei",
+      "sightRadian": 1.74533
+    },
+    "7377": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 3,
+      "name": "Heavenly Rakshasa",
+      "sightRadian": 1.74533
+    },
+    "7378": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 0.5,
+      "name": "Heavenly Nuppepo",
+      "sightRadian": 1.74533
+    },
+    "7379": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 0.5,
+      "name": "Heavenly Nuppepo",
+      "sightRadian": 1.74533
+    },
+    "7380": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 0.5,
+      "name": "Heavenly Nuppepo",
+      "sightRadian": 1.74533
+    },
+    "7381": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 2.0999999046326,
+      "name": "Heavenly Mifune",
+      "sightRadian": 1.74533
+    },
+    "7382": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1,
+      "name": "Heavenly Jaki",
+      "sightRadian": 1.74533
+    },
+    "7384": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.7000000476837,
+      "name": "Heavenly Kyozo",
+      "sightRadian": 1.74533
+    },
+    "7385": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 2,
+      "name": "Heavenly Kuro-kishi",
+      "sightRadian": 1.74533
+    },
+    "7386": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.1000000238419,
+      "name": "Heavenly Shabti",
+      "sightRadian": 1.74533
+    },
+    "7387": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.5,
+      "name": "Heavenly Zenki",
+      "sightRadian": 1.74533
+    },
+    "7388": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Easy",
+      "hitRadius": 4,
+      "name": "Heavenly Gozu",
+      "sightRadian": 1.74533
+    },
+    "7389": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.5,
+      "name": "Heavenly Kubinashi",
+      "sightRadian": 1.74533
+    },
+    "7390": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Caution",
+      "hitRadius": 1.5,
+      "name": "Heavenly Tenma",
+      "sightRadian": 1.74533
+    },
+    "7392": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.69999998807907,
+      "name": "Quivering Coffer",
+      "sightRadian": 1.74533
+    },
+    "7393": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.69999998807907,
+      "name": "Quivering Coffer",
+      "sightRadian": 1.74533
+    },
+    "7394": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.69999998807907,
+      "name": "Quivering Coffer",
+      "sightRadian": 1.74533
+    },
+    "7478": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 5.25,
+      "name": "Hiruko",
+      "sightRadian": 1.74533
+    },
+    "7480": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Mojabune",
+      "sightRadian": 1.74533
+    },
+    "7481": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 3,
+      "name": "Beccho",
+      "sightRadian": 1.74533
+    },
+    "7483": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.4000000953674,
+      "name": "Bhima",
+      "sightRadian": 1.74533
+    },
+    "7485": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Caution",
+      "hitRadius": 3.4499998092651,
+      "name": "Gozu",
+      "sightRadian": 1.74533
+    },
+    "7487": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "Easy",
+      "hitRadius": 2.5,
+      "name": "Suikazura",
+      "sightRadian": 1.74533
+    },
+    "7489": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 6,
+      "name": "Kenko",
+      "sightRadian": 1.74533
+    },
+    "7490": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 4.5,
+      "name": "Kajigakaka",
+      "sightRadian": 1.74533
+    },
+    "7493": {
+      "aggroDistance": 10.2,
+      "aggroType": "",
+      "dangerLevel": "",
+      "hitRadius": 3,
+      "name": "Onra",
+      "sightRadian": 1.74533
+    },
+    "7584": {
+      "aggroDistance": 10.2,
+      "aggroType": "Sight",
+      "dangerLevel": "Danger",
+      "hitRadius": 3.8999998569489,
+      "name": "Heavenly Jinba",
+      "sightRadian": 1.74533
+    },
+    "7610": {
+      "aggroDistance": 10.2,
+      "aggroType": "Proxi",
+      "dangerLevel": "Easy",
+      "hitRadius": 0.5100000500679,
+      "name": "Korrigan",
+      "sightRadian": 1.74533
+    }
+  },
+  "passages": {
+    "2007188": true,
+    "2009507": true
+  },
+  "returns": {
+    "2007187": true,
+    "2009506": true
+  },
+  "silverChest": {
+    "2007357": true
+  },
+  "traps": {
+    "2007182": true,
+    "2007183": true,
+    "2007184": true,
+    "2007185": true,
+    "2007186": true,
+    "2009504": true
+  }
+}
