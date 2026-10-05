@@ -313,11 +313,12 @@ public class MainWindow
             if (config.AutoWalkNearDragons)
             {
                 float autoDist = config.AutoWalkDistance;
-                if (ImGui.SliderFloat("Auto-walk activation range", ref autoDist, 8.0f, 20.0f, "%.1f m"))
+                if (ImGui.SliderFloat("Auto-walk activation range", ref autoDist, 10.0f, 25.0f, "%.1f m"))
                 {
                     config.AutoWalkDistance = autoDist;
                     config.Save();
                 }
+                ImGui.TextDisabled("(Auto-adds +4.0m buffer when mounted. Auto-disengages instantly if combat begins.)");
 
                 bool logChat = config.LogAutoWalkToChat;
                 if (ImGui.Checkbox("Print Auto-Walk notifications to chat log", ref logChat))

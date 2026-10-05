@@ -95,7 +95,7 @@ public unsafe class DragonWalkService
         {
             if (wasAutoWalkForced)
             {
-                RestoreRunMode("Auto-Walk setting toggled off");
+                RestoreRunMode("Auto-Walk setting toggled off", false);
             }
             return;
         }
@@ -107,6 +107,18 @@ public unsafe class DragonWalkService
             {
                 wasAutoWalkForced = false;
                 playerWasAlreadyWalking = false;
+            }
+            return;
+        }
+
+        // If player is already in combat, NEVER force walk mode!
+        // If we previously engaged auto-walk, immediately restore run mode so the player can flee/kite.
+        var playerInCombat = (player.StatusFlags & StatusFlags.InCombat) != 0;
+        if (playerInCombat)
+        {
+            if (wasAutoWalkForced)
+            {
+                RestoreRunMode("Player entered combat / got aggroed! Immediately releasing Walk mode so player can flee!", true);
             }
             return;
         }
@@ -127,8 +139,16 @@ public unsafe class DragonWalkService
             lastPosTime = now;
         }
 
-        // Hysteresis threshold: trigger walk at AutoWalkDistance, clear walk at AutoWalkDistance + 1.5m
-        float triggerDistance = wasAutoWalkForced ? (config.AutoWalkDistance + 1.5f) : config.AutoWalkDistance;
+        var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)player.Address;
+        bool isMounted = chara != null && chara->Mount.MountId > 0;
+        float walkSpeedLimit = isMounted ? 3.8f : 3.2f;
+
+        // When mounted, running speed is ~9.5 m/s vs ~6.0 m/s on foot.
+        // Add an automatic +4.0m buffer when mounted so deceleration starts well ahead of the 10.5m sound circle!
+        float effectiveWalkDistance = config.AutoWalkDistance + (isMounted ? 4.0f : 0f);
+
+        // Hysteresis threshold: trigger walk at effectiveWalkDistance, clear walk at effectiveWalkDistance + 1.5m
+        float triggerDistance = wasAutoWalkForced ? (effectiveWalkDistance + 1.5f) : effectiveWalkDistance;
 
         bool anyDragonInWalkRange = false;
         string nearestDragonName = string.Empty;
@@ -139,6 +159,18 @@ public unsafe class DragonWalkService
         {
             if (obj is not IBattleNpc mob) continue;
             if (mob.IsDead || mob.CurrentHp <= 0) continue;
+
+            // CRITICAL: If the dragon is already awake / aggroed / in combat, walking provides ZERO protection!
+            // Furthermore, forcing walk while an awake dragon is chasing someone traps them and causes fatal wipes.
+            var mobInCombat = (mob.StatusFlags & StatusFlags.InCombat) != 0;
+            var hasTarget = mob.TargetObjectId != 0 && mob.TargetObjectId != 0xE000_0000 && mob.TargetObjectId != 0xFFFF_FFFF;
+            var isDamaged = mob.MaxHp > 0 && mob.CurrentHp < mob.MaxHp;
+            var isCasting = mob.IsCasting;
+
+            if (mobInCombat || hasTarget || isDamaged || isCasting)
+            {
+                continue;
+            }
 
             var name = mob.Name.TextValue;
             if (string.IsNullOrWhiteSpace(name)) continue;
@@ -190,10 +222,6 @@ public unsafe class DragonWalkService
             lastDragonName = nearestDragonName;
             lastDistance = nearestDist;
 
-            var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)player.Address;
-            bool isMounted = chara != null && chara->Mount.MountId > 0;
-            float walkSpeedLimit = isMounted ? 3.8f : 3.2f;
-
             if (!wasAutoWalkForced)
             {
                 // CRITICAL: Inspect player walk state BEFORE writing to ctrl->IsWalking!
@@ -222,20 +250,20 @@ public unsafe class DragonWalkService
                 }
             }
 
-            // Keep memory walk flags locked every frame while near dragon
+            // Keep memory walk flags locked every frame while near sleeping dragon
             ctrl->IsWalking = true;
             ctrl->IsWalkingDuringAutorun = true;
         }
         else if (wasAutoWalkForced)
         {
-            RestoreRunMode($"Safely cleared sleeping dragon range (nearest was '{lastDragonName}')");
+            RestoreRunMode($"Safely cleared sleeping dragon range (nearest was '{lastDragonName}')", false);
         }
     }
 
     /// <summary>
-    /// Restores standard running mode once safely out of dragon range.
+    /// Restores standard running mode once safely out of dragon range or when entering combat.
     /// </summary>
-    private void RestoreRunMode(string reason)
+    private void RestoreRunMode(string reason, bool isCombatEmergency = false)
     {
         var ctrl = Control.Instance();
         if (ctrl != null)
@@ -248,13 +276,20 @@ public unsafe class DragonWalkService
 
         if (config.LogAutoWalkToChat)
         {
-            chatGui.Print("[EurekaAggro] ✔ Safely left dragon zone. Run mode restored.");
+            if (isCombatEmergency)
+            {
+                chatGui.Print("[EurekaAggro] ⚠ In combat / Aggroed! Auto-Walk disengaged, Run mode restored!");
+            }
+            else
+            {
+                chatGui.Print("[EurekaAggro] ✔ Safely left dragon zone. Run mode restored.");
+            }
         }
 
-        if (!playerWasAlreadyWalking)
+        if (!playerWasAlreadyWalking || isCombatEmergency)
         {
-            // Toggle back to running
-            ToggleGameWalkMode(false);
+            // Toggle back to running (force bypass cooldown in combat emergencies)
+            ToggleGameWalkMode(false, force: isCombatEmergency);
         }
         else
         {
@@ -270,10 +305,10 @@ public unsafe class DragonWalkService
     /// <summary>
     /// Sends a virtual key event to toggle FFXIV's internal Walk/Run mode.
     /// </summary>
-    public void ToggleGameWalkMode(bool wantWalking)
+    public void ToggleGameWalkMode(bool wantWalking, bool force = false)
     {
-        // Enforce cooldown (minimum 500ms) to prevent key flickering
-        if ((DateTime.UtcNow - lastToggleTime).TotalMilliseconds < 500)
+        // Enforce cooldown (minimum 400ms) to prevent key flickering, unless forced (e.g. emergency combat release)
+        if (!force && (DateTime.UtcNow - lastToggleTime).TotalMilliseconds < 400)
             return;
 
         byte vkCode = ResolveWalkKeybind();
@@ -297,7 +332,7 @@ public unsafe class DragonWalkService
         catch {}
 
         lastToggleTime = DateTime.UtcNow;
-        log.Information($"[EurekaAggro - AutoWalk] Sent walk keybind to client (VirtualKey: 0x{vkCode:X2}, ScanCode: 0x{scanCode:X2}, TargetState: {(wantWalking ? "Walk" : "Run")})");
+        log.Information($"[EurekaAggro - AutoWalk] Sent walk keybind to client (VirtualKey: 0x{vkCode:X2}, ScanCode: 0x{scanCode:X2}, TargetState: {(wantWalking ? "Walk" : "Run")}, Force: {force})");
     }
 
     /// <summary>
@@ -337,6 +372,6 @@ public unsafe class DragonWalkService
         var ctrl = Control.Instance();
         bool current = ctrl != null && ctrl->IsWalking;
         log.Information($"[EurekaAggro - AutoWalk] Manual test toggle requested from settings. Current IsWalking: {current}");
-        ToggleGameWalkMode(!current);
+        ToggleGameWalkMode(!current, force: true);
     }
 }

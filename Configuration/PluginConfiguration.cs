@@ -119,9 +119,9 @@ public class PluginConfiguration : IPluginConfiguration
     public bool AutoWalkNearDragons { get; set; } = true;
 
     /// <summary>
-    /// Proximity distance in meters to automatically trigger Walk mode near Sleeping Dragons (defaults to 12.0m).
+    /// Proximity distance in meters to automatically trigger Walk mode near Sleeping Dragons (defaults to 16.0m).
     /// </summary>
-    public float AutoWalkDistance { get; set; } = 12.0f;
+    public float AutoWalkDistance { get; set; } = 16.0f;
 
     /// <summary>
     /// When true, prints notifications to the Dalamud in-game chat when auto-walk engages/disengages.
