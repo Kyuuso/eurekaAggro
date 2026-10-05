@@ -414,9 +414,12 @@ public class MainWindow
 
     private void DrawMonstersTab()
     {
+        float saveBtnWidth = 110.0f;
+        float searchWidth = Math.Max(150.0f, ImGui.GetContentRegionAvail().X - saveBtnWidth - ImGui.GetStyle().ItemSpacing.X);
+        ImGui.SetNextItemWidth(searchWidth);
         ImGui.InputTextWithHint("##SearchMob", "Search monster by name...", ref mobSearchFilter, 64);
         ImGui.SameLine();
-        if (ImGui.Button("Save Changes##Mobs"))
+        if (ImGui.Button("Save Changes##Mobs", new Vector2(saveBtnWidth, 0)))
         {
             mobDatabase.SaveUserOverrides();
         }
@@ -427,10 +430,13 @@ public class MainWindow
             .Where(m => string.IsNullOrEmpty(mobSearchFilter) || m.Value.Name.Contains(mobSearchFilter, StringComparison.OrdinalIgnoreCase))
             .Take(150);
 
-        if (ImGui.BeginTable("TableMobsEureka", 6, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY, new Vector2(0, 330)))
+        var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY | ImGuiTableFlags.Resizable;
+        var tableSize = new Vector2(0, ImGui.GetContentRegionAvail().Y);
+
+        if (ImGui.BeginTable("TableMobsEureka", 6, tableFlags, tableSize))
         {
             ImGui.TableSetupColumn("ID", ImGuiTableColumnFlags.WidthFixed, 60);
-            ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch);
+            ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 2.0f);
             ImGui.TableSetupColumn("Danger", ImGuiTableColumnFlags.WidthFixed, 100);
             ImGui.TableSetupColumn("Aggro Type", ImGuiTableColumnFlags.WidthFixed, 120);
             ImGui.TableSetupColumn("Distance (m)", ImGuiTableColumnFlags.WidthFixed, 90);
@@ -492,9 +498,12 @@ public class MainWindow
 
     private void DrawActionsTab()
     {
+        float saveBtnWidth = 110.0f;
+        float searchWidth = Math.Max(150.0f, ImGui.GetContentRegionAvail().X - saveBtnWidth - ImGui.GetStyle().ItemSpacing.X);
+        ImGui.SetNextItemWidth(searchWidth);
         ImGui.InputTextWithHint("##SearchAction", "Search action or mob name...", ref actionSearchFilter, 64);
         ImGui.SameLine();
-        if (ImGui.Button("Save Changes##Actions"))
+        if (ImGui.Button("Save Changes##Actions", new Vector2(saveBtnWidth, 0)))
         {
             actionDatabase.SaveUserOverrides();
         }
@@ -507,15 +516,18 @@ public class MainWindow
                         a.Value.MobName.Contains(actionSearchFilter, StringComparison.OrdinalIgnoreCase))
             .Take(150);
 
-        if (ImGui.BeginTable("TableActionsEureka", 7, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY, new Vector2(0, 330)))
+        var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY | ImGuiTableFlags.Resizable;
+        var tableSize = new Vector2(0, ImGui.GetContentRegionAvail().Y);
+
+        if (ImGui.BeginTable("TableActionsEureka", 7, tableFlags, tableSize))
         {
-            ImGui.TableSetupColumn("Monster", ImGuiTableColumnFlags.WidthFixed, 140);
-            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed, 140);
-            ImGui.TableSetupColumn("Stun", ImGuiTableColumnFlags.WidthFixed, 45);
+            ImGui.TableSetupColumn("Monster", ImGuiTableColumnFlags.WidthStretch, 1.3f);
+            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthStretch, 1.3f);
+            ImGui.TableSetupColumn("Stun", ImGuiTableColumnFlags.WidthFixed, 50);
             ImGui.TableSetupColumn("Silence", ImGuiTableColumnFlags.WidthFixed, 60);
-            ImGui.TableSetupColumn("LOS", ImGuiTableColumnFlags.WidthFixed, 45);
+            ImGui.TableSetupColumn("LOS", ImGuiTableColumnFlags.WidthFixed, 50);
             ImGui.TableSetupColumn("Regen", ImGuiTableColumnFlags.WidthFixed, 50);
-            ImGui.TableSetupColumn("Alert Message", ImGuiTableColumnFlags.WidthStretch);
+            ImGui.TableSetupColumn("Alert Message", ImGuiTableColumnFlags.WidthStretch, 2.0f);
             ImGui.TableHeadersRow();
 
             foreach (var (id, action) in filteredActions)
