@@ -62,7 +62,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         actionDatabase = new ActionDatabase(PluginLog, configDir);
         environmentService = new EurekaEnvironmentService(DataManager, ClientState);
 
-        castMonitor = new CastMonitor(ClientState, TargetManager, ObjectTable, ChatGui, actionDatabase, configuration);
+        castMonitor = new CastMonitor(DataManager, ClientState, TargetManager, ObjectTable, ChatGui, actionDatabase, configuration);
         dragonWalkService = new DragonWalkService(PluginLog, ClientState, ObjectTable, ChatGui, mobDatabase, configuration);
         overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, dragonWalkService, configuration);
 

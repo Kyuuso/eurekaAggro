@@ -154,6 +154,26 @@ public class ActionDatabase
     {
         if (Actions.TryGetValue(actionId, out var existing))
         {
+            // If previous name was placeholder or empty, upgrade with real in-game action name
+            if (!string.IsNullOrWhiteSpace(actionName) &&
+                !actionName.StartsWith("Action #") &&
+                (string.IsNullOrWhiteSpace(existing.ActionName) || existing.ActionName.StartsWith("Action #")))
+            {
+                existing.ActionName = actionName;
+                isDirty = true;
+            }
+
+            if (isInterruptible && !existing.IsInterruptible)
+            {
+                existing.IsInterruptible = true;
+                existing.RequiresSilence = true;
+                if (string.IsNullOrWhiteSpace(existing.AlertMessage))
+                {
+                    existing.AlertMessage = "INTERRUPT / SILENCE AVAILABLE!";
+                }
+                isDirty = true;
+            }
+
             return existing;
         }
 
@@ -167,7 +187,7 @@ public class ActionDatabase
             RequiresStun = false,
             RequiresRegen = false,
             RequiresLineOfSight = false,
-            AlertMessage = isInterruptible ? "INTERRUPT AVAILABLE!" : string.Empty
+            AlertMessage = isInterruptible ? "INTERRUPT / SILENCE AVAILABLE!" : string.Empty
         };
 
         Actions[actionId] = newAction;

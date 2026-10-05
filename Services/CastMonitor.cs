@@ -30,6 +30,7 @@ public class ActiveCastAlert
 /// </summary>
 public class CastMonitor
 {
+    private readonly IDataManager dataManager;
     private readonly IClientState clientState;
     private readonly ITargetManager targetManager;
     private readonly IObjectTable objectTable;
@@ -44,6 +45,7 @@ public class CastMonitor
     public ActiveCastAlert? ActiveAlert { get; private set; }
 
     public CastMonitor(
+        IDataManager dataManager,
         IClientState clientState,
         ITargetManager targetManager,
         IObjectTable objectTable,
@@ -51,6 +53,7 @@ public class CastMonitor
         ActionDatabase actionDatabase,
         PluginConfiguration config)
     {
+        this.dataManager = dataManager;
         this.clientState = clientState;
         this.targetManager = targetManager;
         this.objectTable = objectTable;
@@ -150,7 +153,26 @@ public class CastMonitor
         var mobName = enemy.Name.TextValue;
         var isInterruptible = enemy.IsCastInterruptible;
 
-        var data = actionDatabase.GetOrRegister(actionId, mobName, $"Action #{actionId}", isInterruptible);
+        string actionName = string.Empty;
+        try
+        {
+            var sheet = dataManager.GetExcelSheet<Lumina.Excel.Sheets.Action>();
+            if (sheet != null && sheet.TryGetRow(actionId, out var row))
+            {
+                actionName = row.Name.ExtractText();
+            }
+        }
+        catch
+        {
+            // Fallback if sheet resolution fails
+        }
+
+        if (string.IsNullOrWhiteSpace(actionName))
+        {
+            actionName = $"Action #{actionId}";
+        }
+
+        var data = actionDatabase.GetOrRegister(actionId, mobName, actionName, isInterruptible);
 
         string message = string.Empty;
         if (!string.IsNullOrWhiteSpace(data.AlertMessage))
