@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Dalamud.Game.ClientState.Objects;
@@ -33,6 +34,11 @@ public unsafe class DragonWalkService
     private string lastDragonName = string.Empty;
     private float lastDistance = 0f;
 
+    // Movement speed tracking
+    private Vector3 lastPlayerPos = Vector3.Zero;
+    private DateTime lastPosTime = DateTime.UtcNow;
+    private float currentSpeed = 0f;
+
     /// <summary>
     /// True when Auto-Walk has taken control of the character's movement mode.
     /// </summary>
@@ -51,12 +57,17 @@ public unsafe class DragonWalkService
     // Windows API input simulation
     private const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
     private const uint KEYEVENTF_KEYUP = 0x0002;
+    private const uint WM_KEYDOWN = 0x0100;
+    private const uint WM_KEYUP = 0x0101;
 
     [DllImport("user32.dll")]
     private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, nuint dwExtraInfo);
 
     [DllImport("user32.dll")]
     private static extern uint MapVirtualKeyA(uint uCode, uint uMapType);
+
+    [DllImport("user32.dll")]
+    private static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
     public DragonWalkService(
         IPluginLog log,
@@ -101,6 +112,24 @@ public unsafe class DragonWalkService
         }
 
         var playerPos = player.Position;
+
+        // Calculate player speed in real time
+        var now = DateTime.UtcNow;
+        var dt = (float)(now - lastPosTime).TotalSeconds;
+        if (dt > 0.05f)
+        {
+            if (lastPlayerPos != Vector3.Zero)
+            {
+                var horizDist = Vector2.Distance(new Vector2(playerPos.X, playerPos.Z), new Vector2(lastPlayerPos.X, lastPlayerPos.Z));
+                currentSpeed = horizDist / dt;
+            }
+            lastPlayerPos = playerPos;
+            lastPosTime = now;
+        }
+
+        // Hysteresis threshold: trigger walk at AutoWalkDistance, clear walk at AutoWalkDistance + 1.5m
+        float triggerDistance = wasAutoWalkForced ? (config.AutoWalkDistance + 1.5f) : config.AutoWalkDistance;
+
         bool anyDragonInWalkRange = false;
         string nearestDragonName = string.Empty;
         float nearestDist = float.MaxValue;
@@ -109,15 +138,13 @@ public unsafe class DragonWalkService
         foreach (var obj in objectTable)
         {
             if (obj is not IBattleNpc mob) continue;
-            if (mob.IsDead) continue;
+            if (mob.IsDead || mob.CurrentHp <= 0) continue;
 
             var name = mob.Name.TextValue;
             if (string.IsNullOrWhiteSpace(name)) continue;
             if (MobDatabase.IsPlayerPetOrCompanion(name)) continue;
 
-            // Strict dragon identification:
-            // 1. Name explicitly includes "dragon", "slumbering", "sleeping", or "voidragon"
-            // 2. OR classified as Sound aggro dragon in mob database
+            // Strict dragon identification
             bool isSleepingDragon =
                 name.Contains("sleeping", StringComparison.OrdinalIgnoreCase) ||
                 name.Contains("slumbering", StringComparison.OrdinalIgnoreCase) ||
@@ -136,10 +163,6 @@ public unsafe class DragonWalkService
 
             if (!isSleepingDragon) continue;
 
-            // In combat mobs are already awake and actively engaged
-            var inCombat = (mob.StatusFlags & StatusFlags.InCombat) != 0;
-            if (inCombat) continue;
-
             // Elevation check for Eureka cliffs & caves (Pagos/Pyros)
             if (config.EnableVerticalFilter)
             {
@@ -148,7 +171,7 @@ public unsafe class DragonWalkService
             }
 
             var dist = Vector3.Distance(playerPos, mob.Position);
-            if (dist <= config.AutoWalkDistance)
+            if (dist <= triggerDistance)
             {
                 anyDragonInWalkRange = true;
                 if (dist < nearestDist)
@@ -167,33 +190,35 @@ public unsafe class DragonWalkService
             lastDragonName = nearestDragonName;
             lastDistance = nearestDist;
 
-            // Keep memory walk flags locked every frame while near dragon
-            ctrl->IsWalking = true;
-            ctrl->IsWalkingDuringAutorun = true;
-
             if (!wasAutoWalkForced)
             {
-                // Capture if player was already walking before auto-walk took control
-                playerWasAlreadyWalking = ctrl->IsWalking;
+                // CRITICAL: Inspect player walk state BEFORE writing to ctrl->IsWalking!
+                // If player is moving faster than 2.8 m/s, or if memory flag is false, they are RUNNING.
+                bool playerWasRunning = currentSpeed > 2.8f || !ctrl->IsWalking;
+                playerWasAlreadyWalking = !playerWasRunning;
                 wasAutoWalkForced = true;
 
-                log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{nearestDragonName}' at {nearestDist:F1}m (Trigger limit: {config.AutoWalkDistance:F1}m). Engaging WALK mode!");
+                log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{nearestDragonName}' at {nearestDist:F1}m (Trigger limit: {config.AutoWalkDistance:F1}m, Speed: {currentSpeed:F1} m/s, Initial IsWalking: {ctrl->IsWalking}). Engaging WALK mode!");
 
                 if (config.LogAutoWalkToChat)
                 {
                     chatGui.Print($"[EurekaAggro] ✔ Auto-Walk engaged near '{nearestDragonName}' ({nearestDist:F1}m).");
                 }
 
-                // If player was running, send walk keybind to toggle the game client into walk mode
-                if (!playerWasAlreadyWalking)
+                // If player was running, trigger the game client walk toggle
+                if (playerWasRunning)
                 {
                     ToggleGameWalkMode(true);
                 }
                 else
                 {
-                    log.Information("[EurekaAggro - AutoWalk] Player was already walking manually. Preserving walking state without simulated keypress.");
+                    log.Information("[EurekaAggro - AutoWalk] Player was already walking slowly. Preserving walk state without toggle.");
                 }
             }
+
+            // Keep memory walk flags locked every frame while near dragon
+            ctrl->IsWalking = true;
+            ctrl->IsWalkingDuringAutorun = true;
         }
         else if (wasAutoWalkForced)
         {
@@ -241,26 +266,36 @@ public unsafe class DragonWalkService
     /// </summary>
     public void ToggleGameWalkMode(bool wantWalking)
     {
-        // Enforce cooldown (minimum 600ms) to prevent key flickering
-        if ((DateTime.UtcNow - lastToggleTime).TotalMilliseconds < 600)
+        // Enforce cooldown (minimum 500ms) to prevent key flickering
+        if ((DateTime.UtcNow - lastToggleTime).TotalMilliseconds < 500)
             return;
 
         byte vkCode = ResolveWalkKeybind();
-
         uint scanCode = MapVirtualKeyA(vkCode, 0);
         uint extended = (vkCode == 0x6F) ? KEYEVENTF_EXTENDEDKEY : 0;
 
-        // Key Down
+        // 1. Send via keybd_event (system level input)
         keybd_event(vkCode, (byte)scanCode, extended, 0);
-        // Key Up
         keybd_event(vkCode, (byte)scanCode, extended | KEYEVENTF_KEYUP, 0);
 
+        // 2. Also post directly to FFXIV main window handle to guarantee processing
+        try
+        {
+            var proc = Process.GetCurrentProcess();
+            if (proc.MainWindowHandle != IntPtr.Zero)
+            {
+                PostMessage(proc.MainWindowHandle, WM_KEYDOWN, (IntPtr)vkCode, (IntPtr)(scanCode << 16));
+                PostMessage(proc.MainWindowHandle, WM_KEYUP, (IntPtr)vkCode, (IntPtr)((scanCode << 16) | 0xC0000001));
+            }
+        }
+        catch {}
+
         lastToggleTime = DateTime.UtcNow;
-        log.Information($"[EurekaAggro - AutoWalk] Sent walk keybind to client (VirtualKey: 0x{vkCode:X2}, TargetState: {(wantWalking ? "Walk" : "Run")})");
+        log.Information($"[EurekaAggro - AutoWalk] Sent walk keybind to client (VirtualKey: 0x{vkCode:X2}, ScanCode: 0x{scanCode:X2}, TargetState: {(wantWalking ? "Walk" : "Run")})");
     }
 
     /// <summary>
-    /// Resolves player's active Walk keybind from InputData, defaulting to Keypad / (VK_DIVIDE = 0x6F).
+    /// Resolves player's active Walk keybind from UIInputData, defaulting to Keypad / (VK_DIVIDE = 0x6F).
     /// </summary>
     private byte ResolveWalkKeybind()
     {
