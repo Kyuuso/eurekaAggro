@@ -190,19 +190,25 @@ public unsafe class DragonWalkService
             lastDragonName = nearestDragonName;
             lastDistance = nearestDist;
 
+            var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)player.Address;
+            bool isMounted = chara != null && chara->Mount.MountId > 0;
+            float walkSpeedLimit = isMounted ? 3.8f : 3.2f;
+
             if (!wasAutoWalkForced)
             {
                 // CRITICAL: Inspect player walk state BEFORE writing to ctrl->IsWalking!
-                // If player is moving faster than 2.8 m/s, or if memory flag is false, they are RUNNING.
-                bool playerWasRunning = currentSpeed > 2.8f || !ctrl->IsWalking;
+                // Walking on foot or on a mount is ~2.4 m/s. Running on foot is ~6.0 m/s; galloping on mount is ~9.0 m/s.
+                // If moving above the walking limit or if memory flag is false, the player is actively running/galloping.
+                bool playerWasRunning = currentSpeed > walkSpeedLimit || !ctrl->IsWalking;
                 playerWasAlreadyWalking = !playerWasRunning;
                 wasAutoWalkForced = true;
 
-                log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{nearestDragonName}' at {nearestDist:F1}m (Trigger limit: {config.AutoWalkDistance:F1}m, Speed: {currentSpeed:F1} m/s, Initial IsWalking: {ctrl->IsWalking}). Engaging WALK mode!");
+                string modeStr = isMounted ? "Mounted" : "On Foot";
+                log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{nearestDragonName}' at {nearestDist:F1}m ({modeStr}, Speed: {currentSpeed:F1} m/s, Limit: {walkSpeedLimit:F1} m/s, Initial IsWalking: {ctrl->IsWalking}). Engaging WALK mode!");
 
                 if (config.LogAutoWalkToChat)
                 {
-                    chatGui.Print($"[EurekaAggro] ✔ Auto-Walk engaged near '{nearestDragonName}' ({nearestDist:F1}m).");
+                    chatGui.Print($"[EurekaAggro] ✔ Auto-Walk engaged near '{nearestDragonName}' ({nearestDist:F1}m, {modeStr}).");
                 }
 
                 // If player was running, trigger the game client walk toggle
@@ -212,7 +218,7 @@ public unsafe class DragonWalkService
                 }
                 else
                 {
-                    log.Information("[EurekaAggro - AutoWalk] Player was already walking slowly. Preserving walk state without toggle.");
+                    log.Information($"[EurekaAggro - AutoWalk] Player was already walking slowly ({modeStr}). Preserving walk state without toggle.");
                 }
             }
 
