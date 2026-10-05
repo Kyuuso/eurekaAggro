@@ -203,11 +203,11 @@ public class OverlayRenderer
                             {
                                 if (wasAutoWalkForced && distance <= config.AutoWalkDistance)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1f, 0.4f, 1f)), "✔ AUTO-WALK ENGAGED (SAFE)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), "✔ AUTO-WALK ENGAGED (SAFE)");
                                 }
                                 else if (distance <= totalRadius + 4.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.2f, 0.2f, 1f)), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
                                 }
                                 else if (distance <= totalRadius + 1.5f)
                                 {
@@ -219,7 +219,7 @@ public class OverlayRenderer
                                 // Non-dragon sound monsters (Clipper, Karlabos, Piranu, Crabs, etc.)
                                 if (distance <= totalRadius + 3.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.35f, 0.2f, 1f)), "⚠ SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "⚠ SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
                                 }
                             }
                         }
@@ -310,8 +310,8 @@ public class OverlayRenderer
             if (config.ShowDistanceLines && distance < 12.0f)
             {
                 var lineCol = distance < 10.0f
-                    ? ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.15f, 0.15f, 0.95f))
-                    : ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1f, 0.2f, 0.95f));
+                    ? ImGui.ColorConvertFloat4ToU32(config.ColorDistanceNear)
+                    : ImGui.ColorConvertFloat4ToU32(config.ColorDistanceFar);
 
                 if (gameGui.WorldToScreen(playerPos, out var pPlayer) &&
                     gameGui.WorldToScreen(mob.Position, out var pMob))
@@ -336,7 +336,11 @@ public class OverlayRenderer
                         _ => "[?]"
                     };
 
-                    var textCol = ImGui.ColorConvertFloat4ToU32(GetDangerColor(data.DangerLevel));
+                    var textCol = ImGui.ColorConvertFloat4ToU32(
+                        config.UseCustomMobTextColor
+                            ? config.ColorCustomMobText
+                            : GetDangerColor(data.DangerLevel));
+
                     string levelPrefix = mobLevel > 0 ? $"Lv.{mobLevel} " : string.Empty;
                     string fullText = $"{levelPrefix}{data.Name} {typeLabel} ({distance:F1}m)";
                     drawList.AddText(pText - new Vector2(30, 0), textCol, fullText);
@@ -349,12 +353,12 @@ public class OverlayRenderer
                         {
                             if (mut.IsActiveNow)
                             {
-                                var mutCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.2f, 1.0f, 0.9f, 1.0f));
+                                var mutCol = ImGui.ColorConvertFloat4ToU32(config.ColorMutationActiveText);
                                 drawList.AddText(pText - new Vector2(30, -14), mutCol, $"🧬 CAN MUTATE NOW: {mut.HintMessage}");
                             }
                             else
                             {
-                                var dimCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.65f, 0.65f, 0.65f, 0.75f));
+                                var dimCol = ImGui.ColorConvertFloat4ToU32(config.ColorMutationInactiveText);
                                 drawList.AddText(pText - new Vector2(30, -14), dimCol, $"[Mutates: {mut.HintMessage}]");
                             }
                         }

@@ -410,6 +410,129 @@ public class MainWindow
             config.ShowCastAlerts = alerts;
             config.Save();
         }
+
+        ImGui.Separator();
+        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Color Palette & Customization:");
+
+        if (ImGui.CollapsingHeader("Aggro Circles & Vision Cones", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            var colDragon = config.ColorDragonSound;
+            if (ImGui.ColorEdit4("Sleeping Dragons (Sound)##colDragon", ref colDragon))
+            {
+                config.ColorDragonSound = colDragon;
+                config.Save();
+            }
+
+            var colBlood = config.ColorBlood;
+            if (ImGui.ColorEdit4("Undead / Ashkin (Blood)##colBlood", ref colBlood))
+            {
+                config.ColorBlood = colBlood;
+                config.Save();
+            }
+
+            var colMagic = config.ColorMagic;
+            if (ImGui.ColorEdit4("Sprites / Elementals (Magic)##colMagic", ref colMagic))
+            {
+                config.ColorMagic = colMagic;
+                config.Save();
+            }
+
+            var colDanger = config.ColorDanger;
+            if (ImGui.ColorEdit4("High Danger Monsters##colDanger", ref colDanger))
+            {
+                config.ColorDanger = colDanger;
+                config.Save();
+            }
+
+            var colCaution = config.ColorCaution;
+            if (ImGui.ColorEdit4("Caution Monsters##colCaution", ref colCaution))
+            {
+                config.ColorCaution = colCaution;
+                config.Save();
+            }
+
+            var colEasy = config.ColorEasy;
+            if (ImGui.ColorEdit4("Easy / Safe Monsters##colEasy", ref colEasy))
+            {
+                config.ColorEasy = colEasy;
+                config.Save();
+            }
+
+            var colUnknown = config.ColorUnknown;
+            if (ImGui.ColorEdit4("Standard / Other Monsters##colUnknown", ref colUnknown))
+            {
+                config.ColorUnknown = colUnknown;
+                config.Save();
+            }
+        }
+
+        if (ImGui.CollapsingHeader("Text Labels & Warning Overlays", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            bool customTextCol = config.UseCustomMobTextColor;
+            if (ImGui.Checkbox("Override floating monster name label color", ref customTextCol))
+            {
+                config.UseCustomMobTextColor = customTextCol;
+                config.Save();
+            }
+
+            if (config.UseCustomMobTextColor)
+            {
+                var colText = config.ColorCustomMobText;
+                if (ImGui.ColorEdit4("Custom Monster Label Color##colText", ref colText))
+                {
+                    config.ColorCustomMobText = colText;
+                    config.Save();
+                }
+            }
+
+            var colSafeText = config.ColorDragonSafeText;
+            if (ImGui.ColorEdit4("Dragon Safe / Auto-Walk Engaged Text##colSafeText", ref colSafeText))
+            {
+                config.ColorDragonSafeText = colSafeText;
+                config.Save();
+            }
+
+            var colWarnText = config.ColorDragonWarningText;
+            if (ImGui.ColorEdit4("Dragon Running Danger Alert Text##colWarnText", ref colWarnText))
+            {
+                config.ColorDragonWarningText = colWarnText;
+                config.Save();
+            }
+
+            var colMutActive = config.ColorMutationActiveText;
+            if (ImGui.ColorEdit4("Mutation Available Now (Active)##colMutActive", ref colMutActive))
+            {
+                config.ColorMutationActiveText = colMutActive;
+                config.Save();
+            }
+
+            var colMutInactive = config.ColorMutationInactiveText;
+            if (ImGui.ColorEdit4("Mutation Upcoming (Inactive)##colMutInactive", ref colMutInactive))
+            {
+                config.ColorMutationInactiveText = colMutInactive;
+                config.Save();
+            }
+
+            var colLineNear = config.ColorDistanceNear;
+            if (ImGui.ColorEdit4("Distance Guide Line (< 10m Danger)##colLineNear", ref colLineNear))
+            {
+                config.ColorDistanceNear = colLineNear;
+                config.Save();
+            }
+
+            var colLineFar = config.ColorDistanceFar;
+            if (ImGui.ColorEdit4("Distance Guide Line (>= 10m Safe)##colLineFar", ref colLineFar))
+            {
+                config.ColorDistanceFar = colLineFar;
+                config.Save();
+            }
+        }
+
+        ImGui.Spacing();
+        if (ImGui.Button("Reset All Colors to Default", new Vector2(210, 26)))
+        {
+            config.ResetColorsToDefault();
+        }
     }
 
     private void DrawMonstersTab()

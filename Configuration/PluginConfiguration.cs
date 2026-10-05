@@ -210,6 +210,36 @@ public class PluginConfiguration : IPluginConfiguration
     public Vector4 ColorBlood { get; set; } = new(0.9f, 0.1f, 0.25f, 1.0f);
     public Vector4 ColorMagic { get; set; } = new(0.7f, 0.2f, 0.95f, 1.0f);
 
+    public Vector4 ColorDragonSafeText { get; set; } = new(0.2f, 1.0f, 0.4f, 1.0f);
+    public Vector4 ColorDragonWarningText { get; set; } = new(1.0f, 0.2f, 0.2f, 1.0f);
+    public Vector4 ColorMutationActiveText { get; set; } = new(0.2f, 1.0f, 0.9f, 1.0f);
+    public Vector4 ColorMutationInactiveText { get; set; } = new(0.65f, 0.65f, 0.65f, 0.75f);
+    public Vector4 ColorDistanceNear { get; set; } = new(1.0f, 0.15f, 0.15f, 0.95f);
+    public Vector4 ColorDistanceFar { get; set; } = new(0.2f, 1.0f, 0.2f, 0.95f);
+
+    public bool UseCustomMobTextColor { get; set; } = false;
+    public Vector4 ColorCustomMobText { get; set; } = new(1.0f, 1.0f, 1.0f, 1.0f);
+
+    public void ResetColorsToDefault()
+    {
+        ColorEasy = new(0.1f, 0.9f, 0.2f, 1.0f);
+        ColorCaution = new(1.0f, 0.55f, 0.0f, 1.0f);
+        ColorDanger = new(1.0f, 0.15f, 0.15f, 1.0f);
+        ColorUnknown = new(0.2f, 0.7f, 1.0f, 1.0f);
+        ColorDragonSound = new(1.0f, 0.85f, 0.1f, 1.0f);
+        ColorBlood = new(0.9f, 0.1f, 0.25f, 1.0f);
+        ColorMagic = new(0.7f, 0.2f, 0.95f, 1.0f);
+        ColorDragonSafeText = new(0.2f, 1.0f, 0.4f, 1.0f);
+        ColorDragonWarningText = new(1.0f, 0.2f, 0.2f, 1.0f);
+        ColorMutationActiveText = new(0.2f, 1.0f, 0.9f, 1.0f);
+        ColorMutationInactiveText = new(0.65f, 0.65f, 0.65f, 0.75f);
+        ColorDistanceNear = new(1.0f, 0.15f, 0.15f, 0.95f);
+        ColorDistanceFar = new(0.2f, 1.0f, 0.2f, 0.95f);
+        UseCustomMobTextColor = false;
+        ColorCustomMobText = new(1.0f, 1.0f, 1.0f, 1.0f);
+        Save();
+    }
+
     [NonSerialized]
     private IDalamudPluginInterface? pluginInterface;
 
