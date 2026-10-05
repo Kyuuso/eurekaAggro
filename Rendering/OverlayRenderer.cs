@@ -121,14 +121,22 @@ public class OverlayRenderer
             var distance = Vector3.Distance(playerPos, mob.Position);
             if (distance > config.DetectionRange) continue;
 
-            // In Eureka (especially Pagos & Pyros cliffs and caves), mobs on different elevations cannot aggro
-            if (config.EnableVerticalFilter)
+            var data = mobDatabase.GetOrRegister(mob.BaseId, mob.Name.TextValue, mob.HitboxRadius);
+
+            // In Eureka (especially Pagos & Pyros cliffs and caves), standard mobs cannot aggro across vertical ledges.
+            // However, Sleeping Dragons have 3D spherical sound detection and ALWAYS aggro regardless of height!
+            bool isDragonCheck = data.AggroType == AggroType.Sound ||
+                                 data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
+                                 data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
+                                 data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase) ||
+                                 mobName.Contains("sleeping", StringComparison.OrdinalIgnoreCase) ||
+                                 mobName.Contains("voidragon", StringComparison.OrdinalIgnoreCase);
+
+            if (config.EnableVerticalFilter && !isDragonCheck)
             {
                 var verticalDiff = Math.Abs(playerPos.Y - mob.Position.Y);
                 if (verticalDiff > config.VerticalTolerance) continue;
             }
-
-            var data = mobDatabase.GetOrRegister(mob.BaseId, mob.Name.TextValue, mob.HitboxRadius);
 
             // Resolve true Eureka Elemental Level (extracts from NamePlate to avoid Stormblood dummy sync Lv.70)
             byte mobLevel = EurekaLevelService.GetMobElementalLevel(
@@ -149,11 +157,6 @@ public class OverlayRenderer
             // Filter out mobs that are too low level to aggro the player (unless exempted)
             if (config.FilterSafeMobs)
             {
-                // Only actual lethal Sleeping Dragons (Voidragons, Slumbering Dragons) are exempted regardless of level
-                bool isDragonCheck = data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
-                                     data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
-                                     data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
-
                 bool isExempt = (config.AlwaysShowDragons && isDragonCheck) ||
                                 (config.AlwaysShowUndead && data.AggroType == AggroType.Blood) ||
                                 (config.AlwaysShowSprites && data.AggroType == AggroType.Magic);

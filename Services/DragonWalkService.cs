@@ -212,13 +212,8 @@ public unsafe class DragonWalkService
 
             if (!isSleepingDragon) continue;
 
-            // Elevation check for Eureka cliffs & caves (Pagos/Pyros)
-            if (config.EnableVerticalFilter)
-            {
-                var verticalDiff = Math.Abs(playerPos.Y - mob.Position.Y);
-                if (verticalDiff > config.VerticalTolerance) continue;
-            }
-
+            // Sleeping Dragons have 3D spherical sound aggro and detect running regardless of vertical elevation/cliffs.
+            // Never skip sleeping dragons due to height differences!
             var dist = Vector3.Distance(playerPos, mob.Position);
             if (dist <= triggerDistance)
             {
