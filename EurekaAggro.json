@@ -2,10 +2,11 @@
   "Author": "Kyuuso",
   "Name": "Eureka Aggro",
   "InternalName": "EurekaAggro",
-  "AssemblyVersion": "1.0.9.0",
+  "AssemblyVersion": "1.0.10.0",
   "Description": "Aggro and danger radius visualizer for Eureka (Anemos, Pagos, Pyros, Hydatos). Vision cones, sleeping dragon sound aggro detection (walk!), low HP blood aggro, sprite magic aggro, and cast alerts.",
   "ApplicableVersion": "any",
   "DalamudApiLevel": 15,
+  "IconUrl": "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/images/icon.png",
   "Tags": [
     "eureka",
     "aggro",
@@ -19,6 +20,7 @@
     "sight"
   ]
 }
+
 
 
 

@@ -1,7 +1,10 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Textures;
+using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using EurekaAggro.Configuration;
 using EurekaAggro.Data;
@@ -20,6 +23,7 @@ public class MainWindow
     private readonly ActionDatabase actionDatabase;
     private readonly EurekaEnvironmentService environmentService;
     private readonly IClientState clientState;
+    private readonly ISharedImmediateTexture? iconTexture;
 
     public bool IsOpen = false;
 
@@ -31,13 +35,32 @@ public class MainWindow
         MobDatabase mobDatabase,
         ActionDatabase actionDatabase,
         EurekaEnvironmentService environmentService,
-        IClientState clientState)
+        IClientState clientState,
+        ITextureProvider textureProvider,
+        IDalamudPluginInterface pluginInterface)
     {
         this.config = config;
         this.mobDatabase = mobDatabase;
         this.actionDatabase = actionDatabase;
         this.environmentService = environmentService;
         this.clientState = clientState;
+
+        if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
+        {
+            var iconPath = Path.Combine(pluginInterface.AssemblyLocation.DirectoryName, "images", "icon.png");
+            if (File.Exists(iconPath))
+            {
+                iconTexture = textureProvider.GetFromFileAbsolute(iconPath);
+            }
+            else
+            {
+                var rootIcon = Path.Combine(pluginInterface.AssemblyLocation.DirectoryName, "icon.png");
+                if (File.Exists(rootIcon))
+                {
+                    iconTexture = textureProvider.GetFromFileAbsolute(rootIcon);
+                }
+            }
+        }
     }
 
     public void Draw()
@@ -80,6 +103,12 @@ public class MainWindow
 
     private void DrawStatusBar()
     {
+        if (iconTexture?.TryGetWrap(out var wrap, out _) == true && wrap != null)
+        {
+            ImGui.Image(wrap.Handle, new Vector2(34, 34));
+            ImGui.SameLine();
+        }
+
         var territoryId = clientState.TerritoryType;
         bool isEureka = ValidZones.IsEureka(territoryId);
         string zoneName = ValidZones.GetZoneName(territoryId);

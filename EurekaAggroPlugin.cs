@@ -34,6 +34,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
     [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
+    [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
 
     // Internal components
@@ -63,7 +64,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         castMonitor = new CastMonitor(ClientState, TargetManager, ObjectTable, ChatGui, actionDatabase, configuration);
         overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, configuration);
 
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, TextureProvider, pluginInterface);
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
 
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
