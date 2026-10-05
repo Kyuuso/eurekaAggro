@@ -66,8 +66,8 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         dragonWalkService = new DragonWalkService(PluginLog, ClientState, ObjectTable, ChatGui, mobDatabase, configuration);
         overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, dragonWalkService, configuration);
 
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, TextureProvider, pluginInterface);
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, pluginInterface);
 
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
         {

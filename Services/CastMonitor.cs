@@ -14,6 +14,7 @@ public class ActiveCastAlert
     public string MobName { get; set; } = string.Empty;
     public string ActionName { get; set; } = string.Empty;
     public string MainMessage { get; set; } = string.Empty;
+    public bool IsInterruptible { get; set; }
     public bool RequiresStun { get; set; }
     public bool RequiresSilence { get; set; }
     public bool RequiresLineOfSight { get; set; }
@@ -84,6 +85,13 @@ public class CastMonitor
             targetChara.CurrentHp > 0)
         {
             ProcessEnemyCast(targetChara);
+            return;
+        }
+
+        // If user enabled Target Only, stop here if target is not casting
+        if (config.CastAlertsTargetOnly)
+        {
+            ResetAlert();
             return;
         }
 

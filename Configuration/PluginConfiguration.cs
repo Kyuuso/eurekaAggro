@@ -201,6 +201,21 @@ public class PluginConfiguration : IPluginConfiguration
     public bool ShowCastAlerts { get; set; } = true;
 
     /// <summary>
+    /// When true, only shows cast alerts for your current target instead of all nearby casting enemies.
+    /// </summary>
+    public bool CastAlertsTargetOnly { get; set; } = false;
+
+    /// <summary>
+    /// When true, locks the cast alert HUD window in place so it cannot be accidentally moved with the mouse.
+    /// </summary>
+    public bool LockCastAlertPosition { get; set; } = false;
+
+    /// <summary>
+    /// User-customized screen position for the cast alert window (or -1, -1 for default).
+    /// </summary>
+    public Vector2 CastAlertPosition { get; set; } = new(-1, -1);
+
+    /// <summary>
     /// Print a notification in in-game chat when a dangerous cast is detected.
     /// </summary>
     public bool NotifyCastInChat { get; set; } = false;

@@ -24,6 +24,7 @@ public class MainWindow
     private readonly EurekaEnvironmentService environmentService;
     private readonly IClientState clientState;
     private readonly DragonWalkService dragonWalkService;
+    private readonly CastAlertWindow castAlertWindow;
     private readonly ISharedImmediateTexture? iconTexture;
 
     public bool IsOpen = false;
@@ -38,6 +39,7 @@ public class MainWindow
         EurekaEnvironmentService environmentService,
         IClientState clientState,
         DragonWalkService dragonWalkService,
+        CastAlertWindow castAlertWindow,
         ITextureProvider textureProvider,
         IDalamudPluginInterface pluginInterface)
     {
@@ -47,6 +49,7 @@ public class MainWindow
         this.environmentService = environmentService;
         this.clientState = clientState;
         this.dragonWalkService = dragonWalkService;
+        this.castAlertWindow = castAlertWindow;
 
         if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
         {
@@ -421,11 +424,54 @@ public class MainWindow
             }
         }
 
+        ImGui.Separator();
+        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Enemy Action & Cast Alerts (HUD):");
+
         bool alerts = config.ShowCastAlerts;
-        if (ImGui.Checkbox("Show HUD banner for dangerous casts requiring interrupt/stun/LOS", ref alerts))
+        if (ImGui.Checkbox("Enable floating HUD alert for dangerous casts (Interrupt, Stun, LOS)", ref alerts))
         {
             config.ShowCastAlerts = alerts;
             config.Save();
+        }
+
+        if (config.ShowCastAlerts)
+        {
+            ImGui.Indent();
+
+            bool targetOnly = config.CastAlertsTargetOnly;
+            if (ImGui.Checkbox("Only show cast alerts for current target (ignore background enemies)", ref targetOnly))
+            {
+                config.CastAlertsTargetOnly = targetOnly;
+                config.Save();
+            }
+
+            bool lockPos = config.LockCastAlertPosition;
+            if (ImGui.Checkbox("Lock alert window position (uncheck to drag anywhere with mouse)", ref lockPos))
+            {
+                config.LockCastAlertPosition = lockPos;
+                config.Save();
+            }
+
+            bool preview = castAlertWindow.IsPreviewMode;
+            if (ImGui.Checkbox("Preview & drag alert window position now", ref preview))
+            {
+                castAlertWindow.IsPreviewMode = preview;
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Button("Reset Window Position"))
+            {
+                castAlertWindow.ResetPosition();
+            }
+
+            bool notifyChat = config.NotifyCastInChat;
+            if (ImGui.Checkbox("Print dangerous enemy casts to in-game chat log", ref notifyChat))
+            {
+                config.NotifyCastInChat = notifyChat;
+                config.Save();
+            }
+
+            ImGui.Unindent();
         }
 
         ImGui.Separator();
