@@ -43,6 +43,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     private readonly ActionDatabase actionDatabase;
     private readonly EurekaEnvironmentService environmentService;
     private readonly CastMonitor castMonitor;
+    private readonly DragonWalkService dragonWalkService;
     private readonly OverlayRenderer overlayRenderer;
     private readonly MainWindow mainWindow;
     private readonly CastAlertWindow castAlertWindow;
@@ -62,9 +63,10 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         environmentService = new EurekaEnvironmentService(DataManager, ClientState);
 
         castMonitor = new CastMonitor(ClientState, TargetManager, ObjectTable, ChatGui, actionDatabase, configuration);
-        overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, configuration);
+        dragonWalkService = new DragonWalkService(PluginLog, ClientState, ObjectTable, ChatGui, mobDatabase, configuration);
+        overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, dragonWalkService, configuration);
 
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, TextureProvider, pluginInterface);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, TextureProvider, pluginInterface);
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
 
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
@@ -95,6 +97,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         if (!configuration.Enabled) return;
 
         castMonitor.Update();
+        dragonWalkService.Update();
     }
 
     private void OnDrawUi()

@@ -32,8 +32,7 @@ public class OverlayRenderer
     private DateTime lastPositionTime = DateTime.UtcNow;
     private float currentSpeed = 0.0f;
 
-    // Tracks whether the plugin automatically engaged walk mode near dragons
-    private bool wasAutoWalkForced = false;
+    private readonly DragonWalkService dragonWalkService;
 
     public OverlayRenderer(
         IGameGui gameGui,
@@ -41,6 +40,7 @@ public class OverlayRenderer
         IObjectTable objectTable,
         MobDatabase mobDatabase,
         EurekaEnvironmentService environmentService,
+        DragonWalkService dragonWalkService,
         PluginConfiguration config)
     {
         this.gameGui = gameGui;
@@ -48,6 +48,7 @@ public class OverlayRenderer
         this.objectTable = objectTable;
         this.mobDatabase = mobDatabase;
         this.environmentService = environmentService;
+        this.dragonWalkService = dragonWalkService;
         this.config = config;
     }
 
@@ -93,9 +94,6 @@ public class OverlayRenderer
             clientState.TerritoryType,
             config.AutoDetectElementalLevel,
             config.PlayerElementalLevel);
-
-        // Track whether any Sleeping Dragon is within auto-walk danger range
-        bool anySleepingDragonNear = false;
 
         foreach (var obj in objectTable)
         {
@@ -189,19 +187,15 @@ public class OverlayRenderer
                         // Check if mob is actually a sleeping dragon (e.g. slumbering dragon, voidragon)
                         bool isDragon = data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase) ||
                                         data.Name.Contains("wyrm", StringComparison.OrdinalIgnoreCase) ||
-                                        data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase);
-
-                        if (isDragon && distance <= config.AutoWalkDistance)
-                        {
-                            anySleepingDragonNear = true;
-                        }
+                                        data.Name.Contains("slumbering", StringComparison.OrdinalIgnoreCase) ||
+                                        data.Name.Contains("sleeping", StringComparison.OrdinalIgnoreCase);
 
                         // Alert when running near sound-detecting monsters
                         if (gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.4f, 0), out var pWarn))
                         {
                             if (isDragon)
                             {
-                                if (wasAutoWalkForced && distance <= config.AutoWalkDistance)
+                                if (dragonWalkService.IsAutoWalkEngaged && distance <= config.AutoWalkDistance)
                                 {
                                     drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), "✔ AUTO-WALK ENGAGED (SAFE)");
                                 }
@@ -367,29 +361,20 @@ public class OverlayRenderer
             }
         }
 
-        // Auto-walk safety trigger for Sleeping Dragons
-        if (config.AutoWalkNearDragons)
+        // On-screen notification badge when Auto-Walk is active near a Sleeping Dragon
+        if (dragonWalkService.IsAutoWalkEngaged)
         {
-            unsafe
-            {
-                var ctrl = FFXIVClientStructs.FFXIV.Client.Game.Control.Control.Instance();
-                if (ctrl != null)
-                {
-                    if (anySleepingDragonNear)
-                    {
-                        if (!ctrl->IsWalking)
-                        {
-                            ctrl->IsWalking = true;
-                            wasAutoWalkForced = true;
-                        }
-                    }
-                    else if (wasAutoWalkForced)
-                    {
-                        ctrl->IsWalking = false;
-                        wasAutoWalkForced = false;
-                    }
-                }
-            }
+            var viewport = ImGui.GetMainViewport();
+            var screenCenter = new Vector2(viewport.Size.X / 2f, viewport.Size.Y * 0.82f);
+            var safeCol = ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText);
+            var bgCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.04f, 0.04f, 0.06f, 0.85f));
+            string badgeText = $"✔ EUREKA AUTO-WALK ENGAGED ({dragonWalkService.CurrentDragonName} - {dragonWalkService.CurrentDistance:F1}m)";
+            var textSize = ImGui.CalcTextSize(badgeText);
+            var pMin = screenCenter - (textSize / 2f) - new Vector2(14, 6);
+            var pMax = screenCenter + (textSize / 2f) + new Vector2(14, 6);
+            drawList.AddRectFilled(pMin, pMax, bgCol, 6f);
+            drawList.AddRect(pMin, pMax, safeCol, 6f, ImDrawFlags.None, 1.5f);
+            drawList.AddText(screenCenter - (textSize / 2f), safeCol, badgeText);
         }
     }
 

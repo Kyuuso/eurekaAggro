@@ -23,6 +23,7 @@ public class MainWindow
     private readonly ActionDatabase actionDatabase;
     private readonly EurekaEnvironmentService environmentService;
     private readonly IClientState clientState;
+    private readonly DragonWalkService dragonWalkService;
     private readonly ISharedImmediateTexture? iconTexture;
 
     public bool IsOpen = false;
@@ -36,6 +37,7 @@ public class MainWindow
         ActionDatabase actionDatabase,
         EurekaEnvironmentService environmentService,
         IClientState clientState,
+        DragonWalkService dragonWalkService,
         ITextureProvider textureProvider,
         IDalamudPluginInterface pluginInterface)
     {
@@ -44,6 +46,7 @@ public class MainWindow
         this.actionDatabase = actionDatabase;
         this.environmentService = environmentService;
         this.clientState = clientState;
+        this.dragonWalkService = dragonWalkService;
 
         if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
         {
@@ -312,6 +315,20 @@ public class MainWindow
                     config.AutoWalkDistance = autoDist;
                     config.Save();
                 }
+
+                bool logChat = config.LogAutoWalkToChat;
+                if (ImGui.Checkbox("Print Auto-Walk notifications to chat log", ref logChat))
+                {
+                    config.LogAutoWalkToChat = logChat;
+                    config.Save();
+                }
+
+                if (ImGui.Button("Test Walk Mode Toggle Now"))
+                {
+                    dragonWalkService.ManualTestToggle();
+                }
+                ImGui.SameLine();
+                ImGui.TextDisabled("(Toggles Keypad / in-game Walk state & writes to Dalamud log)");
             }
         }
 

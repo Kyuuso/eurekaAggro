@@ -124,6 +124,11 @@ public class PluginConfiguration : IPluginConfiguration
     public float AutoWalkDistance { get; set; } = 12.0f;
 
     /// <summary>
+    /// When true, prints notifications to the Dalamud in-game chat when auto-walk engages/disengages.
+    /// </summary>
+    public bool LogAutoWalkToChat { get; set; } = false;
+
+    /// <summary>
     /// Displays real-time mutation and adaptation availability indicators above eligible monsters based on active weather and Eorzea time.
     /// </summary>
     public bool ShowMutationStatus { get; set; } = true;
