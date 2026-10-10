@@ -2,7 +2,7 @@
   "Author": "Kyuuso",
   "Name": "Eureka Aggro",
   "InternalName": "EurekaAggro",
-  "AssemblyVersion": "1.2.5.0",
+  "AssemblyVersion": "1.3.0.0",
   "TestingAssemblyVersion": "1.2.0.0",
   "Punchline": "Eureka aggro radar & BFE bunny fate automation suite.",
   "Description": "Aggro and danger radius visualizer for Eureka (Anemos, Pagos, Pyros, Hydatos) with integrated BFE (Bunnies for Eureka) automated bunny fate routing and treasure hunting. Vision cones, sleeping dragon sound aggro detection, low HP blood aggro, sprite magic aggro, tactical cast alerts, and full bunny fate automation.",
@@ -25,6 +25,7 @@
     "automation"
   ]
 }
+
 
 
 

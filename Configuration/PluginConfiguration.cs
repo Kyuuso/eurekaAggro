@@ -284,6 +284,18 @@ public class PluginConfiguration : IPluginConfiguration
         }
     }
 
+    // --- EUREKA TRACKER SETTINGS ---
+    public bool TrackerAutoCreate { get; set; } = false;
+    public bool TrackerAutoPopFate { get; set; } = true;
+    public bool TrackerDisplayFatePop { get; set; } = true;
+    public bool TrackerDisplayToastPop { get; set; } = true;
+    public bool TrackerPlayPopSound { get; set; } = true;
+    public bool TrackerDisplayServerIdInChat { get; set; } = true;
+    public bool TrackerShowLevelInTable { get; set; } = true;
+    public string TrackerLastCode { get; set; } = string.Empty;
+    public string TrackerLastPassword { get; set; } = string.Empty;
+    public string TrackerCustomInstanceId { get; set; } = string.Empty;
+
     // --- AGGRO LINES STATISTICS ---
     public int LifetimeDragonsBypassed { get; set; } = 0;
     public int LifetimeAutoWalkActivations { get; set; } = 0;

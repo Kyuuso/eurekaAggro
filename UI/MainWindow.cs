@@ -23,6 +23,7 @@ using BFE;
 using BFE.Ui.MainWindow;
 using BFE.Ui.SettingsWindow;
 using BFE.Scheduler;
+using EurekaAggro.Tracker;
 
 namespace EurekaAggro.UI;
 
@@ -54,6 +55,8 @@ public class MainWindow
     private readonly ISharedImmediateTexture? iconTexture;
     private readonly BunnyAutomationService bunnyService;
     private readonly IObjectTable objectTable;
+    private readonly TrackerManager trackerManager;
+    private readonly TrackerView trackerView;
 
     public bool IsOpen = false;
 
@@ -64,6 +67,7 @@ public class MainWindow
     // Sub-view states for each module ("cada pestaña con su cosa, con su configuración")
     public SubView AggroSubView = SubView.Main;
     public SubView FateSubView = SubView.Main;
+    public SubView TrackerSubView = SubView.Main;
 
     // Search filters
     private string mobSearchFilter = string.Empty;
@@ -85,7 +89,9 @@ public class MainWindow
         ITextureProvider textureProvider,
         IDalamudPluginInterface pluginInterface,
         BunnyAutomationService bunnyService,
-        IObjectTable objectTable)
+        IObjectTable objectTable,
+        TrackerManager trackerManager,
+        IGameGui gameGui)
     {
         this.config = config;
         this.mobDatabase = mobDatabase;
@@ -96,6 +102,8 @@ public class MainWindow
         this.castAlertWindow = castAlertWindow;
         this.bunnyService = bunnyService;
         this.objectTable = objectTable;
+        this.trackerManager = trackerManager;
+        this.trackerView = new TrackerView(trackerManager, config, clientState, gameGui);
 
         if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
         {
@@ -129,9 +137,16 @@ public class MainWindow
         IsOpen = true;
     }
 
-    public void OpenAbout()
+    public void OpenTracker(SubView subView = SubView.Main)
     {
         targetMainTab = 2;
+        TrackerSubView = subView;
+        IsOpen = true;
+    }
+
+    public void OpenAbout()
+    {
+        targetMainTab = 3;
         IsOpen = true;
     }
 
@@ -171,11 +186,20 @@ public class MainWindow
                     ImGui.EndTabItem();
                 }
 
-                // TAB 3: ABOUT & CREDITS
-                var aboutFlags = (targetMainTab == 2) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("About & Credits###TabAbout", aboutFlags))
+                // TAB 3: TRACKER
+                var trackerFlags = (targetMainTab == 2) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("Tracker###TabTracker", trackerFlags))
                 {
                     ActiveMainTab = 2;
+                    DrawModuleBody(2, scale);
+                    ImGui.EndTabItem();
+                }
+
+                // TAB 4: ABOUT & CREDITS
+                var aboutFlags = (targetMainTab == 3) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("About & Credits###TabAbout", aboutFlags))
+                {
+                    ActiveMainTab = 3;
                     DrawAboutSection(scale);
                     ImGui.EndTabItem();
                 }
@@ -274,6 +298,10 @@ public class MainWindow
                         break;
                 }
             }
+            else if (moduleIndex == 2) // TRACKER
+            {
+                trackerView.Draw(TrackerSubView, scale);
+            }
         }
         ImGui.EndChild();
 
@@ -289,6 +317,56 @@ public class MainWindow
     private void DrawBottomBar(int moduleIndex, float scale)
     {
         var availWidth = ImGui.GetContentRegionAvail().X;
+
+        // Tracker module has 2 sub-views: [ Main ] | [ Configuration ]
+        if (moduleIndex == 2)
+        {
+            var trackerBtnWidth = (availWidth - (10f * scale)) / 2f;
+            var trackerBtnHeight = 32f * scale;
+
+            // 1. MAIN
+            bool isTrackerMainActive = (TrackerSubView == SubView.Main);
+            if (isTrackerMainActive)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Button, GoldAccent);
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.08f, 0.08f, 0.08f, 1f));
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
+            }
+
+            if (ImGui.Button($"Main###BottomMainBtn_{moduleIndex}", new Vector2(trackerBtnWidth, trackerBtnHeight)))
+            {
+                TrackerSubView = SubView.Main;
+            }
+
+            if (isTrackerMainActive)
+            {
+                ImGui.PopStyleColor(3);
+            }
+
+            ImGui.SameLine(0, 10f * scale);
+
+            // 2. CONFIGURATION
+            bool isTrackerConfigActive = (TrackerSubView == SubView.Configuration);
+            if (isTrackerConfigActive)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Button, GoldAccent);
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.08f, 0.08f, 0.08f, 1f));
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
+            }
+
+            if (ImGui.Button($"Configuration###BottomConfigBtn_{moduleIndex}", new Vector2(trackerBtnWidth, trackerBtnHeight)))
+            {
+                TrackerSubView = SubView.Configuration;
+            }
+
+            if (isTrackerConfigActive)
+            {
+                ImGui.PopStyleColor(3);
+            }
+
+            return;
+        }
+
         var btnWidth = (availWidth - (20f * scale)) / 3f;
         var btnHeight = 32f * scale;
 
@@ -1274,7 +1352,17 @@ public class MainWindow
         ImGui.PopTextWrapPos();
         ImGui.Spacing();
 
-        // 3. Kyuuso
+        // 3. KangasZ
+        ImGui.Bullet();
+        ImGui.TextColored(GoldAccent, "KangasZ");
+        ImGui.SameLine();
+        ImGui.TextColored(TextMuted, "- EurekaHelper & Tracker Foundations");
+        ImGui.PushTextWrapPos(0);
+        ImGui.TextUnformatted("Creator of EurekaHelper, developing the in-game Eureka Tracker Phoenix client architecture and comprehensive NM spawn definitions.");
+        ImGui.PopTextWrapPos();
+        ImGui.Spacing();
+
+        // 4. Kyuuso
         ImGui.Bullet();
         ImGui.TextColored(GoldAccent, "Kyuuso");
         ImGui.SameLine();

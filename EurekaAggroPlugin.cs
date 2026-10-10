@@ -8,6 +8,7 @@ using EurekaAggro.Configuration;
 using EurekaAggro.Data;
 using EurekaAggro.Rendering;
 using EurekaAggro.Services;
+using EurekaAggro.Tracker;
 using EurekaAggro.UI;
 
 namespace EurekaAggro;
@@ -37,6 +38,8 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     [PluginService] internal static IToastGui ToastGui { get; private set; } = null!;
     [PluginService] internal static IPlayerState PlayerState { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
+    [PluginService] internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
+    [PluginService] internal static IFateTable FateTable { get; private set; } = null!;
 
     // Componentes del núcleo de detección de Eureka
     private readonly PluginConfiguration configuration;
@@ -52,11 +55,15 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     // Subsistema nativo de automatización de conejos (BFE)
     private readonly BunnyAutomationService bunnyAutomationService;
 
+    // Subsistema nativo de Eureka Tracker
+    private readonly TrackerManager trackerManager;
+
     // Comandos de consola
     private const string MainCommand = "/eurekaaggro";
     private const string ShortCommand = "/ea";
     private const string BfeCommand = "/bfe";
     private const string BunniesCommand = "/bunnies";
+    private const string TrackerCommand = "/etracker";
 
     public EurekaAggroPlugin(IDalamudPluginInterface pluginInterface)
     {
@@ -79,8 +86,11 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         // Inicializamos el servicio nativo de conejos de Eureka
         bunnyAutomationService = new BunnyAutomationService(pluginInterface, ChatGui, ToastGui, PlayerState, TextureProvider);
 
+        // Inicializamos el gestor central de Eureka Tracker
+        trackerManager = new TrackerManager(configuration, GameInteropProvider, ClientState, ObjectTable, DataManager, ChatGui, ToastGui, FateTable, Framework);
+
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, PluginInterface, bunnyAutomationService, ObjectTable);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, PluginInterface, bunnyAutomationService, ObjectTable, trackerManager, GameGui);
 
         // Registered commands for EurekaAggro Suite
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
@@ -102,6 +112,12 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         CommandManager.AddHandler(BunniesCommand, new CommandInfo(OnBfeCommand)
         {
             HelpMessage = "Legacy alias for Eureka bunny automation."
+        });
+
+        // Registered commands for Eureka Tracker
+        CommandManager.AddHandler(TrackerCommand, new CommandInfo(OnTrackerCommand)
+        {
+            HelpMessage = "Open the Eureka Tracker live NM window and instance manager (/etracker, /etracker config)."
         });
 
         PluginInterface.UiBuilder.Draw += OnDrawUi;
@@ -165,6 +181,26 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         }
     }
 
+    private void OnTrackerCommand(string command, string args)
+    {
+        var clean = args.Trim();
+        if (clean.EqualsIgnoreCaseAny("config", "s", "settings", "setting"))
+        {
+            mainWindow.OpenTracker(MainWindow.SubView.Configuration);
+        }
+        else
+        {
+            if (mainWindow.IsOpen && mainWindow.ActiveMainTab == 2 && string.IsNullOrEmpty(clean))
+            {
+                mainWindow.IsOpen = false;
+            }
+            else
+            {
+                mainWindow.OpenTracker(MainWindow.SubView.Main);
+            }
+        }
+    }
+
     private void OnFrameworkUpdate(IFramework _)
     {
         if (configuration.Enabled)
@@ -208,11 +244,15 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         CommandManager.RemoveHandler(ShortCommand);
         CommandManager.RemoveHandler(BfeCommand);
         CommandManager.RemoveHandler(BunniesCommand);
+        CommandManager.RemoveHandler(TrackerCommand);
 
         PluginInterface.UiBuilder.Draw -= OnDrawUi;
         PluginInterface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
         PluginInterface.UiBuilder.OpenMainUi -= OnOpenMainUi;
         Framework.Update -= OnFrameworkUpdate;
+
+        // Liberación de recursos del tracker de Eureka
+        trackerManager?.Dispose();
 
         // Liberación de recursos del subsistema de conejos
         bunnyAutomationService?.Dispose();
