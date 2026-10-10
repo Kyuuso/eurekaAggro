@@ -55,7 +55,12 @@ internal sealed class UiText : IDisposable
         ("ko", "한국어"),
         ("zh-Hans", "简体中文"),
         ("pt-BR", "Português (Brasil)"),
-        ("ru", "Русский")
+        ("ru", "Русский"),
+        ("pl", "Polski"),
+        ("tr", "Türkçe"),
+        ("id", "Bahasa Indonesia"),
+        ("vi", "Tiếng Việt"),
+        ("hi", "हिन्दी")
     ];
 
     private readonly ResourceManager manager;

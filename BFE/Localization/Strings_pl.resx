@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -333,7 +333,7 @@
   <data name="Going to Personal House" xml:space="preserve">
     <value>Podróż do domu osobistego</value>
   </data>
-  <data name="Required plugins unavailable for Bunnies:&#xA;{0}" xml:space="preserve">
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
     <value>Wymagane wtyczki dla Bunnies są niedostępne:
 {0}</value>
   </data>
@@ -391,7 +391,601 @@
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
     <value>Ten dziennik osiągnął limit 100 MiB Dalamud. Zapis mógł się zatrzymać; może brakować ostatniej aktywności, więc dziennik może nie pomóc w diagnozie obecnego problemu.</value>
   </data>
-  <data name="Open XA Slave log tools" xml:space="preserve"><value>Otwórz narzędzia logów XA Slave</value></data>
-  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Otwiera panel Utility &gt; XA Mods w XA Slave, zawierający Dalamud Log Cleaner.</value></data>
-  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>Nie udało się otworzyć narzędzi logów XA Slave.</value></data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>Otwórz narzędzia logów XA Slave</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>Otwiera panel Utility &gt; XA Mods w XA Slave, zawierający Dalamud Log Cleaner.</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>Nie udało się otworzyć narzędzi logów XA Slave.</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>Linie agresywne</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>Tracker</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>O nas i podziękowania</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Strona główna</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statystyki</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Konfiguracja</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>Język:</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>Wybierz język interfejsu wtyczki</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>Lokalizacja: {0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>Poza Eureką – przygotowania do wyprawy</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>Synchronizacja automatyczna</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Instrukcja obsługi</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>Noc</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Dzień</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>Elemental, poziom {0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>Elementy sterujące i filtry radaru</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>Włącz radar główny</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>Tylko w Eureka Expeditions</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>Automatyczne wykrywanie poziomu żywiołów</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>Poziom elementarny w trybie ręcznym</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>Odległość strefy bezpieczeństwa (m)</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>Margines bezpieczeństwa (m)</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>Potwory w pobliżu ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>Wyszukaj potwory...</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>Filtruj bezpieczne potwory</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>Bezpieczna różnica poziomów</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>Pokaż stożki widoczności</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>Pokaż kręgi dźwiękowe</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>Pokaż kręgi krwi</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>Pokaż ostrzeżenia dotyczące funkcji Magic</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>Pokaż okręgi bliskości</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>Pokaż linie odległości</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>Pokaż etykiety grup</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>Wypełnienie figur (jednolite)</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>Wypełnij krycie</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>Kąt łuku stożka agresji (stopnie)</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>Typy agresywne</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>Wzrok</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Dźwięk</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>Krew</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>Magia</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Bliskość</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>Prawdziwy wzrok</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>Bezpieczny</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>Aggro Risk</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>W zakresie</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Imię i nazwisko</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Poziom</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>Typ Aggro</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Zakres</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Odległość</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>Konfiguracja kolorów</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>Postrzeganie barw (wzrok)</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>Kolor i dźwięk (Smoki / Słuch)</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>Kolor krwi (Nieumarli / Ashkin)</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>Magia kolorów (duchy / żywiołaki)</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>Odległość kolorystyczna – bliska (&lt; 10 m)</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>Odległość kolorystyczna – duża (&gt;= 10 m)</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>Przywróć domyślne ustawienia kolorów</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>Zawsze pokazuj śpiące smoki</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>Zawsze pokazuj nieumarłych (krew)</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>Zawsze wyświetlaj sprite’y (Magia)</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>Trasa „Auto-Walk” w pobliżu Śpiących Smoków</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>Odległość uruchamiania funkcji Auto-Walk (m)</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>Wznowienie gry po opuszczeniu „Dragons”</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>Włącz sygnały dźwiękowe / sygnały ostrzegawcze</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>Głośność sygnału dźwiękowego</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>Podgląd alertów dotyczących kopalń odkrywkowych</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>Zablokuj pozycję alarmu odlewu</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>Zresetuj pozycję alertu rzutu</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] OSTRZEŻENIE O DZIAŁANIACH WROGA</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] OSTRZEŻENIE O DZIAŁANIACH WROGA (Przeciągnij, aby przesunąć)</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>WYMAGANE OGŁUSZENIE!</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>ZAKŁÓCIĆ POLE WIDZENIA (UKRYĆ)!</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>MOŻLIWOŚĆ PRZERWANIA / WYŁĄCZENIA DŹWIĘKU!</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0} wykonuje rzut: </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[OK] WŁĄCZONY TRYB AUTOMATYCZNEGO CHODZENIA (BEZPIECZNY)</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[OSTRZEŻENIE] BIEGNIESZ W POBLIŻU SMOKA! PRZEJDŹ DO CHODZENIA (KLUCZ /)</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[BEZPIECZNY] ŚPIĄCY SMOK</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[OSTRZEŻENIE] NAGŁY DŹWIĘK! OMIŃ TO (KLUCZ /)</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[OSTRZEŻENIE] HP &lt; 80%: AKTYWNA AGRESJA KRWI (WYLECZ DO BEZPIECZNEGO POZIOMU)</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[OSTRZEŻENIE] WYKRYTO CASTING! SPRITE ZACZNIE ATAKOWAĆ!</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[MAGIA] Sprite: NIE RZUCAJ ZAKLĘĆ</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[Dźwięk – Chodź!]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[Krew / Nieumarli]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[Magia / Duch]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[Zbliżenie]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[Widok]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>Tracker:</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>Utwórz nowy Eureka Tracker na stronie ffxiv-eureka.com</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>6-znakowy kod</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>Wprowadź 6-znakowy kod istniejącego urządzenia śledzącego</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>Hasło (opcjonalne)</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>Hasło opcjonalne. Wymagane do zmiany ustawień liczników czasu pobierania, jeśli moduł śledzący jest zabezpieczony.</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>Skopiuj hasło do schowka</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Połącz się</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Odłącz</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Łączenie...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>Automatyczne połączenie z serwisem Eureka Tracker po dodaniu wyprawy</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>Identyfikator instancji synchronizacji</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>Identyfikator instancji:</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>Wykryto automatycznie</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>Wprowadzanie ręczne</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>Nie w Eurece</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Zestaw</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>Nie jest połączony z urządzeniem śledzącym</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>Wpisz powyżej 6-znakowy kod śledzenia lub kliknij (+), aby utworzyć nowy.</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>Czas popu</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>Respawn</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>Żywy</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>Martwy</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>Warunki pojawiania się</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>Prognoza pogody</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>Pokaż wszystko</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>Ukryj martwe</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>Skopiuj link do narzędzia do śledzenia</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>Kopiuj znacznik</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>Zresetuj licznik czasu</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>Ustaw czas pojawienia się</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>Kilka minut temu</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>Kilka godzin temu</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Zgłoś się</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>Baza danych logogramów i czynności</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>Czynności związane z wyszukiwaniem...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>Przepis</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Rola</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>Mnemonik</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>Baza danych znanych potworów</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>Strefa</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>Anemos</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>Płatności</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>Pożar</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>Hydatos</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>Stan radaru Aggro:</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>Funkcja Dragon Auto-Walk:</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>Powiadomienia o obsadzie:</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>Zagrożenia w pobliżu (zasięg wykrywania radaru)</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>Baza danych potworów Eureka</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>Baza danych działań wroga i kontrataków taktycznych</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktywne</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Niepełnosprawni</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Włączone</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>Postać gracza nie jest zalogowana lub jest niedostępna.</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ Radar ekspedycyjny pozostaje w trybie gotowości, gdy statek znajduje się poza Eureką.</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>Funkcja wykrywania zagrożeń w czasie rzeczywistym oraz stożki ostrzegawcze uruchomią się automatycznie po wejściu do Anemos, Pagos, Pyros lub Hydatos.</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>Zagrożenie / Nazwa</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>Lv</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>Niebezpieczeństwo</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>Działania taktyczne</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>Źródło: Mob</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>Środek zaradczy</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>Czas rzucania zaklęcia</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>Nazwa akcji</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>Wszystkie strefy</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>Ogólne kwestie związane z wykrywaniem i bezpieczeństwem</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>Włącz tryb głównego urządzenia</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>Aktywuj tylko w Eureka</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>Zasięg wykrywania (metry)</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>Margines bezpieczeństwa (metry)</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>Automatyczne wykrywanie poziomu elementarnego gracza</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>Poziom żywiołów w trybie ręcznym</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>Filtruj bezpieczne potwory (bezpieczna różnica poziomów)</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>Kształty graficzne i elementy rysunkowe</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>Narysuj stożki widoczności</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>Narysuj kręgi agresji dźwiękowej</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>Narysuj krwawe kręgi agresji</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>Wyświetl ostrzeżenia dotyczące magii agresywnej</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>Narysuj okręgi zbliżeniowe</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>Linie orientacyjne odległości rysowania (&lt; 12 m)</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>Narysuj etykiety z pływającymi potworami</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>Wypełnienia bryłowe</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>Kąt łuku stożka widzenia (stopnie)</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>Śpiące smoki i automatyzacja funkcji Auto-Walk</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>Automatyczny spacer w pobliżu Śpiących Smoków (zapobiega ich przebudzeniu / przyciągnięciu uwagi)</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>Odległość aktywacji funkcji Auto-Walk (metry)</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>Wznowienie biegu po opuszczeniu strefy zagrożenia</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>HUD z alertami o rzutach taktycznych</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>Wyświetlanie na ekranie pływającego powiadomienia o akcji wroga</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>Zablokuj położenie okna</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>Test / Podgląd interfejsu użytkownika z powiadomieniami o obsadzie</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>Przywróć położenie okna</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>Sygnały dźwiękowe</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>Odtwarzaj sygnał ostrzegawczy przy zagrożeniu agresją</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>Paleta kolorów i personalizacja</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>Krąg Dźwięku Smoka</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>Tekst ostrzeżenia dotyczący biegu „Dragon Running”</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>Dragon Auto-Walk – bezpieczny tekst</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>Linia bliskiego zasięgu (&lt; 10 m)</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>Linia dalekiego zasięgu (&gt;= 10 m)</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>Wesprzyj McVaxiusa na Ko-fi</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>Dołącz do serwera Aethertek na Discordzie</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>Eureka – kod źródłowy na GitHubie</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>Linki dotyczące społeczności i linki zewnętrzne:</value>
+  </data>
 </root>

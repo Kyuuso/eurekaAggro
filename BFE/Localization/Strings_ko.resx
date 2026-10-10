@@ -391,7 +391,601 @@
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
     <value>이 로그는 Dalamud의 100 MiB 한도에 도달했습니다. 기록이 중단되어 최근 활동이 누락되었을 수 있으므로 현재 문제를 진단하는 데 도움이 되지 않을 수 있습니다.</value>
   </data>
-  <data name="Open XA Slave log tools" xml:space="preserve"><value>XA Slave 로그 도구 열기</value></data>
-  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Dalamud Log Cleaner가 있는 XA Slave의 Utility &gt; XA Mods 패널을 엽니다.</value></data>
-  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>XA Slave 로그 도구를 열지 못했습니다.</value></data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>XA Slave 로그 도구 열기</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>Dalamud Log Cleaner가 있는 XA Slave의 Utility &gt; XA Mods 패널을 엽니다.</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>XA Slave 로그 도구를 열지 못했습니다.</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>공격 라인</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>트래커</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>소개 및 제작진</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>메인</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>통계</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>구성</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>언어:</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>플러그인 인터페이스 언어 선택</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>위치: {0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>유레카 외곽 - 탐사 활동 대기 중</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>자동 동기화됨</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>사용 설명서</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>밤</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>날</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>엘리멘탈 레벨 {0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>레이더 제어 및 필터</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>마스터 레이더 활성화</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>오직 유레카 익스페디션스에서만</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>원소 레벨 자동 감지</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>수동 원소 레벨</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>안전 구역 거리 (m)</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>안전 여유 (m)</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>주변의 몬스터 ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>몬스터 검색...</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>안전한 몬스터 필터</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>안전한 수위 차이</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>시야 원뿔 표시</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>사운드 서클 표시</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>‘블러드 서클’ 보기</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>매직 경고 표시</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>근접 원 표시</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>거리 선 표시</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>모브 레이블 표시</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>도형 채우기 (단색)</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>불투명도 채우기</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>공격 범위 원뿔 각도 (도)</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>공격형 유형</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>시력</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>소리</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>피</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>마법</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>근접성</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>진실의 시야</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>안전한</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>공격 위험</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>범위 내</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>레벨</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>공격형</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>범위</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>거리</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>상태</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>색상 설정</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>색각 (시력)</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>색과 소리 (용 / 청각)</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>컬러 블러드 (언데드 / 애쉬킨)</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>컬러 매직 (스프라이트 / 엘리멘탈)</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>색상 거리 (근거리, &lt; 10m)</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>색상 거리: 원거리 (&gt;= 10m)</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>색상을 기본값으로 재설정</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>잠자는 용은 항상 표시하기</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>언데드(피) 항상 표시</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>스프라이트 항상 표시 (마법)</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>슬리핑 드래곤스 인근 오토워크</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>자동 보행 트리거 거리 (m)</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>드래곤스를 떠난 후 다시 달리기</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>소리/신호음 알림 켜기</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>오디오 알림 음량</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>오픈 캐스트 알림 미리보기</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>잠금 캐스트 알림 위치</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>캐스트 알림 위치 재설정</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] 적의 활동 경보</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] 적의 행동 경보 (끌어서 이동)</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>기절 효과 필수!</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>시야 차단 (숨기기)!</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>중단 / 음소거 기능 제공!</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0}이 캐스팅 중입니다: </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[OK] 자동 보행 모드 활성화됨 (안전)</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[경고] 드래곤 근처에서 달리고 있습니다! 지금 걸어가세요 (키패드 /)</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[안전] 잠자는 용</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[경고] 소리가 난다! 피하려면 걸어라 (키패드 /)</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[경고] HP &lt; 80%: 피에 의한 어그로 발동 (안전한 체력까지 회복하세요)</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[경고] 캐스팅 감지됨! 스프라이트가 어그로를 끌 것입니다!</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[마법] 스프라이트: 주문을 시전하지 마십시오</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[소리 - 걸어가자!]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[피 / 언데드]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[마법 / 스프라이트]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[근접성]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[풍경]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>트래커:</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>ffxiv-eureka.com에서 새로운 유레카 트래커를 생성하세요</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>6자 코드</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>기존 트래커의 6자리 코드를 입력하세요</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>비밀번호 (선택 사항)</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>선택 사항인 비밀번호입니다. 트래커가 보호 설정된 경우 POP 타이머를 수정할 때 필요합니다.</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>비밀번호를 클립보드에 복사하기</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>연결</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>연결 해제</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>연결 중...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>탐험에 참여할 때 유레카 트래커에 자동 연결</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>동기화 인스턴스 ID</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>인스턴스 ID:</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>자동 감지됨</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>수동 입력</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>유레카에서는 아닙니다</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>세트</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>트래커에 연결되지 않음</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>위에 6자리 추적 코드를 입력하거나 (+)를 클릭하여 새 코드를 생성하세요.</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>팝 타임</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>리스폰</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>살아있다</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>사망</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>출현 조건</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>일기 예보</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>모두 표시</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>죽은 사람 숨기기</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>트래커 링크 복사</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>복사 표시</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>타이머 재설정</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>팝 시간 설정</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>몇 분 전</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>몇 시간 전</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>신청하기</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>취소</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>표의문자 및 동작 데이터베이스</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>검색 작업...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>레시피</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>역할</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>설명</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>기억법</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>악명 높은 괴물 데이터베이스</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>구역</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>아네모스</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>결제</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>불</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>Hydatos</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>애그로 레이더 상태:</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>드래곤 오토워크:</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>출연진 소식:</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>주변의 위협 (레이더 탐지 범위)</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>유레카 몬스터 참고 자료 데이터베이스</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>적의 행동 및 전술적 대응 데이터베이스</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>활성</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>비활성화됨</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>활성화됨</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>플레이어 캐릭터가 로그인되어 있지 않거나 사용할 수 없습니다.</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ 유레카 외곽에서는 원정 레이더가 대기 상태에 있습니다.</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>아네모스, 파고스, 피로스, 히다토스에 진입하면 실시간 위협 감지 기능과 위험 표시등이 자동으로 활성화됩니다.</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>위협 / 이름</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>Lv</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>위험</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>전술적 행동</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>출처: Mob</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>대응책</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>시전 시간</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>작업 이름</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>모든 구역</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>일반 감지 및 안전</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>마스터 활성화</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>유레카에서만 활성화</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>탐지 범위 (미터)</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>안전 여유 거리 (미터)</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>플레이어의 원소 레벨 자동 감지</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>수동 플레이어 원소 레벨</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>안전한 몬스터 필터링 (안전한 레벨 차이)</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>시각적 도형 및 그리기 요소</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>시야 원뿔 그리기</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>사운드 어그로 서클 그리기</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>피를 흘리는 어그로 서클 그리기</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>마법 어그로 경고 카드 뽑기</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>근접 원 그리기</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>시야 거리 가이드 라인 (&lt; 12m)</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>떠다니는 괴물 라벨 그리기</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>고체 도형 채우기</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>시야 원뿔 아크 각도 (도)</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>잠자는 드래곤과 자동 이동 기능</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>잠자는 드래곤 근처에서 자동 이동 (깨어나거나 어그로 유발 방지)</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>자동 보행 활성화 거리 (미터)</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>위험 반경 밖으로 벗어나면 달리기 재개</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>전술 캐스트 알림 HUD</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>화면에 적의 행동에 대한 알림을 표시</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>창 위치 고정</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>테스트 / 미리보기 캐스트 알림 HUD</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>창 위치 재설정</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>음성 알림</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>어그로 위협 발생 시 ‘삐’ 경고음 재생</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>색상 팔레트 및 사용자 지정</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>드래곤 사운드 서클</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>드래곤 러닝 경고 문구</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>드래곤 오토워크 안전 안내문</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>근거리 선 (&lt; 10m)</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>원거리 라인 (&gt;= 10m)</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>Ko-fi에서 McVaxius를 후원해 주세요</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>Aethertek 디스코드에 가입하세요</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>Eureka GitHub 소스 코드</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>커뮤니티 및 외부 링크:</value>
+  </data>
 </root>

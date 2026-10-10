@@ -391,7 +391,601 @@
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
     <value>このログはDalamudの100 MiB上限に達しています。記録が停止し、最近の動作が含まれていない可能性があるため、現在の問題の調査に役立たない場合があります。</value>
   </data>
-  <data name="Open XA Slave log tools" xml:space="preserve"><value>XA Slaveのログツールを開く</value></data>
-  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Dalamud Log Cleanerを含むXA SlaveのUtility &gt; XA Modsパネルを開きます。</value></data>
-  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>XA Slaveのログツールを開けませんでした。</value></data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>XA Slaveのログツールを開く</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>Dalamud Log Cleanerを含むXA SlaveのUtility &gt; XA Modsパネルを開きます。</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>XA Slaveのログツールを開けませんでした。</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>アグロ・ラインズ</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>トラッカー</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>概要・クレジット</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>メイン</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>統計</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>言語：</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>プラグインのインターフェース言語を選択してください</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>場所：{0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>ユーレカ郊外 - 遠征隊は待機中</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>自動同期</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>マニュアル</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>夜</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>それ</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>エレメンタル Lv. {0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>レーダー制御およびフィルタ</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>マスターレーダーの有効化</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>「オンリー・イン・ユーレカ・エクスペディションズ」</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>エレメンタルレベルの自動検出</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>手動エレメンタルレベル</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>安全区域の距離（m）</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>安全余裕（m）</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>近くのモンスター ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>モンスターを検索…</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>「安全なモンスター」をフィルタリング</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>安全なレベル差</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>ビジョンコーンを表示</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>サウンドサークルを表示</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>「血の輪」を表示</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>「Magic」の警告を表示する</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>近接サークルを表示</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>距離線を表示</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>モブラベルを表示</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>図形の塗りつぶし（実線）</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>不透明度を塗りつぶす</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>アグロコーンの弧（度）</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>アグロタイプ</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>視力</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>サウンド</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>血</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>マジック</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>近接</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>トゥルーサイト</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>安全</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>アグロ・リスク</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>範囲内</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>レベル</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>アグロタイプ</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>範囲</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>距離</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>ステータス</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>色の設定</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>色覚（視覚）</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>カラー・サウンド（ドラゴン／聴覚）</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>カラー・ブラッド（アンデッド／アシュキン）</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>カラー・マジック（スプライト／エレメンタル）</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>カラー距離（近距離：10m未満）</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>カラー距離：遠距離（10m以上）</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>色をデフォルトに戻す</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>「眠れる竜」を常に表示する</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>アンデッド（血）を常に表示する</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>スプライトを常に表示（マジック）</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>「眠れる竜」の近くでのオートウォーク</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>オートウォークのトリガー距離（m）</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>ドラゴンズを退団した後の復帰</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>サウンド／ビープ音による通知を有効にする</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>音声アラートの音量</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>露天掘りの警報プレビュー</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>ロックキャストアラートの位置</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>キャストアラートの位置をリセット</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] 敵の行動に関する警報</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] 敵の行動アラート（ドラッグして移動）</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>スタン必須！</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>視線を遮る（隠す）！</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>「中断／ミュート」機能をご利用いただけます！</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0}はキャストを行っています： </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[OK] オートウォーク作動中（安全）</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[警告] ドラゴンの近くを走っています！今すぐ歩いてください（キーパッドの / キー）</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[SAFE] 眠れるドラゴン</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[警告] 敵が接近中！ 回避するために移動してください（キーパッドの / キー）</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[アラート] HP &lt; 80%: 血の攻撃対象状態発動中（安全な状態まで回復してください）</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[警告] キャストを検知！スプライトがアグロする！</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[MAGIC] スプライト：呪文を唱えてはならない</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[効果音 - 歩く！]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[血 / アンデッド]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[魔法 / スプライト]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[近接]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[視界]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>トラッカー：</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>ffxiv-eureka.com で新しい Eureka Tracker を作成する</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>6文字のコード</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>既存のトラッカーの6文字のコードを入力してください</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>パスワード（任意）</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>パスワードは任意です。トラッカーが保護されている場合、POPタイマーを変更するにはパスワードが必要です。</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>パスワードをクリップボードにコピーする</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>接続</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>切断</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>接続中...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>遠征に参加する際、Eureka Trackerに自動接続する</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>インスタンスIDの同期</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>インスタンスID：</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>自動検出</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>手動入力</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>ユーレカではない</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>セット</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>トラッカーに接続されていません</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>上記に6文字のトラッカーコードを入力するか、(+)をクリックして新しいコードを作成してください。</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>ポップ・タイム</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>リスポーン</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>生きている</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>死んだ</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>スポーン条件</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>天気予報</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>すべて表示</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>「デッド」を非表示にする</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>トラッカーリンクをコピー</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>コピーフラグ</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>タイマーをリセット</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>ポップ時間を設定する</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>ほんの数分前</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>数時間前</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>応募する</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>表意文字・動作データベース</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>検索アクション...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>レシピ</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>役割</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>ニーモニック</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>悪名高きモンスター・データベース</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>ゾーン</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>アネモス</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>お支払い</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>火</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>ハイダトス</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>アグロレーダーのステータス：</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>ドラゴン・オートウォーク：</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>キャスト情報：</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>周辺の脅威（レーダー探知範囲）</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>ユーリカ・モンスターズ リファレンス・データベース</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>敵の行動と戦術的対抗策データベース</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>アクティブ</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>無効</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>有効</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>プレイヤーキャラクターがログインしていないか、利用できません。</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ ユーレカの外では、遠征用レーダーが待機状態にある。</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>「アネモス」、「パゴス」、「パイロス」、または「ヒダトス」に入ると、リアルタイムの脅威検知機能と危険表示コーンが自動的に作動します。</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>脅威 / 名称</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>Lv</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>危険</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>タクティカル・アクション</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>ソース・モブ</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>対策</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>詠唱時間</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>アクション名</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>すべてのゾーン</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>一般的な検知・安全</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>マスター有効化</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>「ユーレカ」でのみ有効化</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>検知範囲（メートル）</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>安全余裕（メートル）</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>プレイヤーのエレメンタルレベルを自動検出</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>マニュアルプレイヤーのエレメンタルレベル</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>「安全なモンスター」をフィルタリング（安全なレベル差）</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>図形と描画要素</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>ビジョンコーンを描く</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>サウンド・アグロ・サークルを描く</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>「ドロー・ブラッド・アグロ・サークルズ」</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>「ドロー・マジック」のアグロ警告</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>近接円を描く</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>描画距離のガイドライン（12m未満）</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>浮遊するモンスターのラベルを描く</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>ソリッド形状の塗りつぶし</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>視野円錐の弧角（度）</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>「スリーピング・ドラゴンズ」と「オートウォーク」の自動化</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>「眠れるドラゴン」付近でのオートウォーク（目覚めやアグロを防止）</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>オートウォーク作動距離（メートル）</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>危険範囲から離れた際に走行を再開する</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>戦術的キャストアラート HUD</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>画面上に敵の行動に関するアラートをフローティング表示する</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>ウィンドウの位置を固定する</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>テスト／プレビュー　キャストアラートHUD</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>ウィンドウの位置をリセット</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>音声アラート</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>アグロの脅威時にビープ音による警告を再生する</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>カラーパレットとカスタマイズ</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>ドラゴン・サウンド・サークル</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>「ドラゴン・ランニング」に関する警告文</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>「ドラゴン・オートウォーク」の安全に関するテキスト</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>近距離ライン（10m未満）</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>長距離ライン（10m以上）</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>Ko-fiでMcVaxiusを応援しよう</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>AethertekのDiscordに参加する</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>Eureka SuiteのGitHubソースコード</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>コミュニティおよび外部リンク：</value>
+  </data>
 </root>

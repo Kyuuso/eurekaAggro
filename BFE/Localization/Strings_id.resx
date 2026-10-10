@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -333,7 +333,7 @@
   <data name="Going to Personal House" xml:space="preserve">
     <value>Menuju rumah pribadi</value>
   </data>
-  <data name="Required plugins unavailable for Bunnies:&#xA;{0}" xml:space="preserve">
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
     <value>Plugin yang diperlukan untuk Bunnies tidak tersedia:
 {0}</value>
   </data>
@@ -391,7 +391,601 @@
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
     <value>Log ini mencapai batas 100 MiB Dalamud. Pencatatan mungkin berhenti; aktivitas terbaru mungkin tidak tercatat sehingga log mungkin tidak membantu mendiagnosis masalah saat ini.</value>
   </data>
-  <data name="Open XA Slave log tools" xml:space="preserve"><value>Buka alat log XA Slave</value></data>
-  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Membuka panel Utility &gt; XA Mods XA Slave yang berisi Dalamud Log Cleaner.</value></data>
-  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>Alat log XA Slave tidak dapat dibuka.</value></data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>Buka alat log XA Slave</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>Membuka panel Utility &gt; XA Mods XA Slave yang berisi Dalamud Log Cleaner.</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>Alat log XA Slave tidak dapat dibuka.</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>Garis Aggro</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>Pelacak</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>Tentang &amp; Kredit</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Beranda</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Konfigurasi</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>Bahasa:</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>Pilih bahasa antarmuka plugin</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>Lokasi: {0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>Di luar Eureka - Fitur ekspedisi dalam status siaga</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>Disinkronkan secara otomatis</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Panduan</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>Malam</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Hari</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>Elemen Lv. {0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>Kontrol &amp; Filter Radar</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>Aktifkan Radar Utama</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>Hanya di Eureka Expeditions</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>Deteksi Otomatis Tingkat Elemen</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>Tingkat Elemen Manual</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>Jarak Zona Aman (m)</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>Margin Keamanan (m)</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>Monster di Sekitar ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>Cari Monster...</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>Saring Monster yang Aman</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>Selisih Ketinggian yang Aman</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>Tampilkan Kerucut Pandang</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>Tampilkan Lingkaran Suara</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>Tampilkan Lingkaran Darah</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>Tampilkan Peringatan Magic</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>Tampilkan Lingkaran Jarak</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>Tampilkan Garis Jarak</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>Tampilkan Label Mob</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>Isi Bentuk (Penuh)</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>Isi Opasitas</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>Sudut Kerucut Aggro (Derajat)</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>Jenis Aggro</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>Penglihatan</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Suara</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>Darah</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>Sihir</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Kedekatan</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>Penglihatan Sejati</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>Aman</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>Risiko Agresif</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>Dalam Jangkauan</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Tingkat</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>Tipe Aggro</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Rentang</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Jarak</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>Konfigurasi Warna</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>Penglihatan Warna (Penglihatan)</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>Warna dan Suara (Naga / Pendengaran)</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>Darah Berwarna (Makhluk Tak Mati / Ashkin)</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>Sihir Warna (Sprite / Makhluk Elemen)</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>Jarak Warna Dekat (&lt; 10 m)</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>Jarak Warna Jauh (&gt;= 10 m)</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>Kembalikan Warna ke Pengaturan Default</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>Selalu Tampilkan Naga yang Sedang Tidur</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>Selalu Tampilkan Makhluk Tak Mati (Darah)</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>Selalu Tampilkan Sprite (Sihir)</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>Jalan Otomatis di Dekat Naga Tidur</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>Jarak Pemicu Auto-Walk (m)</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>Kembali Berlari Setelah Meninggalkan Naga-Naga</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>Aktifkan Suara / Bunyi Peringatan</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>Volume Peringatan Suara</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>Pratinjau Peringatan Tambang Terbuka</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>Kunci Posisi Peringatan Cast</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>Atur Ulang Posisi Peringatan Pemeran</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] PERINGATAN TINDAKAN MUSUH</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] PERINGATAN AKSI MUSUH (Seret untuk memindahkan)</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>WAJIB MENGGUNAKAN STUN!</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>PUTUSKAN GARIS PANDANG (SEMBUNYIKAN)!</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>TERSEDIA LAYANAN INTERRUPT / SILENCE!</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0} sedang melakukan casting: </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[OK] MODE BERJALAN OTOMATIS AKTIF (AMAN)</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[PERINGATAN] SEDANG BERJALAN DI DEKAT NAGA! SEGERA BERJALANLAH (TOMBOL /)</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[AMAN] NAGA YANG TERTIUP</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[PERINGATAN] SUARA AGGRESIF! JANGAN MENDEKATI (TOMBOL /)</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[PERINGATAN] HP &lt; 80%: AGGRESI DARAH AKTIF (SEMBUHKAN HINGGA AMAN)</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[PERINGATAN] TERDETEKSI CASTING! SPRITE AKAN MENYERANG!</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[MAGIC] Sprite: JANGAN MENYIARKAN MANTRAM</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[Suara - Ayo jalan!]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[Darah / Makhluk Tak Mati]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[Sihir / Makhluk Ajaib]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[Jarak]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[Pemandangan]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>Pelacak:</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>Buat Eureka Tracker baru di ffxiv-eureka.com</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>Kode 6 karakter</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>Masukkan kode 6 karakter dari pelacak yang sudah ada</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>Kata sandi (opsional)</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>Kata sandi opsional. Diperlukan untuk mengubah pengatur waktu pop jika pelacak dilindungi.</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>Salin kata sandi ke papan klip</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Terhubung</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Putuskan sambungan</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Sedang terhubung...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>Terhubung otomatis ke Eureka Tracker saat memulai ekspedisi</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>ID Instansi Sinkronisasi</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>ID Instansi:</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>Terdeteksi secara otomatis</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>Entri Manual</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>Bukan di Eureka</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>Tidak Terhubung ke Pelacak</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>Masukkan kode pelacak yang terdiri dari 6 karakter di atas atau klik (+) untuk membuat yang baru.</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>Waktu Pop</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>Respawn</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>Hidup</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>Mati</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>Syarat Kemunculan</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>Prakiraan Cuaca</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>Tampilkan Semua</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>Sembunyikan yang Sudah Mati</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>Salin Tautan Pelacak</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>Tanda Salin</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>Atur Ulang Timer</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>Tentukan Waktu Pop</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>Beberapa Menit yang Lalu</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>Beberapa Jam yang Lalu</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Daftar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Batal</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>Basis Data Logogram &amp; Tindakan</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>Tindakan Pencarian...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>Resep</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Peran</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Deskripsi</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>Mnemonik</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>Basis Data Monster Terkenal</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>Zona</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>Ayo kita</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>Pembayaran</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>Api</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>Hydatos</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>Status Aggro Radar:</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>Dragon Auto-Walk:</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>Pemberitahuan Pemain:</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>Ancaman di Sekitar (Jangkauan Deteksi Radar)</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>Basis Data Referensi Monster Eureka</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>Basis Data Tindakan Musuh &amp; Tindakan Balasan Taktis</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Cacat</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Diaktifkan</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>Karakter pemain belum masuk atau tidak tersedia.</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ Radar ekspedisi dalam keadaan siaga saat berada di luar Eureka.</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>Deteksi ancaman secara real-time dan tanda peringatan bahaya akan otomatis aktif begitu Anda memasuki Anemos, Pagos, Pyros, atau Hydatos.</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>Ancaman / Nama</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>Lv</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>Bahaya</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>Aksi Taktis</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>Sumber Mob</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>Tindakan Penanggulangan</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>Waktu Lemparan</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>Nama Tindakan</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>Semua Zona</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>Deteksi Umum &amp; Keselamatan</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>Aktifkan Utama</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>Hanya Dapat Diaktifkan di Eureka</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>Jarak Deteksi (Meter)</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>Margin Keamanan (Meter)</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>Deteksi Otomatis Tingkat Elemen Pemain</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>Tingkat Elemen Pemain Manual</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>Saring Monster yang Aman (Selisih Level yang Aman)</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>Bentuk Visual &amp; Elemen Gambar</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>Gambarlah Kerucut Pandang</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>Menggambar Lingkaran Aggro Suara</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>Menggambar Lingkaran Aggro Berdarah</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>Peringatan Draw Magic Aggro</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>Menggambar Lingkaran Proksimitas</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>Garis Panduan Jarak Tampilan (&lt; 12 m)</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>Menggambar Label Monster Mengambang</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>Isi Bentuk Padat</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>Sudut Busur Kerucut Pandang (Derajat)</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>Naga Tidur &amp; Otomatisasi Auto-Walk</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>Auto-Walk di Dekat Naga yang Sedang Tidur (Mencegah Naga Terbangun / Menarik Perhatian)</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>Jarak Aktivasi Auto-Walk (Meter)</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>Kembalikan Keadaan Berjalan Saat Keluar dari Jarak Bahaya</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>HUD Peringatan Lemparan Taktis</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>Menampilkan Peringatan Aksi Musuh yang Mengambang di Layar</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>Kunci Posisi Jendela</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>Uji Coba / Pratinjau HUD Peringatan Pemain</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>Atur Ulang Posisi Jendela</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>Peringatan Suara</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>Putar Suara Peringatan Saat Ada Ancaman Aggro</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>Palet Warna &amp; Kustomisasi</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>Lingkaran Suara Naga</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>Teks Peringatan Dragon Running</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>Teks Keamanan Fitur Dragon Auto-Walk</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>Garis Jarak Dekat (&lt; 10 m)</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>Jalur Jarak Jauh (&gt;= 10 m)</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>Dukung McVaxius di Ko-fi</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>Bergabunglah dengan Discord Aethertek</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>Eureka Suite GitHub Sumber</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>Tautan Komunitas &amp; Eksternal:</value>
+  </data>
 </root>

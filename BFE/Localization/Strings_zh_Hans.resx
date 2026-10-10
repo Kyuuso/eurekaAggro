@@ -391,7 +391,601 @@
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
     <value>此日志已达到 Dalamud 的 100 MiB 上限。日志记录可能已停止，最近的活动可能缺失，因此可能无法帮助诊断当前问题。</value>
   </data>
-  <data name="Open XA Slave log tools" xml:space="preserve"><value>打开XA Slave日志工具</value></data>
-  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>打开XA Slave的Utility &gt; XA Mods面板，其中包含Dalamud Log Cleaner。</value></data>
-  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>无法打开XA Slave日志工具。</value></data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>打开XA Slave日志工具</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>打开XA Slave的Utility &gt; XA Mods面板，其中包含Dalamud Log Cleaner。</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>无法打开XA Slave日志工具。</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>Aggro Lines</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>追踪器</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>关于与鸣谢</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>统计数据</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>语言：</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>选择插件界面语言</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>位置：{0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>《尤里卡之外——探险特辑》待播</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>自动同步</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>手册</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>夜晚</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>元素等级 {0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>雷达控制与滤波器</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>启用主雷达</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>唯有在尤里卡探险公司</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>自动检测元素等级</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>手动元素等级</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>安全区距离（米）</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>安全裕度（米）</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>附近的怪物 ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>搜索怪物……</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>筛选“安全的怪物”</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>安全高程差</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>显示视野锥</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>显示“声音圈”</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>显示血圈</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>显示魔法警告</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>显示距离圈</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>显示距离线</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>显示群组标签</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>填充图形（实心）</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>填充不透明度</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>攻击锥角（度）</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>激进型</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>视力</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>声音</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>血</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>魔法</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>邻近性</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>真视</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>安全</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>Aggro Risk</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>在范围内</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>级别</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>激进型</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>范围</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>颜色配置</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>色觉（视觉）</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>色彩与声音（龙／听觉）</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>《血色》（不死族／阿什金）</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>色彩魔法（精灵/元素生物）</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>颜色 距离 近距离（&lt; 10 米）</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>彩色距离：远（&gt;= 10米）</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>将颜色重置为默认值</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>始终显示沉睡的巨龙</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>始终显示不死生物（血）</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>始终显示精灵（魔法）</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>“睡龙”附近的自动漫步</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>自动行走触发距离（米）</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>离开“龙之队”后恢复跑步</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>启用声音/蜂鸣提示</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>声音提示音量</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>《Open Cast Alert》预览</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>锁定投掷警报位置</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>重置施法警报位置</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] 敌方行动警报</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] 敌方行动警报（拖动以移动）</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>必须使用“STUN”！</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>切断视线（隐藏）！</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>提供“打断”/“静音”功能！</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0}正在进行选角： </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[确定] 自动行走已启用（安全）</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[警告] 正在龙附近奔跑！请立即步行（按键盘上的 / 键）</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[SAFE] 沉睡的巨龙</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[警告] 敌方锁定！请走开以避开（按键盘上的 / 键）</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[警报] 生命值 &lt; 80%：血液仇恨机制已激活（请治疗至安全血量）</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[警报] 检测到施法！精灵将进入仇恨状态！</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[魔法] 精灵：请勿施放法术</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[音效——走！]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[血液 / 不死族]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[魔法 / 精灵]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[邻近]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[视界]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>追踪器：</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>在 ffxiv-eureka.com 上创建一个新的 Eureka Tracker</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>6位字符代码</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>输入现有追踪器的6位代码</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>密码（可选）</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>密码为可选项。如果跟踪器受保护，则修改POP定时器时需要输入密码。</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>将密码复制到剪贴板</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>连接</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>断开连接</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>正在连接...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>进入探险活动时自动连接到Eureka Tracker</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>同步实例 ID</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>实例 ID：</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>自动检测</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>手动录入</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>不在尤里卡</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>集合</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>未连接到追踪器</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>在上面输入一个6位数的追踪码，或点击“+”生成一个新的。</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>流行时刻</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>重生</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>活着</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>已死</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>生成条件</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>天气预报</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>显示全部</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>隐藏已死</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>复制跟踪链接</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>复制标记</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>重置计时器</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>设置弹出时间</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>几分钟前</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>几小时前</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>申请</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>表意文字与动作数据库</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>搜索操作...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>食谱</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>角色</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>助记符</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>恶名昭彰的怪物数据库</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>区域</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>让我们</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>付款</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>火</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>Hydatos</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>Aggro Radar 状态：</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>龙之自动行走：</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>演员阵容快讯：</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>附近威胁（雷达探测范围）</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>《尤里卡怪物参考数据库》</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>敌方行动与战术应对措施数据库</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>有效</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>已禁用</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>已启用</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>玩家角色未登录或不可用。</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ 在尤里卡以外的区域，远征雷达处于待机状态。</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>一旦进入阿内莫斯、帕戈斯、皮罗斯或希达托斯，实时威胁检测和危险警示锥将自动激活。</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>威胁 / 名称</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>Lv</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>危险</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>战术行动</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>Source Mob</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>应对措施</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>施法时间</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>操作名称</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>所有区域</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>一般检测与安全</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>主启用</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>仅在尤里卡激活</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>检测范围（米）</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>安全裕度（米）</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>自动检测玩家元素等级</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>手动玩家元素等级</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>筛选“安全怪物”（安全等级差）</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>视觉形状与绘图元素</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>绘制视野锥</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>绘制“声音仇恨圈”</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>绘制“流血”激进圈</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>抽取“魔法”快攻警告</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>绘制邻近圆</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>绘制距离参考线（&lt; 12 米）</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>绘制漂浮怪兽标签</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>实心形状填充</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>视野锥弧角（度）</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>沉睡的巨龙与自动行走自动化</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>在“沉睡的巨龙”附近自动行走（防止唤醒/吸引仇恨）</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>自动行走激活距离（米）</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>在离开危险半径后恢复运行</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>战术投掷提醒 HUD</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>在屏幕上显示敌方行动浮动提示</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>锁定窗口位置</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>测试/预览 演员提醒 HUD</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>重置窗口位置</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>音频提示音</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>当受到仇恨威胁时播放蜂鸣警告</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>配色方案与自定义</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>龙之声圈</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>“龙奔”警告文本</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>Dragon Auto-Walk 安全提示文本</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>近距离线（&lt; 10 米）</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>远距离线路（≥10米）</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>在 Ko-fi 上支持 McVaxius</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>加入 Aethertek Discord</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>Eureka GitHub 源代码</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>社区与外部链接：</value>
+  </data>
 </root>
