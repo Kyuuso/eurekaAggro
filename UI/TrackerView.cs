@@ -868,6 +868,7 @@ public class TrackerView : IDisposable
             .OrderByDescending(t => !string.IsNullOrEmpty(detectedId) && string.Equals(t.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase))
             .ThenByDescending(t => !string.IsNullOrEmpty(t.InstanceId))
             .ThenByDescending(t => t.UpdatedAt ?? t.CreatedAt ?? DateTimeOffset.MinValue)
+            .ThenByDescending(t => t.PoppedCount)
             .ToList();
 
         if (sorted.Count == 0)

@@ -182,6 +182,7 @@ public class TrackerManager : IDisposable
                         .Where(t => t.ZoneId == zoneId &&
                                     string.Equals(t.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase))
                         .OrderByDescending(t => t.UpdatedAt ?? t.CreatedAt ?? DateTimeOffset.MinValue)
+                        .ThenByDescending(t => t.PoppedCount)
                         .ToList();
 
                     if (matchingTrackers.Count > 0)
