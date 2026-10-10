@@ -39,6 +39,7 @@ internal sealed class UiText : IDisposable
 
     internal static void SetActiveLanguage(string language)
     {
+        if (string.Equals(language, "es-ES", StringComparison.OrdinalIgnoreCase)) language = "es";
         activeLanguage = Languages.Any(l => l.Code == language) ? language : "en";
         fallbackInstance?.Dispose();
         fallbackInstance = new UiText(activeLanguage, null);
@@ -47,7 +48,7 @@ internal sealed class UiText : IDisposable
     internal static readonly (string Code, string Name)[] Languages =
     [
         ("en", "English"),
-        ("es", "Español"),
+        ("es", "Español (España)"),
         ("de", "Deutsch"),
         ("fr", "Français"),
         ("it", "Italiano"),
@@ -71,8 +72,9 @@ internal sealed class UiText : IDisposable
 
     public UiText(string language, Func<UiFontRole, IDisposable>? pushFont = null)
     {
+        if (string.Equals(language, "es-ES", StringComparison.OrdinalIgnoreCase)) language = "es";
         Language = Languages.Any(l => l.Code == language) ? language : "en";
-        Culture = CultureInfo.GetCultureInfo(Language);
+        Culture = CultureInfo.GetCultureInfo(Language == "es" ? "es-ES" : Language);
 
         // Load resource manager for selected language
         manager = new ResourceManager("BFE.Localization.Strings_" + Language.Replace('-', '_'), typeof(UiText).Assembly);
