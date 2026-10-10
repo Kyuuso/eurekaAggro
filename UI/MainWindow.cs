@@ -229,7 +229,9 @@ public class MainWindow
         // Title and zone status
         var territoryId = clientState.TerritoryType;
         bool isEureka = ValidZones.IsEureka(territoryId);
-        string zoneName = ValidZones.GetZoneName(territoryId);
+        string zoneName = isEureka
+            ? ValidZones.GetZoneName(territoryId)
+            : (ECommons.ExcelServices.ExcelTerritoryHelper.GetName(territoryId, true) is { Length: > 0 } name ? name : "Overworld");
 
         ImGui.BeginGroup();
         {

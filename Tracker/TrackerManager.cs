@@ -87,6 +87,11 @@ public class TrackerManager : IDisposable
             _ => null,
         };
 
+        if (CurrentZoneTracker == null)
+        {
+            InstanceService.ResetServerId();
+        }
+
         FateMonitor.Reset();
     }
 

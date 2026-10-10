@@ -10,6 +10,7 @@ using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
 using Dalamud.Plugin.Services;
 using EurekaAggro.Configuration;
+using EurekaAggro.Data;
 using EurekaAggro.Tracker;
 using EurekaAggro.Tracker.Model;
 using EurekaAggro.Tracker.Network;
@@ -403,13 +404,18 @@ public class TrackerView
             }
 
             // Status label
-            if (!string.IsNullOrEmpty(detectedId))
+            bool inEureka = ValidZones.IsEureka(clientState.TerritoryType);
+            if (inEureka && !string.IsNullOrEmpty(detectedId))
             {
                 ImGui.TextColored(ImGuiColors.ParsedGreen, $"[Detected from memory: {detectedId}]");
             }
-            else
+            else if (inEureka)
             {
                 ImGui.TextDisabled("[No Server ID detected yet - enter a Eureka zone]");
+            }
+            else
+            {
+                ImGui.TextDisabled("[Outside Eureka - Standby]");
             }
 
             if (client.IsConnected && !string.IsNullOrEmpty(client.InstanceId))
@@ -707,15 +713,18 @@ public class TrackerView
 
         ImGui.Spacing();
 
-        string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
-        if (!string.IsNullOrEmpty(detectedId))
-        {
-            ImGui.TextColored(GreenColorText, $"Active Eureka Server ID detected: {detectedId}");
-        }
-
         if (trackerManager.CurrentZoneTracker != null)
         {
+            string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
+            if (!string.IsNullOrEmpty(detectedId))
+            {
+                ImGui.TextColored(GreenColorText, $"Active Eureka Server ID detected: {detectedId}");
+            }
             ImGui.TextDisabled($"Current Expedition Zone: {trackerManager.CurrentZoneTracker.ZoneName}");
+        }
+        else
+        {
+            ImGui.TextDisabled("Location: Outside Eureka (Expedition tracker features on standby).");
         }
     }
 

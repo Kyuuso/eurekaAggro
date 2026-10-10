@@ -61,13 +61,13 @@ public unsafe class InstanceTrackerService : IDisposable
 
             if (packet != null)
             {
-                CurrentServerId = packet->ServerId;
                 CurrentTerritoryId = packet->TerritoryTypeId;
                 CurrentInstanceNumber = packet->Instance;
 
                 // Check if this is an expedition zone (Anemos 732, Pagos 763, Pyros 795, Hydatos 827)
                 if (IsEurekaTerritory(packet->TerritoryTypeId))
                 {
+                    CurrentServerId = packet->ServerId;
                     EurekaAggroPlugin.PluginLog.Info($"Entered Eureka zone {packet->TerritoryTypeId} with Server ID {packet->ServerId}");
 
                     if (config.TrackerDisplayServerIdInChat)
@@ -86,6 +86,11 @@ public unsafe class InstanceTrackerService : IDisposable
 
                     OnEurekaZoneEntered?.Invoke(packet->ServerId, packet->TerritoryTypeId);
                 }
+                else
+                {
+                    // Player is outside Eureka - do not track overworld server IDs as Eureka instance IDs
+                    CurrentServerId = null;
+                }
             }
         }
         catch (Exception ex)
@@ -95,14 +100,22 @@ public unsafe class InstanceTrackerService : IDisposable
     }
 
     /// <summary>
-    /// Reads the public instance ID from UIState if already inside a zone.
+    /// Resets any active detected server ID when transitioning outside Eureka.
+    /// </summary>
+    public void ResetServerId()
+    {
+        CurrentServerId = null;
+    }
+
+    /// <summary>
+    /// Reads the public instance ID from UIState if already inside a Eureka zone.
     /// </summary>
     public static uint GetLivePublicInstanceId()
     {
         try
         {
             var uiState = UIState.Instance();
-            if (uiState != null)
+            if (uiState != null && IsEurekaTerritory((ushort)uiState->PublicInstance.TerritoryTypeId))
             {
                 return uiState->PublicInstance.InstanceId;
             }
@@ -114,9 +127,16 @@ public unsafe class InstanceTrackerService : IDisposable
 
     /// <summary>
     /// Returns the best available instance identifier string (Server ID from packet, or PublicInstanceId).
+    /// Returns string.Empty if the player is currently outside Eureka.
     /// </summary>
     public string GetBestDetectedInstanceId()
     {
+        // Must be in Eureka to provide an instance ID
+        if (!IsEurekaTerritory(clientState.TerritoryType))
+        {
+            return string.Empty;
+        }
+
         if (CurrentServerId.HasValue && CurrentServerId.Value > 0)
         {
             return CurrentServerId.Value.ToString();
@@ -131,10 +151,10 @@ public unsafe class InstanceTrackerService : IDisposable
         return string.Empty;
     }
 
-    private static bool IsEurekaTerritory(ushort territoryId) =>
+    public static bool IsEurekaTerritory(uint territoryId) =>
         territoryId is 732 or 763 or 795 or 827;
 
-    private static string GetZoneName(ushort territoryId) => territoryId switch
+    private static string GetZoneName(uint territoryId) => territoryId switch
     {
         732 => "Eureka Anemos",
         763 => "Eureka Pagos",
