@@ -181,7 +181,11 @@ jobs:
                   # Purge legacy EurekaAggro entry so it never appears in Dalamud
                   $pm = @($pm | Where-Object { $_.InternalName -ne "EurekaAggro" })
                   
-                  Set-Content -Path $pmPath -Value ($pm | ConvertTo-Json -Depth 10) -Encoding utf8
+                  $jsonOutput = $pm | ConvertTo-Json -Depth 10
+                  if (-not $jsonOutput.TrimStart().StartsWith("[")) {
+                      $jsonOutput = "[`n" + $jsonOutput + "`n]"
+                  }
+                  Set-Content -Path $pmPath -Value $jsonOutput -Encoding utf8
               }
               
               cd public_repo
@@ -230,7 +234,11 @@ jobs:
                   # Purge legacy EurekaAggro entry so it never appears in Dalamud
                   $pm = @($pm | Where-Object { $_.InternalName -ne "EurekaAggro" })
                   
-                  Set-Content -Path $pmPath -Value ($pm | ConvertTo-Json -Depth 10) -Encoding utf8
+                  $jsonOutput = $pm | ConvertTo-Json -Depth 10
+                  if (-not $jsonOutput.TrimStart().StartsWith("[")) {
+                      $jsonOutput = "[`n" + $jsonOutput + "`n]"
+                  }
+                  Set-Content -Path $pmPath -Value $jsonOutput -Encoding utf8
               }
               
               cd public_repo
