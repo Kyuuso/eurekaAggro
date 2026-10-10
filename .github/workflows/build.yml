@@ -178,16 +178,8 @@ jobs:
                       $target.IconUrl = $iconUrl
                   }
                   
-                  # Also update legacy EurekaAggro entry if present so existing users receive the update
-                  $legacy = $pm | Where-Object { $_.InternalName -eq "EurekaAggro" }
-                  if ($legacy) {
-                      $legacy.AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
-                      $legacy.TestingAssemblyVersion = "${{ env.PLUGIN_VERSION }}"
-                      $legacy.TestingDalamudApiLevel = 15
-                      $legacy.DownloadLinkInstall = $previewZipUrl
-                      $legacy.DownloadLinkUpdate = $previewZipUrl
-                      $legacy.DownloadLinkTesting = $previewZipUrl
-                  }
+                  # Purge legacy EurekaAggro entry so it never appears in Dalamud
+                  $pm = @($pm | Where-Object { $_.InternalName -ne "EurekaAggro" })
                   
                   Set-Content -Path $pmPath -Value ($pm | ConvertTo-Json -Depth 10) -Encoding utf8
               }
@@ -235,14 +227,8 @@ jobs:
                       $target.IconUrl = $iconUrl
                   }
                   
-                  # Also update legacy EurekaAggro entry if present so existing users receive the update
-                  $legacy = $pm | Where-Object { $_.InternalName -eq "EurekaAggro" }
-                  if ($legacy) {
-                      $legacy.AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
-                      $legacy.DownloadLinkInstall = $versionedZipUrl
-                      $legacy.DownloadLinkUpdate = $versionedZipUrl
-                      $legacy.DownloadLinkTesting = $versionedZipUrl
-                  }
+                  # Purge legacy EurekaAggro entry so it never appears in Dalamud
+                  $pm = @($pm | Where-Object { $_.InternalName -ne "EurekaAggro" })
                   
                   Set-Content -Path $pmPath -Value ($pm | ConvertTo-Json -Depth 10) -Encoding utf8
               }

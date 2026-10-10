@@ -36,7 +36,7 @@ Before committing any new feature or fix to `main`:
 
 ## 2. CI/CD & Automated Distribution Pipeline
 
-- **Private Source Repository**: `https://github.com/Kyuuso/eurekaAggro`
+- **Private Source Repository**: `https://github.com/Kyuuso/EurekaSuite`
 - **Public Plugin Distribution Repository**: `https://github.com/Kyuuso/dalamud-plugins`
 - **Dalamud Custom Repository Feed**:
   `https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/pluginmaster.json`
