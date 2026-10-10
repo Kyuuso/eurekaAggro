@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -1360,7 +1360,7 @@ public class MainWindow : IDisposable
         ImGui.SameLine();
         ImGui.TextColored(TextMuted, "- EurekaHelper & Tracker Foundations");
         ImGui.PushTextWrapPos(0);
-        ImGui.TextUnformatted("Creator of EurekaHelper, developing the in-game Eureka Tracker Phoenix client architecture and comprehensive NM spawn definitions.");
+        ImGui.TextUnformatted("Creator of EurekaHelper, developing the in-game Eureka Tracker Phoenix client architecture and NM spawn definitions.");
         ImGui.PopTextWrapPos();
         ImGui.Spacing();
 

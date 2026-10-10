@@ -1,6 +1,6 @@
 # Rule: No Unicode Emojis in UI, Chat, or Logs
 
-1. **NEVER use Unicode emojis** (e.g., `🔑`, `🐰`, `🧬`, `✔`, `⚠`, `💥`, `🛑`, `📦`, `⚔`, etc.) in any user-facing strings:
+1. **NEVER use Unicode emojis** in any user-facing strings:
    - ImGui text, buttons, labels, tooltips, or table cells (`ImGui.Text`, `ImGui.Button`, etc.)
    - Chat messages (`ChatGui.Print`, `IChatGui`)
    - Toast notifications (`ToastGui`)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
@@ -15,7 +15,7 @@ namespace EurekaSuite;
 
 /// <summary>
 /// Main plugin class for Eureka Suite.
-/// Seamlessly integrates:
+/// Integrates:
 /// - Tactical aggro detection and monster radar in Eureka (Sleeping dragons by sound, Ashkin by blood, Sprites by magic, vision cones).
 /// - Combat cast alerts for interrupts and stuns.
 /// - Bunny Fate Engine (BFE) for automated bunny fate routing & treasure hunting with vnavmesh and auto-combat.
