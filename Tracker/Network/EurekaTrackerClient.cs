@@ -47,6 +47,113 @@ public class EurekaTrackerClient : IDisposable
     public bool CanModify => !string.IsNullOrWhiteSpace(TrackerPassword);
 
     /// <summary>
+    /// Fetches all active public trackers for a given data center from ffxiv-eureka.com.
+    /// Connects via Phoenix WebSocket to datacenter:{dataCenterId} and collects the initial_payload.
+    /// </summary>
+    public static async Task<List<PublicTrackerInfo>> FetchPublicTrackersAsync(int dataCenterId, CancellationToken cancellationToken = default)
+    {
+        var results = new List<PublicTrackerInfo>();
+        using var clientWs = new ClientWebSocket();
+        using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(6));
+        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+
+        try
+        {
+            await clientWs.ConnectAsync(new Uri(TrackerWebSocketUrl), linkedCts.Token);
+
+            var joinMsg = new EurekaTrackerMessage(
+                setJoinRef: true,
+                messageId: 1,
+                channel: $"datacenter:{dataCenterId}",
+                @event: "phx_join",
+                payload: new JObject());
+
+            var sendBytes = Encoding.UTF8.GetBytes(joinMsg.ToMessage());
+            await clientWs.SendAsync(new ArraySegment<byte>(sendBytes), WebSocketMessageType.Text, true, linkedCts.Token);
+
+            var buffer = new byte[8192];
+            var segment = new ArraySegment<byte>(buffer);
+
+            while (!linkedCts.Token.IsCancellationRequested && clientWs.State == WebSocketState.Open)
+            {
+                using var ms = new MemoryStream();
+                WebSocketReceiveResult recvResult;
+                do
+                {
+                    recvResult = await clientWs.ReceiveAsync(segment, linkedCts.Token);
+                    if (recvResult.MessageType == WebSocketMessageType.Close) break;
+                    ms.Write(buffer, 0, recvResult.Count);
+                } while (!recvResult.EndOfMessage);
+
+                if (recvResult.MessageType == WebSocketMessageType.Close) break;
+
+                ms.Seek(0, SeekOrigin.Begin);
+                using var reader = new StreamReader(ms, Encoding.UTF8);
+                string jsonText = await reader.ReadToEndAsync(linkedCts.Token);
+
+                var messageArray = JArray.Parse(jsonText);
+                if (messageArray.Count >= 5)
+                {
+                    string @event = (string?)messageArray[3] ?? string.Empty;
+                    var payload = messageArray[4] as JObject;
+
+                    if (@event == "initial_payload" && payload?["data"] is JArray dataArr)
+                    {
+                        foreach (var token in dataArr)
+                        {
+                            if (token is not JObject item) continue;
+
+                            string id = (string?)item["id"] ?? string.Empty;
+                            if (string.IsNullOrEmpty(id)) continue;
+
+                            var attrs = item["attributes"] as JObject;
+                            int zoneId = (int?)item["relationships"]?["zone"]?["data"]?["id"] ?? 0;
+
+                            string? instanceId = null;
+                            var instToken = attrs?["instance-id"];
+                            if (instToken != null && instToken.Type != JTokenType.Null)
+                            {
+                                instanceId = instToken.ToString().Trim();
+                            }
+
+                            DateTimeOffset? createdAt = null;
+                            if (DateTimeOffset.TryParse((string?)attrs?["created-at"], out var dtCreated))
+                                createdAt = dtCreated;
+
+                            DateTimeOffset? updatedAt = null;
+                            if (DateTimeOffset.TryParse((string?)attrs?["updated-at"], out var dtUpdated))
+                                updatedAt = dtUpdated;
+
+                            results.Add(new PublicTrackerInfo
+                            {
+                                TrackerId = id,
+                                ZoneId = zoneId,
+                                InstanceId = instanceId,
+                                CreatedAt = createdAt,
+                                UpdatedAt = updatedAt,
+                            });
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            if (clientWs.State == WebSocketState.Open)
+            {
+                await clientWs.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+            }
+        }
+        catch (OperationCanceledException) { }
+        catch (Exception ex)
+        {
+            EurekaAggroPlugin.PluginLog.Debug($"FetchPublicTrackersAsync for DC {dataCenterId}: {ex.Message}");
+        }
+
+        return results;
+    }
+
+    /// <summary>
     /// Creates a brand new tracker via ffxiv-eureka.com REST API.
     /// Zone IDs: 1 = Anemos, 2 = Pagos, 3 = Pyros, 4 = Hydatos.
     /// </summary>
@@ -621,5 +728,29 @@ public class EurekaTrackerClient : IDisposable
     public void Dispose()
     {
         _ = DisconnectAsync();
+    }
+}
+
+/// <summary>
+/// Model representing a publicly listed tracker on a given data center.
+/// </summary>
+public class PublicTrackerInfo
+{
+    public string TrackerId { get; set; } = string.Empty;
+    public int ZoneId { get; set; }
+    public string? InstanceId { get; set; }
+    public DateTimeOffset? CreatedAt { get; set; }
+    public DateTimeOffset? UpdatedAt { get; set; }
+
+    public string GetAgeString()
+    {
+        var time = UpdatedAt ?? CreatedAt;
+        if (!time.HasValue) return string.Empty;
+
+        var elapsed = DateTimeOffset.UtcNow - time.Value.ToUniversalTime();
+        if (elapsed.TotalMinutes < 1) return "just now";
+        if (elapsed.TotalMinutes < 60) return $"{(int)elapsed.TotalMinutes}m ago";
+        if (elapsed.TotalHours < 24) return $"{(int)elapsed.TotalHours}h ago";
+        return $"{(int)elapsed.TotalDays}d ago";
     }
 }

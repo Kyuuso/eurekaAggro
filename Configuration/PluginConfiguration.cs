@@ -286,6 +286,8 @@ public class PluginConfiguration : IPluginConfiguration
 
     // --- EUREKA TRACKER SETTINGS ---
     public bool TrackerAutoCreate { get; set; } = false;
+    public bool TrackerCreatePublic { get; set; } = true;
+    public bool TrackerAutoJoinExisting { get; set; } = true;
     public bool TrackerAutoPopFate { get; set; } = true;
     public bool TrackerDisplayFatePop { get; set; } = true;
     public bool TrackerDisplayToastPop { get; set; } = true;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Plugin.Services;
@@ -46,6 +47,11 @@ public class TrackerManager : IDisposable
         { "Dynamis", 10 },
         { "Meteor", 11 },
     };
+
+    public List<PublicTrackerInfo> AvailablePublicTrackers { get; private set; } = new();
+    public bool IsFetchingPublicTrackers { get; private set; }
+    public DateTimeOffset? LastPublicTrackersFetch { get; private set; }
+    public event Action? OnPublicTrackersUpdated;
 
     public TrackerManager(
         PluginConfiguration config,
@@ -95,10 +101,12 @@ public class TrackerManager : IDisposable
         if (CurrentZoneTracker == null)
         {
             InstanceService.ResetServerId();
+            AvailablePublicTrackers.Clear();
+            OnPublicTrackersUpdated?.Invoke();
         }
         else
         {
-            TryAutoCreateTracker();
+            TryAutoJoinOrCreateTracker();
         }
 
         FateMonitor.Reset();
@@ -107,60 +115,138 @@ public class TrackerManager : IDisposable
     private void OnEurekaZoneEntered(uint serverId, ushort territoryId)
     {
         UpdateCurrentZone(territoryId);
-        TryAutoCreateTracker();
+        TryAutoJoinOrCreateTracker(serverId);
     }
 
     /// <summary>
-    /// Attempts to auto-create a new tracker on ffxiv-eureka.com if enabled,
-    /// directly associating the detected instance/server ID and datacenter.
+    /// Fetches all active public trackers for the player's current data center.
     /// </summary>
-    public void TryAutoCreateTracker()
+    public async Task RefreshPublicTrackersAsync(CancellationToken cancellationToken = default)
     {
-        if (!config.TrackerAutoCreate || Client.IsConnected || isAutoCreatingTracker || CurrentZoneTracker == null)
+        int? dcId = GetCurrentDataCenterId();
+        if (!dcId.HasValue || IsFetchingPublicTrackers) return;
+
+        IsFetchingPublicTrackers = true;
+        try
+        {
+            var trackers = await EurekaTrackerClient.FetchPublicTrackersAsync(dcId.Value, cancellationToken);
+            AvailablePublicTrackers = trackers;
+            LastPublicTrackersFetch = DateTimeOffset.UtcNow;
+            OnPublicTrackersUpdated?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            EurekaAggroPlugin.PluginLog.Debug($"Failed to refresh public trackers: {ex.Message}");
+        }
+        finally
+        {
+            IsFetchingPublicTrackers = false;
+        }
+    }
+
+    /// <summary>
+    /// Legacy alias for TryAutoJoinOrCreateTracker.
+    /// </summary>
+    public void TryAutoCreateTracker() => TryAutoJoinOrCreateTracker();
+
+    /// <summary>
+    /// Evaluates entering a Eureka zone:
+    /// 1. If an active public tracker with the same Server ID is already open on this data center, auto-connects to it.
+    /// 2. If no matching tracker exists and AutoCreate is enabled, creates a new one (public or private based on config) and injects Server ID.
+    /// 3. Otherwise, refreshes the public tracker directory so the user can connect in 1 click.
+    /// </summary>
+    public void TryAutoJoinOrCreateTracker(uint? specificServerId = null)
+    {
+        if (Client.IsConnected || isAutoCreatingTracker || CurrentZoneTracker == null)
             return;
 
-        isAutoCreatingTracker = true;
+        string detectedId = specificServerId?.ToString() ?? InstanceService.GetBestDetectedInstanceId();
         int zoneId = CurrentZoneTracker.ZoneId;
         string zoneName = CurrentZoneTracker.ZoneName;
+        int? dcId = GetCurrentDataCenterId();
 
+        isAutoCreatingTracker = true;
         _ = Task.Run(async () =>
         {
             try
             {
-                var (newTrackerId, password, _) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
-                if (!string.IsNullOrEmpty(newTrackerId))
+                // 1. Check existing public trackers on this datacenter if enabled
+                if (dcId.HasValue && config.TrackerAutoJoinExisting && !string.IsNullOrEmpty(detectedId))
                 {
-                    config.TrackerLastCode = newTrackerId;
-                    config.TrackerLastPassword = password;
-                    config.Save();
+                    var publicTrackers = await EurekaTrackerClient.FetchPublicTrackersAsync(dcId.Value);
+                    AvailablePublicTrackers = publicTrackers;
+                    LastPublicTrackersFetch = DateTimeOffset.UtcNow;
+                    OnPublicTrackersUpdated?.Invoke();
 
-                    bool joined = await Client.JoinTrackerAsync(newTrackerId, password);
-                    if (joined)
+                    var matching = publicTrackers.FirstOrDefault(t =>
+                        t.ZoneId == zoneId &&
+                        string.Equals(t.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase));
+
+                    if (matching != null)
                     {
-                        // Add detected Instance ID directly to the newly created tracker
-                        string detectedId = InstanceService.GetBestDetectedInstanceId();
-                        int? dcId = GetCurrentDataCenterId();
-                        if (!string.IsNullOrEmpty(detectedId))
+                        bool joined = await Client.JoinTrackerAsync(matching.TrackerId);
+                        if (joined)
                         {
-                            await Client.SetInstanceInformationAsync(detectedId, dcId);
-                        }
+                            config.TrackerLastCode = matching.TrackerId;
+                            config.Save();
 
-                        chatGui.Print(new SeStringBuilder()
-                            .AddUiForeground(45)
-                            .AddText("[EurekaAggro] ")
-                            .AddUiForegroundOff()
-                            .AddText($"Auto-created {zoneName} Tracker: ")
-                            .AddUiForeground(58)
-                            .AddText($"https://ffxiv-eureka.com/{newTrackerId}")
-                            .AddUiForegroundOff()
-                            .AddText(string.IsNullOrEmpty(detectedId) ? string.Empty : $" (Instance ID: {detectedId})")
-                            .BuiltString);
+                            chatGui.Print(new SeStringBuilder()
+                                .AddUiForeground(45)
+                                .AddText("[EurekaAggro] ")
+                                .AddUiForegroundOff()
+                                .AddText($"Auto-connected to existing public {zoneName} Tracker: ")
+                                .AddUiForeground(58)
+                                .AddText($"https://ffxiv-eureka.com/{matching.TrackerId}")
+                                .AddUiForegroundOff()
+                                .AddText($" (Matched Server ID: {detectedId})")
+                                .BuiltString);
+                            return;
+                        }
                     }
+                }
+
+                // 2. If no matching tracker exists, check if auto-create is enabled
+                if (config.TrackerAutoCreate)
+                {
+                    var (newTrackerId, password, _) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
+                    if (!string.IsNullOrEmpty(newTrackerId))
+                    {
+                        config.TrackerLastCode = newTrackerId;
+                        config.TrackerLastPassword = password;
+                        config.Save();
+
+                        bool joined = await Client.JoinTrackerAsync(newTrackerId, password);
+                        if (joined)
+                        {
+                            int? dcToPush = (config.TrackerCreatePublic && dcId.HasValue) ? dcId.Value : null;
+                            if (!string.IsNullOrEmpty(detectedId) || dcToPush.HasValue)
+                            {
+                                await Client.SetInstanceInformationAsync(detectedId, dcToPush);
+                            }
+
+                            string pubTag = (config.TrackerCreatePublic && dcId.HasValue) ? " [Public]" : " [Private]";
+                            chatGui.Print(new SeStringBuilder()
+                                .AddUiForeground(45)
+                                .AddText("[EurekaAggro] ")
+                                .AddUiForegroundOff()
+                                .AddText($"Auto-created {zoneName} Tracker{pubTag}: ")
+                                .AddUiForeground(58)
+                                .AddText($"https://ffxiv-eureka.com/{newTrackerId}")
+                                .AddUiForegroundOff()
+                                .AddText(string.IsNullOrEmpty(detectedId) ? string.Empty : $" (Instance ID: {detectedId})")
+                                .BuiltString);
+                        }
+                    }
+                }
+                else if (dcId.HasValue && AvailablePublicTrackers.Count == 0)
+                {
+                    // Fetch public trackers so they are immediately visible in the UI
+                    _ = RefreshPublicTrackersAsync();
                 }
             }
             catch (Exception ex)
             {
-                EurekaAggroPlugin.PluginLog.Error(ex, "Failed to auto-create and join Eureka tracker.");
+                EurekaAggroPlugin.PluginLog.Error(ex, "Failed to auto-join or auto-create Eureka tracker.");
             }
             finally
             {
@@ -196,6 +282,23 @@ public class TrackerManager : IDisposable
         }
         catch { }
 
+        return null;
+    }
+
+    /// <summary>
+    /// Resolves the player's current data center name string (e.g. "Chaos", "Light").
+    /// </summary>
+    public string? GetCurrentDataCenterName()
+    {
+        try
+        {
+            var world = objectTable.LocalPlayer?.CurrentWorld.Value;
+            if (world != null)
+            {
+                return world.Value.DataCenter.Value.Name.ToString();
+            }
+        }
+        catch { }
         return null;
     }
 

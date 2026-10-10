@@ -348,10 +348,10 @@ public class TrackerView : IDisposable
                 {
                     // Auto-sync detected Server ID if present
                     string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
-                    if (!string.IsNullOrEmpty(detectedId))
+                    inputInstanceId = detectedId;
+                    int? dcId = config.TrackerCreatePublic ? trackerManager.GetCurrentDataCenterId() : null;
+                    if (!string.IsNullOrEmpty(detectedId) || dcId.HasValue)
                     {
-                        inputInstanceId = detectedId;
-                        int? dcId = trackerManager.GetCurrentDataCenterId();
                         await trackerManager.Client.SetInstanceInformationAsync(detectedId, dcId);
                     }
                 }
@@ -733,9 +733,9 @@ public class TrackerView : IDisposable
 
         ImGui.Spacing();
 
+        string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
         if (trackerManager.CurrentZoneTracker != null)
         {
-            string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
             if (!string.IsNullOrEmpty(detectedId))
             {
                 ImGui.TextColored(GreenColorText, $"Active Eureka Server ID detected: {detectedId}");
@@ -746,7 +746,191 @@ public class TrackerView : IDisposable
         {
             ImGui.TextDisabled("Location: Outside Eureka (Expedition tracker features on standby).");
         }
+
+        ImGui.Spacing();
+        DrawPublicTrackersSection(detectedId, scale);
     }
+
+    /// <summary>
+    /// Displays live public trackers from ffxiv-eureka.com for the player's current data center.
+    /// Highlights trackers matching the player's detected Server ID and provides 1-click connection.
+    /// </summary>
+    private void DrawPublicTrackersSection(string detectedId, float scale)
+    {
+        int? dcId = trackerManager.GetCurrentDataCenterId();
+        string dcName = trackerManager.GetCurrentDataCenterName() ?? "Data Center";
+
+        // Auto-refresh when opening or when stale (> 60s)
+        if (dcId.HasValue && !trackerManager.IsFetchingPublicTrackers &&
+            (trackerManager.AvailablePublicTrackers.Count == 0 || !trackerManager.LastPublicTrackersFetch.HasValue || (DateTimeOffset.UtcNow - trackerManager.LastPublicTrackersFetch.Value).TotalSeconds > 60))
+        {
+            _ = trackerManager.RefreshPublicTrackersAsync();
+        }
+
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        // Section header with title and refresh button
+        int currentZoneId = trackerManager.CurrentZoneTracker?.ZoneId ?? 0;
+        string zoneHeader = trackerManager.CurrentZoneTracker != null
+            ? $"Public Trackers on {dcName} ({trackerManager.CurrentZoneTracker.ZoneName}):"
+            : $"Public Trackers on {dcName} (All Zones):";
+
+        ImGui.TextColored(GoldAccent, zoneHeader);
+        ImGui.SameLine();
+
+        if (trackerManager.IsFetchingPublicTrackers)
+        {
+            ImGui.TextDisabled("(Scanning...)");
+        }
+        else
+        {
+            if (ImGuiComponents.IconButton(FontAwesomeIcon.Sync))
+            {
+                _ = trackerManager.RefreshPublicTrackersAsync();
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Refresh public tracker list from ffxiv-eureka.com");
+            }
+        }
+
+        // Filter and sort trackers
+        var list = trackerManager.AvailablePublicTrackers;
+        if (currentZoneId > 0)
+        {
+            list = list.Where(t => t.ZoneId == currentZoneId).ToList();
+        }
+
+        var sorted = list
+            .OrderByDescending(t => !string.IsNullOrEmpty(detectedId) && string.Equals(t.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase))
+            .ThenByDescending(t => !string.IsNullOrEmpty(t.InstanceId))
+            .ThenByDescending(t => t.UpdatedAt ?? t.CreatedAt ?? DateTimeOffset.MinValue)
+            .ToList();
+
+        if (sorted.Count == 0)
+        {
+            if (trackerManager.IsFetchingPublicTrackers)
+            {
+                ImGui.TextDisabled("Scanning public directory on ffxiv-eureka.com...");
+            }
+            else
+            {
+                string noMsg = currentZoneId > 0
+                    ? $"No active public trackers registered for {trackerManager.CurrentZoneTracker?.ZoneName} on {dcName}."
+                    : $"No active public trackers registered on {dcName}.";
+                ImGui.TextDisabled(noMsg);
+                ImGui.TextDisabled("Click [+] above to create a new tracker and publish it to the instance.");
+            }
+            return;
+        }
+
+        ImGui.Spacing();
+
+        int numColumns = currentZoneId > 0 ? 4 : 5;
+        if (ImGui.BeginTable("##PublicTrackersTable", numColumns, ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
+        {
+            ImGui.TableSetupColumn("Code", ImGuiTableColumnFlags.WidthFixed, 100 * scale);
+            if (currentZoneId == 0)
+            {
+                ImGui.TableSetupColumn("Zone", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+            }
+            ImGui.TableSetupColumn("Instance ID", ImGuiTableColumnFlags.WidthStretch, 140 * scale);
+            ImGui.TableSetupColumn("Activity", ImGuiTableColumnFlags.WidthFixed, 80 * scale);
+            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+            ImGui.TableHeadersRow();
+
+            foreach (var pt in sorted)
+            {
+                bool isMatch = !string.IsNullOrEmpty(detectedId) && string.Equals(pt.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase);
+
+                ImGui.TableNextRow();
+
+                // 1. Tracker 6-char Code + Copy button
+                ImGui.TableNextColumn();
+                ImGui.TextColored(GoldAccent, pt.TrackerId);
+                ImGui.SameLine();
+                if (ImGuiComponents.IconButton($"##CopyCode_{pt.TrackerId}", FontAwesomeIcon.Copy))
+                {
+                    ImGui.SetClipboardText(pt.TrackerId);
+                }
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip($"Copy code '{pt.TrackerId}' to clipboard");
+                }
+
+                // Optional Zone column if viewing all zones
+                if (currentZoneId == 0)
+                {
+                    ImGui.TableNextColumn();
+                    ImGui.Text(GetZoneName(pt.ZoneId));
+                }
+
+                // 2. Server ID / Instance ID
+                ImGui.TableNextColumn();
+                if (isMatch)
+                {
+                    ImGui.TextColored(GreenColorText, $"{pt.InstanceId} [MATCH!]");
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip($"This tracker matches your current active Eureka Server ID ({detectedId})!");
+                    }
+                }
+                else if (!string.IsNullOrEmpty(pt.InstanceId))
+                {
+                    ImGui.Text(pt.InstanceId);
+                }
+                else
+                {
+                    ImGui.TextDisabled("-");
+                }
+
+                // 3. Activity / Updated
+                ImGui.TableNextColumn();
+                string age = pt.GetAgeString();
+                ImGui.TextDisabled(string.IsNullOrEmpty(age) ? "-" : age);
+
+                // 4. One-click Connect Button
+                ImGui.TableNextColumn();
+                if (isMatch)
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.20f, 0.55f, 0.30f, 1f));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.25f, 0.70f, 0.38f, 1f));
+                }
+
+                if (ImGui.Button($"Connect##{pt.TrackerId}"))
+                {
+                    inputTrackerCode = pt.TrackerId;
+                    inputTrackerPassword = string.Empty;
+                    config.TrackerLastCode = pt.TrackerId;
+                    config.TrackerLastPassword = string.Empty;
+                    config.Save();
+                    _ = trackerManager.Client.JoinTrackerAsync(pt.TrackerId);
+                }
+
+                if (isMatch)
+                {
+                    ImGui.PopStyleColor(2);
+                }
+
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip($"Connect instantly to tracker '{pt.TrackerId}' (ffxiv-eureka.com/{pt.TrackerId}) with 1 click.");
+                }
+            }
+
+            ImGui.EndTable();
+        }
+    }
+
+    private static string GetZoneName(int zoneId) => zoneId switch
+    {
+        1 => "Anemos",
+        2 => "Pagos",
+        3 => "Pyros",
+        4 => "Hydatos",
+        _ => "Eureka",
+    };
 
     private void DrawConfiguration(float scale)
     {
@@ -761,12 +945,41 @@ public class TrackerView : IDisposable
             config.Save();
             if (autoCreate)
             {
-                trackerManager.TryAutoCreateTracker();
+                trackerManager.TryAutoJoinOrCreateTracker();
             }
         }
         if (ImGui.IsItemHovered())
         {
             ImGui.SetTooltip("Automatically generates a new tracker on ffxiv-eureka.com upon entering Eureka (or enabling), setting the detected Instance ID directly.");
+        }
+
+        // Indented sub-option for public tracker creation
+        ImGui.Indent(20f);
+        bool createPublic = config.TrackerCreatePublic;
+        if (ImGui.Checkbox("Publish auto-created tracker to Data Center publicly", ref createPublic))
+        {
+            config.TrackerCreatePublic = createPublic;
+            config.Save();
+        }
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip("When creating a tracker automatically or manually, registers your Data Center on ffxiv-eureka.com so it appears on the public list for other players.");
+        }
+        ImGui.Unindent(20f);
+
+        bool autoJoin = config.TrackerAutoJoinExisting;
+        if (ImGui.Checkbox("Auto-connect to public tracker if Server ID matches", ref autoJoin))
+        {
+            config.TrackerAutoJoinExisting = autoJoin;
+            config.Save();
+            if (autoJoin)
+            {
+                trackerManager.TryAutoJoinOrCreateTracker();
+            }
+        }
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip("Upon entering Eureka, scans public trackers for your Data Center and zone. If an existing tracker already has your matching Server ID, connects automatically.");
         }
 
         bool autoPop = config.TrackerAutoPopFate;
