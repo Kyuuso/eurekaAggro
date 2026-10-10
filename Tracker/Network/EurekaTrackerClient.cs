@@ -124,6 +124,29 @@ public class EurekaTrackerClient : IDisposable
                             if (DateTimeOffset.TryParse((string?)attrs?["updated-at"], out var dtUpdated))
                                 updatedAt = dtUpdated;
 
+                            int poppedCount = 0;
+                            var nmToken = attrs?["notorious-monsters"];
+                            if (nmToken != null)
+                            {
+                                try
+                                {
+                                    JObject? nmObj = nmToken.Type == JTokenType.String
+                                        ? JObject.Parse((string)nmToken!)
+                                        : nmToken as JObject;
+                                    if (nmObj != null)
+                                    {
+                                        foreach (var prop in nmObj.Properties())
+                                        {
+                                            if (long.TryParse(prop.Value?.ToString(), out var time) && time > 0)
+                                            {
+                                                poppedCount++;
+                                            }
+                                        }
+                                    }
+                                }
+                                catch { }
+                            }
+
                             results.Add(new PublicTrackerInfo
                             {
                                 TrackerId = id,
@@ -131,6 +154,7 @@ public class EurekaTrackerClient : IDisposable
                                 InstanceId = instanceId,
                                 CreatedAt = createdAt,
                                 UpdatedAt = updatedAt,
+                                PoppedCount = poppedCount,
                             });
                         }
 
@@ -741,6 +765,7 @@ public class PublicTrackerInfo
     public string? InstanceId { get; set; }
     public DateTimeOffset? CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
+    public int PoppedCount { get; set; }
 
     public string GetAgeString()
     {
@@ -752,5 +777,15 @@ public class PublicTrackerInfo
         if (elapsed.TotalMinutes < 60) return $"{(int)elapsed.TotalMinutes}m ago";
         if (elapsed.TotalHours < 24) return $"{(int)elapsed.TotalHours}h ago";
         return $"{(int)elapsed.TotalDays}d ago";
+    }
+
+    public string GetTimeActiveString()
+    {
+        if (!CreatedAt.HasValue) return "-";
+        var elapsed = DateTimeOffset.UtcNow - CreatedAt.Value.ToUniversalTime();
+        if (elapsed.TotalMinutes < 1) return "0m";
+        if (elapsed.TotalMinutes < 60) return $"{(int)elapsed.TotalMinutes}m";
+        if (elapsed.TotalHours < 24) return $"{(int)elapsed.TotalHours}h";
+        return $"{(int)elapsed.TotalDays}d";
     }
 }

@@ -178,19 +178,22 @@ public class TrackerManager : IDisposable
                     LastPublicTrackersFetch = DateTimeOffset.UtcNow;
                     OnPublicTrackersUpdated?.Invoke();
 
-                    var matching = publicTrackers.FirstOrDefault(t =>
-                        t.ZoneId == zoneId &&
-                        string.Equals(t.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase));
+                    var matchingTrackers = publicTrackers
+                        .Where(t => t.ZoneId == zoneId &&
+                                    string.Equals(t.InstanceId, detectedId, StringComparison.OrdinalIgnoreCase))
+                        .OrderByDescending(t => t.UpdatedAt ?? t.CreatedAt ?? DateTimeOffset.MinValue)
+                        .ToList();
 
-                    if (matching != null)
+                    if (matchingTrackers.Count > 0)
                     {
+                        var matching = matchingTrackers[0];
                         bool joined = await Client.JoinTrackerAsync(matching.TrackerId);
                         if (joined)
                         {
                             config.TrackerLastCode = matching.TrackerId;
                             config.Save();
 
-                            chatGui.Print(new SeStringBuilder()
+                            var sb = new SeStringBuilder()
                                 .AddUiForeground(45)
                                 .AddText("[EurekaAggro] ")
                                 .AddUiForegroundOff()
@@ -198,8 +201,16 @@ public class TrackerManager : IDisposable
                                 .AddUiForeground(58)
                                 .AddText($"https://ffxiv-eureka.com/{matching.TrackerId}")
                                 .AddUiForegroundOff()
-                                .AddText($" (Matched Server ID: {detectedId})")
-                                .BuiltString);
+                                .AddText($" (Server ID: {detectedId}, Updated: {matching.GetAgeString()})");
+
+                            if (matchingTrackers.Count > 1)
+                            {
+                                sb.AddUiForeground(43)
+                                  .AddText($" [Note: {matchingTrackers.Count} trackers found for ID {detectedId}; joined the most recent one]")
+                                  .AddUiForegroundOff();
+                            }
+
+                            chatGui.Print(sb.BuiltString);
                             return;
                         }
                     }

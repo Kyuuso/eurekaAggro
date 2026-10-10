@@ -442,6 +442,46 @@ public class TrackerView : IDisposable
             {
                 ImGui.SameLine();
                 ImGui.TextColored(GoldAccent, $"| Active on Tracker: {client.InstanceId}");
+
+                // Check if multiple public trackers exist for this same instance ID
+                var altTrackers = trackerManager.AvailablePublicTrackers
+                    .Where(t => string.Equals(t.InstanceId, client.InstanceId, StringComparison.OrdinalIgnoreCase) &&
+                                !string.Equals(t.TrackerId, client.TrackerId, StringComparison.OrdinalIgnoreCase))
+                    .OrderByDescending(t => t.UpdatedAt ?? t.CreatedAt ?? DateTimeOffset.MinValue)
+                    .ToList();
+
+                if (altTrackers.Count > 0)
+                {
+                    ImGui.SameLine();
+                    ImGui.TextColored(OrangeColorText, $"({altTrackers.Count} alt online)");
+                    ImGui.SameLine();
+                    if (ImGui.SmallButton("Switch...##SwitchAltTrackerBtn"))
+                    {
+                        ImGui.OpenPopup("##SwitchAltTrackerPopup");
+                    }
+
+                    if (ImGui.BeginPopup("##SwitchAltTrackerPopup"))
+                    {
+                        ImGui.TextColored(GoldAccent, $"Alternative Trackers for Instance {client.InstanceId}:");
+                        ImGui.Separator();
+                        foreach (var alt in altTrackers)
+                        {
+                            ImGui.Text($"{alt.TrackerId}  |  {alt.GetAgeString()}  |  {alt.PoppedCount} NMs");
+                            ImGui.SameLine();
+                            if (ImGui.Button($"Connect##Alt_{alt.TrackerId}"))
+                            {
+                                inputTrackerCode = alt.TrackerId;
+                                inputTrackerPassword = string.Empty;
+                                config.TrackerLastCode = alt.TrackerId;
+                                config.TrackerLastPassword = string.Empty;
+                                config.Save();
+                                _ = client.JoinTrackerAsync(alt.TrackerId);
+                                ImGui.CloseCurrentPopup();
+                            }
+                        }
+                        ImGui.EndPopup();
+                    }
+                }
             }
         }
         ImGui.EndGroup();
@@ -827,17 +867,19 @@ public class TrackerView : IDisposable
 
         ImGui.Spacing();
 
-        int numColumns = currentZoneId > 0 ? 4 : 5;
+        int numColumns = currentZoneId > 0 ? 6 : 7;
         if (ImGui.BeginTable("##PublicTrackersTable", numColumns, ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
         {
-            ImGui.TableSetupColumn("Code", ImGuiTableColumnFlags.WidthFixed, 100 * scale);
+            ImGui.TableSetupColumn("Code", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
             if (currentZoneId == 0)
             {
-                ImGui.TableSetupColumn("Zone", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+                ImGui.TableSetupColumn("Zone", ImGuiTableColumnFlags.WidthFixed, 80 * scale);
             }
-            ImGui.TableSetupColumn("Instance ID", ImGuiTableColumnFlags.WidthStretch, 140 * scale);
-            ImGui.TableSetupColumn("Activity", ImGuiTableColumnFlags.WidthFixed, 80 * scale);
-            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+            ImGui.TableSetupColumn("Instance ID", ImGuiTableColumnFlags.WidthFixed, 115 * scale);
+            ImGui.TableSetupColumn("Last Updated", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+            ImGui.TableSetupColumn("Active", ImGuiTableColumnFlags.WidthFixed, 65 * scale);
+            ImGui.TableSetupColumn("NMs Popped", ImGuiTableColumnFlags.WidthStretch, 85 * scale);
+            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed, 85 * scale);
             ImGui.TableHeadersRow();
 
             foreach (var pt in sorted)
@@ -885,12 +927,28 @@ public class TrackerView : IDisposable
                     ImGui.TextDisabled("-");
                 }
 
-                // 3. Activity / Updated
+                // 3. Last Updated
                 ImGui.TableNextColumn();
                 string age = pt.GetAgeString();
                 ImGui.TextDisabled(string.IsNullOrEmpty(age) ? "-" : age);
 
-                // 4. One-click Connect Button
+                // 4. Time Active
+                ImGui.TableNextColumn();
+                string active = pt.GetTimeActiveString();
+                ImGui.TextDisabled(active);
+
+                // 5. NMs Popped
+                ImGui.TableNextColumn();
+                if (pt.PoppedCount > 0)
+                {
+                    ImGui.TextColored(GreenColorText, $"{pt.PoppedCount} NMs");
+                }
+                else
+                {
+                    ImGui.TextDisabled("0 NMs");
+                }
+
+                // 6. One-click Connect Button
                 ImGui.TableNextColumn();
                 if (isMatch)
                 {
