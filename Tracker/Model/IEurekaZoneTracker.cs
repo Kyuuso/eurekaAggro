@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace EurekaAggro.Tracker.Model;
+namespace EurekaSuite.Tracker.Model;
 
 /// <summary>
 /// Interface implemented by each Eureka zone (Anemos, Pagos, Pyros, Hydatos)

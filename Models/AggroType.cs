@@ -1,4 +1,4 @@
-namespace EurekaAggro.Models;
+﻿namespace EurekaSuite.Models;
 
 /// <summary>
 /// Defines how a monster detects and engages the player in Eureka.

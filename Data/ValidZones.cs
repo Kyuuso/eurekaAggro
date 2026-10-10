@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace EurekaAggro.Data;
+namespace EurekaSuite.Data;
 
 /// <summary>
 /// Contains territory type IDs for all Eureka expedition zones in FFXIV.

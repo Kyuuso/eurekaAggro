@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-namespace EurekaAggro.Tracker.Model;
+namespace EurekaSuite.Tracker.Model;
 
 /// <summary>
 /// Data definition for a Notorious Monster (NM) / FATE in Eureka.

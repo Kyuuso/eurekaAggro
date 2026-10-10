@@ -1,4 +1,4 @@
-namespace EurekaAggro.Models;
+﻿namespace EurekaSuite.Models;
 
 /// <summary>
 /// Contains aggro parameters and threat data for a monster in Eureka.

@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Hooking;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
+using EurekaSuite.Configuration;
 using FFXIVClientStructs.FFXIV.Client.Game.Network;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.Network;
 
-namespace EurekaAggro.Tracker.Services;
+namespace EurekaSuite.Tracker.Services;
 
 /// <summary>
 /// Intercepts zone initialization network packets to automatically resolve the zone's Server ID,
@@ -45,11 +45,11 @@ public unsafe class InstanceTrackerService : IDisposable
                 (nint)PacketDispatcher.MemberFunctionPointers.HandleZoneInitPacket,
                 ZoneInitDetour);
             zoneInitHook.Enable();
-            EurekaAggroPlugin.PluginLog.Info("ZoneInitPacket hook enabled successfully.");
+            EurekaSuitePlugin.PluginLog.Info("ZoneInitPacket hook enabled successfully.");
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Failed to hook HandleZoneInitPacket. Using memory fallbacks.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Failed to hook HandleZoneInitPacket. Using memory fallbacks.");
         }
     }
 
@@ -68,14 +68,14 @@ public unsafe class InstanceTrackerService : IDisposable
                 if (IsEurekaTerritory(packet->TerritoryTypeId))
                 {
                     CurrentServerId = packet->ServerId;
-                    EurekaAggroPlugin.PluginLog.Info($"Entered Eureka zone {packet->TerritoryTypeId} with Server ID {packet->ServerId}");
+                    EurekaSuitePlugin.PluginLog.Info($"Entered Eureka zone {packet->TerritoryTypeId} with Server ID {packet->ServerId}");
 
                     if (config.TrackerDisplayServerIdInChat)
                     {
                         string zoneName = GetZoneName(packet->TerritoryTypeId);
                         chatGui.Print(new SeStringBuilder()
                             .AddUiForeground(45)
-                            .AddText("[EurekaAggro] ")
+                            .AddText("[Eureka Suite] ")
                             .AddUiForegroundOff()
                             .AddText($"{zoneName} Instance detected - ")
                             .AddUiForeground(58)
@@ -95,7 +95,7 @@ public unsafe class InstanceTrackerService : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Error processing ZoneInitDetour.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Error processing ZoneInitDetour.");
         }
     }
 
@@ -171,7 +171,7 @@ public unsafe class InstanceTrackerService : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Failed to dispose ZoneInitHook.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Failed to dispose ZoneInitHook.");
         }
     }
 }

@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace EurekaAggro.Tracker.Model;
+namespace EurekaSuite.Tracker.Model;
 
 /// <summary>
 /// Calculations and conversion utilities for Eorzea Time (ET) and Earth Time (LT).

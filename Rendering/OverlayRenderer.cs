@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
@@ -6,12 +6,12 @@ using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Models;
-using EurekaAggro.Services;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Models;
+using EurekaSuite.Services;
 
-namespace EurekaAggro.Rendering;
+namespace EurekaSuite.Rendering;
 
 /// <summary>
 /// Real-time 3D in-game overlay renderer for Eureka.

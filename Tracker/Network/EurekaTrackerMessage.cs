@@ -1,6 +1,6 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
-namespace EurekaAggro.Tracker.Network;
+namespace EurekaSuite.Tracker.Network;
 
 /// <summary>
 /// Encapsulates a Phoenix Channels v2 protocol wire message.

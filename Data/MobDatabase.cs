@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Models;
+using EurekaSuite.Models;
 using Newtonsoft.Json.Linq;
 
-namespace EurekaAggro.Data;
+namespace EurekaSuite.Data;
 
 /// <summary>
 /// Manages the Eureka mob database, aggro detection types, and custom user overrides.
@@ -27,7 +27,13 @@ public class MobDatabase
     public MobDatabase(IPluginLog log, string configDirectory)
     {
         this.log = log;
-        userStoragePath = Path.Combine(configDirectory, "eurekaaggro_mobs.json");
+        userStoragePath = Path.Combine(configDirectory, "eurekasuite_mobs.json");
+        var legacyPath = Path.Combine(configDirectory, "EurekaSuite_mobs.json");
+        if (!File.Exists(userStoragePath) && File.Exists(legacyPath))
+        {
+            try { File.Copy(legacyPath, userStoragePath); } catch { }
+        }
+
         LoadEmbeddedDatabase();
         LoadUserOverrides();
     }
@@ -37,7 +43,7 @@ public class MobDatabase
         try
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("EurekaAggro.Recursos.DB.json");
+            using var stream = assembly.GetManifestResourceStream("EurekaSuite.Recursos.DB.json");
             if (stream == null)
             {
                 log.Warning("Embedded DB.json resource was not found.");

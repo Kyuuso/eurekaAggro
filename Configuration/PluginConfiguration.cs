@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using System.Numerics;
 using Dalamud.Configuration;
 using Dalamud.Plugin;
 
-namespace EurekaAggro.Configuration;
+namespace EurekaSuite.Configuration;
 
 /// <summary>
-/// Persistent plugin configuration for EurekaAggro.
+/// Persistent plugin configuration for EurekaSuite.
 /// Stores visual settings, detection ranges, safety margins, and color palettes.
 /// </summary>
 [Serializable]

@@ -28,7 +28,7 @@ jobs:
       - name: Extract plugin version
         shell: pwsh
         run: |
-          $manifest = Get-Content EurekaAggro.json -Raw | ConvertFrom-Json
+          $manifest = Get-Content EurekaSuite.json -Raw | ConvertFrom-Json
           $rawVer = $manifest.AssemblyVersion
           if ([string]::IsNullOrWhiteSpace($rawVer)) { $rawVer = "1.0.0.0" }
           
@@ -66,8 +66,8 @@ jobs:
       - name: Build plugin (Release)
         shell: pwsh
         run: |
-          dotnet build -c Release EurekaAggro.csproj -p:DALAMUD_HOME="${{ env.DALAMUD_DIR }}"
-          Copy-Item -Path "EurekaAggro.json" -Destination "bin/Release/EurekaAggro.json" -Force
+          dotnet build -c Release EurekaSuite.csproj -p:DALAMUD_HOME="${{ env.DALAMUD_DIR }}"
+          Copy-Item -Path "EurekaSuite.json" -Destination "bin/Release/EurekaSuite.json" -Force
 
       - name: Package plugin
         shell: pwsh
@@ -76,10 +76,10 @@ jobs:
           New-Item -ItemType Directory -Force -Path "package/images"
           
           # Copiar binarios del plugin, dependencias (ECommons) y metadatos
-          Copy-Item -Path "bin/Release/EurekaAggro.dll" -Destination "package/"
-          Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "package/"
-          Copy-Item -Path "bin/Release/EurekaAggro.pdb" -Destination "package/" -ErrorAction SilentlyContinue
-          Copy-Item -Path "bin/Release/EurekaAggro.deps.json" -Destination "package/" -ErrorAction SilentlyContinue
+          Copy-Item -Path "bin/Release/EurekaSuite.dll" -Destination "package/"
+          Copy-Item -Path "bin/Release/EurekaSuite.json" -Destination "package/"
+          Copy-Item -Path "bin/Release/EurekaSuite.pdb" -Destination "package/" -ErrorAction SilentlyContinue
+          Copy-Item -Path "bin/Release/EurekaSuite.deps.json" -Destination "package/" -ErrorAction SilentlyContinue
           Copy-Item -Path "bin/Release/ECommons.dll" -Destination "package/" -ErrorAction SilentlyContinue
           Copy-Item -Path "images/icon.png" -Destination "package/images/icon.png" -Force
           Copy-Item -Path "images/icon.png" -Destination "package/icon.png" -Force
@@ -88,11 +88,11 @@ jobs:
           }
           
           # Strictly versioned zip for release archives
-          Compress-Archive -Path "package/*" -DestinationPath "EurekaAggro-${{ env.TAG_NAME }}.zip" -Force
+          Compress-Archive -Path "package/*" -DestinationPath "EurekaSuite-${{ env.TAG_NAME }}.zip" -Force
           
-          # If building preview, also create EurekaAggro-preview.zip
+          # If building preview, also create EurekaSuite-preview.zip
           if ($env:IS_TESTING_ONLY -eq "true") {
-              Copy-Item -Path "EurekaAggro-${{ env.TAG_NAME }}.zip" -Destination "EurekaAggro-preview.zip" -Force
+              Copy-Item -Path "EurekaSuite-${{ env.TAG_NAME }}.zip" -Destination "EurekaSuite-preview.zip" -Force
           }
 
       - name: Upload Build Artifacts
@@ -100,9 +100,9 @@ jobs:
         with:
           name: ${{ env.TAG_NAME }}-package
           path: |
-            EurekaAggro-${{ env.TAG_NAME }}.zip
-            EurekaAggro-preview.zip
-            bin/Release/EurekaAggro.json
+            EurekaSuite-${{ env.TAG_NAME }}.zip
+            EurekaSuite-preview.zip
+            bin/Release/EurekaSuite.json
             images/icon.png
           if-no-files-found: ignore
 
@@ -113,9 +113,9 @@ jobs:
           name: Release ${{ env.TAG_NAME }}
           prerelease: ${{ env.IS_PRERELEASE == 'true' }}
           files: |
-            EurekaAggro-${{ env.TAG_NAME }}.zip
-            EurekaAggro-preview.zip
-            bin/Release/EurekaAggro.json
+            EurekaSuite-${{ env.TAG_NAME }}.zip
+            EurekaSuite-preview.zip
+            bin/Release/EurekaSuite.json
             images/icon.png
           generate_release_notes: true
 
@@ -131,65 +131,124 @@ jobs:
           # Clone public repo using personal sync token
           git clone https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/Kyuuso/dalamud-plugins.git public_repo
           
-          New-Item -ItemType Directory -Force -Path "public_repo/plugins/EurekaAggro"
-          New-Item -ItemType Directory -Force -Path "public_repo/plugins/EurekaAggro/images"
+          New-Item -ItemType Directory -Force -Path "public_repo/plugins/EurekaSuite"
+          New-Item -ItemType Directory -Force -Path "public_repo/plugins/EurekaSuite/images"
           $pmPath = "public_repo/pluginmaster.json"
           
           if ($env:IS_TESTING_ONLY -eq "true") {
-              # PREVIEW / TESTING TRACK: Update assembly versions and links so in-game client detects the update immediately
+              # PREVIEW / TESTING TRACK
               Write-Host "Deploying PREVIEW / Testing release to public repo..."
-              Copy-Item -Path "EurekaAggro-preview.zip" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro-preview.zip" -Force
-              Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro.json" -Force
+              Copy-Item -Path "EurekaSuite-preview.zip" -Destination "public_repo/plugins/EurekaSuite/EurekaSuite-preview.zip" -Force
+              Copy-Item -Path "bin/Release/EurekaSuite.json" -Destination "public_repo/plugins/EurekaSuite/EurekaSuite.json" -Force
+              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaSuite/images/icon.png" -Force
+              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaSuite/icon.png" -Force
               
               if (Test-Path $pmPath) {
-                  $pmRaw = Get-Content $pmPath -Raw
-                  $previewZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/EurekaAggro-preview.zip"
-                  $pmUpdated = $pmRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
-                  $pmUpdated = $pmUpdated -replace '("DownloadLinkInstall"\s*:\s*")[^"]+(")', "`${1}$previewZipUrl`${2}"
-                  $pmUpdated = $pmUpdated -replace '("DownloadLinkUpdate"\s*:\s*")[^"]+(")', "`${1}$previewZipUrl`${2}"
-                  $pmUpdated = $pmUpdated -replace '("DownloadLinkTesting"\s*:\s*")[^"]+(")', "`${1}$previewZipUrl`${2}"
+                  $pm = Get-Content $pmPath -Raw | ConvertFrom-Json
+                  $previewZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaSuite/EurekaSuite-preview.zip"
+                  $iconUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaSuite/images/icon.png"
                   
-                  if ($pmUpdated -match '"TestingAssemblyVersion"\s*:') {
-                      $pmUpdated = $pmUpdated -replace '("TestingAssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
+                  $target = $pm | Where-Object { $_.InternalName -eq "EurekaSuite" }
+                  if (-not $target) {
+                      $target = [PSCustomObject]@{
+                          Author = "Kyuuso"
+                          Name = "Eureka Suite"
+                          InternalName = "EurekaSuite"
+                          AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                          TestingAssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                          TestingDalamudApiLevel = 15
+                          ApplicableVersion = "any"
+                          DalamudApiLevel = 15
+                          IconUrl = $iconUrl
+                          Description = "All-in-one quality-of-life suite for Eureka (Anemos, Pagos, Pyros, Hydatos). Features lethal aggro radar visualizers, native BFE (Bunnies for Eureka) automated bunny fate routing & treasure hunting, and real-time ffxiv-eureka.com Phoenix WebSocket tracker synchronization."
+                          DownloadLinkInstall = $previewZipUrl
+                          DownloadLinkUpdate = $previewZipUrl
+                          DownloadLinkTesting = $previewZipUrl
+                      }
+                      $pmList = [System.Collections.Generic.List[object]]@($pm)
+                      $pmList.Add($target)
+                      $pm = $pmList.ToArray()
                   } else {
-                      $pmUpdated = $pmUpdated -replace '("AssemblyVersion"\s*:\s*"[^"]+",)', "`$1`n    `"TestingAssemblyVersion`": `"${{ env.PLUGIN_VERSION }}`","
+                      $target.AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                      $target.TestingAssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                      $target.TestingDalamudApiLevel = 15
+                      $target.DownloadLinkInstall = $previewZipUrl
+                      $target.DownloadLinkUpdate = $previewZipUrl
+                      $target.DownloadLinkTesting = $previewZipUrl
+                      $target.IconUrl = $iconUrl
                   }
-                  if (-not ($pmUpdated -match '"TestingDalamudApiLevel"\s*:')) {
-                      $pmUpdated = $pmUpdated -replace '("DalamudApiLevel"\s*:\s*\d+,)', "`$1`n    `"TestingDalamudApiLevel`": 15,"
+                  
+                  # Also update legacy EurekaAggro entry if present so existing users receive the update
+                  $legacy = $pm | Where-Object { $_.InternalName -eq "EurekaAggro" }
+                  if ($legacy) {
+                      $legacy.AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                      $legacy.TestingAssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                      $legacy.TestingDalamudApiLevel = 15
+                      $legacy.DownloadLinkInstall = $previewZipUrl
+                      $legacy.DownloadLinkUpdate = $previewZipUrl
+                      $legacy.DownloadLinkTesting = $previewZipUrl
                   }
-                  Set-Content -Path $pmPath -Value $pmUpdated -Encoding utf8
+                  
+                  Set-Content -Path $pmPath -Value ($pm | ConvertTo-Json -Depth 10) -Encoding utf8
               }
               
               cd public_repo
-              git add pluginmaster.json plugins/EurekaAggro/
-              git commit -m "Auto-update EurekaAggro testing/preview release to ${{ env.PLUGIN_VERSION }}" || echo "No changes to commit"
+              git add pluginmaster.json plugins/EurekaSuite/
+              git commit -m "Auto-update EurekaSuite testing/preview release to ${{ env.PLUGIN_VERSION }}" || echo "No changes to commit"
               git push origin main || git push origin master
           } else {
               # STABLE RELEASE TRACK
               Write-Host "Deploying STABLE release to public repo..."
-              Copy-Item -Path "EurekaAggro-${{ env.TAG_NAME }}.zip" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro-${{ env.TAG_NAME }}.zip" -Force
-              Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro.json" -Force
-              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaAggro/images/icon.png" -Force
-              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaAggro/icon.png" -Force
+              Copy-Item -Path "EurekaSuite-${{ env.TAG_NAME }}.zip" -Destination "public_repo/plugins/EurekaSuite/EurekaSuite-${{ env.TAG_NAME }}.zip" -Force
+              Copy-Item -Path "bin/Release/EurekaSuite.json" -Destination "public_repo/plugins/EurekaSuite/EurekaSuite.json" -Force
+              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaSuite/images/icon.png" -Force
+              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaSuite/icon.png" -Force
               
               if (Test-Path $pmPath) {
-                  $pmRaw = Get-Content $pmPath -Raw
-                  $pmUpdated = $pmRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
-                  $versionedZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/EurekaAggro-${{ env.TAG_NAME }}.zip"
-                  $iconUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/images/icon.png"
-                  $pmUpdated = $pmUpdated -replace '("DownloadLinkInstall"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
-                  $pmUpdated = $pmUpdated -replace '("DownloadLinkUpdate"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
-                  $pmUpdated = $pmUpdated -replace '("DownloadLinkTesting"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
-                  if ($pmUpdated -match '"IconUrl"\s*:') {
-                      $pmUpdated = $pmUpdated -replace '("IconUrl"\s*:\s*")[^"]+(")', "`${1}$iconUrl`${2}"
+                  $pm = Get-Content $pmPath -Raw | ConvertFrom-Json
+                  $versionedZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaSuite/EurekaSuite-${{ env.TAG_NAME }}.zip"
+                  $iconUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaSuite/images/icon.png"
+                  
+                  $target = $pm | Where-Object { $_.InternalName -eq "EurekaSuite" }
+                  if (-not $target) {
+                      $target = [PSCustomObject]@{
+                          Author = "Kyuuso"
+                          Name = "Eureka Suite"
+                          InternalName = "EurekaSuite"
+                          AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                          ApplicableVersion = "any"
+                          DalamudApiLevel = 15
+                          IconUrl = $iconUrl
+                          Description = "All-in-one quality-of-life suite for Eureka (Anemos, Pagos, Pyros, Hydatos). Features lethal aggro radar visualizers, native BFE (Bunnies for Eureka) automated bunny fate routing & treasure hunting, and real-time ffxiv-eureka.com Phoenix WebSocket tracker synchronization."
+                          DownloadLinkInstall = $versionedZipUrl
+                          DownloadLinkUpdate = $versionedZipUrl
+                          DownloadLinkTesting = $versionedZipUrl
+                      }
+                      $pmList = [System.Collections.Generic.List[object]]@($pm)
+                      $pmList.Add($target)
+                      $pm = $pmList.ToArray()
                   } else {
-                      $pmUpdated = $pmUpdated -replace '("AssemblyVersion"\s*:\s*"[^"]+",)', "`$1`n    `"IconUrl`": `"$iconUrl`","
+                      $target.AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                      $target.DownloadLinkInstall = $versionedZipUrl
+                      $target.DownloadLinkUpdate = $versionedZipUrl
+                      $target.DownloadLinkTesting = $versionedZipUrl
+                      $target.IconUrl = $iconUrl
                   }
-                  Set-Content -Path $pmPath -Value $pmUpdated -Encoding utf8
+                  
+                  # Also update legacy EurekaAggro entry if present so existing users receive the update
+                  $legacy = $pm | Where-Object { $_.InternalName -eq "EurekaAggro" }
+                  if ($legacy) {
+                      $legacy.AssemblyVersion = "${{ env.PLUGIN_VERSION }}"
+                      $legacy.DownloadLinkInstall = $versionedZipUrl
+                      $legacy.DownloadLinkUpdate = $versionedZipUrl
+                      $legacy.DownloadLinkTesting = $versionedZipUrl
+                  }
+                  
+                  Set-Content -Path $pmPath -Value ($pm | ConvertTo-Json -Depth 10) -Encoding utf8
               }
               
               cd public_repo
-              git add pluginmaster.json plugins/EurekaAggro/
-              git commit -m "Auto-update EurekaAggro plugin release to ${{ env.TAG_NAME }} (${{ env.PLUGIN_VERSION }})" || echo "No changes to commit"
+              git add pluginmaster.json plugins/EurekaSuite/
+              git commit -m "Auto-update EurekaSuite plugin release to ${{ env.TAG_NAME }} (${{ env.PLUGIN_VERSION }})" || echo "No changes to commit"
               git push origin main || git push origin master
           }

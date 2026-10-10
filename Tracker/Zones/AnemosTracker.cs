@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using EurekaAggro.Tracker.Model;
+using EurekaSuite.Tracker.Model;
 
-namespace EurekaAggro.Tracker.Zones;
+namespace EurekaSuite.Tracker.Zones;
 
 public class AnemosTracker : IEurekaZoneTracker
 {

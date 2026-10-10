@@ -1,6 +1,6 @@
-# EurekaAggro
+# Eureka Suite
 
-**EurekaAggro** is a Dalamud tactical radar and safety assistant plugin for Final Fantasy XIV, engineered specifically for the Forbidden Land, Eureka expeditions (**Anemos, Pagos, Pyros, Hydatos**, and the **Baldesion Arsenal**).
+**Eureka Suite** is an all-in-one Dalamud expedition assistant plugin for Final Fantasy XIV, engineered specifically for the Forbidden Land, Eureka expeditions (**Anemos, Pagos, Pyros, Hydatos**, and the **Baldesion Arsenal**).
 
 ---
 
@@ -32,7 +32,7 @@
 - Adds indicators above eligible monsters (e.g. `🧬 CAN MUTATE NOW: Fog / Night`) to maximize Mutation Box farming efficiency.
 
 ### 5. In-Game Database Browser
-- `/eurekaaggro` or `/ea` opens a multi-tab configuration interface:
+- `/eurekasuite`, `/eureka`, or `/ea` opens a multi-tab configuration interface:
   - **General & Visual Settings**: Adjust detection ranges, vertical cliff tolerance, safety margins, color pickers, and test Walk mode.
   - **Eureka Monsters**: Fully responsive, searchable table with every Eureka mob, elemental level, danger tier, and aggro type.
   - **Enemy Actions & Counters**: Searchable table of dangerous enemy casts, interruptibility, and counter strategies.
@@ -67,24 +67,28 @@
 
 | Command | Description |
 | :--- | :--- |
-| `/eurekaaggro` | Opens or closes the main configuration window. |
-| `/ea` | Short alias to open or close the main configuration window. |
-| `/bfe` | Opens or closes the BFE Bunny Automation window. |
+| `/eurekasuite` | Opens or closes the Eureka Suite window. |
+| `/eureka` | Alias to open the Eureka Suite main overview. |
+| `/es` | Short alias to open or close Eureka Suite. |
+| `/aggro` | Opens the Aggro Radar tab directly. |
+| `/bfe` | Opens or closes the Bunny Fate Engine tab. |
 | `/bfe settings` | Opens the BFE Settings window. |
 | `/bfe pyros` | Starts automated Pyros bunny farming. |
 | `/bfe stop` | Stops bunny automation. |
 | `/bunnies` | Legacy alias for `/bfe`. |
-| `/xllog` | Dalamud log console (view real-time auto-walk and cast monitor logs). |
+| `/etracker` | Opens the Eureka Tracker live NM view. |
+| `/ea`, `/eurekaaggro` | Legacy aliases for backwards compatibility. |
+| `/xllog` | Dalamud log console. |
 
 ---
 
 ## Credits & Acknowledgements
 
-The **EurekaAggro** project incorporates and maintains the **BFE (Bunnies for Eureka)** automation engine under open source collaboration:
+The **Eureka Suite** project incorporates and maintains the **BFE (Bunnies for Eureka)** automation engine under open source collaboration:
 
 - **Joshua-XIV**: Original creator and author of [Bunnies](https://github.com/Joshua-XIV/Bunnies).
 - **DhogGPT / McVaxius**: Creator of [BFE](https://github.com/McVaxius/BFE), architecture modernization, 15-language localization, and S+ UI design ([aethertek.io](https://aethertek.io/)). [☕ Support McVaxius on Ko-fi](https://ko-fi.com/mcvaxius).
-- **Kyuuso**: Maintainer of EurekaAggro, takeover, aggro radar visualizer, and unified suite integration.
+- **Kyuuso**: Maintainer of Eureka Suite, takeover, aggro radar visualizer, and unified suite integration.
 
 ---
 
@@ -96,7 +100,7 @@ The **EurekaAggro** project incorporates and maintains the **BFE (Bunnies for Eu
    ```
    https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/pluginmaster.json
    ```
-4. Search for **Eureka Aggro** in the plugin list and click **Install**.
+4. Search for **Eureka Suite** in the plugin list and click **Install**.
    - *To receive testing/preview builds, enable "Get testing versions" in the Dalamud plugin testing settings.*
 
 

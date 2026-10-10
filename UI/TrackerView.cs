@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
@@ -9,13 +9,13 @@ using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Tracker;
-using EurekaAggro.Tracker.Model;
-using EurekaAggro.Tracker.Network;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Tracker;
+using EurekaSuite.Tracker.Model;
+using EurekaSuite.Tracker.Network;
 
-namespace EurekaAggro.UI;
+namespace EurekaSuite.UI;
 
 /// <summary>
 /// Renders the complete Eureka Tracker GUI inspired by EurekaHelper,
@@ -1315,7 +1315,7 @@ public class TrackerView : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Failed to open map with map link.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Failed to open map with map link.");
         }
     }
 }

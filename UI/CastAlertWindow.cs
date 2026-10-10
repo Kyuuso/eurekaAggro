@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
-using EurekaAggro.Configuration;
-using EurekaAggro.Services;
+using EurekaSuite.Configuration;
+using EurekaSuite.Services;
 
-namespace EurekaAggro.UI;
+namespace EurekaSuite.UI;
 
 /// <summary>
 /// Floating HUD window showing active cast alerts when dangerous actions are being performed.
@@ -86,7 +86,7 @@ public class CastAlertWindow
         ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 8.0f);
         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(14, 10));
 
-        if (ImGui.Begin("##EurekaAggro_CastAlert", flags))
+        if (ImGui.Begin("##EurekaSuite_CastAlert", flags))
         {
             // Persist position whenever user moves the window
             var currentPos = ImGui.GetWindowPos();

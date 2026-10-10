@@ -1,6 +1,6 @@
 # AGENTS.md - Development & Versioning Guidelines
 
-This document provides mandatory guidelines and workflow instructions for AI coding agents and human contributors working on **EurekaAggro**.
+This document provides mandatory guidelines and workflow instructions for AI coding agents and human contributors working on **Eureka Suite**.
 
 ---
 
@@ -29,7 +29,7 @@ Before committing any new feature or fix to `main`:
    # For major rewrites:
    .\scripts\bump-version.ps1 -Type major
    ```
-2. Verify that both [`EurekaAggro.json`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaAggro.json) (`"AssemblyVersion"`) and [`EurekaAggro.csproj`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaAggro.csproj) (`<Version>`) reflect the updated version number.
+2. Verify that both [`EurekaSuite.json`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaSuite.json) (`"AssemblyVersion"`) and [`EurekaSuite.csproj`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaSuite.csproj) (`<Version>`) reflect the updated version number.
 3. Commit with a descriptive conventional commit message (e.g., `fix: correct Pagos minotaur aggro (v1.0.1)`).
 
 ---
@@ -43,10 +43,10 @@ Before committing any new feature or fix to `main`:
 
 ### Automated Workflow
 When changes are pushed to `main`:
-1. `.github/workflows/build.yml` reads the version from `EurekaAggro.json`.
+1. `.github/workflows/build.yml` reads the version from `EurekaSuite.json`.
 2. Downloads the matching Dalamud SDK and compiles in `Release` mode using .NET 10.
-3. Creates a versioned GitHub Release (e.g. `Release v1.0.6` with tag `v1.0.6`) containing `EurekaAggro-v1.0.6.zip` (NEVER use `latest.zip` to prevent Fastly/GitHub CDN caching collisions).
-4. Automatically commits the versioned `EurekaAggro-v1.0.6.zip`, `EurekaAggro.json`, and updates `pluginmaster.json` in `Kyuuso/dalamud-plugins` with direct versioned download URLs (`DownloadLinkInstall`, `DownloadLinkUpdate`, `DownloadLinkTesting`).
+3. Creates a versioned GitHub Release (e.g. `Release v1.0.6` with tag `v1.0.6`) containing `EurekaSuite-v1.0.6.zip` (NEVER use `latest.zip` to prevent Fastly/GitHub CDN caching collisions).
+4. Automatically commits the versioned `EurekaSuite-v1.0.6.zip`, `EurekaSuite.json`, and updates `pluginmaster.json` in `Kyuuso/dalamud-plugins` with direct versioned download URLs (`DownloadLinkInstall`, `DownloadLinkUpdate`, `DownloadLinkTesting`).
 
 ---
 

@@ -1,28 +1,29 @@
-using System;
+﻿using System;
 using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using ECommons;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Rendering;
-using EurekaAggro.Services;
-using EurekaAggro.Tracker;
-using EurekaAggro.UI;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Rendering;
+using EurekaSuite.Services;
+using EurekaSuite.Tracker;
+using EurekaSuite.UI;
 
-namespace EurekaAggro;
+namespace EurekaSuite;
 
 /// <summary>
-/// Clase principal del plugin EurekaAggro.
-/// Integra de forma 100% nativa:
-/// - Detección táctica de aggro y radar de monstruos en Eureka (Dragones dormidos por sonido, Ashkin por sangre, Sprites por magia, conos de visión).
-/// - Alertas de casteo en combate para interrupciones y aturdimientos.
-/// - Takeover completo de BFE (Bunnies for Eureka) para automatización inteligente de conejos de Pyros/Pagos/Hydatos con vnavmesh y combate integrado.
+/// Main plugin class for Eureka Suite.
+/// Seamlessly integrates:
+/// - Tactical aggro detection and monster radar in Eureka (Sleeping dragons by sound, Ashkin by blood, Sprites by magic, vision cones).
+/// - Combat cast alerts for interrupts and stuns.
+/// - Bunny Fate Engine (BFE) for automated bunny fate routing & treasure hunting with vnavmesh and auto-combat.
+/// - Live ffxiv-eureka.com Phoenix WebSocket tracker sync with automatic instance discovery.
 /// </summary>
-public sealed class EurekaAggroPlugin : IDalamudPlugin
+public sealed class EurekaSuitePlugin : IDalamudPlugin
 {
-    public string Name => "Eureka Aggro";
+    public string Name => "Eureka Suite";
 
     // Servicios inyectados de Dalamud
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
@@ -59,13 +60,17 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     private readonly TrackerManager trackerManager;
 
     // Comandos de consola
-    private const string MainCommand = "/eurekaaggro";
-    private const string ShortCommand = "/ea";
+    private const string MainCommand = "/eurekasuite";
+    private const string SuiteShortCommand = "/es";
+    private const string EurekaCommand = "/eureka";
+    private const string LegacyMainCommand = "/EurekaSuite";
+    private const string LegacyShortCommand = "/ea";
+    private const string AggroCommand = "/aggro";
     private const string BfeCommand = "/bfe";
     private const string BunniesCommand = "/bunnies";
     private const string TrackerCommand = "/etracker";
 
-    public EurekaAggroPlugin(IDalamudPluginInterface pluginInterface)
+    public EurekaSuitePlugin(IDalamudPluginInterface pluginInterface)
     {
         configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
         configuration.Initialize(pluginInterface);
@@ -92,15 +97,35 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
         mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, PluginInterface, bunnyAutomationService, ObjectTable, trackerManager, GameGui);
 
-        // Registered commands for EurekaAggro Suite
+        // Registered commands for Eureka Suite
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Open the Eureka Aggro Suite main window and radar overview."
+            HelpMessage = "Open the Eureka Suite main window."
         });
 
-        CommandManager.AddHandler(ShortCommand, new CommandInfo(OnCommand)
+        CommandManager.AddHandler(SuiteShortCommand, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Short alias to open Eureka Aggro Suite."
+            HelpMessage = "Short alias to open Eureka Suite."
+        });
+
+        CommandManager.AddHandler(EurekaCommand, new CommandInfo(OnCommand)
+        {
+            HelpMessage = "Open Eureka Suite main overview."
+        });
+
+        CommandManager.AddHandler(LegacyMainCommand, new CommandInfo(OnCommand)
+        {
+            HelpMessage = "Legacy alias for Eureka Suite."
+        });
+
+        CommandManager.AddHandler(LegacyShortCommand, new CommandInfo(OnCommand)
+        {
+            HelpMessage = "Legacy short alias (/ea) for Eureka Suite."
+        });
+
+        CommandManager.AddHandler(AggroCommand, new CommandInfo(OnCommand)
+        {
+            HelpMessage = "Open Eureka Suite aggro radar tab."
         });
 
         // Registered commands for Fate Engine (Bunnies)
@@ -125,7 +150,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenMainUi += OnOpenMainUi;
         Framework.Update += OnFrameworkUpdate;
 
-        PluginLog.Info("EurekaAggro suite and Fate Engine initialized successfully.");
+        PluginLog.Info("Eureka Suite initialized successfully.");
     }
 
     private void OnCommand(string command, string args)
@@ -241,7 +266,11 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     public void Dispose()
     {
         CommandManager.RemoveHandler(MainCommand);
-        CommandManager.RemoveHandler(ShortCommand);
+        CommandManager.RemoveHandler(SuiteShortCommand);
+        CommandManager.RemoveHandler(EurekaCommand);
+        CommandManager.RemoveHandler(LegacyMainCommand);
+        CommandManager.RemoveHandler(LegacyShortCommand);
+        CommandManager.RemoveHandler(AggroCommand);
         CommandManager.RemoveHandler(BfeCommand);
         CommandManager.RemoveHandler(BunniesCommand);
         CommandManager.RemoveHandler(TrackerCommand);
@@ -267,6 +296,6 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         mobDatabase.SaveIfDirty();
         actionDatabase.SaveIfDirty();
 
-        PluginLog.Info("EurekaAggro descargado correctamente.");
+        PluginLog.Info("Eureka Suite unloaded successfully.");
     }
 }

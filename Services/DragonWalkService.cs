@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -6,13 +6,13 @@ using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Models;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Models;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using FFXIVClientStructs.FFXIV.Client.System.Input;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Proximity-based monitoring service for lethal Sleeping Dragons in Eureka zones.
@@ -251,11 +251,11 @@ public unsafe class DragonWalkService
                 config.LifetimeAutoWalkActivations++;
 
                 string modeStr = isMounted ? "Mounted" : "On Foot";
-                log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{lastDragonName}' at {lastDistance:F1}m ({modeStr}, Speed: {currentSpeed:F1} m/s). Engaging WALK mode!");
+                log.Information($"[EurekaSuite - AutoWalk] Approaching Sleeping Dragon '{lastDragonName}' at {lastDistance:F1}m ({modeStr}, Speed: {currentSpeed:F1} m/s). Engaging WALK mode!");
 
                 if (config.LogAutoWalkToChat)
                 {
-                    chatGui.Print($"[EurekaAggro] ✔ Auto-Walk engaged near '{lastDragonName}' ({lastDistance:F1}m, {modeStr}).");
+                    chatGui.Print($"[Eureka Suite] Auto-Walk engaged near '{lastDragonName}' ({lastDistance:F1}m, {modeStr}).");
                 }
 
                 if (playerWasRunning)
@@ -283,17 +283,17 @@ public unsafe class DragonWalkService
     /// </summary>
     private void RestoreRunMode(string reason, bool isCombatEmergency = false)
     {
-        log.Information($"[EurekaAggro - AutoWalk] Restoring RUN mode. Reason: {reason} (Emergency: {isCombatEmergency})");
+        log.Information($"[Eureka Suite - AutoWalk] Restoring RUN mode. Reason: {reason} (Emergency: {isCombatEmergency})");
 
         if (config.LogAutoWalkToChat)
         {
             if (isCombatEmergency)
             {
-                chatGui.Print("[EurekaAggro] ⚠ In combat / Aggroed! Auto-Walk disengaged, RUN mode restored!");
+                chatGui.Print("[Eureka Suite] [Combat] In combat / Aggroed! Auto-Walk disengaged, RUN mode restored!");
             }
             else
             {
-                chatGui.Print("[EurekaAggro] ✔ Safely left dragon zone. Run mode restored.");
+                chatGui.Print("[Eureka Suite] Safely left dragon zone. Run mode restored.");
             }
         }
 
@@ -304,7 +304,7 @@ public unsafe class DragonWalkService
         }
         else
         {
-            log.Information("[EurekaAggro - AutoWalk] Leaving dragon area. Player had walking enabled manually before, keeping walking state.");
+            log.Information("[EurekaSuite - AutoWalk] Leaving dragon area. Player had walking enabled manually before, keeping walking state.");
         }
 
         if (!isCombatEmergency)
@@ -363,7 +363,7 @@ public unsafe class DragonWalkService
         ctrl->IsWalkingDuringAutorun = wantWalking;
 
         lastToggleTime = DateTime.UtcNow;
-        log.Information($"[EurekaAggro - AutoWalk] SetDesiredWalkState (Target: {(wantWalking ? "Walk" : "Run")}, Prior: {(currentWalking ? "Walk" : "Run")}, VK: 0x{vkCode:X2}, Force: {force})");
+        log.Information($"[EurekaSuite - AutoWalk] SetDesiredWalkState (Target: {(wantWalking ? "Walk" : "Run")}, Prior: {(currentWalking ? "Walk" : "Run")}, VK: 0x{vkCode:X2}, Force: {force})");
     }
 
     /// <summary>
@@ -402,7 +402,7 @@ public unsafe class DragonWalkService
     {
         var ctrl = Control.Instance();
         bool current = ctrl != null && ctrl->IsWalking;
-        log.Information($"[EurekaAggro - AutoWalk] Manual test toggle requested from settings. Current IsWalking: {current}");
+        log.Information($"[EurekaSuite - AutoWalk] Manual test toggle requested from settings. Current IsWalking: {current}");
         SetDesiredWalkState(!current, force: true);
     }
 }

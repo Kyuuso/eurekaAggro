@@ -1,16 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Tracker.Model;
-using EurekaAggro.Tracker.Network;
-using EurekaAggro.Tracker.Services;
-using EurekaAggro.Tracker.Zones;
+using EurekaSuite.Configuration;
+using EurekaSuite.Tracker.Model;
+using EurekaSuite.Tracker.Network;
+using EurekaSuite.Tracker.Services;
+using EurekaSuite.Tracker.Zones;
 
-namespace EurekaAggro.Tracker;
+namespace EurekaSuite.Tracker;
 
 /// <summary>
 /// Central manager orchestrating the Eureka Tracker subsystem:
@@ -136,7 +136,7 @@ public class TrackerManager : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Debug($"Failed to refresh public trackers: {ex.Message}");
+            EurekaSuitePlugin.PluginLog.Debug($"Failed to refresh public trackers: {ex.Message}");
         }
         finally
         {
@@ -196,7 +196,7 @@ public class TrackerManager : IDisposable
 
                             var sb = new SeStringBuilder()
                                 .AddUiForeground(45)
-                                .AddText("[EurekaAggro] ")
+                                .AddText("[Eureka Suite] ")
                                 .AddUiForegroundOff()
                                 .AddText($"Auto-connected to existing public {zoneName} Tracker: ")
                                 .AddUiForeground(58)
@@ -244,7 +244,7 @@ public class TrackerManager : IDisposable
                             string pubTag = (config.TrackerCreatePublic && dcId.HasValue) ? " [Public]" : " [Private]";
                             chatGui.Print(new SeStringBuilder()
                                 .AddUiForeground(45)
-                                .AddText("[EurekaAggro] ")
+                                .AddText("[Eureka Suite] ")
                                 .AddUiForegroundOff()
                                 .AddText($"Auto-created {zoneName} Tracker{pubTag}: ")
                                 .AddUiForeground(58)
@@ -263,7 +263,7 @@ public class TrackerManager : IDisposable
             }
             catch (Exception ex)
             {
-                EurekaAggroPlugin.PluginLog.Error(ex, "Failed to auto-join or auto-create Eureka tracker.");
+                EurekaSuitePlugin.PluginLog.Error(ex, "Failed to auto-join or auto-create Eureka tracker.");
             }
             finally
             {

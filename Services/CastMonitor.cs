@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Active cast alert data shown on screen.
@@ -229,7 +229,7 @@ public class CastMonitor
             // Only print once when cast starts
             if (config.NotifyCastInChat)
             {
-                chat.Print($"[EurekaAggro] Alert: {mobName} is casting {data.ActionName} -> {message}");
+                chat.Print($"[Eureka Suite] Alert: {mobName} is casting {data.ActionName} -> {message}");
             }
         }
     }

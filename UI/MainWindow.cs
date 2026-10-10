@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -15,17 +15,17 @@ using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Models;
-using EurekaAggro.Services;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Models;
+using EurekaSuite.Services;
 using BFE;
 using BFE.Ui.MainWindow;
 using BFE.Ui.SettingsWindow;
 using BFE.Scheduler;
-using EurekaAggro.Tracker;
+using EurekaSuite.Tracker;
 
-namespace EurekaAggro.UI;
+namespace EurekaSuite.UI;
 
 /// <summary>
 /// Unified master window for the Eureka Aggro Suite.
@@ -157,7 +157,7 @@ public class MainWindow : IDisposable
         var scale = ImGuiHelpers.GlobalScale;
         ImGui.SetNextWindowSize(new Vector2(880 * scale, 680 * scale), ImGuiCond.FirstUseEver);
 
-        if (ImGui.Begin("Eureka Aggro Suite###EurekaAggroMainWindow", ref IsOpen))
+        if (ImGui.Begin("Eureka Suite###EurekaSuiteMainWindow", ref IsOpen))
         {
             // 1. Top Master Header: Icon, Name, Credits summary, State
             DrawMasterHeader(scale);
@@ -235,7 +235,7 @@ public class MainWindow : IDisposable
 
         ImGui.BeginGroup();
         {
-            ImGui.TextColored(GoldAccent, "Eureka Aggro Suite");
+            ImGui.TextColored(GoldAccent, "Eureka Suite");
             ImGui.SameLine();
             ImGui.TextDisabled($"v{GetType().Assembly.GetName().Version?.ToString(3) ?? "1.2.3"}");
             ImGui.SameLine();
@@ -1319,12 +1319,12 @@ public class MainWindow : IDisposable
     private void DrawAboutSection(float scale)
     {
         ImGui.Spacing();
-        ImGui.TextColored(GoldAccent, "Eureka Aggro Suite - Project Attribution & Credits");
+        ImGui.TextColored(GoldAccent, "Eureka Suite - Project Attribution & Credits");
         ImGui.Separator();
         ImGui.Spacing();
 
         ImGui.PushTextWrapPos(0);
-        ImGui.TextUnformatted("Eureka Aggro combines specialized expedition threat radar detection with automated Fate and bunny treasure hunting under a unified, high-performance architecture.");
+        ImGui.TextUnformatted("Eureka Suite combines specialized expedition threat radar detection with automated Fate and bunny treasure hunting under a unified, high-performance architecture.");
         ImGui.PopTextWrapPos();
 
         ImGui.Spacing();
@@ -1368,9 +1368,9 @@ public class MainWindow : IDisposable
         ImGui.Bullet();
         ImGui.TextColored(GoldAccent, "Kyuuso");
         ImGui.SameLine();
-        ImGui.TextColored(TextMuted, "- EurekaAggro & Unified Takeover");
+        ImGui.TextColored(TextMuted, "- Eureka Suite & Unified Takeover");
         ImGui.PushTextWrapPos(0);
-        ImGui.TextUnformatted("Creator of EurekaAggro, 3D threat radar visualizer, Sleeping Dragon proximity auto-walk, tactical cast monitor, and unified takeover suite integration.");
+        ImGui.TextUnformatted("Creator of Eureka Suite, 3D threat radar visualizer, Sleeping Dragon proximity auto-walk, tactical cast monitor, and unified takeover suite integration.");
         ImGui.PopTextWrapPos();
 
         ImGui.Spacing();
@@ -1394,9 +1394,9 @@ public class MainWindow : IDisposable
             Process.Start(new ProcessStartInfo { FileName = "https://discord.gg/invite/aethertek", UseShellExecute = true });
         }
         ImGui.SameLine(0, 10f * scale);
-        if (ImGui.Button($"EurekaAggro GitHub Source###GithubBtn", new Vector2(btnWidth, btnHeight)))
+        if (ImGui.Button($"Eureka Suite GitHub Source###GithubBtn", new Vector2(btnWidth, btnHeight)))
         {
-            Process.Start(new ProcessStartInfo { FileName = "https://github.com/Kyuuso/eurekaAggro", UseShellExecute = true });
+            Process.Start(new ProcessStartInfo { FileName = "https://github.com/Kyuuso/EurekaSuite", UseShellExecute = true });
         }
     }
     #endregion

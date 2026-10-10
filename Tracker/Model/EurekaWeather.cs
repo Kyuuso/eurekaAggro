@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EurekaAggro.Tracker.Model;
+namespace EurekaSuite.Tracker.Model;
 
 /// <summary>
 /// Weather conditions across all Eureka expedition zones.

@@ -1,17 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Tracker.Model;
-using EurekaAggro.Tracker.Network;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Tracker.Model;
+using EurekaSuite.Tracker.Network;
 using FFXIVClientStructs.FFXIV.Client.UI;
 
-namespace EurekaAggro.Tracker.Services;
+namespace EurekaSuite.Tracker.Services;
 
 /// <summary>
 /// Monitors in-game FATEs in Eureka to detect spawned Notorious Monsters (NMs),
@@ -100,7 +100,7 @@ public class FateMonitorService
 
             var seString = new SeStringBuilder()
                 .AddUiForeground(45)
-                .AddText("[EurekaAggro] ")
+                .AddText("[Eureka Suite] ")
                 .AddUiForegroundOff()
                 .AddText("NM Popped: ")
                 .AddUiForeground(58)

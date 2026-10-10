@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -6,11 +6,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using EurekaAggro.Tracker.Model;
-using EurekaAggro.Tracker.Zones;
+using EurekaSuite.Tracker.Model;
+using EurekaSuite.Tracker.Zones;
 using Newtonsoft.Json.Linq;
 
-namespace EurekaAggro.Tracker.Network;
+namespace EurekaSuite.Tracker.Network;
 
 /// <summary>
 /// Asynchronous Phoenix WebSocket and REST API client for ffxiv-eureka.com.
@@ -171,7 +171,7 @@ public class EurekaTrackerClient : IDisposable
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Debug($"FetchPublicTrackersAsync for DC {dataCenterId}: {ex.Message}");
+            EurekaSuitePlugin.PluginLog.Debug($"FetchPublicTrackersAsync for DC {dataCenterId}: {ex.Message}");
         }
 
         return results;
@@ -215,7 +215,7 @@ public class EurekaTrackerClient : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Failed to create new tracker via REST API.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Failed to create new tracker via REST API.");
             return (string.Empty, string.Empty, ex.Message);
         }
     }
@@ -257,7 +257,7 @@ public class EurekaTrackerClient : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Failed to export tracker via REST API.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Failed to export tracker via REST API.");
             return (string.Empty, string.Empty, ex.Message);
         }
     }
@@ -314,7 +314,7 @@ public class EurekaTrackerClient : IDisposable
         catch (Exception ex)
         {
             ErrorMessage = $"Connection error: {ex.Message}";
-            EurekaAggroPlugin.PluginLog.Error(ex, $"Failed to connect to tracker {trackerId}");
+            EurekaSuitePlugin.PluginLog.Error(ex, $"Failed to connect to tracker {trackerId}");
             await DisconnectAsync();
             return false;
         }
@@ -344,7 +344,7 @@ public class EurekaTrackerClient : IDisposable
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Debug($"Heartbeat loop terminated: {ex.Message}");
+            EurekaSuitePlugin.PluginLog.Debug($"Heartbeat loop terminated: {ex.Message}");
         }
     }
 
@@ -380,7 +380,7 @@ public class EurekaTrackerClient : IDisposable
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Debug($"ReceiveLoop disconnected: {ex.Message}");
+            EurekaSuitePlugin.PluginLog.Debug($"ReceiveLoop disconnected: {ex.Message}");
             if (IsConnected)
             {
                 ErrorMessage = "Connection closed unexpectedly.";
@@ -444,7 +444,7 @@ public class EurekaTrackerClient : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Error processing incoming Phoenix message.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Error processing incoming Phoenix message.");
         }
     }
 
@@ -591,7 +591,7 @@ public class EurekaTrackerClient : IDisposable
         }
         catch (Exception ex)
         {
-            EurekaAggroPlugin.PluginLog.Error(ex, "Failed to parse notorious monsters JSON payload.");
+            EurekaSuitePlugin.PluginLog.Error(ex, "Failed to parse notorious monsters JSON payload.");
         }
     }
 

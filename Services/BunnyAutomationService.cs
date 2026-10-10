@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
@@ -17,11 +17,11 @@ using BFE.Ui.DebugWindow;
 using BFE.Ui.MainWindow;
 using BFE.Ui.SettingWindow;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Servicio central de automatización de conejos de Eureka (BFE Takeover).
-/// Integra de forma nativa e integral en EurekaAggro toda la lógica de obtención de conejos,
+/// Integra de forma nativa e integral en EurekaSuite toda la lógica de obtención de conejos,
 /// cofres de tesoro, navegación con vnavmesh, rotación con WrathCombo, evasión con BossMod,
 /// teletransportes e interacción con AutoRetainer.
 /// </summary>
@@ -99,7 +99,7 @@ public sealed class BunnyAutomationService : IDisposable
         bunniesIPC = new BunniesIPC();
 
         // Inicialización de ventanas
-        windowSystem = new WindowSystem("EurekaAggro - Bunnies");
+        windowSystem = new WindowSystem("Eureka Suite - Bunnies");
         mainWindow = new MainWindow();
         debugWindow = new DebugWindow();
         settingsWindow = new SettingsWindow();
@@ -158,7 +158,7 @@ public sealed class BunnyAutomationService : IDisposable
         else if (cleanArgs.EqualsIgnoreCaseAny("stop"))
         {
             SchedulerMain.DisablePlugin();
-            ChatGui.Print("[EurekaAggro] Bunny automation stopped.");
+            ChatGui.Print("[Eureka Suite] Bunny automation stopped.");
         }
         else if (cleanArgs.EqualsIgnoreCaseAny("pyros"))
         {
@@ -167,7 +167,7 @@ public sealed class BunnyAutomationService : IDisposable
             {
                 C.zoneSelected = 1;
                 SchedulerMain.EnablePlugin();
-                ChatGui.Print("[EurekaAggro] Starting Pyros bunny automation cycle.");
+                ChatGui.Print("[Eureka Suite] Starting Pyros bunny automation cycle.");
             }
             else
             {

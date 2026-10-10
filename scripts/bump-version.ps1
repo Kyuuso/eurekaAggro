@@ -5,15 +5,15 @@ param(
     [string]$SetVersion = ""
 )
 
-$manifestPath = Join-Path $PSScriptRoot "..\EurekaAggro.json"
-$csprojPath = Join-Path $PSScriptRoot "..\EurekaAggro.csproj"
+$manifestPath = Join-Path $PSScriptRoot "..\EurekaSuite.json"
+$csprojPath = Join-Path $PSScriptRoot "..\EurekaSuite.csproj"
 
 if (-not (Test-Path $manifestPath)) {
-    Write-Error "Could not find EurekaAggro.json at $manifestPath"
+    Write-Error "Could not find EurekaSuite.json at $manifestPath"
     exit 1
 }
 
-# 1. Read current version from EurekaAggro.json
+# 1. Read current version from EurekaSuite.json
 $jsonContent = Get-Content $manifestPath -Raw | ConvertFrom-Json
 $currentVersion = $jsonContent.AssemblyVersion
 
@@ -57,12 +57,12 @@ if (-not [string]::IsNullOrWhiteSpace($SetVersion)) {
 
 Write-Host "Bumping version from $currentVersion to $newVersion..." -ForegroundColor Cyan
 
-# 3. Update EurekaAggro.json
+# 3. Update EurekaSuite.json
 $jsonRaw = Get-Content $manifestPath -Raw
 $jsonUpdated = $jsonRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}$newVersion`${2}"
 Set-Content -Path $manifestPath -Value $jsonUpdated -Encoding utf8
 
-# 4. Update EurekaAggro.csproj
+# 4. Update EurekaSuite.csproj
 if (Test-Path $csprojPath) {
     $csprojContent = Get-Content $csprojPath -Raw
     if ($csprojContent -match '<AssemblyVersion>[^<]+</AssemblyVersion>') {
