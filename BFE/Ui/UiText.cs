@@ -1,110 +1,218 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Numerics;
+using System.Linq;
 using System.Resources;
 using System.Text.RegularExpressions;
-using AethertekUI;
-using Dalamud.Bindings.ImGui;
 
 namespace BFE.Ui;
 
+/// <summary>
+/// Roles de tipografía para la interfaz de usuario.
+/// </summary>
+internal enum UiFontRole
+{
+    Body,
+    BodyStrong,
+    Title,
+    PluginName,
+    Counter,
+    Action,
+    CompactTitle
+}
+
+/// <summary>
+/// Sistema nativo de localización y formateo de texto para la interfaz de conejos.
+/// Carga las cadenas traducidas desde los recursos del ensamblado sin dependencias externas.
+/// </summary>
 internal sealed class UiText : IDisposable
 {
     [ThreadStatic] private static UiText? current;
-    internal static UiText Current => current ?? throw new InvalidOperationException("Enter the BFE UI frame before drawing.");
-    internal static readonly (string Code,string Name)[] Languages=[("en","English"),("de","Deutsch"),("fr","Français"),
-        ("es","Español"),("it","Italiano"),("ru","Русский"),("ja","日本語"),("ko","한국어"),("zh-Hans","简体中文"),
-        ("vi","Tiếng Việt"),("pt-BR","Português (Brasil)"),("id","Bahasa Indonesia"),("pl","Polski"),("tr","Türkçe"),("hi","हिन्दी")];
-    internal static IEnumerable<string> CjkLanguages(string selected) => new[]{"ja","ko","zh-Hans"}.OrderBy(code=>code==selected?0:1);
+    internal static UiText Current => current ?? FallbackInstance;
+
+    private static UiText? fallbackInstance;
+    private static UiText FallbackInstance => fallbackInstance ??= new UiText("es", null);
+
+    internal static readonly (string Code, string Name)[] Languages =
+    [
+        ("es", "Español"),
+        ("en", "English"),
+        ("de", "Deutsch"),
+        ("fr", "Français"),
+        ("it", "Italiano"),
+        ("ja", "日本語"),
+        ("ko", "한국어"),
+        ("zh-Hans", "简体中文"),
+        ("pt-BR", "Português (Brasil)"),
+        ("ru", "Русский")
+    ];
+
     private readonly ResourceManager manager;
-    internal ResourceSet Resources { get; }
-    internal IReadOnlyList<string> RequiredText { get; }
+    internal ResourceSet? Resources { get; }
     internal CultureInfo Culture { get; }
     internal string Language { get; }
-    private readonly Func<UiFontRole,IDisposable> pushFont;
     private readonly (Regex Pattern, string Key, int ArgumentCount)[] messageTemplates;
-    internal UiText(string language, Func<UiFontRole,IDisposable> pushFont)
+
+    public UiText(string language, Func<UiFontRole, IDisposable>? pushFont = null)
     {
-        Language=Languages.Any(l=>l.Code==language)?language:"en";
-        Culture=CultureInfo.GetCultureInfo(Language);
-        manager=new ResourceManager("BFE.Localization.Strings_"+Language.Replace('-','_'),typeof(UiText).Assembly);
-        Resources=manager.GetResourceSet(CultureInfo.InvariantCulture,true,false) ?? throw new MissingManifestResourceException(Language);
-        this.pushFont=pushFont;
-        var english=new ResourceManager("BFE.Localization.Strings_en",typeof(UiText).Assembly);
+        Language = Languages.Any(l => l.Code == language) ? language : "es";
+        Culture = CultureInfo.GetCultureInfo(Language);
+
+        // Cargamos el gestor de recursos para el idioma seleccionado
+        manager = new ResourceManager("BFE.Localization.Strings_" + Language.Replace('-', '_'), typeof(UiText).Assembly);
         try
         {
-            var fallback=english.GetResourceSet(CultureInfo.InvariantCulture,true,false) ?? throw new MissingManifestResourceException("en");
-            RequiredText=Values(Resources).Concat(Values(fallback)).Concat(Languages.Where(l => l.Code != "hi").Select(l=>l.Name)).Append("\u2661").Distinct().ToArray();
+            Resources = manager.GetResourceSet(CultureInfo.InvariantCulture, true, false);
         }
-        finally { english.ReleaseAllResources(); }
-        // Service messages remain English in logs; only their UI copies are localized.
+        catch
+        {
+            Resources = null;
+        }
+
+        // Compilación de patrones de texto para sustitución dinámica de argumentos
         var parameter = new Regex(@"\{(\d+)(?::([^}]+))?\}");
-        messageTemplates = Resources.Cast<DictionaryEntry>().Select(entry => (string)entry.Key)
-            .Where(key => parameter.IsMatch(key)).Select(key =>
-            {
-                var pattern = "^";
-                var offset = 0;
-                var holes = parameter.Matches(key);
-                foreach (Match hole in holes)
+        if (Resources != null)
+        {
+            messageTemplates = Resources.Cast<DictionaryEntry>()
+                .Select(entry => (string)entry.Key)
+                .Where(key => parameter.IsMatch(key))
+                .Select(key =>
                 {
-                    pattern += Regex.Escape(key[offset..hole.Index].Replace("\r\n", "\n")).Replace(@"\n", @"\r?\n") + $"(?<arg{hole.Groups[1].Value}>.*?)";
-                    offset = hole.Index + hole.Length;
-                }
-                pattern += Regex.Escape(key[offset..].Replace("\r\n", "\n")).Replace(@"\n", @"\r?\n") + "$";
-                return (new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.Singleline, TimeSpan.FromMilliseconds(20)), key,
-                    holes.Cast<Match>().Max(hole => int.Parse(hole.Groups[1].Value, CultureInfo.InvariantCulture)) + 1);
-            }).ToArray();
+                    var pattern = "^";
+                    var offset = 0;
+                    var holes = parameter.Matches(key);
+                    foreach (Match hole in holes)
+                    {
+                        pattern += Regex.Escape(key[offset..hole.Index].Replace("\r\n", "\n")).Replace(@"\n", @"\r?\n") + $"(?<arg{hole.Groups[1].Value}>.*?)";
+                        offset = hole.Index + hole.Length;
+                    }
+                    pattern += Regex.Escape(key[offset..].Replace("\r\n", "\n")).Replace(@"\n", @"\r?\n") + "$";
+                    return (new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.Singleline, TimeSpan.FromMilliseconds(20)), key,
+                        holes.Cast<Match>().Max(hole => int.Parse(hole.Groups[1].Value, CultureInfo.InvariantCulture)) + 1);
+                }).ToArray();
+        }
+        else
+        {
+            messageTemplates = Array.Empty<(Regex, string, int)>();
+        }
     }
+
+    /// <summary>
+    /// Traduce una cadena en inglés al idioma activo del usuario.
+    /// Si no existe traducción, devuelve la cadena original.
+    /// </summary>
     internal static string T(string english)
     {
+        if (string.IsNullOrEmpty(english)) return string.Empty;
         if (Current.Language == "en") return english;
-        english = english switch { "idle" => "Idle", "Going to Fc" => "Going to FC", _ => english };
-        if (Current.Resources.GetString(english, false) is { } exact) return exact;
+
+        // Normalización de términos frecuentes
+        english = english switch
+        {
+            "idle" => "Idle",
+            "Going to Fc" => "Going to FC",
+            _ => english
+        };
+
+        if (Current.Resources?.GetString(english, false) is { } exact) return exact;
+
         var trimmed = english.TrimEnd();
-        if (trimmed.Length != english.Length && Current.Resources.GetString(trimmed, false) is { } label)
+        if (trimmed.Length != english.Length && Current.Resources?.GetString(trimmed, false) is { } label)
             return label + english[trimmed.Length..];
+
         foreach (var template in Current.messageTemplates)
         {
             var match = template.Pattern.Match(english);
             if (!match.Success) continue;
-            // Service captures are already formatted; preserve IDs and leading zeroes.
+
             var args = Enumerable.Range(0, template.ArgumentCount).Select(index =>
             {
                 var value = match.Groups[$"arg{index}"].Value;
                 return (object)(template.Key == "Start {0}" && value == "Normal Raid" ? T(value) : value);
             }).ToArray();
-            return string.Format(Current.Culture, Current.Resources.GetString(template.Key, false)!, args);
+
+            var formatString = Current.Resources?.GetString(template.Key, false);
+            if (!string.IsNullOrEmpty(formatString))
+                return string.Format(Current.Culture, formatString, args);
         }
-        return english; // Names, game data and raw diagnostic values are consumer data.
+
+        return english;
     }
-    internal static string F(string english,params object?[] args) => string.Format(Current.Culture,T(english),args);
-    internal static string F(FormattableString text) => string.Format(Current.Culture, T(text.Format),
-        text.GetArguments().Select(value => value is string s && s is "Yes" or "No" or "Y" or "N" or "On" or "Off" or "Forced / On" or "Override Off" or "Interactive" or "Passive" ? T(s) : value).ToArray());
-    internal string Format(string key, params object?[] args) => string.Format(Culture, Resources.GetString(key, false) ?? key, args);
-    internal string Label(string key) => Resources.GetString(key, false) ?? key;
-    internal static IDisposable Font(UiFontRole role) => Current.pushFont(role);
+
+    /// <summary>
+    /// Traduce y formatea una cadena con argumentos variables.
+    /// </summary>
+    internal static string F(string english, params object?[] args)
+    {
+        try
+        {
+            return string.Format(Current.Culture, T(english), args);
+        }
+        catch
+        {
+            return english;
+        }
+    }
+
+    /// <summary>
+    /// Traduce y formatea una cadena interpolada con argumentos.
+    /// </summary>
+    internal static string F(FormattableString text)
+    {
+        try
+        {
+            return string.Format(Current.Culture, T(text.Format),
+                text.GetArguments().Select(value => value is string s && s is "Yes" or "No" or "Y" or "N" or "On" or "Off" or "Forced / On" or "Override Off" or "Interactive" or "Passive" ? T(s) : value).ToArray());
+        }
+        catch
+        {
+            return text.ToString();
+        }
+    }
+
+    internal string Format(string key, params object?[] args)
+    {
+        try
+        {
+            return string.Format(Culture, Resources?.GetString(key, false) ?? key, args);
+        }
+        catch
+        {
+            return key;
+        }
+    }
+
+    internal string Label(string key) => Resources?.GetString(key, false) ?? key;
+
+    /// <summary>
+    /// Objeto nulo para ámbito de tipografía compatible con llamadas previas.
+    /// </summary>
+    private sealed class EmptyScope : IDisposable
+    {
+        public static readonly EmptyScope Instance = new();
+        public void Dispose() { }
+    }
+
+    internal static IDisposable Font(UiFontRole role) => EmptyScope.Instance;
+
     internal Scope Enter() => new(this);
+
     internal readonly struct Scope : IDisposable
     {
         private readonly UiText? previous;
-        internal Scope(UiText value) { previous=current; current=value; }
-        public void Dispose() => current=previous;
+        internal Scope(UiText value) { previous = current; current = value; }
+        public void Dispose() => current = previous;
     }
-    internal static string Date(DateTimeOffset? date) => date?.ToLocalTime().ToString("g",Current.Culture) ?? T("Never");
-    internal ushort[] GlyphRanges()
+
+    internal static string Date(DateTimeOffset? date) => date?.ToLocalTime().ToString("g", Current.Culture) ?? T("Never");
+
+    public void Dispose()
     {
-        var chars=RequiredText.SelectMany(MaterialText.NativeGlyphText).Where(c=>!char.IsControl(c))
-            .Concat(Enumerable.Range(0x20,0x024F-0x20+1).Select(i=>(char)i))
-            .Concat(Enumerable.Range(0x0400,0x052F-0x0400+1).Select(i=>(char)i)).Concat("—").Distinct().Order().ToArray();
-        var result=new List<ushort>();
-        for(var index=0;index<chars.Length;index++)
+        try
         {
-            var first=chars[index]; var last=first;
-            while(index+1<chars.Length && chars[index+1]==last+1) last=chars[++index];
-            result.Add(first); result.Add(last);
+            manager.ReleaseAllResources();
         }
-        result.Add(0); return result.ToArray();
+        catch { }
     }
-    internal static IEnumerable<string> Values(ResourceSet set) => set.Cast<DictionaryEntry>().Select(e=>(string)e.Value!);
-    public void Dispose() => manager.ReleaseAllResources();
 }

@@ -1,4 +1,3 @@
-using AethertekUI;
 using BFE.Ui;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.Types;
@@ -877,21 +876,19 @@ public static unsafe class Helpers
     public static void PluginGreenRedText(bool PluginInstalled, string text)
     {
         if (PluginInstalled)
-            MaterialText.TextColored(ImGuiColors.HealerGreen, $"- {text}");
+            UiGui.TextColored(ImGuiColors.HealerGreen, $"- {text}");
         else
-            MaterialText.TextColored(ImGuiColors.DalamudRed, $"- {text}");
+            UiGui.TextColored(ImGuiColors.DalamudRed, $"- {text}");
     }
 
     // GUI, created selectable dropdown menus centered within the window
     public static void DrawMainSelectables(string label, ref bool show, Vector2 vector, float textstart)
     {
-        if (MaterialText.RequiresShaping(UiText.T(label)))
-            vector.Y = Math.Max(vector.Y, MaterialText.Measure(UiText.T(label)).Y);
         ImGui.SetCursorPosX(0);
         if (ImGui.Selectable("##" + label, show, ImGuiSelectableFlags.None, vector))
             show = !show;
         ImGui.SameLine();
-        ImGui.SetCursorPosX(Math.Max(0, (vector.X - MaterialText.Measure(UiText.T(label)).X) * .5f));
+        ImGui.SetCursorPosX(Math.Max(0, (vector.X - ImGui.CalcTextSize(UiText.T(label)).X) * 0.5f));
         UiGui.TextUnformatted(label);
         ImGui.Spacing();
     }

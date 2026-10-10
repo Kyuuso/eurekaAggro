@@ -1,72 +1,68 @@
+using System;
+using System.Numerics;
+using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Colors;
-using Dalamud.Plugin.Ipc.Exceptions;
 using ECommons.ImGuiMethods;
 using ECommons.Logging;
-using Dalamud.Bindings.ImGui;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using AethertekUI;
 
-namespace BFE.Ui.SettingsWindow
+namespace BFE.Ui.SettingsWindow;
+
+/// <summary>
+/// Configuración de integración con AutoRetainer para procesamiento automático de retainers.
+/// </summary>
+internal class AutoReatinerSettings
 {
-    internal class AutoReatinerSettings
-    {
-        private static bool EnableRetainers = C.enableRetainers;
-        private static bool EnableSubs = C.enableSubs;
-        private static bool EnableMulti = C.enableMulti;
+    private static bool EnableRetainers = C.enableRetainers;
+    private static bool EnableSubs = C.enableSubs;
+    private static bool EnableMulti = C.enableMulti;
 
-        public static void Draw()
+    public static void Draw()
+    {
+        if (!PluginInstalled("AutoRetainer"))
         {
-            if (!PluginInstalled("AutoRetainer"))
+            ImGui.PushTextWrapPos(0);
+            UiGui.TextColored(ImGuiColors.DalamudRed, "AutoRetainer no está instalado o activado. Haz clic para copiar el repositorio.");
+            ImGui.PopTextWrapPos();
+
+            C.enableRetainers = false;
+            C.enableSubs = false;
+            C.enableMulti = false;
+
+            if (ImGui.IsItemHovered())
             {
-                var backgroundColor = Vector4.Zero;
-                ImGui.PushTextWrapPos(0);
-                UiGui.TextColored(ImGuiColors.DalamudRed, "AutoRetainer is currently not installed or enabled. Click to copy Repo.");
-                ImGui.PopTextWrapPos();
-                C.enableRetainers = false;
-                C.enableSubs = false;
-                C.enableMulti = false;
-                if (ImGui.IsItemHovered())
+                var bg = new Vector4(1f, 1f, 1f, 0.15f);
+                if (ImGui.IsItemClicked())
                 {
-                    backgroundColor = MaterialTheme.Current.Colors.OnSurfaceVariant;
-                    backgroundColor.W = 0.15f;
-                    if (ImGui.IsItemClicked())
-                    {
-                        ImGui.SetClipboardText(IPC.AutoRetainerIPC.Repo);
-                        DuoLog.Information("Repo URL Copied");
-                        Notify.Info(P.appearance.Label("Repo URL Copied"));
-                    }
-                    ImGui.GetWindowDrawList().AddRectFilled(ImGui.GetItemRectMin(), ImGui.GetItemRectMax(), backgroundColor.ToUint());
+                    ImGui.SetClipboardText(IPC.AutoRetainerIPC.Repo);
+                    DuoLog.Information("URL del repositorio de AutoRetainer copiada.");
+                    Notify.Info(UiText.T("Repo URL Copied"));
                 }
+                ImGui.GetWindowDrawList().AddRectFilled(ImGui.GetItemRectMin(), ImGui.GetItemRectMax(), ImGui.ColorConvertFloat4ToU32(bg));
+            }
+            C.Save();
+        }
+
+        if (PluginInstalled("AutoRetainer"))
+        {
+            if (Helpers.CheckboxWithTooltip("Activar soporte de Retainers", ref EnableRetainers,
+                "Activa el envío y recolección automática de retainers para este personaje."))
+            {
+                C.enableRetainers = EnableRetainers;
                 C.Save();
             }
 
-            if (PluginInstalled("AutoRetainer"))
+            if (Helpers.CheckboxWithTooltip("Activar soporte de Submarinos", ref EnableSubs,
+                "Actualmente no soportado."))
             {
-                if (Helpers.CheckboxWithTooltip("Enable Retainer Support", ref EnableRetainers,
-                "Enables retainer support for this character."))
-                {
-                    C.enableRetainers = EnableRetainers;
-                }
+                C.enableSubs = EnableSubs;
+                C.Save();
+            }
 
-                // Enables submarine support for this character.
-                if (Helpers.CheckboxWithTooltip("Enable Submarine Support", ref EnableSubs,
-                "Currently Not Supported!"))
-                {
-                    C.enableSubs = EnableSubs;
-                }
-
-                // Enables multi support after completion of looping Bunnies
-                if (Helpers.CheckboxWithTooltip("Enable Multi Support", ref EnableMulti,
-                "Currently Not Supported!"))
-                {
-                    C.enableMulti = EnableMulti;
-                }
+            if (Helpers.CheckboxWithTooltip("Activar soporte de Multi-personaje", ref EnableMulti,
+                "Actualmente no soportado."))
+            {
+                C.enableMulti = EnableMulti;
+                C.Save();
             }
         }
     }

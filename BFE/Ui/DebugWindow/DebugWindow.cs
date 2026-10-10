@@ -1,24 +1,14 @@
-using AethertekUI;
-using Dalamud.Bindings.ImGui;
+using System;
 using System.Numerics;
+using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
-using BFE.Scheduler.Handlers;
-using BFE.Scheduler.Tasks;
-using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using System.Reflection;
-using FFXIVClientStructs.FFXIV.Client.UI;
-using Dalamud.Game.Config;
-using ECommons.Logging;
-using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Client.Game;
-using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using FFXIVClientStructs.FFXIV.Client.Game.Fate;
-using BFE.IPC;
 using BFE.Windows;
+
 namespace BFE.Ui.DebugWindow;
 
+/// <summary>
+/// Ventana de depuración técnica para inspección de estadísticas y variables internas.
+/// </summary>
 internal class DebugWindow : PositionedWindow
 {
     public DebugWindow() : base($"{PluginInfo.DisplayName} Debug ###BFEDebugWindow")
@@ -35,26 +25,26 @@ internal class DebugWindow : PositionedWindow
             Click = (m) => { if (m == ImGuiMouseButton.Left) P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen; },
             Icon = FontAwesomeIcon.Cog,
             IconOffset = new(2, 2),
-            ShowTooltip = () => MaterialText.SetTooltip(UiText.T("Open settings window"))
+            ShowTooltip = () => ImGui.SetTooltip(UiText.T("Open settings window"))
         });
 
         P.windowSystem.AddWindow(this);
     }
-    public void Dispose() {}
+
+    public void Dispose() { }
 
     public override void Draw()
     {
-        WindowMotion.DrawChrome();
         UiGui.Title($"{PluginInfo.DisplayName} Debug", UiText.T("BFE Debug"));
         bool debug = C.enableDebug;
         if (UiGui.Checkbox("Debug Stats", ref debug))
         {
-            C.UpdatePyrosStats(PyrosStats => { PyrosStats.gilEarned = C.stats.gilEarned; });
-            C.UpdatePyrosStats(PyrosStats => { PyrosStats.goldCoffer = C.stats.goldCoffer; });
-            C.UpdatePyrosStats(PyrosStats => { PyrosStats.silverCoffer = C.stats.silverCoffer; });
-            C.UpdatePyrosStats(PyrosStats => { PyrosStats.bronzeCoffer = C.stats.bronzeCoffer; });
-            C.UpdatePyrosStats(PyrosStats => { PyrosStats.eldthursCounter = C.stats.eldthursCounter; });
-            C.UpdatePyrosStats(PyrosStats => { PyrosStats.pyrosHairStyleCounter = C.stats.pyrosHairStyleCounter; });
+            C.UpdatePyrosStats(pyrosStats => { pyrosStats.gilEarned = C.stats.gilEarned; });
+            C.UpdatePyrosStats(pyrosStats => { pyrosStats.goldCoffer = C.stats.goldCoffer; });
+            C.UpdatePyrosStats(pyrosStats => { pyrosStats.silverCoffer = C.stats.silverCoffer; });
+            C.UpdatePyrosStats(pyrosStats => { pyrosStats.bronzeCoffer = C.stats.bronzeCoffer; });
+            C.UpdatePyrosStats(pyrosStats => { pyrosStats.eldthursCounter = C.stats.eldthursCounter; });
+            C.UpdatePyrosStats(pyrosStats => { pyrosStats.pyrosHairStyleCounter = C.stats.pyrosHairStyleCounter; });
             C.enableDebug = debug;
         }
         FinalizePendingWindowPlacement();

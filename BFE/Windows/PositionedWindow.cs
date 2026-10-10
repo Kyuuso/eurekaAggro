@@ -1,15 +1,17 @@
 using System;
 using System.Numerics;
-using AethertekUI.Dalamud;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 
 namespace BFE.Windows;
 
+/// <summary>
+/// Ventana base con posicionamiento automático y restablecimiento de coordenadas.
+/// Migrada a Dalamud nativo sin dependencias externas de librerías propietarias.
+/// </summary>
 public abstract class PositionedWindow : Window
 {
-    protected readonly MaterialWindowMotion WindowMotion = new();
     private Vector2? pendingWindowPosition;
     private bool pendingPositionConditionReset;
 
@@ -33,10 +35,11 @@ public abstract class PositionedWindow : Window
             pendingWindowPosition = null;
             pendingPositionConditionReset = true;
         }
-        WindowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
     }
 
-    public override void PostDraw() => WindowMotion.Restore(this);
+    public override void PostDraw()
+    {
+    }
 
     protected void FinalizePendingWindowPlacement()
     {

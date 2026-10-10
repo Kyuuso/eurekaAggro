@@ -75,14 +75,12 @@ jobs:
           New-Item -ItemType Directory -Force -Path "package"
           New-Item -ItemType Directory -Force -Path "package/images"
           
-          # Copy plugin binaries, dependencies (AethertekUI, ECommons), and metadata
+          # Copiar binarios del plugin, dependencias (ECommons) y metadatos
           Copy-Item -Path "bin/Release/EurekaAggro.dll" -Destination "package/"
           Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "package/"
           Copy-Item -Path "bin/Release/EurekaAggro.pdb" -Destination "package/" -ErrorAction SilentlyContinue
           Copy-Item -Path "bin/Release/EurekaAggro.deps.json" -Destination "package/" -ErrorAction SilentlyContinue
-          Copy-Item -Path "bin/Release/AethertekUI*.dll" -Destination "package/"
-          Copy-Item -Path "bin/Release/AethertekUI*.pdb" -Destination "package/" -ErrorAction SilentlyContinue
-          Copy-Item -Path "bin/Release/ECommons.dll" -Destination "package/"
+          Copy-Item -Path "bin/Release/ECommons.dll" -Destination "package/" -ErrorAction SilentlyContinue
           Copy-Item -Path "images/icon.png" -Destination "package/images/icon.png" -Force
           Copy-Item -Path "images/icon.png" -Destination "package/icon.png" -Force
           if (Test-Path "bin/Release/BFE") {

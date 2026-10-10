@@ -26,7 +26,7 @@ public class MainWindow
     private readonly DragonWalkService dragonWalkService;
     private readonly CastAlertWindow castAlertWindow;
     private readonly ISharedImmediateTexture? iconTexture;
-    private readonly BFE.Plugin bfePlugin;
+    private readonly BunnyAutomationService bunnyService;
 
     public bool IsOpen = false;
 
@@ -43,7 +43,7 @@ public class MainWindow
         CastAlertWindow castAlertWindow,
         ITextureProvider textureProvider,
         IDalamudPluginInterface pluginInterface,
-        BFE.Plugin bfePlugin)
+        BunnyAutomationService bunnyService)
     {
         this.config = config;
         this.mobDatabase = mobDatabase;
@@ -52,7 +52,7 @@ public class MainWindow
         this.clientState = clientState;
         this.dragonWalkService = dragonWalkService;
         this.castAlertWindow = castAlertWindow;
-        this.bfePlugin = bfePlugin;
+        this.bunnyService = bunnyService;
 
         if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
         {
@@ -790,17 +790,17 @@ public class MainWindow
         // Control Buttons
         if (ImGui.Button("Open BFE Window (/bfe)", new Vector2(210, 32)))
         {
-            if (bfePlugin?.mainWindow != null)
+            if (bunnyService?.mainWindow != null)
             {
-                bfePlugin.mainWindow.IsOpen = !bfePlugin.mainWindow.IsOpen;
+                bunnyService.mainWindow.IsOpen = !bunnyService.mainWindow.IsOpen;
             }
         }
         ImGui.SameLine();
         if (ImGui.Button("BFE Settings (/bfe settings)", new Vector2(210, 32)))
         {
-            if (bfePlugin?.settingsWindow != null)
+            if (bunnyService?.settingsWindow != null)
             {
-                bfePlugin.settingsWindow.IsOpen = !bfePlugin.settingsWindow.IsOpen;
+                bunnyService.settingsWindow.IsOpen = !bunnyService.settingsWindow.IsOpen;
             }
         }
 
@@ -810,8 +810,8 @@ public class MainWindow
         {
             if (ImGui.Button("Start Pyros Bunnies (/bfe pyros)", new Vector2(210, 32)))
             {
-                bfePlugin?.pluginDependencies.Refresh(true);
-                if (bfePlugin?.pluginDependencies.RequiredDependenciesLoaded == true)
+                bunnyService?.pluginDependencies.Refresh(true);
+                if (bunnyService?.pluginDependencies.RequiredDependenciesLoaded == true)
                 {
                     BFE.Plugin.C.zoneSelected = 1;
                     BFE.Scheduler.SchedulerMain.EnablePlugin();

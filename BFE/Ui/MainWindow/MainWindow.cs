@@ -1,26 +1,36 @@
-using System.Numerics;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
-using ECommons.ImGuiMethods;
 using BFE.Scheduler;
 using BFE.Windows;
-using AethertekUI;
+
 namespace BFE.Ui.MainWindow;
 
+/// <summary>
+/// Ventana principal de automatización de conejos de Eureka (BFE).
+/// Permite el control del ciclo de conejos, visualización de estadísticas y créditos de autoría.
+/// </summary>
 internal class MainWindow : PositionedWindow
 {
-    public MainWindow() : base($"{PluginInfo.DisplayName} {P.GetType().Assembly.GetName().Version} ###BFEMainWindow")
+    private bool showAllStats = true;
+    private bool showPagosStats = false;
+    private bool showPyrosStats = false;
+    private bool showHydatosStats = false;
+
+    public MainWindow() : base($"{PluginInfo.DisplayName} ###BFEMainWindow")
     {
         SizeConstraints = new()
         {
-            MinimumSize = new(720, 520),
+            MinimumSize = new(680, 500),
             MaximumSize = new(1800, 1400)
         };
-        Size = new(1452, 988);
+        Size = new(800, 600);
         SizeCondition = ImGuiCond.FirstUseEver;
         Flags |= ImGuiWindowFlags.HorizontalScrollbar;
 
@@ -28,58 +38,119 @@ internal class MainWindow : PositionedWindow
         {
             Click = (m) => { if (m == ImGuiMouseButton.Left) P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen; },
             Icon = FontAwesomeIcon.Cog,
-            IconOffset = new(2,2),
-            ShowTooltip = () => MaterialText.SetTooltip(UiText.T("Open settings window"))
+            IconOffset = new(2, 2),
+            ShowTooltip = () => ImGui.SetTooltip(UiText.T("Open settings window"))
         });
+
         TitleBarButtons.Add(new()
         {
-            Icon = FontAwesomeIcon.Play, Priority = -10, IconOffset = new(2, 1),
+            Icon = FontAwesomeIcon.Play,
+            Priority = -10,
+            IconOffset = new(2, 1),
             Click = button => { if (button == ImGuiMouseButton.Left) StartBunnies.RunActionFromUi(); },
-            ShowTooltip = () => MaterialText.SetTooltip(StartBunnies.ActionTitleTooltip),
+            ShowTooltip = () => ImGui.SetTooltip(StartBunnies.ActionTitleTooltip),
         });
 
         P.windowSystem.AddWindow(this);
     }
-    public void Dispose() {}
+
+    public void Dispose() { }
+
     public override void PreDraw()
     {
-        TitleBarButtons[1].Icon = StartBunnies.IsRunning ? FontAwesomeIcon.Stop : FontAwesomeIcon.Play;
-        UiGui.ReserveTitleSpace(this, WindowName.Split("##", 2)[0], 720);
+        if (TitleBarButtons.Count > 1)
+        {
+            TitleBarButtons[1].Icon = StartBunnies.IsRunning ? FontAwesomeIcon.Stop : FontAwesomeIcon.Play;
+        }
         base.PreDraw();
     }
-    public override void PostDraw()
+
+    public override void Draw()
     {
-        base.PostDraw();
-        UiGui.PaintTitleWithImage(this, WindowName.Split("##", 2)[0]);
+        DrawHeader();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        if (ImGui.BeginTabBar("BunniesBarPrincipal", ImGuiTabBarFlags.FittingPolicyScroll))
+        {
+            if (ImGui.BeginTabItem($"{FontAwesomeIcon.Play.ToIconString()}  {UiText.T("Start Bunnies")}"))
+            {
+                ImGui.Spacing();
+                StartBunnies.Draw();
+                ImGui.EndTabItem();
+            }
+
+            if (ImGui.BeginTabItem($"{FontAwesomeIcon.ChartBar.ToIconString()}  {UiText.T("Stats")}"))
+            {
+                ImGui.Spacing();
+                DrawStatsTab();
+                ImGui.EndTabItem();
+            }
+
+            if (ImGui.BeginTabItem($"{FontAwesomeIcon.InfoCircle.ToIconString()}  {UiText.T("About")}"))
+            {
+                ImGui.Spacing();
+                About.Draw();
+                ImGui.EndTabItem();
+            }
+
+            ImGui.EndTabBar();
+        }
+
+        FinalizePendingWindowPlacement();
+    }
+
+    private void DrawHeader()
+    {
+        // Título del subsistema y estado de ejecución
+        ImGui.TextColored(ImGuiColors.ParsedGold, $"{PluginInfo.DisplayName} - Bunny Fate Engine");
+        ImGui.SameLine();
+
+        var isRunning = SchedulerMain.DoWeTick;
+        var statusColor = isRunning ? ImGuiColors.HealerGreen : ImGuiColors.DalamudGrey;
+        var statusText = isRunning ? "En Ejecución" : "En Reposo";
+        ImGui.TextColored(statusColor, $"[{statusText}]");
+
+        ImGui.SameLine(ImGui.GetContentRegionAvail().X - 220f * ImGuiHelpers.GlobalScale);
+        if (ImGui.SmallButton($"{FontAwesomeIcon.Cog.ToIconString()} Ajustes"))
+        {
+            P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
+        }
+
+        ImGui.SameLine();
+        if (ImGui.SmallButton($"{FontAwesomeIcon.Heart.ToIconString()} Ko-fi"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = PluginInfo.SupportUrl, UseShellExecute = true });
+        }
+
+        ImGui.SameLine();
+        if (ImGui.SmallButton($"{FontAwesomeIcon.User.ToIconString()} Autor"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = PluginInfo.OriginalAuthorUrl, UseShellExecute = true });
+        }
     }
 
     private void DrawStatsTab()
     {
-        bool statsOpen;
-        using (MaterialText.PushLineHeight(UiText.T("Lifetime"), UiText.T("Session")))
-            statsOpen = ImGui.BeginTabBar("Stats");
-        if (statsOpen)
+        if (ImGui.BeginTabBar("StatsTabs"))
         {
-            if (UiGui.TabItem("Lifetime"))
+            if (ImGui.BeginTabItem(UiText.T("Lifetime")))
             {
-                this.DrawStatsTab(C.stats, out bool reset, C.pyrosStats, C.pagosStats, C.hydatosStats);
-                
+                DrawStatsSection(C.stats, out bool reset, C.pyrosStats, C.pagosStats, C.hydatosStats);
                 if (reset)
                 {
                     C.stats = new();
                     C.pagosStats = new();
                     C.pyrosStats = new();
                     C.hydatosStats = new();
-
                     C.Save();
                 }
                 ImGui.EndTabItem();
             }
 
-            if (UiGui.TabItem("Session"))
+            if (ImGui.BeginTabItem(UiText.T("Session")))
             {
-                this.DrawStatsTab(C.sessionStats, out bool reset, C.pyrosSessionStats, C.pagosSessionStats, C.hydatosSessionStats);
-
+                DrawStatsSection(C.sessionStats, out bool reset, C.pyrosSessionStats, C.pagosSessionStats, C.hydatosSessionStats);
                 if (reset)
                 {
                     C.sessionStats = new();
@@ -89,360 +160,90 @@ internal class MainWindow : PositionedWindow
                 }
                 ImGui.EndTabItem();
             }
+
             ImGui.EndTabBar();
         }
     }
-    private bool showAllStats = true;
-    private bool showSessionStats = true;
-    private bool showPagosStats = false;
-    private bool showSessionPagosStats = false;
-    private bool showPyrosStats = false;
-    private bool showSessionPyrosStats = false;
-    private bool showHydatosStats = false;
-    private bool showSessionHydatostats = false;
-    private void DrawStatsTab(Stats stat, out bool reset, PyrosStats pyrosStat, PagosStats pagosStat, HydatosStats hydatosStat)
+
+    private void DrawStatsSection(Stats stat, out bool reset, PyrosStats pyrosStat, PagosStats pagosStat, HydatosStats hydatosStat)
     {
-        var buttonHeight = Math.Max(30 * MaterialTheme.Metrics.Scale, ImGui.GetFrameHeight());
+        var buttonHeight = Math.Max(28f * ImGuiHelpers.GlobalScale, ImGui.GetFrameHeight());
         var availableHeight = Math.Max(1, ImGui.GetContentRegionAvail().Y - buttonHeight - ImGui.GetStyle().ItemSpacing.Y);
-        var availableWidth = new Vector2(ImGui.GetContentRegionAvail().X, 0);
-        string[] texts = { "Pagos Stats", "Pyros Stats", "Hydatos Stats" };
-        float[] textSize = { MaterialText.Measure(UiText.T(texts[0])).X, MaterialText.Measure(UiText.T(texts[1])).X, MaterialText.Measure(UiText.T(texts[2])).X };
-        float[] textStartX = { (availableWidth[0] - textSize[0]) * 0.5f, (availableWidth[0] - textSize[1]) * .5f, (availableWidth[0] - textSize[2]) * .5f };
-        ImGui.BeginChild("StatsRegion", new Vector2(0, availableHeight), true, ImGuiWindowFlags.None);
-        DrawMainSelectables("Total Stats", ref showAllStats, availableWidth, .5f * (availableWidth[0] - MaterialText.Measure("Total Stats").X));
-        if (showAllStats)
-            DrawStats(stat);
 
-        ImGui.Separator();
-        DrawMainSelectables(texts[0], ref showPagosStats, availableWidth, textStartX[0]);
-        if (showPagosStats)
-            DrawPagosStats(pagosStat);
+        ImGui.BeginChild("StatsRegionScroll", new Vector2(0, availableHeight), true);
 
-        ImGui.Separator();
-        DrawMainSelectables(texts[1], ref showPyrosStats, availableWidth, textStartX[1]);
-        if (showPyrosStats)
-            DrawPyrosStats(pyrosStat);
-
-        ImGui.Separator();
-        DrawMainSelectables(texts[2], ref showHydatosStats, availableWidth, textStartX[2]);
-        if (showHydatosStats)
-            DrawHydtosStats(hydatosStat);
-
-        if (!showHydatosStats)
-            ImGui.Separator();
-        ImGui.EndChild();
-        bool isCtrlHeld = ImGui.GetIO().KeyCtrl;
-
-        using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !ImGui.GetIO().KeyCtrl))
+        if (ImGui.CollapsingHeader("Estadísticas Totales", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            reset = UiGui.Button("RESET STATS", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && ImGui.GetIO().KeyCtrl;
-        }
-        if (ImGui.IsItemHovered()) MaterialText.SetTooltip(UiText.T(isCtrlHeld ? "Press to reset your stats." : "Hold Ctrl to enable the button."));
-    }
-
-    private void DrawStats(Stats stat)
-    {
-        if (!C.hasUpdatedStats)
-        {
-            C.hasUpdatedStats = true;
-        }
-
-        ImGui.Columns(3, "", false);
-
-        // Top Middle
-        ImGui.NextColumn();
-
-        UiGui.CenterColumnText(MaterialTheme.Current.Colors.Primary, UiText.T("Bunnies"), true);
-        ImGuiHelpers.ScaledDummy(10f);
-
-        // Setting up columns for stats
-        ImGui.Columns(2, "", false);
-
-        // Dictionary for Iteration
-        var totalStats = new Dictionary<string, int>
-        {
-            { "Gil Earned", stat.gilEarned },
-            { "Gold Coffers", stat.goldCoffer },
-            { "Silver Coffers", stat.silverCoffer },
-            { "Bronze Coffers", stat.bronzeCoffer },
-            { "Eldthurs Mount", stat.eldthursCounter },
-            { "Pyros Hairstyles", stat.pyrosHairStyleCounter},
-            { "Copycat Bulb", stat.bulbMinion },
-            { "Petrel Mount", stat.petrelCounter }
-        };
-
-        foreach (var (label, value) in totalStats)
-        {
-            UiGui.CenterColumnText(UiText.T(label), true);
-            UiGui.CenterColumnText(value.ToString("N0", UiText.Current.Culture));
-            ImGui.NextColumn();
-        }
-
-        ImGui.Columns(1, "", false);
-        ImGui.Dummy(new Vector2(0, 20));
-    }
-
-    private void DrawPagosStats(PagosStats stats)
-    {
-        if (!C.hasUpdatedStats)
-        {
-            C.hasUpdatedStats = true;
-        }
-
-        ImGui.Columns(3, "", false);
-
-        // Top Middle
-        ImGui.NextColumn();
-
-        UiGui.CenterColumnText(MaterialTheme.Current.Colors.Primary, "Pagos", true);
-        ImGuiHelpers.ScaledDummy(10f);
-
-        // Setting up columns for stats
-        ImGui.Columns(2, "", false);
-
-        var PagosStats = new Dictionary<string, int>
-        {
-            { "Gil Earned", stats.gilEarned },
-            { "Gold Coffers", stats.goldCoffer },
-            { "Silver Coffers", stats.silverCoffer },
-            { "Bronze Coffers", stats.bronzeCoffer },
-            { "Eldthurs Mount", stats.bulbMinion },
-            { "Pyros Hairstyles", stats.hakutakuEye}
-        };
-
-        foreach (var (label, value) in PagosStats)
-        {
-            UiGui.CenterColumnText(UiText.T(label), true);
-            UiGui.CenterColumnText(value.ToString("N0", UiText.Current.Culture));
-            ImGui.NextColumn();
-        }
-
-        ImGui.Columns(1, "", false);
-    }
-
-    private void DrawPyrosStats(PyrosStats stats)
-    {
-        if (!C.hasUpdatedStats)
-        {
-            C.hasUpdatedStats = true;
-        }
-
-        ImGui.Columns(3, "", false);
-
-        // Top Middle
-        ImGui.NextColumn();
-
-        UiGui.CenterColumnText(MaterialTheme.Current.Colors.Primary, "Pyros", true);
-        ImGuiHelpers.ScaledDummy(10f);
-
-        // Setting up columns for stats
-        ImGui.Columns(2, "", false);
-
-        var PyrosStats = new Dictionary<string, int>
-        {
-            { "Gil Earned", stats.gilEarned },
-            { "Gold Coffers", stats.goldCoffer },
-            { "Silver Coffers", stats.silverCoffer },
-            { "Bronze Coffers", stats.bronzeCoffer },
-            { "Eldthurs Mount", stats.eldthursCounter },
-            { "Pyros Hairstyles", stats.pyrosHairStyleCounter}
-        };
-
-        foreach (var (label, value) in PyrosStats)
-        {
-            UiGui.CenterColumnText(UiText.T(label), true);
-            UiGui.CenterColumnText(value.ToString("N0", UiText.Current.Culture));
-            ImGui.NextColumn();
-        }
-
-        ImGui.Columns(1, "", false);
-    }
-
-    private void DrawHydtosStats(HydatosStats stats)
-    {
-        if (!C.hasUpdatedStats)
-        {
-            C.hasUpdatedStats = true;
-        }
-
-        ImGui.Columns(3, "", false);
-
-        // Top Middle
-        ImGui.NextColumn();
-
-        UiGui.CenterColumnText(MaterialTheme.Current.Colors.Primary, "Hydatos", true);
-        ImGuiHelpers.ScaledDummy(10f);
-
-        // Setting up columns for stats
-        ImGui.Columns(2, "", false);
-
-        var HydatosStats = new Dictionary<string, int>
-        {
-            { "Gil Earned", stats.gilEarned },
-            { "Gold Coffers", stats.goldCoffer },
-            { "Silver Coffers", stats.silverCoffer },
-            { "Bronze Coffers", stats.bronzeCoffer },
-            { "Petrel Mount", stats.petrelCounter },
-        };
-
-        foreach (var (label, value) in HydatosStats)
-        {
-            UiGui.CenterColumnText(UiText.T(label), true);
-            UiGui.CenterColumnText(value.ToString("N0", UiText.Current.Culture));
-            ImGui.NextColumn();
-        }
-
-        ImGui.Columns(1, "", false);
-    }
-
-    public override void Draw()
-    {
-        WindowMotion.DrawChrome();
-        var window = ImGuiP.GetCurrentWindow();
-        var previousWorkRect = window.WorkRect;
-        var viewportWorkRect = previousWorkRect;
-        viewportWorkRect.Max.X = Math.Max(viewportWorkRect.Min.X,
-            Math.Min(viewportWorkRect.Max.X, window.Pos.X + ImGui.GetWindowContentRegionMax().X));
-        // A prior horizontal extent must not widen the next frame's reflow viewport.
-        window.WorkRect = viewportWorkRect;
-        try
-        {
-            DrawHeader();
-            ImGui.Separator();
-            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (BfePresentation.Compact ? 10 : 5) * MaterialTheme.Metrics.Scale);
-            using var tabFont = UiText.Font(UiFontRole.Action);
-            var s = MaterialTheme.Metrics.Scale;
-            ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(16, BfePresentation.Compact ? 12 : 16) * s);
-            bool tabsOpen;
-            using (MaterialText.PushLineHeight(UiText.T("Start Bunnies"), UiText.T("Stats"), UiText.T("About")))
-                tabsOpen = ImGui.BeginTabBar("Bunnies Bar", ImGuiTabBarFlags.FittingPolicyScroll);
-            ImGui.PopStyleVar();
-            if (tabsOpen)
+            DrawDictionaryStats(new Dictionary<string, int>
             {
-                var width = ImGui.GetContentRegionAvail().X / s;
-                if (UiGui.TabItem("Start Bunnies", MaterialIcon.Play, width * .325f))
-                {
-                    using (UiText.Font(UiFontRole.Body)) StartBunnies.Draw();
-                    ImGui.EndTabItem();
-                }
-                if (UiGui.TabItem("Stats", MaterialIcon.Chart, width * .16f))
-                {
-                    using (UiText.Font(UiFontRole.Body)) DrawStatsTab();
-                    ImGui.EndTabItem();
-                }
-                if (UiGui.TabItem("About", MaterialIcon.Info, width * .17f))
-                {
-                    using (UiText.Font(UiFontRole.Body)) About.Draw();
-                    ImGui.EndTabItem();
-                }
-                ImGui.EndTabBar();
-            }
+                { "Gil Obtenido", stat.gilEarned },
+                { "Cofres de Oro", stat.goldCoffer },
+                { "Cofres de Plata", stat.silverCoffer },
+                { "Cofres de Bronce", stat.bronzeCoffer },
+                { "Montura Eldthurs", stat.eldthursCounter },
+                { "Peinados de Pyros", stat.pyrosHairStyleCounter },
+                { "Minion Copycat Bulb", stat.bulbMinion },
+                { "Montura Petrel", stat.petrelCounter }
+            });
         }
-        finally { window.WorkRect = previousWorkRect; }
-        FinalizePendingWindowPlacement();
+
+        if (ImGui.CollapsingHeader("Estadísticas de Pyros", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            DrawDictionaryStats(new Dictionary<string, int>
+            {
+                { "Gil Obtenido", pyrosStat.gilEarned },
+                { "Cofres de Oro", pyrosStat.goldCoffer },
+                { "Cofres de Plata", pyrosStat.silverCoffer },
+                { "Cofres de Bronce", pyrosStat.bronzeCoffer },
+                { "Montura Eldthurs", pyrosStat.eldthursCounter },
+                { "Peinados de Pyros", pyrosStat.pyrosHairStyleCounter }
+            });
+        }
+
+        if (ImGui.CollapsingHeader("Estadísticas de Pagos"))
+        {
+            DrawDictionaryStats(new Dictionary<string, int>
+            {
+                { "Gil Obtenido", pagosStat.gilEarned },
+                { "Cofres de Oro", pagosStat.goldCoffer },
+                { "Cofres de Plata", pagosStat.silverCoffer },
+                { "Cofres de Bronce", pagosStat.bronzeCoffer },
+                { "Minion Bulb", pagosStat.bulbMinion },
+                { "Ojo Hakutaku", pagosStat.hakutakuEye }
+            });
+        }
+
+        ImGui.EndChild();
+
+        var isCtrlHeld = ImGui.GetIO().KeyCtrl;
+        using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !isCtrlHeld))
+        {
+            reset = ImGui.Button("RESTABLECER ESTADÍSTICAS (MANTÉN CTRL)", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && isCtrlHeld;
+        }
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip(isCtrlHeld ? "Pulsa para reiniciar las estadísticas." : "Mantén pulsada la tecla Ctrl para habilitar el botón.");
+        }
     }
 
-    private void DrawHeader()
+    private static void DrawDictionaryStats(Dictionary<string, int> items)
     {
-        var s = MaterialTheme.Metrics.Scale;
-        var origin = ImGui.GetCursorScreenPos();
-        var width = ImGui.GetContentRegionAvail().X;
-        var compact = BfePresentation.Compact;
-        BfePresentation.Rabbit(origin + new Vector2(compact ? 9 : 5, compact ? 5 : 6) * s, (compact ? 77 : 90) * s);
-        var titleX = (compact ? 102 : 99) * s;
-        ImGui.SetCursorScreenPos(origin + new Vector2(titleX, (compact ? -5 : -8) * s));
-        using (UiText.Font(compact ? UiFontRole.CompactTitle : UiFontRole.Title)) UiGui.TextColored(MaterialTheme.Current.Colors.Primary, "BFE");
-        var titleRight = ImGui.GetItemRectMax().X;
-        ImGui.SetCursorScreenPos(origin + new Vector2(titleX, (compact ? 41 : 56) * s));
-        UiGui.TextUnformatted("Bunny Fate Engine");
-        var selectorWidth = C.UiLanguageVisibleOnMainWindow ? P.appearance.SelectorWidth : 0;
-        var compactWidth = C.UiCompactVisibleOnMainWindow
-            ? ImGui.GetTextLineHeight() + ImGui.GetStyle().ItemInnerSpacing.X + MaterialText.Measure("C").X + ImGui.GetStyle().ItemSpacing.X : 0;
-        var opacityWidth = ImGui.GetTextLineHeight() + ImGui.GetStyle().ItemInnerSpacing.X + MaterialText.Measure(UiText.T("Transparency")).X;
-        var controlsWidth = new[] { "Settings", "Ko-fi", "Discord", "OG Author" }.Sum(label => UiGui.IconButtonWidth(label, header: true))
-            + compactWidth + opacityWidth + selectorWidth + ImGui.GetStyle().ItemSpacing.X * (C.UiLanguageVisibleOnMainWindow ? 5 : 4);
-        var headingRight = Math.Max(titleRight, ImGui.GetItemRectMax().X);
-        var wrapped = headingRight + 20 * s + controlsWidth > origin.X + width;
-        ImGui.SetCursorScreenPos(origin + new Vector2(wrapped ? 0 : width - controlsWidth, (wrapped ? BfePresentation.HeaderHeight : compact ? 23 : 30) * s));
-        var controlsOrigin = ImGui.GetCursorScreenPos();
-        var controlsHeight = (compact ? 44 : 52) * s;
-        if (C.UiCompactVisibleOnMainWindow)
+        if (ImGui.BeginTable("##StatsGrid", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
         {
-            var compactPreference = C.UiCompact;
-            ImGui.BeginGroup();
-            ImGui.SetCursorScreenPos(controlsOrigin + new Vector2(0, (controlsHeight - ImGui.GetTextLineHeight()) * .5f));
-            ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(ImGui.GetStyle().FramePadding.X, 0));
-            if (UiGui.Checkbox("C##CompactMode", ref compactPreference)) { C.UiCompact = compactPreference; C.Save(); }
-            ImGui.PopStyleVar();
-            if (ImGui.IsItemHovered()) MaterialText.SetTooltip(UiText.T("Compact mode"));
-            var measuredCompactWidth = ImGui.GetItemRectSize().X;
-            ImGui.SetCursorScreenPos(controlsOrigin);
-            ImGui.Dummy(new Vector2(measuredCompactWidth, controlsHeight));
-            ImGui.EndGroup();
-            if (ImGui.GetItemRectMax().X + ImGui.GetStyle().ItemSpacing.X + opacityWidth <= origin.X + width) ImGui.SameLine();
+            ImGui.TableSetupColumn("Concepto", ImGuiTableColumnFlags.WidthStretch, 0.6f);
+            ImGui.TableSetupColumn("Cantidad", ImGuiTableColumnFlags.WidthStretch, 0.4f);
+
+            foreach (var (label, val) in items)
+            {
+                ImGui.TableNextRow();
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(label);
+
+                ImGui.TableNextColumn();
+                ImGui.TextColored(ImGuiColors.ParsedGold, val.ToString("N0"));
+            }
+
+            ImGui.EndTable();
         }
-        var opacityOrigin = ImGui.GetCursorScreenPos();
-        ImGui.BeginGroup();
-        ImGui.SetCursorScreenPos(opacityOrigin + new Vector2(0, (controlsHeight - ImGui.GetTextLineHeight()) * .5f));
-        ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(ImGui.GetStyle().FramePadding.X, 0));
-        P.appearance.DrawTransparencyToggle();
-        ImGui.PopStyleVar();
-        var measuredOpacityWidth = ImGui.GetItemRectSize().X;
-        ImGui.SetCursorScreenPos(opacityOrigin);
-        ImGui.Dummy(new Vector2(measuredOpacityWidth, controlsHeight));
-        ImGui.EndGroup();
-        UiGui.SameLineIconIfFits("Settings", header: true);
-        if (UiGui.IconButton("Settings", MaterialIcon.Settings, true))
-            P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
-        UiGui.SameLineIconIfFits("Ko-fi", header: true);
-        if (UiGui.IconButton("Ko-fi", MaterialIcon.HeartOutline, true))
-            Process.Start(new ProcessStartInfo { FileName = PluginInfo.SupportUrl, UseShellExecute = true });
-        UiGui.SameLineIconIfFits("Discord", header: true);
-        if (UiGui.IconButton("Discord", MaterialIcon.None, true))
-            Process.Start(new ProcessStartInfo { FileName = PluginInfo.DiscordUrl, UseShellExecute = true });
-        if (ImGui.IsItemHovered())
-            MaterialText.SetTooltip(UiText.T(PluginInfo.DiscordFeedbackNote));
-        UiGui.SameLineIconIfFits("OG Author", header: true);
-        if (UiGui.IconButton("OG Author", MaterialIcon.Person, true))
-            Process.Start(new ProcessStartInfo { FileName = PluginInfo.OriginalAuthorUrl, UseShellExecute = true });
-        if (C.UiLanguageVisibleOnMainWindow)
-        {
-            if (ImGui.GetItemRectMax().X + ImGui.GetStyle().ItemSpacing.X + selectorWidth <= origin.X + width) ImGui.SameLine();
-            P.appearance.DrawSelector(false);
-        }
-        var controlsBottom = ImGui.GetItemRectMax().Y;
-        ImGui.SetCursorScreenPos(origin);
-        ImGui.Dummy(new Vector2(width, Math.Max(BfePresentation.HeaderHeight * s, controlsBottom - origin.Y + 10 * s)));
-        ImGui.Separator();
-        var statePosition = ImGui.GetCursorScreenPos();
-        var stateHeight = (compact ? 36 : 37) * s;
-        var stateFontSize = (compact ? 27 : 31) * s;
-        var parts = UiText.T("State: {0}").Split("{0}", 2);
-        var state = UiText.T(SchedulerMain.DoWeTick ? "Running" : "Idle");
-        var prefixHeight = stateFontSize;
-        var emphasizedSize = 31 * s;
-        var emphasizedHeight = emphasizedSize;
-        if (MaterialText.RequiresShaping(parts[0])) prefixHeight = MaterialText.Measure(parts[0]).Y * stateFontSize / ImGui.GetFontSize();
-        using (UiText.Font(UiFontRole.BodyStrong))
-            if (MaterialText.RequiresShaping(state)) emphasizedHeight = MaterialText.Measure(state).Y * emphasizedSize / ImGui.GetFontSize();
-        if (MaterialText.RequiresShaping(parts[0]) || MaterialText.RequiresShaping(state))
-            stateHeight = Math.Max(stateHeight, MathF.Ceiling(Math.Max(prefixHeight, emphasizedHeight)));
-        var stateOrigin = statePosition + new Vector2(compact ? 14 : 10, 0) * s;
-        var drawList = ImGui.GetWindowDrawList();
-        var colors = MaterialTheme.Current.Colors;
-        drawList.AddCircleFilled(stateOrigin + new Vector2(12 * s, stateHeight * .5f), 12 * s,
-            MaterialCanvas.Color(SchedulerMain.DoWeTick ? ImGuiColors.HealerGreen : colors.OnSurfaceVariant), 24);
-        var textPosition = stateOrigin + new Vector2((compact ? 48 : 50) * s, (stateHeight - prefixHeight) * .5f);
-        MaterialText.AddText(drawList, ImGui.GetFont(), stateFontSize, textPosition, MaterialCanvas.Color(colors.OnSurface), parts[0]);
-        textPosition.X += MaterialText.Measure(parts[0]).X * stateFontSize / ImGui.GetFontSize() + (compact ? 21 : 12) * s;
-        using (UiText.Font(UiFontRole.BodyStrong))
-        {
-            var emphasizedPosition = new Vector2(textPosition.X, stateOrigin.Y + (stateHeight - emphasizedHeight) * .5f);
-            MaterialText.AddText(drawList, ImGui.GetFont(), emphasizedSize, emphasizedPosition,
-                MaterialCanvas.Color(SchedulerMain.DoWeTick ? ImGuiColors.HealerGreen : colors.OnSurface), state);
-            textPosition.X += MaterialText.Measure(state).X * emphasizedSize / ImGui.GetFontSize();
-        }
-        MaterialText.AddText(drawList, ImGui.GetFont(), stateFontSize, textPosition, MaterialCanvas.Color(colors.OnSurface), parts[1]);
-        ImGui.Dummy(new Vector2(width, stateHeight));
     }
 }

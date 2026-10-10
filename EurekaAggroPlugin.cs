@@ -3,6 +3,7 @@ using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using ECommons;
 using EurekaAggro.Configuration;
 using EurekaAggro.Data;
 using EurekaAggro.Rendering;
@@ -12,19 +13,17 @@ using EurekaAggro.UI;
 namespace EurekaAggro;
 
 /// <summary>
-/// Main plugin class for EurekaAggro.
-/// Specialized 100% for Eureka expeditions (Anemos, Pagos, Pyros, Hydatos):
-/// - Sleeping Dragons sound detection (running warning and safe walking radius).
-/// - Undead (Ashkin) blood detection when player HP is below 80%.
-/// - Sprites / Elementals magic aggro detection.
-/// - Classic frontal sight cones and radial proximity circles with precision guide lines.
-/// - In-game tactical cast alerts for interrupt/stun/LOS counters.
+/// Clase principal del plugin EurekaAggro.
+/// Integra de forma 100% nativa:
+/// - Detección táctica de aggro y radar de monstruos en Eureka (Dragones dormidos por sonido, Ashkin por sangre, Sprites por magia, conos de visión).
+/// - Alertas de casteo en combate para interrupciones y aturdimientos.
+/// - Takeover completo de BFE (Bunnies for Eureka) para automatización inteligente de conejos de Pyros/Pagos/Hydatos con vnavmesh y combate integrado.
 /// </summary>
 public sealed class EurekaAggroPlugin : IDalamudPlugin
 {
     public string Name => "Eureka Aggro";
 
-    // Injected Dalamud services
+    // Servicios inyectados de Dalamud
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IClientState ClientState { get; private set; } = null!;
@@ -39,7 +38,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     [PluginService] internal static IPlayerState PlayerState { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
 
-    // Internal components
+    // Componentes del núcleo de detección de Eureka
     private readonly PluginConfiguration configuration;
     private readonly MobDatabase mobDatabase;
     private readonly ActionDatabase actionDatabase;
@@ -49,15 +48,23 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     private readonly OverlayRenderer overlayRenderer;
     private readonly MainWindow mainWindow;
     private readonly CastAlertWindow castAlertWindow;
-    private readonly BFE.Plugin bfePlugin;
 
+    // Subsistema nativo de automatización de conejos (BFE)
+    private readonly BunnyAutomationService bunnyAutomationService;
+
+    // Comandos de consola
     private const string MainCommand = "/eurekaaggro";
     private const string ShortCommand = "/ea";
+    private const string BfeCommand = "/bfe";
+    private const string BunniesCommand = "/bunnies";
 
     public EurekaAggroPlugin(IDalamudPluginInterface pluginInterface)
     {
         configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
         configuration.Initialize(pluginInterface);
+
+        // Inicializamos ECommons directamente para el plugin principal
+        ECommonsMain.Init(pluginInterface, this, ECommons.Module.DalamudReflector, ECommons.Module.ObjectFunctions);
 
         var configDir = pluginInterface.GetPluginConfigDirectory();
 
@@ -69,20 +76,32 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         dragonWalkService = new DragonWalkService(PluginLog, ClientState, ObjectTable, ChatGui, mobDatabase, configuration);
         overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, dragonWalkService, configuration);
 
-        // Initialize BFE (Bunnies for Eureka) automation subsystem
-        bfePlugin = new BFE.Plugin(pluginInterface, this, ChatGui, ToastGui, PlayerState, TextureProvider);
+        // Inicializamos el servicio nativo de conejos de Eureka
+        bunnyAutomationService = new BunnyAutomationService(pluginInterface, ChatGui, ToastGui, PlayerState, TextureProvider);
 
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, pluginInterface, bfePlugin);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, pluginInterface, bunnyAutomationService);
 
+        // Registro de comandos del radar de EurekaAggro
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Opens the Eureka Aggro configuration and radar window."
+            HelpMessage = "Abre la ventana principal del radar y configuración de Eureka Aggro."
         });
 
         CommandManager.AddHandler(ShortCommand, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Short command to open the Eureka Aggro radar."
+            HelpMessage = "Comando abreviado para abrir el radar de Eureka Aggro."
+        });
+
+        // Registro de comandos de automatización de conejos
+        CommandManager.AddHandler(BfeCommand, new CommandInfo(OnBfeCommand)
+        {
+            HelpMessage = "Comandos de automatización de conejos (/bfe, /bfe pyros, /bfe stop, /bfe settings)."
+        });
+
+        CommandManager.AddHandler(BunniesCommand, new CommandInfo(OnBfeCommand)
+        {
+            HelpMessage = "Alias heredado para el control de conejos de Eureka."
         });
 
         PluginInterface.UiBuilder.Draw += OnDrawUi;
@@ -90,7 +109,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenMainUi += OnOpenConfigUi;
         Framework.Update += OnFrameworkUpdate;
 
-        PluginLog.Info("EurekaAggro initialized successfully.");
+        PluginLog.Info("EurekaAggro y subsistema de conejos inicializados correctamente.");
     }
 
     private void OnCommand(string command, string args)
@@ -98,24 +117,36 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         mainWindow.IsOpen = !mainWindow.IsOpen;
     }
 
+    private void OnBfeCommand(string command, string args)
+    {
+        bunnyAutomationService.ProcessCommand(command, args);
+    }
+
     private void OnFrameworkUpdate(IFramework _)
     {
-        if (!configuration.Enabled) return;
+        if (configuration.Enabled)
+        {
+            castMonitor.Update();
+            dragonWalkService.Update();
+        }
 
-        castMonitor.Update();
-        dragonWalkService.Update();
+        // El motor de conejos procesa sus ticks y chequeo de dependencias
+        bunnyAutomationService.Update();
     }
 
     private void OnDrawUi()
     {
-        // 1. Draw 3D in-game overlay
+        // 1. Overlay 3D en pantalla
         overlayRenderer.Draw();
 
-        // 2. Draw HUD cast alert window if active
+        // 2. Ventana de alerta de casteos tácticos
         castAlertWindow.Draw();
 
-        // 3. Draw main configuration window if open
+        // 3. Ventana principal de radar y configuración
         mainWindow.Draw();
+
+        // 4. Ventanas de conejos si están abiertas
+        bunnyAutomationService.DrawUi();
     }
 
     private void OnOpenConfigUi()
@@ -127,18 +158,24 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     {
         CommandManager.RemoveHandler(MainCommand);
         CommandManager.RemoveHandler(ShortCommand);
+        CommandManager.RemoveHandler(BfeCommand);
+        CommandManager.RemoveHandler(BunniesCommand);
 
         PluginInterface.UiBuilder.Draw -= OnDrawUi;
         PluginInterface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
         PluginInterface.UiBuilder.OpenMainUi -= OnOpenConfigUi;
         Framework.Update -= OnFrameworkUpdate;
 
-        bfePlugin?.Dispose();
+        // Liberación de recursos del subsistema de conejos
+        bunnyAutomationService?.Dispose();
+
+        // Liberación de recursos de ECommons
+        ECommonsMain.Dispose();
 
         configuration.Save();
         mobDatabase.SaveIfDirty();
         actionDatabase.SaveIfDirty();
 
-        PluginLog.Info("EurekaAggro unloaded.");
+        PluginLog.Info("EurekaAggro descargado correctamente.");
     }
 }
