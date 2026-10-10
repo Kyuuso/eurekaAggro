@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Plugin.Services;
 using EurekaAggro.Configuration;
 using EurekaAggro.Tracker.Model;
@@ -20,7 +21,10 @@ public class TrackerManager : IDisposable
     private readonly IClientState clientState;
     private readonly IObjectTable objectTable;
     private readonly IDataManager dataManager;
+    private readonly IChatGui chatGui;
     private readonly IFramework framework;
+
+    private bool isAutoCreatingTracker;
 
     public EurekaTrackerClient Client { get; }
     public InstanceTrackerService InstanceService { get; }
@@ -58,6 +62,7 @@ public class TrackerManager : IDisposable
         this.clientState = clientState;
         this.objectTable = objectTable;
         this.dataManager = dataManager;
+        this.chatGui = chatGui;
         this.framework = framework;
 
         Client = new EurekaTrackerClient();
@@ -91,6 +96,10 @@ public class TrackerManager : IDisposable
         {
             InstanceService.ResetServerId();
         }
+        else
+        {
+            TryAutoCreateTracker();
+        }
 
         FateMonitor.Reset();
     }
@@ -98,24 +107,66 @@ public class TrackerManager : IDisposable
     private void OnEurekaZoneEntered(uint serverId, ushort territoryId)
     {
         UpdateCurrentZone(territoryId);
+        TryAutoCreateTracker();
+    }
 
-        // Auto-create tracker if enabled and not currently connected
-        if (config.TrackerAutoCreate && !Client.IsConnected && CurrentZoneTracker != null)
+    /// <summary>
+    /// Attempts to auto-create a new tracker on ffxiv-eureka.com if enabled,
+    /// directly associating the detected instance/server ID and datacenter.
+    /// </summary>
+    public void TryAutoCreateTracker()
+    {
+        if (!config.TrackerAutoCreate || Client.IsConnected || isAutoCreatingTracker || CurrentZoneTracker == null)
+            return;
+
+        isAutoCreatingTracker = true;
+        int zoneId = CurrentZoneTracker.ZoneId;
+        string zoneName = CurrentZoneTracker.ZoneName;
+
+        _ = Task.Run(async () =>
         {
-            int zoneId = CurrentZoneTracker.ZoneId;
-            _ = Task.Run(async () =>
+            try
             {
                 var (newTrackerId, password, _) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
                 if (!string.IsNullOrEmpty(newTrackerId))
                 {
-                    await Client.JoinTrackerAsync(newTrackerId, password);
+                    config.TrackerLastCode = newTrackerId;
+                    config.TrackerLastPassword = password;
+                    config.Save();
 
-                    // Push detected server ID to the newly created tracker
-                    int? dcId = GetCurrentDataCenterId();
-                    await Client.SetInstanceInformationAsync(serverId.ToString(), dcId);
+                    bool joined = await Client.JoinTrackerAsync(newTrackerId, password);
+                    if (joined)
+                    {
+                        // Add detected Instance ID directly to the newly created tracker
+                        string detectedId = InstanceService.GetBestDetectedInstanceId();
+                        int? dcId = GetCurrentDataCenterId();
+                        if (!string.IsNullOrEmpty(detectedId))
+                        {
+                            await Client.SetInstanceInformationAsync(detectedId, dcId);
+                        }
+
+                        chatGui.Print(new SeStringBuilder()
+                            .AddUiForeground(45)
+                            .AddText("[EurekaAggro] ")
+                            .AddUiForegroundOff()
+                            .AddText($"Auto-created {zoneName} Tracker: ")
+                            .AddUiForeground(58)
+                            .AddText($"https://ffxiv-eureka.com/{newTrackerId}")
+                            .AddUiForegroundOff()
+                            .AddText(string.IsNullOrEmpty(detectedId) ? string.Empty : $" (Instance ID: {detectedId})")
+                            .BuiltString);
+                    }
                 }
-            });
-        }
+            }
+            catch (Exception ex)
+            {
+                EurekaAggroPlugin.PluginLog.Error(ex, "Failed to auto-create and join Eureka tracker.");
+            }
+            finally
+            {
+                isAutoCreatingTracker = false;
+            }
+        });
     }
 
     private void OnFrameworkUpdate(IFramework _)

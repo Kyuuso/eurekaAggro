@@ -36,7 +36,7 @@ namespace EurekaAggro.UI;
 /// - Bottom Navigation Bar: [ Main ] | [ Configuration ] switching the active module's sub-view.
 /// All user-facing strings are strictly in English.
 /// </summary>
-public class MainWindow
+public class MainWindow : IDisposable
 {
     public enum SubView
     {
@@ -1400,4 +1400,9 @@ public class MainWindow
         }
     }
     #endregion
+
+    public void Dispose()
+    {
+        trackerView?.Dispose();
+    }
 }

@@ -27,6 +27,7 @@ public class EurekaTrackerClient : IDisposable
     private CancellationTokenSource? cts;
     private int messageId;
     private int lastHeartbeatId = -1;
+    private TaskCompletionSource<bool>? joinTcs;
 
     public bool IsConnected { get; private set; }
     public bool IsInvalid { get; private set; }
@@ -149,6 +150,7 @@ public class EurekaTrackerClient : IDisposable
         {
             cts = new CancellationTokenSource();
             webSocket = new ClientWebSocket();
+            joinTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             await webSocket.ConnectAsync(new Uri(TrackerWebSocketUrl), cts.Token);
             _ = ReceiveLoop(cts.Token);
@@ -170,7 +172,13 @@ public class EurekaTrackerClient : IDisposable
             // Start 30s heartbeat loop
             _ = HeartbeatLoop(cts.Token);
 
-            return true;
+            // Wait for initial_payload or rejection from ffxiv-eureka.com (up to 8s timeout)
+            using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
+            using (timeoutCts.Token.Register(() => joinTcs?.TrySetResult(false)))
+            {
+                bool joined = await joinTcs.Task;
+                return joined && IsConnected;
+            }
         }
         catch (Exception ex)
         {
@@ -328,6 +336,7 @@ public class EurekaTrackerClient : IDisposable
                 ErrorMessage = $"Tracker error: {reason}";
             }
 
+            joinTcs?.TrySetResult(false);
             _ = DisconnectAsync();
             return;
         }
@@ -381,6 +390,8 @@ public class EurekaTrackerClient : IDisposable
         IsConnected = true;
         IsInvalid = false;
         ErrorMessage = null;
+
+        joinTcs?.TrySetResult(true);
 
         OnConnectionStatusChanged?.Invoke();
         OnTrackerUpdated?.Invoke();
@@ -527,9 +538,17 @@ public class EurekaTrackerClient : IDisposable
     {
         if (!IsConnected) return;
 
+        string? cleanId = string.IsNullOrWhiteSpace(instanceId) ? null : instanceId.Trim();
+        InstanceId = cleanId ?? string.Empty;
+        if (dataCenterId.HasValue && dataCenterId.Value > 0)
+        {
+            DataCenterId = dataCenterId.Value;
+            IsPublic = true;
+        }
+
         var payload = new JObject
         {
-            ["instance_id"] = string.IsNullOrWhiteSpace(instanceId) ? null : instanceId.Trim(),
+            ["instance_id"] = cleanId,
             ["data_center_id"] = dataCenterId.HasValue && dataCenterId.Value > 0 ? dataCenterId.Value : null,
         };
 
@@ -541,6 +560,7 @@ public class EurekaTrackerClient : IDisposable
             payload: payload);
 
         await SendRawAsync(msg.ToMessage());
+        OnTrackerUpdated?.Invoke();
     }
 
     public async Task SetPasswordAsync(string password)
@@ -573,6 +593,7 @@ public class EurekaTrackerClient : IDisposable
     public async Task DisconnectAsync()
     {
         IsConnected = false;
+        joinTcs?.TrySetResult(false);
         cts?.Cancel();
 
         try

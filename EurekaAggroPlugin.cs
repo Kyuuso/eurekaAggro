@@ -251,6 +251,9 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenMainUi -= OnOpenMainUi;
         Framework.Update -= OnFrameworkUpdate;
 
+        // Liberación de recursos de la ventana principal
+        mainWindow?.Dispose();
+
         // Liberación de recursos del tracker de Eureka
         trackerManager?.Dispose();
 

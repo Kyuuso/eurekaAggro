@@ -6,6 +6,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin.Services;
 using EurekaAggro.Configuration;
+using EurekaAggro.Data;
 using EurekaAggro.Tracker.Model;
 using EurekaAggro.Tracker.Network;
 using FFXIVClientStructs.FFXIV.Client.UI;
@@ -94,6 +95,9 @@ public class FateMonitorService
         if (config.TrackerDisplayFatePop)
         {
             var mapPayload = new MapLinkPayload(fate.TerritoryId, fate.MapId, fate.FatePosition.X, fate.FatePosition.Y);
+            string placeName = !string.IsNullOrEmpty(mapPayload.PlaceName) ? mapPayload.PlaceName : ValidZones.GetZoneName(fate.TerritoryId);
+            string coordStr = !string.IsNullOrEmpty(mapPayload.CoordinateString) ? mapPayload.CoordinateString : $"( {fate.FatePosition.X:0.0} , {fate.FatePosition.Y:0.0} )";
+
             var seString = new SeStringBuilder()
                 .AddUiForeground(45)
                 .AddText("[EurekaAggro] ")
@@ -104,6 +108,10 @@ public class FateMonitorService
                 .AddUiForegroundOff()
                 .AddText(" at ")
                 .Add(mapPayload)
+                .AddUiForeground(518)
+                .AddText($"\uE0BB {placeName} {coordStr}")
+                .AddUiForegroundOff()
+                .Add(RawPayload.LinkTerminator)
                 .BuiltString;
 
             chatGui.Print(seString);

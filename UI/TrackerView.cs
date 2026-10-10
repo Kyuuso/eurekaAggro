@@ -22,7 +22,7 @@ namespace EurekaAggro.UI;
 /// featuring full Phoenix WebSocket live sync, auto/manual Instance ID detection and updates,
 /// NM respawn timers, and weather forecasting.
 /// </summary>
-public class TrackerView
+public class TrackerView : IDisposable
 {
     private readonly TrackerManager trackerManager;
     private readonly PluginConfiguration config;
@@ -62,6 +62,23 @@ public class TrackerView
 
         inputTrackerCode = config.TrackerLastCode ?? string.Empty;
         inputTrackerPassword = config.TrackerLastPassword ?? string.Empty;
+
+        trackerManager.Client.OnTrackerUpdated += OnTrackerUpdated;
+        trackerManager.Client.OnConnectionStatusChanged += OnTrackerUpdated;
+    }
+
+    private void OnTrackerUpdated()
+    {
+        var client = trackerManager.Client;
+        if (!string.IsNullOrEmpty(client.TrackerId)) inputTrackerCode = client.TrackerId;
+        if (!string.IsNullOrEmpty(client.TrackerPassword)) inputTrackerPassword = client.TrackerPassword;
+        if (!string.IsNullOrEmpty(client.InstanceId)) inputInstanceId = client.InstanceId;
+    }
+
+    public void Dispose()
+    {
+        trackerManager.Client.OnTrackerUpdated -= OnTrackerUpdated;
+        trackerManager.Client.OnConnectionStatusChanged -= OnTrackerUpdated;
     }
 
     public void Draw(MainWindow.SubView subView, float scale)
@@ -326,14 +343,17 @@ public class TrackerView
                 config.TrackerLastPassword = password;
                 config.Save();
 
-                await trackerManager.Client.JoinTrackerAsync(newTrackerId, password);
-
-                // Auto-sync detected Server ID if present
-                string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
-                if (!string.IsNullOrEmpty(detectedId))
+                bool joined = await trackerManager.Client.JoinTrackerAsync(newTrackerId, password);
+                if (joined)
                 {
-                    int? dcId = trackerManager.GetCurrentDataCenterId();
-                    await trackerManager.Client.SetInstanceInformationAsync(detectedId, dcId);
+                    // Auto-sync detected Server ID if present
+                    string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
+                    if (!string.IsNullOrEmpty(detectedId))
+                    {
+                        inputInstanceId = detectedId;
+                        int? dcId = trackerManager.GetCurrentDataCenterId();
+                        await trackerManager.Client.SetInstanceInformationAsync(detectedId, dcId);
+                    }
                 }
             }
         });
@@ -739,10 +759,14 @@ public class TrackerView
         {
             config.TrackerAutoCreate = autoCreate;
             config.Save();
+            if (autoCreate)
+            {
+                trackerManager.TryAutoCreateTracker();
+            }
         }
         if (ImGui.IsItemHovered())
         {
-            ImGui.SetTooltip("Automatically generates a new tracker on ffxiv-eureka.com if entering Eureka without an active connection.");
+            ImGui.SetTooltip("Automatically generates a new tracker on ffxiv-eureka.com upon entering Eureka (or enabling), setting the detected Instance ID directly.");
         }
 
         bool autoPop = config.TrackerAutoPopFate;
