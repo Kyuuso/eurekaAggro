@@ -91,12 +91,8 @@ internal class MainWindow : PositionedWindow
         var ancho = ImGui.GetContentRegionAvail().X;
         var dl = ImGui.GetWindowDrawList();
 
-        // Icono de conejo estilizado (o símbolo dorado)
-        var posIcono = pos + new Vector2(4f * scale, 2f * scale);
-        dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.8f, posIcono, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento), "🐰");
-
         // Título BFE y subtítulo Bunny Fate Engine
-        var posTexto = pos + new Vector2(40f * scale, 0);
+        var posTexto = pos + new Vector2(10f * scale, 0);
         dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.5f, posTexto, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento), "BFE");
         dl.AddText(posTexto + new Vector2(0, 22f * scale), 0xFFCCCCCC, "Bunny Fate Engine");
 

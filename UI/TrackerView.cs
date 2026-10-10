@@ -170,10 +170,31 @@ public class TrackerView : IDisposable
             if (hasSavedPwd)
             {
                 ImGui.SameLine();
-                ImGui.TextColored(GoldAccent, "🔑");
+                if (ImGuiComponents.IconButton("##SavedPwdBtn", FontAwesomeIcon.Key))
+                {
+                    string pwd = config.GetSavedPassword(inputTrackerCode) ?? string.Empty;
+                    ImGui.SetClipboardText(pwd);
+                }
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip("Saved password restored from memory!");
+                    string pwd = config.GetSavedPassword(inputTrackerCode) ?? string.Empty;
+                    ImGui.SetTooltip($"Saved password: '{pwd}' (Click to copy)");
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(inputTrackerPassword))
+            {
+                ImGui.SameLine();
+                if (ImGuiComponents.IconButton("##ShareInputBtn", FontAwesomeIcon.ShareAlt))
+                {
+                    string shareMsg = !string.IsNullOrWhiteSpace(inputTrackerCode)
+                        ? $"https://ffxiv-eureka.com/{inputTrackerCode} | Password: {inputTrackerPassword}"
+                        : inputTrackerPassword;
+                    ImGui.SetClipboardText(shareMsg);
+                }
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip($"Copy share message (URL + Password: '{inputTrackerPassword}') to clipboard");
                 }
             }
 
@@ -213,7 +234,23 @@ public class TrackerView : IDisposable
                 ImGui.SetTooltip("Copy tracker URL to clipboard (https://ffxiv-eureka.com/...)");
             }
 
-            // Copy Password
+            ImGui.SameLine();
+
+            // Share (URL + Password)
+            if (ImGuiComponents.IconButton(FontAwesomeIcon.ShareAlt))
+            {
+                string shareMsg = client.CanModify
+                    ? $"https://ffxiv-eureka.com/{client.TrackerId} | Password: {client.TrackerPassword}"
+                    : $"https://ffxiv-eureka.com/{client.TrackerId}";
+                ImGui.SetClipboardText(shareMsg);
+            }
+            if (ImGui.IsItemHovered())
+            {
+                string pwdText = client.CanModify ? $" (includes Password: {client.TrackerPassword})" : "";
+                ImGui.SetTooltip($"Copy share message to clipboard{pwdText}\n'https://ffxiv-eureka.com/{client.TrackerId} | Password: ...'");
+            }
+
+            // Copy Password & Display
             if (client.CanModify)
             {
                 ImGui.SameLine();
@@ -223,7 +260,14 @@ public class TrackerView : IDisposable
                 }
                 if (ImGui.IsItemHovered())
                 {
-                    ImGui.SetTooltip($"Copy tracker password to clipboard: {client.TrackerPassword}");
+                    ImGui.SetTooltip($"Click to copy password '{client.TrackerPassword}' to clipboard");
+                }
+
+                ImGui.SameLine();
+                ImGui.TextColored(GoldAccent, $"| Password: {client.TrackerPassword}");
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip($"Admin password: '{client.TrackerPassword}'. Share this so others can update NM pop times.");
                 }
 
                 ImGui.SameLine();
@@ -919,10 +963,23 @@ public class TrackerView : IDisposable
                 if (!string.IsNullOrEmpty(savedPwd))
                 {
                     ImGui.SameLine();
-                    ImGui.TextColored(GoldAccent, "🔑");
+                    if (ImGuiComponents.IconButton($"##KeyPublic_{pt.TrackerId}", FontAwesomeIcon.Key))
+                    {
+                        ImGui.SetClipboardText(savedPwd);
+                    }
                     if (ImGui.IsItemHovered())
                     {
-                        ImGui.SetTooltip("Password remembered! Connect will restore your admin/edit permissions automatically.");
+                        ImGui.SetTooltip($"Password remembered: '{savedPwd}'\nClick to copy password to clipboard.");
+                    }
+
+                    ImGui.SameLine();
+                    if (ImGuiComponents.IconButton($"##SharePublic_{pt.TrackerId}", FontAwesomeIcon.ShareAlt))
+                    {
+                        ImGui.SetClipboardText($"https://ffxiv-eureka.com/{pt.TrackerId} | Password: {savedPwd}");
+                    }
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip($"Copy share message (URL + Password: '{savedPwd}') to clipboard.");
                     }
                 }
 
@@ -1042,9 +1099,9 @@ public class TrackerView : IDisposable
                 ImGui.TableSetupColumn("Code", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
                 ImGui.TableSetupColumn("Zone", ImGuiTableColumnFlags.WidthFixed, 80 * scale);
                 ImGui.TableSetupColumn("Instance ID", ImGuiTableColumnFlags.WidthFixed, 95 * scale);
-                ImGui.TableSetupColumn("Permissions", ImGuiTableColumnFlags.WidthFixed, 120 * scale);
-                ImGui.TableSetupColumn("Last Visited", ImGuiTableColumnFlags.WidthStretch, 90 * scale);
-                ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, 115 * scale);
+                ImGui.TableSetupColumn("Password", ImGuiTableColumnFlags.WidthFixed, 140 * scale);
+                ImGui.TableSetupColumn("Last Visited", ImGuiTableColumnFlags.WidthStretch, 80 * scale);
+                ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, 135 * scale);
                 ImGui.TableHeadersRow();
 
                 for (int i = 0; i < config.TrackerHistory.Count; i++)
@@ -1080,26 +1137,31 @@ public class TrackerView : IDisposable
                         ImGui.TextDisabled("-");
                     }
 
-                    // 4. Permissions (Password)
+                    // 4. Password (with Copy button)
                     ImGui.TableNextColumn();
                     if (entry.HasPassword)
                     {
-                        ImGui.TextColored(GoldAccent, "🔑 Admin Saved");
+                        ImGui.TextColored(GoldAccent, entry.Password);
+                        ImGui.SameLine();
+                        if (ImGuiComponents.IconButton($"##CopyPwdHist_{entry.TrackerId}", FontAwesomeIcon.Key))
+                        {
+                            ImGui.SetClipboardText(entry.Password);
+                        }
                         if (ImGui.IsItemHovered())
                         {
-                            ImGui.SetTooltip("Saved admin password is remembered and will be used to restore edit rights.");
+                            ImGui.SetTooltip($"Click to copy password '{entry.Password}' to clipboard");
                         }
                     }
                     else
                     {
-                        ImGui.TextDisabled("Read-only");
+                        ImGui.TextDisabled("None (Read-only)");
                     }
 
                     // 5. Last Visited
                     ImGui.TableNextColumn();
                     ImGui.TextDisabled(entry.GetAgeString());
 
-                    // 6. Action: Reconnect & Forget
+                    // 6. Actions: Connect, Share, Forget
                     ImGui.TableNextColumn();
                     if (ImGui.Button($"Connect##Hist_{entry.TrackerId}"))
                     {
@@ -1111,6 +1173,19 @@ public class TrackerView : IDisposable
                     if (ImGui.IsItemHovered())
                     {
                         ImGui.SetTooltip($"Reconnect to {entry.TrackerId} with saved credentials and admin rights");
+                    }
+
+                    if (entry.HasPassword)
+                    {
+                        ImGui.SameLine();
+                        if (ImGuiComponents.IconButton($"##ShareHist_{entry.TrackerId}", FontAwesomeIcon.ShareAlt))
+                        {
+                            ImGui.SetClipboardText($"https://ffxiv-eureka.com/{entry.TrackerId} | Password: {entry.Password}");
+                        }
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.SetTooltip($"Copy share message (URL + Password: '{entry.Password}') to clipboard");
+                        }
                     }
 
                     ImGui.SameLine();

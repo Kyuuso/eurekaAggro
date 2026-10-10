@@ -351,7 +351,7 @@ public class OverlayRenderer
                             if (mut.IsActiveNow)
                             {
                                 var mutCol = ImGui.ColorConvertFloat4ToU32(config.ColorMutationActiveText);
-                                drawList.AddText(pText - new Vector2(30, -14), mutCol, $"🧬 CAN MUTATE NOW: {mut.HintMessage}");
+                                drawList.AddText(pText - new Vector2(30, -14), mutCol, $"[CAN MUTATE NOW]: {mut.HintMessage}");
                             }
                             else
                             {
