@@ -20,13 +20,13 @@ internal sealed class BfeAppearance : IDisposable
 
     internal BfeAppearance(ITextureProvider textures)
     {
-        text = new UiText("es", null);
-        appliedLanguage = "es";
+        text = new UiText("en", null);
+        appliedLanguage = "en";
     }
 
     private void Apply()
     {
-        var lang = C.UiLanguage ?? "es";
+        var lang = C.UiLanguage ?? "en";
         if (lang != appliedLanguage)
         {
             text.Dispose();
@@ -68,7 +68,7 @@ internal sealed class BfeAppearance : IDisposable
 
     internal void DrawSelector(bool compact)
     {
-        var currentLang = C.UiLanguage ?? "es";
+        var currentLang = C.UiLanguage ?? "en";
         var langs = UiText.Languages;
         var currentIndex = Array.FindIndex(langs, l => l.Code == currentLang);
         if (currentIndex < 0) currentIndex = 0;

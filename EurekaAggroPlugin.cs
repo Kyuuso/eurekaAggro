@@ -80,46 +80,89 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         bunnyAutomationService = new BunnyAutomationService(pluginInterface, ChatGui, ToastGui, PlayerState, TextureProvider);
 
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, pluginInterface, bunnyAutomationService);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, PluginInterface, bunnyAutomationService, ObjectTable);
 
-        // Registro de comandos del radar de EurekaAggro
+        // Registered commands for EurekaAggro Suite
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Abre la ventana principal del radar y configuración de Eureka Aggro."
+            HelpMessage = "Open the Eureka Aggro Suite main window and radar overview."
         });
 
         CommandManager.AddHandler(ShortCommand, new CommandInfo(OnCommand)
         {
-            HelpMessage = "Comando abreviado para abrir el radar de Eureka Aggro."
+            HelpMessage = "Short alias to open Eureka Aggro Suite."
         });
 
-        // Registro de comandos de automatización de conejos
+        // Registered commands for Fate Engine (Bunnies)
         CommandManager.AddHandler(BfeCommand, new CommandInfo(OnBfeCommand)
         {
-            HelpMessage = "Comandos de automatización de conejos (/bfe, /bfe pyros, /bfe stop, /bfe settings)."
+            HelpMessage = "Eureka bunny fate automation commands (/bfe, /bfe pyros, /bfe stop, /bfe settings)."
         });
 
         CommandManager.AddHandler(BunniesCommand, new CommandInfo(OnBfeCommand)
         {
-            HelpMessage = "Alias heredado para el control de conejos de Eureka."
+            HelpMessage = "Legacy alias for Eureka bunny automation."
         });
 
         PluginInterface.UiBuilder.Draw += OnDrawUi;
         PluginInterface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
-        PluginInterface.UiBuilder.OpenMainUi += OnOpenConfigUi;
+        PluginInterface.UiBuilder.OpenMainUi += OnOpenMainUi;
         Framework.Update += OnFrameworkUpdate;
 
-        PluginLog.Info("EurekaAggro y subsistema de conejos inicializados correctamente.");
+        PluginLog.Info("EurekaAggro suite and Fate Engine initialized successfully.");
     }
 
     private void OnCommand(string command, string args)
     {
-        mainWindow.IsOpen = !mainWindow.IsOpen;
+        var clean = args.Trim();
+        if (clean.EqualsIgnoreCaseAny("config", "s", "settings", "setting"))
+        {
+            mainWindow.OpenAggroRadar(MainWindow.SubView.Configuration);
+        }
+        else
+        {
+            if (mainWindow.IsOpen && string.IsNullOrEmpty(clean))
+            {
+                mainWindow.IsOpen = false;
+            }
+            else
+            {
+                mainWindow.OpenAggroRadar(MainWindow.SubView.Main);
+            }
+        }
     }
 
     private void OnBfeCommand(string command, string args)
     {
-        bunnyAutomationService.ProcessCommand(command, args);
+        var clean = args.Trim();
+        if (clean.EqualsIgnoreCaseAny("config", "s", "settings", "setting"))
+        {
+            mainWindow.OpenFateEngine(MainWindow.SubView.Configuration);
+        }
+        else if (clean.EqualsIgnoreCaseAny("pyros"))
+        {
+            bunnyAutomationService.ProcessCommand(command, args);
+            mainWindow.OpenFateEngine(MainWindow.SubView.Main);
+        }
+        else if (clean.EqualsIgnoreCaseAny("stop"))
+        {
+            bunnyAutomationService.ProcessCommand(command, args);
+        }
+        else if (clean.EqualsIgnoreCaseAny("ws", "j", "d", "debug"))
+        {
+            bunnyAutomationService.ProcessCommand(command, args);
+        }
+        else
+        {
+            if (mainWindow.IsOpen && mainWindow.TargetMainTab == 1 && string.IsNullOrEmpty(clean))
+            {
+                mainWindow.IsOpen = false;
+            }
+            else
+            {
+                mainWindow.OpenFateEngine(MainWindow.SubView.Main);
+            }
+        }
     }
 
     private void OnFrameworkUpdate(IFramework _)
@@ -151,7 +194,12 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
 
     private void OnOpenConfigUi()
     {
-        mainWindow.IsOpen = true;
+        mainWindow.OpenAggroRadar(MainWindow.SubView.Configuration);
+    }
+
+    private void OnOpenMainUi()
+    {
+        mainWindow.OpenAggroRadar(MainWindow.SubView.Main);
     }
 
     public void Dispose()
@@ -163,7 +211,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
 
         PluginInterface.UiBuilder.Draw -= OnDrawUi;
         PluginInterface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
-        PluginInterface.UiBuilder.OpenMainUi -= OnOpenConfigUi;
+        PluginInterface.UiBuilder.OpenMainUi -= OnOpenMainUi;
         Framework.Update -= OnFrameworkUpdate;
 
         // Liberación de recursos del subsistema de conejos

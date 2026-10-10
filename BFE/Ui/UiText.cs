@@ -32,12 +32,12 @@ internal sealed class UiText : IDisposable
     internal static UiText Current => current ?? FallbackInstance;
 
     private static UiText? fallbackInstance;
-    private static UiText FallbackInstance => fallbackInstance ??= new UiText("es", null);
+    private static UiText FallbackInstance => fallbackInstance ??= new UiText("en", null);
 
     internal static readonly (string Code, string Name)[] Languages =
     [
-        ("es", "Español"),
         ("en", "English"),
+        ("es", "Español"),
         ("de", "Deutsch"),
         ("fr", "Français"),
         ("it", "Italiano"),
@@ -56,7 +56,7 @@ internal sealed class UiText : IDisposable
 
     public UiText(string language, Func<UiFontRole, IDisposable>? pushFont = null)
     {
-        Language = Languages.Any(l => l.Code == language) ? language : "es";
+        Language = Languages.Any(l => l.Code == language) ? language : "en";
         Culture = CultureInfo.GetCultureInfo(Language);
 
         // Cargamos el gestor de recursos para el idioma seleccionado

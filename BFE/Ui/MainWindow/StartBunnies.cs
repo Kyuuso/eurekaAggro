@@ -34,8 +34,8 @@ internal class StartBunnies
 
     internal static string ActionTitleTooltip => UiText.T(ActionLabel) + "\n" + UiText.T(
         !IsRunning && !P.pluginDependencies.RequiredDependenciesLoaded
-            ? "Carga todos los plugins requeridos para iniciar la automatización."
-            : icurrentTask == "idle" ? "En reposo. Selecciona un área y pulsa Iniciar." : icurrentTask);
+            ? "Load all required plugins to start automation."
+            : icurrentTask == "idle" ? "Idle. Select an area and press Start to begin." : icurrentTask);
 
     internal static void RunActionFromUi()
     {
@@ -245,7 +245,7 @@ internal class StartBunnies
             if (ImGui.SmallButton($"##Link_{dep.InternalName}"))
             {
                 ImGui.SetClipboardText(dep.RepoUrl);
-                DuoLog.Information("URL del repositorio copiada al portapapeles.");
+                DuoLog.Information("Repo URL copied to clipboard.");
                 Notify.Info(UiText.T("Repo URL Copied"));
             }
             ImGui.PopStyleColor();

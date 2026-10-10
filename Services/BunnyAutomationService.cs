@@ -158,7 +158,7 @@ public sealed class BunnyAutomationService : IDisposable
         else if (cleanArgs.EqualsIgnoreCaseAny("stop"))
         {
             SchedulerMain.DisablePlugin();
-            ChatGui.Print("[Eureka Conejos] Automatización detenida.");
+            ChatGui.Print("[EurekaAggro] Bunny automation stopped.");
         }
         else if (cleanArgs.EqualsIgnoreCaseAny("pyros"))
         {
@@ -167,17 +167,13 @@ public sealed class BunnyAutomationService : IDisposable
             {
                 C.zoneSelected = 1;
                 SchedulerMain.EnablePlugin();
-                ChatGui.Print("[Eureka Conejos] Iniciando ciclo de conejos en Pyros.");
+                ChatGui.Print("[EurekaAggro] Starting Pyros bunny automation cycle.");
             }
             else
             {
                 Helpers.NotifyPlugins();
                 SchedulerMain.DisablePlugin();
             }
-        }
-        else
-        {
-            mainWindow.IsOpen = !mainWindow.IsOpen;
         }
     }
 

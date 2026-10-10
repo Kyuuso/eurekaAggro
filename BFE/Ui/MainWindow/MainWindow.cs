@@ -222,31 +222,31 @@ internal class MainWindow : PositionedWindow
 
         ImGui.BeginChild("StatsRegionScroll", new Vector2(0, availableHeight), true);
 
-        if (ImGui.CollapsingHeader("Estadísticas Totales (Lifetime)", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader("Lifetime Overall Statistics", ImGuiTreeNodeFlags.DefaultOpen))
         {
             DrawDictionaryStats(new Dictionary<string, int>
             {
-                { "Gil Obtenido", stat.gilEarned },
-                { "Cofres de Oro", stat.goldCoffer },
-                { "Cofres de Plata", stat.silverCoffer },
-                { "Cofres de Bronce", stat.bronzeCoffer },
-                { "Montura Eldthurs", stat.eldthursCounter },
-                { "Peinados de Pyros", stat.pyrosHairStyleCounter },
-                { "Minion Copycat Bulb", stat.bulbMinion },
-                { "Montura Petrel", stat.petrelCounter }
+                { "Gil Earned", stat.gilEarned },
+                { "Gold Coffers", stat.goldCoffer },
+                { "Silver Coffers", stat.silverCoffer },
+                { "Bronze Coffers", stat.bronzeCoffer },
+                { "Eldthurs Horns", stat.eldthursCounter },
+                { "Pyros Hairstyles", stat.pyrosHairStyleCounter },
+                { "Copycat Bulb Minion", stat.bulbMinion },
+                { "Petrel Mount", stat.petrelCounter }
             });
         }
 
-        if (ImGui.CollapsingHeader("Estadísticas de Pyros", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader("Pyros Statistics", ImGuiTreeNodeFlags.DefaultOpen))
         {
             DrawDictionaryStats(new Dictionary<string, int>
             {
-                { "Gil Obtenido", pyrosStat.gilEarned },
-                { "Cofres de Oro", pyrosStat.goldCoffer },
-                { "Cofres de Plata", pyrosStat.silverCoffer },
-                { "Cofres de Bronce", pyrosStat.bronzeCoffer },
-                { "Montura Eldthurs", pyrosStat.eldthursCounter },
-                { "Peinados de Pyros", pyrosStat.pyrosHairStyleCounter }
+                { "Gil Earned", pyrosStat.gilEarned },
+                { "Gold Coffers", pyrosStat.goldCoffer },
+                { "Silver Coffers", pyrosStat.silverCoffer },
+                { "Bronze Coffers", pyrosStat.bronzeCoffer },
+                { "Eldthurs Horns", pyrosStat.eldthursCounter },
+                { "Pyros Hairstyles", pyrosStat.pyrosHairStyleCounter }
             });
         }
 
@@ -255,11 +255,11 @@ internal class MainWindow : PositionedWindow
         var isCtrlHeld = ImGui.GetIO().KeyCtrl;
         using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !isCtrlHeld))
         {
-            reset = ImGui.Button("RESTABLECER ESTADÍSTICAS (MANTÉN CTRL)", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && isCtrlHeld;
+            reset = ImGui.Button("RESET STATS (HOLD CTRL)", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && isCtrlHeld;
         }
         if (ImGui.IsItemHovered())
         {
-            ImGui.SetTooltip(isCtrlHeld ? "Pulsa para reiniciar las estadísticas." : "Mantén pulsada la tecla Ctrl para habilitar el botón.");
+            ImGui.SetTooltip(isCtrlHeld ? "Click to reset statistics." : "Hold Ctrl to enable button.");
         }
     }
 
@@ -267,8 +267,8 @@ internal class MainWindow : PositionedWindow
     {
         if (ImGui.BeginTable("##StatsGrid", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
         {
-            ImGui.TableSetupColumn("Concepto", ImGuiTableColumnFlags.WidthStretch, 0.6f);
-            ImGui.TableSetupColumn("Cantidad", ImGuiTableColumnFlags.WidthStretch, 0.4f);
+            ImGui.TableSetupColumn("Item / Metric", ImGuiTableColumnFlags.WidthStretch, 0.6f);
+            ImGui.TableSetupColumn("Count", ImGuiTableColumnFlags.WidthStretch, 0.4f);
 
             foreach (var (label, val) in items)
             {

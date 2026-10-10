@@ -1,23 +1,48 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Interface;
+using Dalamud.Interface.Colors;
 using Dalamud.Interface.Textures;
+using Dalamud.Interface.Utility;
+using Dalamud.Interface.Utility.Raii;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using EurekaAggro.Configuration;
 using EurekaAggro.Data;
 using EurekaAggro.Models;
 using EurekaAggro.Services;
+using BFE;
+using BFE.Ui.MainWindow;
+using BFE.Ui.SettingsWindow;
+using BFE.Scheduler;
 
 namespace EurekaAggro.UI;
 
 /// <summary>
-/// Main settings and management window for Eureka Aggro.
+/// Unified master window for the Eureka Aggro Suite.
+/// Matches the modular schematic:
+/// - Top Header: Icon, Name, Credits summary, Live Zone/Player Status, Quick Links.
+/// - Top Navigation Tabs: [ Aggro Lines ] | [ Fate Engine ] | [ About & Credits ].
+/// - Middle Scrollable Content: Rendered based on the active module and its selected sub-view.
+/// - Bottom Navigation Bar: [ Main ] | [ Configuration ] switching the active module's sub-view.
+/// All user-facing strings are strictly in English.
 /// </summary>
 public class MainWindow
 {
+    public enum SubView
+    {
+        Main,
+        Configuration
+    }
+
     private readonly PluginConfiguration config;
     private readonly MobDatabase mobDatabase;
     private readonly ActionDatabase actionDatabase;
@@ -27,11 +52,26 @@ public class MainWindow
     private readonly CastAlertWindow castAlertWindow;
     private readonly ISharedImmediateTexture? iconTexture;
     private readonly BunnyAutomationService bunnyService;
+    private readonly IObjectTable objectTable;
 
     public bool IsOpen = false;
 
+    // Top module navigation state (0 = Aggro Lines, 1 = Fate Engine, 2 = About & Credits)
+    public int TargetMainTab = 0;
+    private int currentMainTab = -1;
+
+    // Sub-view states for each module ("cada pestaña con su cosa, con su configuración")
+    public SubView AggroSubView = SubView.Main;
+    public SubView FateSubView = SubView.Main;
+
+    // Search filters
     private string mobSearchFilter = string.Empty;
     private string actionSearchFilter = string.Empty;
+
+    // Visual palette
+    private static readonly Vector4 GoldAccent = new(0.961f, 0.729f, 0.259f, 1f);      // #F5BA42
+    private static readonly Vector4 CardBackground = new(0.106f, 0.110f, 0.133f, 1f);    // #1B1C22
+    private static readonly Vector4 TextMuted = new(0.608f, 0.620f, 0.663f, 1f);
 
     public MainWindow(
         PluginConfiguration config,
@@ -43,7 +83,8 @@ public class MainWindow
         CastAlertWindow castAlertWindow,
         ITextureProvider textureProvider,
         IDalamudPluginInterface pluginInterface,
-        BunnyAutomationService bunnyService)
+        BunnyAutomationService bunnyService,
+        IObjectTable objectTable)
     {
         this.config = config;
         this.mobDatabase = mobDatabase;
@@ -53,6 +94,7 @@ public class MainWindow
         this.dragonWalkService = dragonWalkService;
         this.castAlertWindow = castAlertWindow;
         this.bunnyService = bunnyService;
+        this.objectTable = objectTable;
 
         if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
         {
@@ -72,41 +114,71 @@ public class MainWindow
         }
     }
 
+    public void OpenAggroRadar(SubView subView = SubView.Main)
+    {
+        TargetMainTab = 0;
+        AggroSubView = subView;
+        currentMainTab = -1;
+        IsOpen = true;
+    }
+
+    public void OpenFateEngine(SubView subView = SubView.Main)
+    {
+        TargetMainTab = 1;
+        FateSubView = subView;
+        currentMainTab = -1;
+        IsOpen = true;
+    }
+
+    public void OpenAbout()
+    {
+        TargetMainTab = 2;
+        currentMainTab = -1;
+        IsOpen = true;
+    }
+
     public void Draw()
     {
         if (!IsOpen) return;
 
-        ImGui.SetNextWindowSize(new Vector2(760, 520), ImGuiCond.FirstUseEver);
+        var scale = ImGuiHelpers.GlobalScale;
+        ImGui.SetNextWindowSize(new Vector2(880 * scale, 680 * scale), ImGuiCond.FirstUseEver);
 
-        if (ImGui.Begin("Eureka Aggro Radar", ref IsOpen))
+        if (ImGui.Begin("Eureka Aggro Suite###EurekaAggroMainWindow", ref IsOpen))
         {
-            DrawStatusBar();
+            // 1. Top Master Header: Icon, Name, Credits summary, State, Links
+            DrawMasterHeader(scale);
 
             ImGui.Separator();
+            ImGui.Spacing();
 
-            if (ImGui.BeginTabBar("##EurekaAggro_Tabs"))
+            // 2. Top Module Tabs
+            if (ImGui.BeginTabBar("##EurekaMasterTabs", ImGuiTabBarFlags.FittingPolicyScroll))
             {
-                if (ImGui.BeginTabItem("Configuration"))
+                // TAB 1: AGGRO LINES
+                var aggroFlags = (TargetMainTab == 0 && currentMainTab != 0) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("🛡️ Aggro Lines##TabAggro", ref IsOpen, aggroFlags))
                 {
-                    DrawConfigurationTab();
+                    currentMainTab = 0;
+                    DrawModuleBody(0, scale);
                     ImGui.EndTabItem();
                 }
 
-                if (ImGui.BeginTabItem("Eureka Monsters"))
+                // TAB 2: FATE ENGINE (BUNNIES)
+                var fateFlags = (TargetMainTab == 1 && currentMainTab != 1) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("🐰 Fate Engine##TabFate", ref IsOpen, fateFlags))
                 {
-                    DrawMonstersTab();
+                    currentMainTab = 1;
+                    DrawModuleBody(1, scale);
                     ImGui.EndTabItem();
                 }
 
-                if (ImGui.BeginTabItem("Enemy Actions & Counters"))
+                // TAB 3: ABOUT & CREDITS
+                var aboutFlags = (TargetMainTab == 2 && currentMainTab != 2) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("ℹ️ About & Credits##TabAbout", ref IsOpen, aboutFlags))
                 {
-                    DrawActionsTab();
-                    ImGui.EndTabItem();
-                }
-
-                if (ImGui.BeginTabItem("Bunny Automation (BFE)"))
-                {
-                    DrawBfeTab();
+                    currentMainTab = 2;
+                    DrawAboutSection(scale);
                     ImGui.EndTabItem();
                 }
 
@@ -116,39 +188,472 @@ public class MainWindow
         ImGui.End();
     }
 
-    private void DrawStatusBar()
+    /// <summary>
+    /// Master header displayed at the top of the suite window:
+    /// Plugin Icon, Title, Version, Active Expedition Status, Quick community links.
+    /// </summary>
+    private void DrawMasterHeader(float scale)
     {
+        var width = ImGui.GetContentRegionAvail().X;
+
+        // Icon display
         if (iconTexture?.TryGetWrap(out var wrap, out _) == true && wrap != null)
         {
-            ImGui.Image(wrap.Handle, new Vector2(34, 34));
+            ImGui.Image(wrap.Handle, new Vector2(38 * scale, 38 * scale));
             ImGui.SameLine();
         }
 
+        // Title and zone status
         var territoryId = clientState.TerritoryType;
         bool isEureka = ValidZones.IsEureka(territoryId);
         string zoneName = ValidZones.GetZoneName(territoryId);
 
-        ImGui.Text($"Location: {zoneName} (ID: {territoryId})");
-        ImGui.SameLine();
-        if (isEureka)
+        ImGui.BeginGroup();
         {
-            int effectiveLvl = EurekaLevelService.GetEffectiveElementalLevel(territoryId, config.AutoDetectElementalLevel, config.PlayerElementalLevel);
-            string mode = config.AutoDetectElementalLevel ? "Auto-synced" : "Manual";
-            string weather = environmentService.GetCurrentWeatherName();
-            int etHour = EurekaEnvironmentService.GetEorzeaHour();
-            string timeStr = $"{etHour:D2}:00 ET ({(EurekaEnvironmentService.IsNight() ? "Night" : "Day")})";
-
-            ImGui.TextColored(new Vector4(0.2f, 1.0f, 0.3f, 1.0f), $"[Active in Eureka | Elemental Lv. {effectiveLvl} ({mode})]");
+            ImGui.TextColored(GoldAccent, "Eureka Aggro Suite");
             ImGui.SameLine();
-            ImGui.TextDisabled($"| Weather: {weather} | {timeStr}");
+            ImGui.TextDisabled($"v{GetType().Assembly.GetName().Version?.ToString(3) ?? "1.2.3"}");
+            ImGui.SameLine();
+            ImGui.TextDisabled("• by Kyuuso, DhogGPT & Joshua-XIV");
+
+            if (isEureka)
+            {
+                int effectiveLvl = EurekaLevelService.GetEffectiveElementalLevel(territoryId, config.AutoDetectElementalLevel, config.PlayerElementalLevel);
+                string mode = config.AutoDetectElementalLevel ? "Auto-synced" : "Manual";
+                string weather = environmentService.GetCurrentWeatherName();
+                int etHour = EurekaEnvironmentService.GetEorzeaHour();
+                string timeStr = $"{etHour:D2}:00 ET ({(EurekaEnvironmentService.IsNight() ? "Night" : "Day")})";
+
+                ImGui.TextColored(ImGuiColors.HealerGreen, $"● Location: {zoneName} (Elemental Lv. {effectiveLvl} [{mode}]) | {weather} | {timeStr}");
+            }
+            else
+            {
+                ImGui.TextColored(ImGuiColors.DalamudGrey, $"○ Location: {zoneName} [Outside Eureka - Expedition features on standby]");
+            }
         }
-        else
+        ImGui.EndGroup();
+
+        // Quick action links on top right
+        ImGui.SameLine(width - 245 * scale);
+        ImGui.BeginGroup();
         {
-            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "[Outside Eureka]");
+            if (ImGui.SmallButton($"{FontAwesomeIcon.Heart.ToIconString()} Ko-fi"))
+            {
+                Process.Start(new ProcessStartInfo { FileName = "https://ko-fi.com/mcvaxius", UseShellExecute = true });
+            }
+            ImGui.SameLine();
+            if (ImGui.SmallButton($"{FontAwesomeIcon.CommentDots.ToIconString()} Discord"))
+            {
+                Process.Start(new ProcessStartInfo { FileName = "https://discord.gg/invite/aethertek", UseShellExecute = true });
+            }
+            ImGui.SameLine();
+            if (ImGui.SmallButton($"{FontAwesomeIcon.CodeBranch.ToIconString()} GitHub"))
+            {
+                Process.Start(new ProcessStartInfo { FileName = "https://github.com/Kyuuso/eurekaAggro", UseShellExecute = true });
+            }
+        }
+        ImGui.EndGroup();
+    }
+
+    /// <summary>
+    /// Renders the module content area along with the bottom navigation switcher:
+    /// [ Main ] | [ Configuration ]
+    /// </summary>
+    private void DrawModuleBody(int moduleIndex, float scale)
+    {
+        var bottomBarHeight = 38f * scale;
+
+        // Middle Scrollable Content Child Area
+        if (ImGui.BeginChild($"##ModuleContent_{moduleIndex}", new Vector2(0, -bottomBarHeight - (8f * scale)), true, ImGuiWindowFlags.None))
+        {
+            if (moduleIndex == 0) // AGGRO LINES
+            {
+                if (AggroSubView == SubView.Main)
+                {
+                    DrawAggroRadarMain(scale);
+                }
+                else
+                {
+                    DrawAggroRadarConfiguration();
+                }
+            }
+            else if (moduleIndex == 1) // FATE ENGINE
+            {
+                if (FateSubView == SubView.Main)
+                {
+                    DrawFateEngineMain(scale);
+                }
+                else
+                {
+                    DrawFateEngineConfiguration();
+                }
+            }
+        }
+        ImGui.EndChild();
+
+        // Bottom Navigation Bar
+        ImGui.Spacing();
+        DrawBottomBar(moduleIndex, scale);
+    }
+
+    /// <summary>
+    /// Bottom navigation bar as drawn in the user's schematic:
+    /// [ Main ] | [ Configuration ]
+    /// </summary>
+    private void DrawBottomBar(int moduleIndex, float scale)
+    {
+        var availWidth = ImGui.GetContentRegionAvail().X;
+        var btnWidth = (availWidth - (10f * scale)) / 2f;
+        var btnHeight = 32f * scale;
+
+        var activeSubView = (moduleIndex == 0) ? AggroSubView : FateSubView;
+
+        // 1. BUTTON: MAIN (PRINCIPAL)
+        bool isMainActive = (activeSubView == SubView.Main);
+        if (isMainActive)
+        {
+            ImGui.PushStyleColor(ImGuiCol.Button, GoldAccent);
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.08f, 0.08f, 0.08f, 1f));
+            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
+        }
+
+        if (ImGui.Button($"{FontAwesomeIcon.ThLarge.ToIconString()}   Main##BottomMainBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        {
+            if (moduleIndex == 0) AggroSubView = SubView.Main;
+            else FateSubView = SubView.Main;
+        }
+
+        if (isMainActive)
+        {
+            ImGui.PopStyleColor(3);
+        }
+
+        ImGui.SameLine(0, 10f * scale);
+
+        // 2. BUTTON: CONFIGURATION (CONFIGURACIÓN)
+        bool isConfigActive = (activeSubView == SubView.Configuration);
+        if (isConfigActive)
+        {
+            ImGui.PushStyleColor(ImGuiCol.Button, GoldAccent);
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.08f, 0.08f, 0.08f, 1f));
+            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
+        }
+
+        if (ImGui.Button($"{FontAwesomeIcon.Cog.ToIconString()}   Configuration##BottomConfigBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        {
+            if (moduleIndex == 0) AggroSubView = SubView.Configuration;
+            else FateSubView = SubView.Configuration;
+        }
+
+        if (isConfigActive)
+        {
+            ImGui.PopStyleColor(3);
         }
     }
 
-    private void DrawConfigurationTab()
+    #region MODULE 1: AGGRO LINES - MAIN VIEW
+    private void DrawAggroRadarMain(float scale)
+    {
+        // 1. Status Overview Card
+        ImGui.BeginGroup();
+        {
+            var radarStatus = config.Enabled ? "Enabled" : "Disabled";
+            var radarColor = config.Enabled ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed;
+
+            ImGui.TextColored(GoldAccent, $"{FontAwesomeIcon.ShieldAlt.ToIconString()}   Aggro Radar Status:");
+            ImGui.SameLine();
+            ImGui.TextColored(radarColor, $"● {radarStatus}");
+
+            ImGui.SameLine(320 * scale);
+            ImGui.TextColored(GoldAccent, $"{FontAwesomeIcon.Walking.ToIconString()}   Dragon Auto-Walk:");
+            ImGui.SameLine();
+            var autoWalkStatus = config.AutoWalkNearDragons ? "Active" : "Disabled";
+            ImGui.TextColored(config.AutoWalkNearDragons ? ImGuiColors.HealerGreen : TextMuted, $"● {autoWalkStatus}");
+
+            ImGui.SameLine(600 * scale);
+            ImGui.TextColored(GoldAccent, $"{FontAwesomeIcon.ExclamationTriangle.ToIconString()}   Cast Alerts:");
+            ImGui.SameLine();
+            var alertStatus = config.ShowCastAlerts ? "Active" : "Disabled";
+            ImGui.TextColored(config.ShowCastAlerts ? ImGuiColors.HealerGreen : TextMuted, $"● {alertStatus}");
+        }
+        ImGui.EndGroup();
+
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        // 2. Live Nearby Detected Threats
+        if (ImGui.CollapsingHeader("Live Nearby Threats (Radar Detection Range)", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            DrawLiveThreatsTable(scale);
+        }
+
+        ImGui.Spacing();
+
+        // 3. Monsters Reference Database
+        if (ImGui.CollapsingHeader("Eureka Monsters Reference Database"))
+        {
+            DrawMonstersReferenceTable();
+        }
+
+        ImGui.Spacing();
+
+        // 4. Enemy Actions & Counters Database
+        if (ImGui.CollapsingHeader("Enemy Actions & Tactical Counters Database"))
+        {
+            DrawActionsReferenceTable();
+        }
+    }
+
+    private void DrawLiveThreatsTable(float scale)
+    {
+        var player = objectTable.LocalPlayer;
+        if (player == null || !clientState.IsLoggedIn)
+        {
+            ImGui.TextDisabled("Player character not logged in or unavailable.");
+            return;
+        }
+
+        var playerPos = player.Position;
+        var threats = new List<(string Name, int Level, float Distance, AggroType Aggro, DangerLevel Danger, bool IsDragon)>();
+
+        foreach (var obj in objectTable)
+        {
+            if (obj is not IBattleChara mob || mob.GameObjectId == player.GameObjectId) continue;
+            if (mob.CurrentHp <= 0 || !mob.IsTargetable) continue;
+            if (mob is IPlayerCharacter || mob.ObjectKind != ObjectKind.BattleNpc) continue;
+            if (mob.OwnerId != 0 && mob.OwnerId != 0xE000_0000 && mob.OwnerId != 0xFFFF_FFFF) continue;
+            if (obj is IBattleNpc bNpc && (bNpc.BattleNpcKind == BattleNpcSubKind.Pet ||
+                                           bNpc.BattleNpcKind == BattleNpcSubKind.Buddy)) continue;
+
+            float dist = Vector3.Distance(playerPos, mob.Position);
+            if (dist <= config.DetectionRange)
+            {
+                var data = mobDatabase.GetOrRegister(mob.BaseId, mob.Name.TextValue, mob.HitboxRadius);
+                var aggro = data.AggroType;
+                var danger = data.DangerLevel;
+                var isDragon = aggro == AggroType.Sound || data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase);
+                int lvl = data.ElementalLevel > 0 ? data.ElementalLevel : (int)mob.Level;
+
+                threats.Add((data.Name, lvl, dist, aggro, danger, isDragon));
+            }
+        }
+
+        if (threats.Count == 0)
+        {
+            ImGui.TextDisabled("No hostile enemies detected within your radar detection range.");
+            return;
+        }
+
+        // Sort by distance
+        threats.Sort((a, b) => a.Distance.CompareTo(b.Distance));
+
+        if (ImGui.BeginTable("##LiveThreatsTable", 6, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
+        {
+            ImGui.TableSetupColumn("Target Name", ImGuiTableColumnFlags.WidthStretch, 2.2f);
+            ImGui.TableSetupColumn("Level", ImGuiTableColumnFlags.WidthFixed, 45 * scale);
+            ImGui.TableSetupColumn("Distance", ImGuiTableColumnFlags.WidthFixed, 75 * scale);
+            ImGui.TableSetupColumn("Aggro Mechanic", ImGuiTableColumnFlags.WidthStretch, 1.6f);
+            ImGui.TableSetupColumn("Danger Tier", ImGuiTableColumnFlags.WidthStretch, 1.2f);
+            ImGui.TableSetupColumn("Safety Notice", ImGuiTableColumnFlags.WidthStretch, 2.0f);
+            ImGui.TableHeadersRow();
+
+            foreach (var threat in threats.Take(15))
+            {
+                ImGui.TableNextRow();
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(threat.Name);
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(threat.Level > 0 ? threat.Level.ToString() : "-");
+
+                ImGui.TableNextColumn();
+                var distColor = threat.Distance < 10.5f ? ImGuiColors.DalamudRed : (threat.Distance < 20f ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudGrey);
+                ImGui.TextColored(distColor, $"{threat.Distance:F1} m");
+
+                ImGui.TableNextColumn();
+                var aggroColor = threat.Aggro switch
+                {
+                    AggroType.Sound => new Vector4(1.0f, 0.4f, 0.4f, 1f),
+                    AggroType.Blood => new Vector4(0.9f, 0.1f, 0.3f, 1f),
+                    AggroType.Magic => new Vector4(0.4f, 0.9f, 1.0f, 1f),
+                    AggroType.Proximity => new Vector4(1.0f, 0.8f, 0.2f, 1f),
+                    _ => new Vector4(0.4f, 1.0f, 0.4f, 1f)
+                };
+                ImGui.TextColored(aggroColor, threat.Aggro.ToString());
+
+                ImGui.TableNextColumn();
+                var dangerColor = threat.Danger switch
+                {
+                    DangerLevel.Danger => ImGuiColors.DalamudRed,
+                    DangerLevel.Caution => new Vector4(1f, 0.6f, 0.2f, 1f),
+                    DangerLevel.Easy => ImGuiColors.HealerGreen,
+                    _ => ImGuiColors.DalamudGrey
+                };
+                ImGui.TextColored(dangerColor, threat.Danger.ToString());
+
+                ImGui.TableNextColumn();
+                if (threat.IsDragon)
+                {
+                    ImGui.TextColored(ImGuiColors.DalamudYellow, "Walk mode required (< 10.5m)");
+                }
+                else if (threat.Aggro == AggroType.Sight)
+                {
+                    ImGui.TextColored(TextMuted, "Avoid front vision cone");
+                }
+                else if (threat.Aggro == AggroType.Blood)
+                {
+                    ImGui.TextColored(new Vector4(0.9f, 0.3f, 0.3f, 1f), "Aggros low HP (< 80%)");
+                }
+                else
+                {
+                    ImGui.TextDisabled("Normal proximity");
+                }
+            }
+
+            ImGui.EndTable();
+        }
+    }
+
+    private void DrawMonstersReferenceTable()
+    {
+        ImGui.InputTextWithHint("##MobSearch", "Search monster by name...", ref mobSearchFilter, 100);
+
+        ImGui.SameLine();
+        if (ImGui.Button("Reset Filter"))
+        {
+            mobSearchFilter = string.Empty;
+        }
+
+        var mobs = mobDatabase.Mobs.Values.ToList();
+        if (!string.IsNullOrWhiteSpace(mobSearchFilter))
+        {
+            mobs = mobs.Where(m => m.Name.Contains(mobSearchFilter, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        ImGui.TextDisabled($"Showing {mobs.Count} registered monsters in database");
+
+        if (ImGui.BeginTable("##MobTable", 5, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY, new Vector2(0, 300)))
+        {
+            ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 2.5f);
+            ImGui.TableSetupColumn("Elemental Lv.", ImGuiTableColumnFlags.WidthFixed, 85);
+            ImGui.TableSetupColumn("Aggro Type", ImGuiTableColumnFlags.WidthStretch, 1.5f);
+            ImGui.TableSetupColumn("Danger", ImGuiTableColumnFlags.WidthStretch, 1.2f);
+            ImGui.TableSetupColumn("Detection Radius", ImGuiTableColumnFlags.WidthStretch, 1.5f);
+            ImGui.TableHeadersRow();
+
+            foreach (var mob in mobs)
+            {
+                ImGui.TableNextRow();
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(mob.Name);
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(mob.ElementalLevel > 0 ? mob.ElementalLevel.ToString() : "-");
+
+                ImGui.TableNextColumn();
+                var aggroColor = mob.AggroType switch
+                {
+                    AggroType.Sound => new Vector4(1.0f, 0.4f, 0.4f, 1.0f),
+                    AggroType.Blood => new Vector4(0.9f, 0.1f, 0.3f, 1.0f),
+                    AggroType.Magic => new Vector4(0.4f, 0.9f, 1.0f, 1.0f),
+                    AggroType.Proximity => new Vector4(1.0f, 0.8f, 0.2f, 1.0f),
+                    AggroType.Sight => new Vector4(0.4f, 1.0f, 0.4f, 1.0f),
+                    _ => Vector4.One
+                };
+                ImGui.TextColored(aggroColor, mob.AggroType.ToString());
+
+                ImGui.TableNextColumn();
+                var dangerColor = mob.DangerLevel switch
+                {
+                    DangerLevel.Danger => ImGuiColors.DalamudRed,
+                    DangerLevel.Caution => new Vector4(1.0f, 0.6f, 0.2f, 1.0f),
+                    DangerLevel.Easy => ImGuiColors.HealerGreen,
+                    _ => ImGuiColors.DalamudGrey
+                };
+                ImGui.TextColored(dangerColor, mob.DangerLevel.ToString());
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted($"{mob.TotalRadius:F1} m");
+            }
+
+            ImGui.EndTable();
+        }
+    }
+
+    private void DrawActionsReferenceTable()
+    {
+        ImGui.InputTextWithHint("##ActionSearch", "Search enemy action or mob name...", ref actionSearchFilter, 100);
+
+        ImGui.SameLine();
+        if (ImGui.Button("Reset Filter##Action"))
+        {
+            actionSearchFilter = string.Empty;
+        }
+
+        var actions = actionDatabase.Actions.Values.ToList();
+        if (!string.IsNullOrWhiteSpace(actionSearchFilter))
+        {
+            actions = actions.Where(a =>
+                a.ActionName.Contains(actionSearchFilter, StringComparison.OrdinalIgnoreCase) ||
+                a.MobName.Contains(actionSearchFilter, StringComparison.OrdinalIgnoreCase) ||
+                a.AlertMessage.Contains(actionSearchFilter, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        ImGui.TextDisabled($"Showing {actions.Count} dangerous enemy casts in database");
+
+        if (ImGui.BeginTable("##ActionTable", 5, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY, new Vector2(0, 300)))
+        {
+            ImGui.TableSetupColumn("Action Name", ImGuiTableColumnFlags.WidthStretch, 2.0f);
+            ImGui.TableSetupColumn("Mob Name", ImGuiTableColumnFlags.WidthStretch, 2.0f);
+            ImGui.TableSetupColumn("Interruptible", ImGuiTableColumnFlags.WidthFixed, 85);
+            ImGui.TableSetupColumn("Required Counter", ImGuiTableColumnFlags.WidthStretch, 1.8f);
+            ImGui.TableSetupColumn("Alert Message", ImGuiTableColumnFlags.WidthStretch, 2.5f);
+            ImGui.TableHeadersRow();
+
+            foreach (var action in actions)
+            {
+                ImGui.TableNextRow();
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(action.ActionName);
+
+                ImGui.TableNextColumn();
+                ImGui.TextUnformatted(action.MobName);
+
+                ImGui.TableNextColumn();
+                if (action.IsInterruptible)
+                {
+                    ImGui.TextColored(new Vector4(0.2f, 1.0f, 0.4f, 1.0f), "YES");
+                }
+                else
+                {
+                    ImGui.TextDisabled("No");
+                }
+
+                ImGui.TableNextColumn();
+                string counter = action.RequiresSilence ? "Silence / Interject" : (action.RequiresStun ? "Stun" : (action.RequiresLineOfSight ? "Break Line of Sight" : "Mitigation"));
+                var counterColor = action.RequiresSilence ? new Vector4(0.2f, 1.0f, 0.4f, 1.0f) : (action.RequiresStun ? new Vector4(1.0f, 0.8f, 0.2f, 1.0f) : (action.RequiresLineOfSight ? new Vector4(1.0f, 0.4f, 0.4f, 1.0f) : Vector4.One));
+                ImGui.TextColored(counterColor, counter);
+
+                ImGui.TableNextColumn();
+                string msg = action.AlertMessage;
+                ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X);
+                if (ImGui.InputText($"##Msg_{action.ActionId}", ref msg, 120))
+                {
+                    action.AlertMessage = msg;
+                }
+            }
+
+            ImGui.EndTable();
+        }
+    }
+    #endregion
+
+    #region MODULE 1: AGGRO LINES - CONFIGURATION VIEW
+    private void DrawAggroRadarConfiguration()
     {
         bool enabled = config.Enabled;
         if (ImGui.Checkbox("Enable Eureka Aggro Radar", ref enabled))
@@ -298,55 +803,78 @@ public class MainWindow
 
         if (config.ShowSoundCircles)
         {
-            float dragonDist = config.DragonRunAggroDistance;
-            if (ImGui.SliderFloat("Sound running aggro distance", ref dragonDist, 8.0f, 15.0f, "%.1f m"))
+            float soundDist = config.DragonRunAggroDistance;
+            if (ImGui.SliderFloat("Sleeping Dragon sound aggro radius", ref soundDist, 8.0f, 15.0f, "%.1f m"))
             {
-                config.DragonRunAggroDistance = dragonDist;
+                config.DragonRunAggroDistance = soundDist;
+                config.Save();
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Sleeping Dragons have a running sound aggro radius of ~10.5m. Walking is 100% safe.");
+            }
+        }
+
+        bool autoWalk = config.AutoWalkNearDragons;
+        if (ImGui.Checkbox("Auto-Walk Safety Trigger for Sleeping Dragons", ref autoWalk))
+        {
+            config.AutoWalkNearDragons = autoWalk;
+            config.Save();
+        }
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip("Automatically toggles Walk mode when within proximity of lethal Sleeping Dragons and restores Run mode once safely past.");
+        }
+
+        if (config.AutoWalkNearDragons)
+        {
+            float autoDist = config.AutoWalkDistance;
+            if (ImGui.SliderFloat("Auto-Walk trigger distance", ref autoDist, 10.5f, 25.0f, "%.1f m"))
+            {
+                config.AutoWalkDistance = autoDist;
                 config.Save();
             }
 
-            float walkSpeed = config.DragonWalkSpeedThreshold;
-            if (ImGui.SliderFloat("Walk vs run speed threshold", ref walkSpeed, 1.5f, 4.0f, "%.1f m/s"))
+            bool chatAlert = config.LogAutoWalkToChat;
+            if (ImGui.Checkbox("Log Auto-Walk activation in chat", ref chatAlert))
             {
-                config.DragonWalkSpeedThreshold = walkSpeed;
+                config.LogAutoWalkToChat = chatAlert;
                 config.Save();
             }
 
-            bool autoWalk = config.AutoWalkNearDragons;
-            if (ImGui.Checkbox("Auto-walk near Sleeping Dragons (prevents accidental running aggro)", ref autoWalk))
+            ImGui.SameLine();
+            if (ImGui.SmallButton("Test Walk Mode Toggle"))
             {
-                config.AutoWalkNearDragons = autoWalk;
-                config.Save();
+                dragonWalkService.ManualTestToggle();
             }
+        }
 
-            if (config.AutoWalkNearDragons)
+        bool prox = config.ShowProximityCircles;
+        if (ImGui.Checkbox("Proximity Aggro Circles (360°)", ref prox))
+        {
+            config.ShowProximityCircles = prox;
+            config.Save();
+        }
+
+        bool sight = config.ShowVisionCones;
+        if (ImGui.Checkbox("Sight Aggro Cones (Frontal vision)", ref sight))
+        {
+            config.ShowVisionCones = sight;
+            config.Save();
+        }
+
+        if (config.ShowVisionCones)
+        {
+            float coneAngle = config.SightAngleDegrees;
+            if (ImGui.SliderFloat("Sight cone arc angle", ref coneAngle, 45.0f, 140.0f, "%.0f deg"))
             {
-                float autoDist = config.AutoWalkDistance;
-                if (ImGui.SliderFloat("Auto-walk activation range", ref autoDist, 10.0f, 25.0f, "%.1f m"))
-                {
-                    config.AutoWalkDistance = autoDist;
-                    config.Save();
-                }
-                ImGui.TextDisabled("(Auto-adds +4.0m buffer when mounted. Auto-disengages instantly if combat begins.)");
-
-                bool logChat = config.LogAutoWalkToChat;
-                if (ImGui.Checkbox("Print Auto-Walk notifications to chat log", ref logChat))
-                {
-                    config.LogAutoWalkToChat = logChat;
-                    config.Save();
-                }
-
-                if (ImGui.Button("Test Walk Mode Toggle Now"))
-                {
-                    dragonWalkService.ManualTestToggle();
-                }
-                ImGui.SameLine();
-                ImGui.TextDisabled("(Toggles Keypad / in-game Walk state & writes to Dalamud log)");
+                config.SightAngleDegrees = coneAngle;
+                config.Save();
             }
         }
 
         bool blood = config.ShowBloodCircles;
-        if (ImGui.Checkbox("Undead / Ashkin: Blood detection (Flashes red if player HP < 80%)", ref blood))
+        if (ImGui.Checkbox("Blood Aggro Circles (Undead / Ashkin - Low HP < 80%)", ref blood))
         {
             config.ShowBloodCircles = blood;
             config.Save();
@@ -355,7 +883,7 @@ public class MainWindow
         if (config.ShowBloodCircles)
         {
             float bloodDist = config.BloodAggroDistance;
-            if (ImGui.SliderFloat("Undead blood aggro distance", ref bloodDist, 15.0f, 35.0f, "%.1f m"))
+            if (ImGui.SliderFloat("Blood detection radius", ref bloodDist, 15.0f, 35.0f, "%.1f m"))
             {
                 config.BloodAggroDistance = bloodDist;
                 config.Save();
@@ -363,7 +891,7 @@ public class MainWindow
         }
 
         bool magic = config.ShowMagicWarnings;
-        if (ImGui.Checkbox("Sprites / Elementals: Magic aggro (Displays \"DO NOT CAST MAGIC\" warning)", ref magic))
+        if (ImGui.Checkbox("Magic Aggro Warnings (Sprites / Elementals - Spellcasting)", ref magic))
         {
             config.ShowMagicWarnings = magic;
             config.Save();
@@ -372,513 +900,295 @@ public class MainWindow
         if (config.ShowMagicWarnings)
         {
             float magicDist = config.MagicAggroDistance;
-            if (ImGui.SliderFloat("Sprite magic detection distance", ref magicDist, 10.0f, 25.0f, "%.1f m"))
+            if (ImGui.SliderFloat("Magic detection radius", ref magicDist, 10.0f, 25.0f, "%.1f m"))
             {
                 config.MagicAggroDistance = magicDist;
                 config.Save();
             }
         }
 
-        bool sight = config.ShowVisionCones;
-        if (ImGui.Checkbox("Standard Monsters: Frontal vision cone", ref sight))
+        float baseDist = config.DefaultAggroDistance;
+        if (ImGui.SliderFloat("Base monster aggro radius", ref baseDist, 8.0f, 15.0f, "%.1f m"))
         {
-            config.ShowVisionCones = sight;
+            config.DefaultAggroDistance = baseDist;
             config.Save();
         }
 
-        bool proxi = config.ShowProximityCircles;
-        if (ImGui.Checkbox("Standard Monsters: 360-degree proximity aggro", ref proxi))
+        bool distLines = config.ShowDistanceLines;
+        if (ImGui.Checkbox("Draw distance lines connecting to nearby threats", ref distLines))
         {
-            config.ShowProximityCircles = proxi;
+            config.ShowDistanceLines = distLines;
+            config.Save();
+        }
+
+        bool mobLabels = config.ShowMobLabels;
+        if (ImGui.Checkbox("Draw floating nametag labels above monsters", ref mobLabels))
+        {
+            config.ShowMobLabels = mobLabels;
+            config.Save();
+        }
+
+        bool mutationStatus = config.ShowMutationStatus;
+        if (ImGui.Checkbox("Show real-time mutation indicator (Weather & ET)", ref mutationStatus))
+        {
+            config.ShowMutationStatus = mutationStatus;
             config.Save();
         }
 
         ImGui.Separator();
-        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Visual Guides & Overlays:");
+        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Enemy Action Alerts (HUD Cast Monitor):");
 
-        bool lines = config.ShowDistanceLines;
-        if (ImGui.Checkbox("Distance guide line (< 10m red, >= 10m green for precision walking)", ref lines))
+        bool enableAlerts = config.ShowCastAlerts;
+        if (ImGui.Checkbox("Show tactical cast alert window when nearby enemies cast", ref enableAlerts))
         {
-            config.ShowDistanceLines = lines;
-            config.Save();
-        }
-
-        bool labels = config.ShowMobLabels;
-        if (ImGui.Checkbox("Show floating name, aggro type, and distance labels above monsters", ref labels))
-        {
-            config.ShowMobLabels = labels;
-            config.Save();
-        }
-
-        bool mutation = config.ShowMutationStatus;
-        if (ImGui.Checkbox("Show Mutation / Adaptation tracker above eligible mobs (weather/time based)", ref mutation))
-        {
-            config.ShowMutationStatus = mutation;
-            config.Save();
-        }
-
-        bool fill = config.FillShapes;
-        if (ImGui.Checkbox("Fill cones and circles (unchecked = clean hollow outlines)", ref fill))
-        {
-            config.FillShapes = fill;
-            config.Save();
-        }
-
-        if (config.FillShapes)
-        {
-            float opacity = config.FillOpacity;
-            if (ImGui.SliderFloat("Fill opacity", ref opacity, 0.05f, 0.8f, "%.2f"))
-            {
-                config.FillOpacity = opacity;
-                config.Save();
-            }
-        }
-
-        ImGui.Separator();
-        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Enemy Action & Cast Alerts (HUD):");
-
-        bool alerts = config.ShowCastAlerts;
-        if (ImGui.Checkbox("Enable floating HUD alert for dangerous casts (Interrupt, Stun, LOS)", ref alerts))
-        {
-            config.ShowCastAlerts = alerts;
+            config.ShowCastAlerts = enableAlerts;
             config.Save();
         }
 
         if (config.ShowCastAlerts)
         {
-            ImGui.Indent();
-
-            bool targetOnly = config.CastAlertsTargetOnly;
-            if (ImGui.Checkbox("Only show cast alerts for current target (ignore background enemies)", ref targetOnly))
+            bool lockAlerts = config.LockCastAlertPosition;
+            if (ImGui.Checkbox("Lock cast alert window position (uncheck to drag)", ref lockAlerts))
             {
-                config.CastAlertsTargetOnly = targetOnly;
+                config.LockCastAlertPosition = lockAlerts;
                 config.Save();
-            }
-
-            bool lockPos = config.LockCastAlertPosition;
-            if (ImGui.Checkbox("Lock alert window position (uncheck to drag anywhere with mouse)", ref lockPos))
-            {
-                config.LockCastAlertPosition = lockPos;
-                config.Save();
-            }
-
-            bool preview = castAlertWindow.IsPreviewMode;
-            if (ImGui.Checkbox("Preview & drag alert window position now", ref preview))
-            {
-                castAlertWindow.IsPreviewMode = preview;
             }
 
             ImGui.SameLine();
-            if (ImGui.Button("Reset Window Position"))
+            bool isPreview = castAlertWindow.IsPreviewMode;
+            if (ImGui.Checkbox("Preview Alert Window", ref isPreview))
+            {
+                castAlertWindow.IsPreviewMode = isPreview;
+            }
+
+            ImGui.SameLine();
+            if (ImGui.SmallButton("Reset Position"))
             {
                 castAlertWindow.ResetPosition();
             }
-
-            bool notifyChat = config.NotifyCastInChat;
-            if (ImGui.Checkbox("Print dangerous enemy casts to in-game chat log", ref notifyChat))
-            {
-                config.NotifyCastInChat = notifyChat;
-                config.Save();
-            }
-
-            ImGui.Unindent();
         }
 
         ImGui.Separator();
-        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Color Palette & Customization:");
+        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Visual Colors & Customization:");
 
-        if (ImGui.CollapsingHeader("Aggro Circles & Vision Cones", ImGuiTreeNodeFlags.DefaultOpen))
+        var colDragon = config.ColorDragonSound;
+        if (ImGui.ColorEdit4("Sound Aggro (Dragons)", ref colDragon, ImGuiColorEditFlags.AlphaBar))
         {
-            var colDragon = config.ColorDragonSound;
-            if (ImGui.ColorEdit4("Sleeping Dragons (Sound)##colDragon", ref colDragon))
-            {
-                config.ColorDragonSound = colDragon;
-                config.Save();
-            }
-
-            var colBlood = config.ColorBlood;
-            if (ImGui.ColorEdit4("Undead / Ashkin (Blood)##colBlood", ref colBlood))
-            {
-                config.ColorBlood = colBlood;
-                config.Save();
-            }
-
-            var colMagic = config.ColorMagic;
-            if (ImGui.ColorEdit4("Sprites / Elementals (Magic)##colMagic", ref colMagic))
-            {
-                config.ColorMagic = colMagic;
-                config.Save();
-            }
-
-            var colDanger = config.ColorDanger;
-            if (ImGui.ColorEdit4("High Danger Monsters##colDanger", ref colDanger))
-            {
-                config.ColorDanger = colDanger;
-                config.Save();
-            }
-
-            var colCaution = config.ColorCaution;
-            if (ImGui.ColorEdit4("Caution Monsters##colCaution", ref colCaution))
-            {
-                config.ColorCaution = colCaution;
-                config.Save();
-            }
-
-            var colEasy = config.ColorEasy;
-            if (ImGui.ColorEdit4("Easy / Safe Monsters##colEasy", ref colEasy))
-            {
-                config.ColorEasy = colEasy;
-                config.Save();
-            }
-
-            var colUnknown = config.ColorUnknown;
-            if (ImGui.ColorEdit4("Standard / Other Monsters##colUnknown", ref colUnknown))
-            {
-                config.ColorUnknown = colUnknown;
-                config.Save();
-            }
+            config.ColorDragonSound = colDragon;
+            config.Save();
         }
 
-        if (ImGui.CollapsingHeader("Text Labels & Warning Overlays", ImGuiTreeNodeFlags.DefaultOpen))
+        var colDanger = config.ColorDanger;
+        if (ImGui.ColorEdit4("Danger Cone / Circle", ref colDanger, ImGuiColorEditFlags.AlphaBar))
         {
-            bool customTextCol = config.UseCustomMobTextColor;
-            if (ImGui.Checkbox("Override floating monster name label color", ref customTextCol))
-            {
-                config.UseCustomMobTextColor = customTextCol;
-                config.Save();
-            }
-
-            if (config.UseCustomMobTextColor)
-            {
-                var colText = config.ColorCustomMobText;
-                if (ImGui.ColorEdit4("Custom Monster Label Color##colText", ref colText))
-                {
-                    config.ColorCustomMobText = colText;
-                    config.Save();
-                }
-            }
-
-            var colSafeText = config.ColorDragonSafeText;
-            if (ImGui.ColorEdit4("Dragon Safe / Auto-Walk Engaged Text##colSafeText", ref colSafeText))
-            {
-                config.ColorDragonSafeText = colSafeText;
-                config.Save();
-            }
-
-            var colWarnText = config.ColorDragonWarningText;
-            if (ImGui.ColorEdit4("Dragon Running Danger Alert Text##colWarnText", ref colWarnText))
-            {
-                config.ColorDragonWarningText = colWarnText;
-                config.Save();
-            }
-
-            var colMutActive = config.ColorMutationActiveText;
-            if (ImGui.ColorEdit4("Mutation Available Now (Active)##colMutActive", ref colMutActive))
-            {
-                config.ColorMutationActiveText = colMutActive;
-                config.Save();
-            }
-
-            var colMutInactive = config.ColorMutationInactiveText;
-            if (ImGui.ColorEdit4("Mutation Upcoming (Inactive)##colMutInactive", ref colMutInactive))
-            {
-                config.ColorMutationInactiveText = colMutInactive;
-                config.Save();
-            }
-
-            var colLineNear = config.ColorDistanceNear;
-            if (ImGui.ColorEdit4("Distance Guide Line (< 10m Danger)##colLineNear", ref colLineNear))
-            {
-                config.ColorDistanceNear = colLineNear;
-                config.Save();
-            }
-
-            var colLineFar = config.ColorDistanceFar;
-            if (ImGui.ColorEdit4("Distance Guide Line (>= 10m Safe)##colLineFar", ref colLineFar))
-            {
-                config.ColorDistanceFar = colLineFar;
-                config.Save();
-            }
+            config.ColorDanger = colDanger;
+            config.Save();
         }
 
-        ImGui.Spacing();
-        if (ImGui.Button("Reset All Colors to Default", new Vector2(210, 26)))
+        var colBlood = config.ColorBlood;
+        if (ImGui.ColorEdit4("Blood Aggro (Undead)", ref colBlood, ImGuiColorEditFlags.AlphaBar))
+        {
+            config.ColorBlood = colBlood;
+            config.Save();
+        }
+
+        var colMagic = config.ColorMagic;
+        if (ImGui.ColorEdit4("Magic Aggro (Sprites)", ref colMagic, ImGuiColorEditFlags.AlphaBar))
+        {
+            config.ColorMagic = colMagic;
+            config.Save();
+        }
+
+        var colEasy = config.ColorEasy;
+        if (ImGui.ColorEdit4("Safe Level Mob", ref colEasy, ImGuiColorEditFlags.AlphaBar))
+        {
+            config.ColorEasy = colEasy;
+            config.Save();
+        }
+
+        if (ImGui.Button("Reset All Colors to Default"))
         {
             config.ResetColorsToDefault();
         }
     }
+    #endregion
 
-    private void DrawMonstersTab()
+    #region MODULE 2: FATE ENGINE (BUNNIES) - MAIN VIEW
+    private void DrawFateEngineMain(float scale)
     {
-        float saveBtnWidth = 110.0f;
-        float searchWidth = Math.Max(150.0f, ImGui.GetContentRegionAvail().X - saveBtnWidth - ImGui.GetStyle().ItemSpacing.X);
-        ImGui.SetNextItemWidth(searchWidth);
-        ImGui.InputTextWithHint("##SearchMob", "Search monster by name...", ref mobSearchFilter, 64);
-        ImGui.SameLine();
-        if (ImGui.Button("Save Changes##Mobs", new Vector2(saveBtnWidth, 0)))
-        {
-            mobDatabase.SaveUserOverrides();
-        }
+        // 1. Primary DhogGPT Dark Dashboard
+        StartBunnies.Draw();
 
+        ImGui.Spacing();
         ImGui.Separator();
+        ImGui.Spacing();
 
-        var filteredMobs = mobDatabase.Mobs
-            .Where(m => string.IsNullOrEmpty(mobSearchFilter) || m.Value.Name.Contains(mobSearchFilter, StringComparison.OrdinalIgnoreCase))
-            .Take(150);
-
-        var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY | ImGuiTableFlags.Resizable;
-        var tableSize = new Vector2(0, ImGui.GetContentRegionAvail().Y);
-
-        if (ImGui.BeginTable("TableMobsEureka", 6, tableFlags, tableSize))
+        // 2. Collapsible Session & Lifetime Statistics
+        if (ImGui.CollapsingHeader("Session & Lifetime Statistics", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            ImGui.TableSetupColumn("ID", ImGuiTableColumnFlags.WidthFixed, 60);
-            ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch, 2.0f);
-            ImGui.TableSetupColumn("Danger", ImGuiTableColumnFlags.WidthFixed, 100);
-            ImGui.TableSetupColumn("Aggro Type", ImGuiTableColumnFlags.WidthFixed, 120);
-            ImGui.TableSetupColumn("Distance (m)", ImGuiTableColumnFlags.WidthFixed, 90);
-            ImGui.TableSetupColumn("Cone Angle (°)", ImGuiTableColumnFlags.WidthFixed, 95);
-            ImGui.TableHeadersRow();
-
-            foreach (var (id, mob) in filteredMobs)
-            {
-                ImGui.TableNextRow();
-
-                ImGui.TableNextColumn();
-                ImGui.Text(id.ToString());
-
-                ImGui.TableNextColumn();
-                ImGui.Text(mob.Name);
-
-                // Selector de Nivel de Peligro
-                ImGui.TableNextColumn();
-                int dangerIdx = (int)mob.DangerLevel;
-                string[] dangerNames = { "Unknown", "Easy", "Caution", "Danger" };
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.Combo($"##Danger{id}", ref dangerIdx, dangerNames, dangerNames.Length))
-                {
-                    mob.DangerLevel = (DangerLevel)dangerIdx;
-                }
-
-                // Selector de Tipo de Aggro de Eureka
-                ImGui.TableNextColumn();
-                int typeIdx = (int)mob.AggroType;
-                string[] typeNames = { "Unknown", "Sight", "Sound", "Proximity", "Blood", "Magic" };
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.Combo($"##Type{id}", ref typeIdx, typeNames, typeNames.Length))
-                {
-                    mob.AggroType = (AggroType)typeIdx;
-                }
-
-                // Distancia adicional de aggro
-                ImGui.TableNextColumn();
-                float dist = mob.AggroDistance;
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.DragFloat($"##Dist{id}", ref dist, 0.1f, 1.0f, 35.0f, "%.1f"))
-                {
-                    mob.AggroDistance = dist;
-                }
-
-                // Ángulo de visión en grados
-                ImGui.TableNextColumn();
-                float degrees = (float)(mob.SightRadian * 180.0f / Math.PI);
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.DragFloat($"##Angle{id}", ref degrees, 1.0f, 10.0f, 360.0f, "%.0f°"))
-                {
-                    mob.SightRadian = (float)(degrees * Math.PI / 180.0f);
-                }
-            }
-
-            ImGui.EndTable();
+            DrawFateStatsSection(scale);
         }
     }
 
-    private void DrawActionsTab()
+    private void DrawFateStatsSection(float scale)
     {
-        float saveBtnWidth = 110.0f;
-        float searchWidth = Math.Max(150.0f, ImGui.GetContentRegionAvail().X - saveBtnWidth - ImGui.GetStyle().ItemSpacing.X);
-        ImGui.SetNextItemWidth(searchWidth);
-        ImGui.InputTextWithHint("##SearchAction", "Search action or mob name...", ref actionSearchFilter, 64);
-        ImGui.SameLine();
-        if (ImGui.Button("Save Changes##Actions", new Vector2(saveBtnWidth, 0)))
+        var buttonHeight = Math.Max(28f * scale, ImGui.GetFrameHeight());
+
+        // Pyros Session Table
+        var stats = BFE.Plugin.C?.pyrosSessionStats;
+        if (stats != null)
         {
-            actionDatabase.SaveUserOverrides();
-        }
+            int totalCoffers = stats.bronzeCoffer + stats.silverCoffer + stats.goldCoffer;
 
-        ImGui.Separator();
-
-        var filteredActions = actionDatabase.Actions
-            .Where(a => string.IsNullOrEmpty(actionSearchFilter) ||
-                        a.Value.ActionName.Contains(actionSearchFilter, StringComparison.OrdinalIgnoreCase) ||
-                        a.Value.MobName.Contains(actionSearchFilter, StringComparison.OrdinalIgnoreCase))
-            .Take(150);
-
-        var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.ScrollY | ImGuiTableFlags.Resizable;
-        var tableSize = new Vector2(0, ImGui.GetContentRegionAvail().Y);
-
-        if (ImGui.BeginTable("TableActionsEureka", 7, tableFlags, tableSize))
-        {
-            ImGui.TableSetupColumn("Monster", ImGuiTableColumnFlags.WidthStretch, 1.3f);
-            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthStretch, 1.3f);
-            ImGui.TableSetupColumn("Stun", ImGuiTableColumnFlags.WidthFixed, 50);
-            ImGui.TableSetupColumn("Silence", ImGuiTableColumnFlags.WidthFixed, 60);
-            ImGui.TableSetupColumn("LOS", ImGuiTableColumnFlags.WidthFixed, 50);
-            ImGui.TableSetupColumn("Regen", ImGuiTableColumnFlags.WidthFixed, 50);
-            ImGui.TableSetupColumn("Alert Message", ImGuiTableColumnFlags.WidthStretch, 2.0f);
-            ImGui.TableHeadersRow();
-
-            foreach (var (id, action) in filteredActions)
+            ImGui.TextColored(GoldAccent, "Pyros Current Session:");
+            if (ImGui.BeginTable("##PyrosSessionGrid", 4, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
             {
+                ImGui.TableSetupColumn("Total Coffers", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                ImGui.TableSetupColumn("Gold Coffers", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                ImGui.TableSetupColumn("Silver Coffers", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                ImGui.TableSetupColumn("Gil Earned", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                ImGui.TableHeadersRow();
+
                 ImGui.TableNextRow();
-
                 ImGui.TableNextColumn();
-                ImGui.Text(action.MobName);
-
+                ImGui.TextColored(Vector4.One, totalCoffers.ToString());
                 ImGui.TableNextColumn();
-                ImGui.Text(action.ActionName);
-
+                ImGui.TextColored(GoldAccent, stats.goldCoffer.ToString());
                 ImGui.TableNextColumn();
-                bool stun = action.RequiresStun;
-                if (ImGui.Checkbox($"##Stun{id}", ref stun)) action.RequiresStun = stun;
-
+                ImGui.TextColored(new Vector4(0.7f, 0.85f, 1f, 1f), stats.silverCoffer.ToString());
                 ImGui.TableNextColumn();
-                bool sil = action.RequiresSilence;
-                if (ImGui.Checkbox($"##Sil{id}", ref sil)) action.RequiresSilence = sil;
+                ImGui.TextColored(GoldAccent, $"{stats.gilEarned:N0} gil");
 
-                ImGui.TableNextColumn();
-                bool los = action.RequiresLineOfSight;
-                if (ImGui.Checkbox($"##Los{id}", ref los)) action.RequiresLineOfSight = los;
-
-                ImGui.TableNextColumn();
-                bool reg = action.RequiresRegen;
-                if (ImGui.Checkbox($"##Reg{id}", ref reg)) action.RequiresRegen = reg;
-
-                ImGui.TableNextColumn();
-                string msg = action.AlertMessage;
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.InputText($"##Msg{id}", ref msg, 128))
-                {
-                    action.AlertMessage = msg;
-                }
+                ImGui.EndTable();
             }
 
-            ImGui.EndTable();
-        }
-    }
-
-    private void DrawBfeTab()
-    {
-        // 1. Cabecera de la sección
-        ImGui.TextColored(new Vector4(0.961f, 0.729f, 0.259f, 1f), "🐰  BFE (Bunny Fate Engine) - Automatización Integrada");
-        ImGui.TextColored(new Vector4(0.7f, 0.72f, 0.78f, 1f), "Enrutamiento automático, combate, resolución de FATEs y búsqueda de cofres en Eureka (Pyros / Pagos / Hydatos).");
-
-        ImGui.Spacing();
-
-        // 2. Barra de estado y accesos directos
-        bool isRunning = BFE.Scheduler.SchedulerMain.DoWeTick;
-        var estadoColor = isRunning ? new Vector4(0.239f, 0.839f, 0.467f, 1f) : new Vector4(0.5f, 0.52f, 0.58f, 1f);
-        var estadoTexto = isRunning ? "En Ejecución (Activo)" : "En Reposo (Detenido)";
-
-        ImGui.TextColored(estadoColor, $"● Estado: {estadoTexto}");
-        ImGui.SameLine(ImGui.GetContentRegionAvail().X - 320);
-
-        if (ImGui.SmallButton("Ventana Flotante BFE (/bfe)"))
-        {
-            if (bunnyService?.mainWindow != null)
-                bunnyService.mainWindow.IsOpen = !bunnyService.mainWindow.IsOpen;
-        }
-
-        ImGui.SameLine();
-        if (ImGui.SmallButton("Ajustes BFE (/bfe settings)"))
-        {
-            if (bunnyService?.settingsWindow != null)
-                bunnyService.settingsWindow.IsOpen = !bunnyService.settingsWindow.IsOpen;
-        }
-
-        ImGui.Spacing();
-        ImGui.Separator();
-        ImGui.Spacing();
-
-        // 3. Control principal de zona y lanzamiento
-        ImGui.TextColored(Vector4.One, "Zona Activa: Eureka Pyros [WIP]");
-        ImGui.Spacing();
-
-        var btnColor = isRunning ? new Vector4(0.85f, 0.25f, 0.25f, 1f) : new Vector4(0.961f, 0.729f, 0.259f, 1f);
-        var hoverColor = isRunning ? new Vector4(0.95f, 0.35f, 0.35f, 1f) : new Vector4(0.98f, 0.78f, 0.32f, 1f);
-        var textColor = isRunning ? Vector4.One : new Vector4(0.07f, 0.07f, 0.07f, 1f);
-
-        ImGui.PushStyleColor(ImGuiCol.Button, btnColor);
-        ImGui.PushStyleColor(ImGuiCol.ButtonHovered, hoverColor);
-        ImGui.PushStyleColor(ImGuiCol.Text, textColor);
-
-        var btnEtiqueta = isRunning ? "■   Detener Automatización (/bfe stop)" : "▶   Iniciar Pyros Bunnies (/bfe pyros)";
-        if (ImGui.Button(btnEtiqueta, new Vector2(ImGui.GetContentRegionAvail().X, 38)))
-        {
-            if (isRunning)
+            if (stats.eldthursCounter > 0 || stats.pyrosHairStyleCounter > 0)
             {
-                BFE.Scheduler.SchedulerMain.DisablePlugin();
-            }
-            else
-            {
-                bunnyService?.pluginDependencies.Refresh(true);
-                if (bunnyService?.pluginDependencies.RequiredDependenciesLoaded == true)
-                {
-                    BFE.Plugin.C.zoneSelected = 1;
-                    BFE.Scheduler.SchedulerMain.EnablePlugin();
-                }
+                ImGui.Spacing();
+                ImGui.Text($"• Eldthurs Horns: {stats.eldthursCounter}  |  • Pyros Hairstyles: {stats.pyrosHairStyleCounter}");
             }
         }
-        ImGui.PopStyleColor(3);
 
         ImGui.Spacing();
-        ImGui.Separator();
-        ImGui.Spacing();
 
-        // 4. Estadísticas de la sesión activa
-        if (ImGui.CollapsingHeader("Estadísticas de la Sesión en Pyros", ImGuiTreeNodeFlags.DefaultOpen))
+        // Lifetime Overall Table
+        var stat = BFE.Plugin.C?.stats;
+        if (stat != null)
         {
-            var stats = BFE.Plugin.C?.pyrosSessionStats;
-            if (stats != null)
+            ImGui.TextColored(GoldAccent, "Lifetime Overall:");
+            var dict = new Dictionary<string, int>
             {
-                int totalCofres = stats.bronzeCoffer + stats.silverCoffer + stats.goldCoffer;
+                { "Gil Earned", stat.gilEarned },
+                { "Gold Coffers", stat.goldCoffer },
+                { "Silver Coffers", stat.silverCoffer },
+                { "Bronze Coffers", stat.bronzeCoffer },
+                { "Eldthurs Mount", stat.eldthursCounter },
+                { "Pyros Hairstyles", stat.pyrosHairStyleCounter },
+                { "Copycat Bulb", stat.bulbMinion },
+                { "Petrel Mount", stat.petrelCounter }
+            };
 
-                if (ImGui.BeginTable("##TablaStatsPyros", 4, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+            if (ImGui.BeginTable("##LifetimeStatsTable", 2, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+            {
+                ImGui.TableSetupColumn("Item / Metric", ImGuiTableColumnFlags.WidthStretch, 0.6f);
+                ImGui.TableSetupColumn("Count", ImGuiTableColumnFlags.WidthStretch, 0.4f);
+                ImGui.TableHeadersRow();
+
+                foreach (var (lbl, val) in dict)
                 {
-                    ImGui.TableSetupColumn("Total Cofres", ImGuiTableColumnFlags.WidthStretch, 0.25f);
-                    ImGui.TableSetupColumn("Cofres Oro", ImGuiTableColumnFlags.WidthStretch, 0.25f);
-                    ImGui.TableSetupColumn("Cofres Plata", ImGuiTableColumnFlags.WidthStretch, 0.25f);
-                    ImGui.TableSetupColumn("Gil Obtenido", ImGuiTableColumnFlags.WidthStretch, 0.25f);
-                    ImGui.TableHeadersRow();
-
                     ImGui.TableNextRow();
                     ImGui.TableNextColumn();
-                    ImGui.TextColored(Vector4.One, totalCofres.ToString());
-                    ImGui.TableNextColumn();
-                    ImGui.TextColored(new Vector4(0.961f, 0.729f, 0.259f, 1f), stats.goldCoffer.ToString());
-                    ImGui.TableNextColumn();
-                    ImGui.TextColored(new Vector4(0.7f, 0.85f, 1f, 1f), stats.silverCoffer.ToString());
-                    ImGui.TableNextColumn();
-                    ImGui.TextColored(new Vector4(0.961f, 0.729f, 0.259f, 1f), $"{stats.gilEarned:N0} gil");
+                    ImGui.TextUnformatted(lbl);
 
-                    ImGui.EndTable();
+                    ImGui.TableNextColumn();
+                    ImGui.TextColored(GoldAccent, val.ToString("N0"));
                 }
+                ImGui.EndTable();
+            }
+        }
 
-                if (stats.eldthursCounter > 0 || stats.pyrosHairStyleCounter > 0)
+        ImGui.Spacing();
+
+        // Reset Button with Ctrl guard
+        var isCtrlHeld = ImGui.GetIO().KeyCtrl;
+        using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !isCtrlHeld))
+        {
+            if (ImGui.Button("RESET STATS (HOLD CTRL)", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && isCtrlHeld)
+            {
+                if (BFE.Plugin.C != null)
                 {
-                    ImGui.Spacing();
-                    ImGui.Text($"• Cuernos de Eldthurs: {stats.eldthursCounter}  |  • Peinados de Pyros: {stats.pyrosHairStyleCounter}");
+                    BFE.Plugin.C.stats = new();
+                    BFE.Plugin.C.pyrosStats = new();
+                    BFE.Plugin.C.sessionStats = new();
+                    BFE.Plugin.C.pyrosSessionStats = new();
+                    BFE.Plugin.C.Save();
                 }
             }
+        }
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip(isCtrlHeld ? "Click to reset your bunny statistics." : "Hold Ctrl to enable the reset button.");
+        }
+    }
+    #endregion
+
+    #region MODULE 2: FATE ENGINE (BUNNIES) - CONFIGURATION VIEW
+    private void DrawFateEngineConfiguration()
+    {
+        if (ImGui.CollapsingHeader("General Automation Settings", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            GeneralSettings.Draw();
         }
 
         ImGui.Spacing();
         ImGui.Separator();
         ImGui.Spacing();
 
-        // 5. Créditos de autoría y atribución
-        ImGui.TextColored(new Vector4(1.0f, 0.85f, 0.4f, 1.0f), "Créditos & Atribución de Autoría");
-        ImGui.BulletText("Automatización original de conejos por Joshua-XIV (https://github.com/Joshua-XIV/Bunnies)");
-        ImGui.BulletText("Motor moderno BFE, localización en 15 idiomas y diseño de interfaz por DhogGPT / McVaxius (https://github.com/McVaxius/BFE)");
-        ImGui.BulletText("Takeover, unificación en suite EurekaAggro y mantenimiento por Kyuuso");
-        ImGui.BulletText("Apoya a McVaxius en Ko-fi: https://ko-fi.com/mcvaxius");
+        if (ImGui.CollapsingHeader("AutoRetainer Integration Settings", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            AutoReatinerSettings.Draw();
+        }
     }
+    #endregion
+
+    #region MODULE 3: ABOUT & CREDITS
+    private void DrawAboutSection(float scale)
+    {
+        ImGui.Spacing();
+        ImGui.TextColored(GoldAccent, "Eureka Aggro Suite - Project Attribution & Credits");
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        ImGui.TextWrapped("Eureka Aggro combines specialized expedition threat radar detection with automated Fate and bunny treasure hunting under a unified, high-performance architecture.");
+
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        ImGui.TextColored(new Vector4(0.4f, 0.8f, 1.0f, 1.0f), "Core Authors & Contributors:");
+        ImGui.BulletText("Joshua-XIV: Creator and author of the original Bunnies automation engine (https://github.com/Joshua-XIV/Bunnies)");
+        ImGui.BulletText("DhogGPT / McVaxius: Creator of BFE, modern routing architecture, 15-language localization, and S+ UI design (https://github.com/McVaxius/BFE)");
+        ImGui.BulletText("Kyuuso: Creator of EurekaAggro, 3D radar visualizer, Sleeping Dragon auto-walk, tactical cast monitor, and unified takeover suite integration");
+
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        ImGui.TextColored(GoldAccent, "Support & Community Links:");
+        if (ImGui.Button($"{FontAwesomeIcon.Heart.ToIconString()}  Support McVaxius on Ko-fi"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = "https://ko-fi.com/mcvaxius", UseShellExecute = true });
+        }
+        ImGui.SameLine();
+        if (ImGui.Button($"{FontAwesomeIcon.CommentDots.ToIconString()}  Join Aethertek Discord"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = "https://discord.gg/invite/aethertek", UseShellExecute = true });
+        }
+        ImGui.SameLine();
+        if (ImGui.Button($"{FontAwesomeIcon.CodeBranch.ToIconString()}  EurekaAggro GitHub"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = "https://github.com/Kyuuso/eurekaAggro", UseShellExecute = true });
+        }
+    }
+    #endregion
 }
