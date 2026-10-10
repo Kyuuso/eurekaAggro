@@ -298,6 +298,91 @@ public class PluginConfiguration : IPluginConfiguration
     public string TrackerLastPassword { get; set; } = string.Empty;
     public string TrackerCustomInstanceId { get; set; } = string.Empty;
 
+    // --- TRACKER PASSWORD & HISTORY MEMORY ---
+    public Dictionary<string, string> SavedTrackerPasswords { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public List<TrackerHistoryEntry> TrackerHistory { get; set; } = new();
+
+    /// <summary>
+    /// Remembers a tracker, its password, instance ID, and updates last used timestamp.
+    /// </summary>
+    public void RememberTracker(string trackerId, string? password = null, string? instanceId = null, int zoneId = 0)
+    {
+        if (string.IsNullOrWhiteSpace(trackerId)) return;
+        string cleanId = trackerId.Trim();
+
+        TrackerLastCode = cleanId;
+
+        if (!string.IsNullOrWhiteSpace(password))
+        {
+            string cleanPwd = password.Trim();
+            TrackerLastPassword = cleanPwd;
+            SavedTrackerPasswords[cleanId] = cleanPwd;
+        }
+        else if (SavedTrackerPasswords.TryGetValue(cleanId, out var existingPwd))
+        {
+            TrackerLastPassword = existingPwd;
+        }
+
+        var existing = TrackerHistory.Find(e => string.Equals(e.TrackerId, cleanId, StringComparison.OrdinalIgnoreCase));
+        if (existing != null)
+        {
+            existing.LastUsedAt = DateTimeOffset.UtcNow;
+            if (!string.IsNullOrWhiteSpace(password)) existing.Password = password.Trim();
+            if (!string.IsNullOrWhiteSpace(instanceId)) existing.InstanceId = instanceId.Trim();
+            if (zoneId > 0) existing.ZoneId = zoneId;
+        }
+        else
+        {
+            TrackerHistory.Insert(0, new TrackerHistoryEntry
+            {
+                TrackerId = cleanId,
+                Password = !string.IsNullOrWhiteSpace(password) ? password.Trim() : (SavedTrackerPasswords.TryGetValue(cleanId, out var p) ? p : string.Empty),
+                InstanceId = instanceId?.Trim() ?? string.Empty,
+                ZoneId = zoneId,
+                CreatedAt = DateTimeOffset.UtcNow,
+                LastUsedAt = DateTimeOffset.UtcNow,
+            });
+        }
+
+        // Keep last 30 entries
+        if (TrackerHistory.Count > 30)
+        {
+            TrackerHistory.RemoveRange(30, TrackerHistory.Count - 30);
+        }
+
+        Save();
+    }
+
+    /// <summary>
+    /// Retrieves a saved edit password for a tracker ID if known.
+    /// </summary>
+    public string? GetSavedPassword(string? trackerId)
+    {
+        if (string.IsNullOrWhiteSpace(trackerId)) return null;
+        if (SavedTrackerPasswords.TryGetValue(trackerId.Trim(), out var pwd) && !string.IsNullOrWhiteSpace(pwd))
+        {
+            return pwd;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Forgets a tracker and its password from history.
+    /// </summary>
+    public void ForgetTracker(string trackerId)
+    {
+        if (string.IsNullOrWhiteSpace(trackerId)) return;
+        string cleanId = trackerId.Trim();
+        SavedTrackerPasswords.Remove(cleanId);
+        TrackerHistory.RemoveAll(e => string.Equals(e.TrackerId, cleanId, StringComparison.OrdinalIgnoreCase));
+        if (string.Equals(TrackerLastCode, cleanId, StringComparison.OrdinalIgnoreCase))
+        {
+            TrackerLastCode = string.Empty;
+            TrackerLastPassword = string.Empty;
+        }
+        Save();
+    }
+
     // --- AGGRO LINES STATISTICS ---
     public int LifetimeDragonsBypassed { get; set; } = 0;
     public int LifetimeAutoWalkActivations { get; set; } = 0;
@@ -332,5 +417,30 @@ public class PluginConfiguration : IPluginConfiguration
     public void Save()
     {
         pluginInterface?.SavePluginConfig(this);
+    }
+}
+
+/// <summary>
+/// Persisted history entry for a previously visited or created Eureka Tracker.
+/// Stores edit password, instance ID, zone, and visit timestamps.
+/// </summary>
+public class TrackerHistoryEntry
+{
+    public string TrackerId { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string InstanceId { get; set; } = string.Empty;
+    public int ZoneId { get; set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset LastUsedAt { get; set; } = DateTimeOffset.UtcNow;
+
+    public bool HasPassword => !string.IsNullOrWhiteSpace(Password);
+
+    public string GetAgeString()
+    {
+        var elapsed = DateTimeOffset.UtcNow - LastUsedAt.ToUniversalTime();
+        if (elapsed.TotalMinutes < 1) return "just now";
+        if (elapsed.TotalMinutes < 60) return $"{(int)elapsed.TotalMinutes}m ago";
+        if (elapsed.TotalHours < 24) return $"{(int)elapsed.TotalHours}h ago";
+        return $"{(int)elapsed.TotalDays}d ago";
     }
 }

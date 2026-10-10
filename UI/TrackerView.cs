@@ -140,7 +140,17 @@ public class TrackerView : IDisposable
 
             // Code Input
             ImGui.SetNextItemWidth(110 * scale);
-            ImGui.InputTextWithHint("##TrackerCode", "6-char Code", ref inputTrackerCode, 6);
+            if (ImGui.InputTextWithHint("##TrackerCode", "6-char Code", ref inputTrackerCode, 6))
+            {
+                if (inputTrackerCode.Length == 6 && string.IsNullOrEmpty(inputTrackerPassword))
+                {
+                    string? saved = config.GetSavedPassword(inputTrackerCode);
+                    if (!string.IsNullOrEmpty(saved))
+                    {
+                        inputTrackerPassword = saved;
+                    }
+                }
+            }
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip("Enter the 6-character code of an existing tracker");
@@ -156,6 +166,17 @@ public class TrackerView : IDisposable
                 ImGui.SetTooltip("Optional password. Required to modify pop timers if the tracker is protected.");
             }
 
+            bool hasSavedPwd = !string.IsNullOrEmpty(config.GetSavedPassword(inputTrackerCode));
+            if (hasSavedPwd)
+            {
+                ImGui.SameLine();
+                ImGui.TextColored(GoldAccent, "🔑");
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip("Saved password restored from memory!");
+                }
+            }
+
             ImGui.SameLine();
 
             // Connect Button
@@ -163,9 +184,9 @@ public class TrackerView : IDisposable
             {
                 if (!string.IsNullOrWhiteSpace(inputTrackerCode))
                 {
-                    config.TrackerLastCode = inputTrackerCode;
-                    config.TrackerLastPassword = inputTrackerPassword;
-                    config.Save();
+                    string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
+                    int zoneId = trackerManager.CurrentZoneTracker?.ZoneId ?? 0;
+                    config.RememberTracker(inputTrackerCode, inputTrackerPassword, detectedId, zoneId);
 
                     _ = Task.Run(async () =>
                     {
@@ -337,17 +358,16 @@ public class TrackerView : IDisposable
             var (newTrackerId, password, err) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
             if (!string.IsNullOrEmpty(newTrackerId))
             {
+                string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
+                config.RememberTracker(newTrackerId, password, detectedId, zoneId);
+
                 inputTrackerCode = newTrackerId;
                 inputTrackerPassword = password;
-                config.TrackerLastCode = newTrackerId;
-                config.TrackerLastPassword = password;
-                config.Save();
 
                 bool joined = await trackerManager.Client.JoinTrackerAsync(newTrackerId, password);
                 if (joined)
                 {
                     // Auto-sync detected Server ID if present
-                    string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
                     inputInstanceId = detectedId;
                     int? dcId = config.TrackerCreatePublic ? trackerManager.GetCurrentDataCenterId() : null;
                     if (!string.IsNullOrEmpty(detectedId) || dcId.HasValue)
@@ -470,12 +490,11 @@ public class TrackerView : IDisposable
                             ImGui.SameLine();
                             if (ImGui.Button($"Connect##Alt_{alt.TrackerId}"))
                             {
+                                string altPwd = config.GetSavedPassword(alt.TrackerId) ?? string.Empty;
                                 inputTrackerCode = alt.TrackerId;
-                                inputTrackerPassword = string.Empty;
-                                config.TrackerLastCode = alt.TrackerId;
-                                config.TrackerLastPassword = string.Empty;
-                                config.Save();
-                                _ = client.JoinTrackerAsync(alt.TrackerId);
+                                inputTrackerPassword = altPwd;
+                                config.RememberTracker(alt.TrackerId, altPwd, alt.InstanceId, alt.ZoneId);
+                                _ = client.JoinTrackerAsync(alt.TrackerId, altPwd);
                                 ImGui.CloseCurrentPopup();
                             }
                         }
@@ -789,6 +808,9 @@ public class TrackerView : IDisposable
 
         ImGui.Spacing();
         DrawPublicTrackersSection(detectedId, scale);
+
+        ImGui.Spacing();
+        DrawRecentTrackersSection(scale);
     }
 
     /// <summary>
@@ -888,9 +910,21 @@ public class TrackerView : IDisposable
 
                 ImGui.TableNextRow();
 
-                // 1. Tracker 6-char Code + Copy button
+                // 1. Tracker 6-char Code + Copy button + Password Memory Key icon
                 ImGui.TableNextColumn();
                 ImGui.TextColored(GoldAccent, pt.TrackerId);
+
+                string savedPwd = config.GetSavedPassword(pt.TrackerId) ?? string.Empty;
+                if (!string.IsNullOrEmpty(savedPwd))
+                {
+                    ImGui.SameLine();
+                    ImGui.TextColored(GoldAccent, "🔑");
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip("Password remembered! Connect will restore your admin/edit permissions automatically.");
+                    }
+                }
+
                 ImGui.SameLine();
                 if (ImGuiComponents.IconButton($"##CopyCode_{pt.TrackerId}", FontAwesomeIcon.Copy))
                 {
@@ -948,7 +982,7 @@ public class TrackerView : IDisposable
                     ImGui.TextDisabled("0 NMs");
                 }
 
-                // 6. One-click Connect Button
+                // 6. One-click Connect Button (with remembered password)
                 ImGui.TableNextColumn();
                 if (isMatch)
                 {
@@ -959,11 +993,9 @@ public class TrackerView : IDisposable
                 if (ImGui.Button($"Connect##{pt.TrackerId}"))
                 {
                     inputTrackerCode = pt.TrackerId;
-                    inputTrackerPassword = string.Empty;
-                    config.TrackerLastCode = pt.TrackerId;
-                    config.TrackerLastPassword = string.Empty;
-                    config.Save();
-                    _ = trackerManager.Client.JoinTrackerAsync(pt.TrackerId);
+                    inputTrackerPassword = savedPwd;
+                    config.RememberTracker(pt.TrackerId, savedPwd, pt.InstanceId, pt.ZoneId);
+                    _ = trackerManager.Client.JoinTrackerAsync(pt.TrackerId, savedPwd);
                 }
 
                 if (isMatch)
@@ -989,6 +1021,113 @@ public class TrackerView : IDisposable
         4 => "Hydatos",
         _ => "Eureka",
     };
+
+    /// <summary>
+    /// Displays previously visited or created trackers with remembered passwords.
+    /// Allows 1-click reconnection with preserved admin/edit permissions.
+    /// </summary>
+    private void DrawRecentTrackersSection(float scale)
+    {
+        if (config.TrackerHistory.Count == 0) return;
+
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        if (ImGui.CollapsingHeader($"Recent Trackers & Saved Passwords ({config.TrackerHistory.Count})###RecentTrackersHeader"))
+        {
+            ImGui.Spacing();
+            if (ImGui.BeginTable("##RecentTrackersTable", 6, ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
+            {
+                ImGui.TableSetupColumn("Code", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+                ImGui.TableSetupColumn("Zone", ImGuiTableColumnFlags.WidthFixed, 80 * scale);
+                ImGui.TableSetupColumn("Instance ID", ImGuiTableColumnFlags.WidthFixed, 95 * scale);
+                ImGui.TableSetupColumn("Permissions", ImGuiTableColumnFlags.WidthFixed, 120 * scale);
+                ImGui.TableSetupColumn("Last Visited", ImGuiTableColumnFlags.WidthStretch, 90 * scale);
+                ImGui.TableSetupColumn("Actions", ImGuiTableColumnFlags.WidthFixed, 115 * scale);
+                ImGui.TableHeadersRow();
+
+                for (int i = 0; i < config.TrackerHistory.Count; i++)
+                {
+                    var entry = config.TrackerHistory[i];
+                    ImGui.TableNextRow();
+
+                    // 1. Code
+                    ImGui.TableNextColumn();
+                    ImGui.TextColored(GoldAccent, entry.TrackerId);
+                    ImGui.SameLine();
+                    if (ImGuiComponents.IconButton($"##CopyHist_{entry.TrackerId}", FontAwesomeIcon.Copy))
+                    {
+                        ImGui.SetClipboardText(entry.TrackerId);
+                    }
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip($"Copy code '{entry.TrackerId}' to clipboard");
+                    }
+
+                    // 2. Zone
+                    ImGui.TableNextColumn();
+                    ImGui.Text(GetZoneName(entry.ZoneId));
+
+                    // 3. Instance ID
+                    ImGui.TableNextColumn();
+                    if (!string.IsNullOrEmpty(entry.InstanceId))
+                    {
+                        ImGui.Text(entry.InstanceId);
+                    }
+                    else
+                    {
+                        ImGui.TextDisabled("-");
+                    }
+
+                    // 4. Permissions (Password)
+                    ImGui.TableNextColumn();
+                    if (entry.HasPassword)
+                    {
+                        ImGui.TextColored(GoldAccent, "🔑 Admin Saved");
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.SetTooltip("Saved admin password is remembered and will be used to restore edit rights.");
+                        }
+                    }
+                    else
+                    {
+                        ImGui.TextDisabled("Read-only");
+                    }
+
+                    // 5. Last Visited
+                    ImGui.TableNextColumn();
+                    ImGui.TextDisabled(entry.GetAgeString());
+
+                    // 6. Action: Reconnect & Forget
+                    ImGui.TableNextColumn();
+                    if (ImGui.Button($"Connect##Hist_{entry.TrackerId}"))
+                    {
+                        inputTrackerCode = entry.TrackerId;
+                        inputTrackerPassword = entry.Password;
+                        config.RememberTracker(entry.TrackerId, entry.Password, entry.InstanceId, entry.ZoneId);
+                        _ = trackerManager.Client.JoinTrackerAsync(entry.TrackerId, entry.Password);
+                    }
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip($"Reconnect to {entry.TrackerId} with saved credentials and admin rights");
+                    }
+
+                    ImGui.SameLine();
+                    if (ImGuiComponents.IconButton($"##DelHist_{entry.TrackerId}", FontAwesomeIcon.Trash))
+                    {
+                        config.ForgetTracker(entry.TrackerId);
+                        break;
+                    }
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip("Remove this tracker and its password from history");
+                    }
+                }
+
+                ImGui.EndTable();
+            }
+        }
+    }
 
     private void DrawConfiguration(float scale)
     {

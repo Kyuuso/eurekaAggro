@@ -187,11 +187,11 @@ public class TrackerManager : IDisposable
                     if (matchingTrackers.Count > 0)
                     {
                         var matching = matchingTrackers[0];
-                        bool joined = await Client.JoinTrackerAsync(matching.TrackerId);
+                        string savedPwd = config.GetSavedPassword(matching.TrackerId) ?? string.Empty;
+                        bool joined = await Client.JoinTrackerAsync(matching.TrackerId, savedPwd);
                         if (joined)
                         {
-                            config.TrackerLastCode = matching.TrackerId;
-                            config.Save();
+                            config.RememberTracker(matching.TrackerId, savedPwd, detectedId, zoneId);
 
                             var sb = new SeStringBuilder()
                                 .AddUiForeground(45)
@@ -202,6 +202,13 @@ public class TrackerManager : IDisposable
                                 .AddText($"https://ffxiv-eureka.com/{matching.TrackerId}")
                                 .AddUiForegroundOff()
                                 .AddText($" (Server ID: {detectedId}, Updated: {matching.GetAgeString()})");
+
+                            if (!string.IsNullOrEmpty(savedPwd))
+                            {
+                                sb.AddUiForeground(57)
+                                  .AddText(" [Admin password restored]")
+                                  .AddUiForegroundOff();
+                            }
 
                             if (matchingTrackers.Count > 1)
                             {
@@ -222,9 +229,7 @@ public class TrackerManager : IDisposable
                     var (newTrackerId, password, _) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
                     if (!string.IsNullOrEmpty(newTrackerId))
                     {
-                        config.TrackerLastCode = newTrackerId;
-                        config.TrackerLastPassword = password;
-                        config.Save();
+                        config.RememberTracker(newTrackerId, password, detectedId, zoneId);
 
                         bool joined = await Client.JoinTrackerAsync(newTrackerId, password);
                         if (joined)
