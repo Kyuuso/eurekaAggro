@@ -10,7 +10,7 @@ using Dalamud.Interface.Windowing;
 namespace BFE.Ui;
 
 /// <summary>
-/// Iconos estándar mapeados para la interfaz gráfica.
+/// Standard icons mapped for the user interface.
 /// </summary>
 internal enum MaterialIcon
 {
@@ -26,8 +26,7 @@ internal enum MaterialIcon
 }
 
 /// <summary>
-/// Utilidades y componentes visuales para renderizar la interfaz de usuario
-/// mediante ImGui nativo de Dalamud, sin dependencias de librerías externas propietarias.
+/// Visual helper utilities and UI components rendering via native Dalamud ImGui.
 /// </summary>
 internal static class UiGui
 {
@@ -124,7 +123,7 @@ internal static class UiGui
     }
 
     /// <summary>
-    /// Botón de acción principal destacado con colores llamativos según su estado de ejecución.
+    /// Prominent action button styled according to execution state.
     /// </summary>
     internal static bool FilledAction(string original, MaterialIcon icon, bool disabled)
     {
@@ -190,7 +189,7 @@ internal static class UiGui
 
     internal static void Title(string original, string translated)
     {
-        // Título decorativo en ventana
+        // Decorative title banner
         ImGui.TextColored(ImGuiColors.DalamudViolet, translated);
         ImGui.Separator();
     }
@@ -204,7 +203,7 @@ internal static class UiGui
 
     internal static void PaintTitleWithImage(Window owner, string display)
     {
-        // Dalamud dibuja el título nativamente en la barra de la ventana
+        // Dalamud handles title rendering natively in the window title bar
     }
 
     internal static void TableHeadersRow(float height = 0)
@@ -244,7 +243,7 @@ internal static class UiGui
     }
 
     /// <summary>
-    /// Mapea los iconos de diseño a iconos estándar FontAwesome de Dalamud.
+    /// Maps generic UI icons to standard Dalamud FontAwesome icons.
     /// </summary>
     internal static FontAwesomeIcon ToFontAwesome(MaterialIcon icon) => icon switch
     {

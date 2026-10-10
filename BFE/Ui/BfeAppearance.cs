@@ -8,8 +8,8 @@ using Dalamud.Plugin.Services;
 namespace BFE.Ui;
 
 /// <summary>
-/// Gestor visual ligero para la apariencia de las ventanas de conejos.
-/// Soporta cambio de idioma y renderizado directo mediante Dalamud WindowSystem.
+/// Lightweight appearance and styling manager for bunny automation windows.
+/// Supports language switching and direct rendering via the Dalamud WindowSystem.
 /// </summary>
 internal sealed class BfeAppearance : IDisposable
 {

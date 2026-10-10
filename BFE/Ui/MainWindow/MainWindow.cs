@@ -13,15 +13,14 @@ using BFE.Windows;
 namespace BFE.Ui.MainWindow;
 
 /// <summary>
-/// Ventana principal de automatización de conejos de Eureka (BFE).
-/// Recrea la estética de alto impacto con cabecera estilizada,
-/// pestañas elegantes y presentación fiel al diseño original.
+/// Main Eureka bunny automation window (Bunny Fate Engine).
+/// Renders the styled header, status indicators, tabs, and control panels.
 /// </summary>
 internal class MainWindow : PositionedWindow
 {
-    private static readonly Vector4 ColorDoradoAcento = new(0.961f, 0.729f, 0.259f, 1f);      // #F5BA42
-    private static readonly Vector4 ColorFondoVentana = new(0.075f, 0.078f, 0.090f, 1f);      // #131417
-    private static readonly Vector4 ColorTextoSecundario = new(0.608f, 0.620f, 0.663f, 1f);
+    private static readonly Vector4 GoldAccentColor = new(0.961f, 0.729f, 0.259f, 1f);       // #F5BA42
+    private static readonly Vector4 WindowBackgroundColor = new(0.075f, 0.078f, 0.090f, 1f); // #131417
+    private static readonly Vector4 SecondaryTextColor = new(0.608f, 0.620f, 0.663f, 1f);
 
     public MainWindow() : base($"{PluginInfo.DisplayName} ###BFEMainWindow")
     {
@@ -69,17 +68,17 @@ internal class MainWindow : PositionedWindow
     {
         var scale = ImGuiHelpers.GlobalScale;
 
-        // 1. Cabecera principal (Header con marca BFE y controles)
+        // 1. Primary header with BFE branding and controls
         DrawHeader(scale);
 
         ImGui.Spacing();
 
-        // 2. Indicador de estado (State: Idle / Running)
+        // 2. Status indicator (State: Idle / Running)
         DrawStateIndicator(scale);
 
         ImGui.Spacing();
 
-        // 3. Barra de navegación por pestañas
+        // 3. Tab navigation bar
         DrawTabs(scale);
 
         FinalizePendingWindowPlacement();
@@ -88,16 +87,16 @@ internal class MainWindow : PositionedWindow
     private void DrawHeader(float scale)
     {
         var pos = ImGui.GetCursorScreenPos();
-        var ancho = ImGui.GetContentRegionAvail().X;
+        var width = ImGui.GetContentRegionAvail().X;
         var dl = ImGui.GetWindowDrawList();
 
-        // Título BFE y subtítulo Bunny Fate Engine
-        var posTexto = pos + new Vector2(10f * scale, 0);
-        dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.5f, posTexto, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento), "BFE");
-        dl.AddText(posTexto + new Vector2(0, 22f * scale), 0xFFCCCCCC, "Bunny Fate Engine");
+        // BFE title and Bunny Fate Engine subtitle
+        var textPos = pos + new Vector2(10f * scale, 0);
+        dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.5f, textPos, ImGui.ColorConvertFloat4ToU32(GoldAccentColor), "BFE");
+        dl.AddText(textPos + new Vector2(0, 22f * scale), 0xFFCCCCCC, "Bunny Fate Engine");
 
-        // Botones de acción rápida a la derecha
-        ImGui.SetCursorScreenPos(pos + new Vector2(ancho - 370f * scale, 8f * scale));
+        // Quick action buttons on the right
+        ImGui.SetCursorScreenPos(pos + new Vector2(width - 370f * scale, 8f * scale));
 
         if (ImGui.SmallButton("Settings"))
         {
@@ -134,13 +133,13 @@ internal class MainWindow : PositionedWindow
         var dl = ImGui.GetWindowDrawList();
 
         var isRunning = SchedulerMain.DoWeTick;
-        var colorCirculo = isRunning ? new Vector4(0.239f, 0.839f, 0.467f, 1f) : new Vector4(0.42f, 0.43f, 0.47f, 1f);
+        var circleColor = isRunning ? new Vector4(0.239f, 0.839f, 0.467f, 1f) : new Vector4(0.42f, 0.43f, 0.47f, 1f);
 
-        var centroCirculo = pos + new Vector2(6f * scale, 8f * scale);
-        dl.AddCircleFilled(centroCirculo, 5f * scale, ImGui.ColorConvertFloat4ToU32(colorCirculo));
+        var circleCenter = pos + new Vector2(6f * scale, 8f * scale);
+        dl.AddCircleFilled(circleCenter, 5f * scale, ImGui.ColorConvertFloat4ToU32(circleColor));
 
-        var textoEstado = isRunning ? "Running" : "Idle";
-        dl.AddText(pos + new Vector2(18f * scale, 0), 0xFFFFFFFF, $"State:  {textoEstado}");
+        var stateText = isRunning ? "Running" : "Idle";
+        dl.AddText(pos + new Vector2(18f * scale, 0), 0xFFFFFFFF, $"State:  {stateText}");
 
         ImGui.Dummy(new Vector2(100f * scale, 18f * scale));
     }
@@ -273,7 +272,7 @@ internal class MainWindow : PositionedWindow
                 ImGui.TextUnformatted(label);
 
                 ImGui.TableNextColumn();
-                ImGui.TextColored(ColorDoradoAcento, val.ToString("N0"));
+                ImGui.TextColored(GoldAccentColor, val.ToString("N0"));
             }
 
             ImGui.EndTable();

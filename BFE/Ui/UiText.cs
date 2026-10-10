@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace BFE.Ui;
 
 /// <summary>
-/// Roles de tipografía para la interfaz de usuario.
+/// Typography roles for the user interface.
 /// </summary>
 internal enum UiFontRole
 {
@@ -23,8 +23,8 @@ internal enum UiFontRole
 }
 
 /// <summary>
-/// Sistema nativo de localización y formateo de texto para la interfaz de conejos.
-/// Carga las cadenas traducidas desde los recursos del ensamblado sin dependencias externas.
+/// Native localization and string formatting system for the bunny automation UI.
+/// Loads translated strings directly from embedded assembly resources.
 /// </summary>
 internal sealed class UiText : IDisposable
 {
@@ -59,7 +59,7 @@ internal sealed class UiText : IDisposable
         Language = Languages.Any(l => l.Code == language) ? language : "en";
         Culture = CultureInfo.GetCultureInfo(Language);
 
-        // Cargamos el gestor de recursos para el idioma seleccionado
+        // Load resource manager for selected language
         manager = new ResourceManager("BFE.Localization.Strings_" + Language.Replace('-', '_'), typeof(UiText).Assembly);
         try
         {
@@ -70,7 +70,7 @@ internal sealed class UiText : IDisposable
             Resources = null;
         }
 
-        // Compilación de patrones de texto para sustitución dinámica de argumentos
+        // Compile regex templates for dynamic string formatting substitutions
         var parameter = new Regex(@"\{(\d+)(?::([^}]+))?\}");
         if (Resources != null)
         {
@@ -99,15 +99,15 @@ internal sealed class UiText : IDisposable
     }
 
     /// <summary>
-    /// Traduce una cadena en inglés al idioma activo del usuario.
-    /// Si no existe traducción, devuelve la cadena original.
+    /// Translates an English string into the currently active UI language.
+    /// If no translation exists, returns the original string.
     /// </summary>
     internal static string T(string english)
     {
         if (string.IsNullOrEmpty(english)) return string.Empty;
         if (Current.Language == "en") return english;
 
-        // Normalización de términos frecuentes
+        // Normalization of common casing differences
         english = english switch
         {
             "idle" => "Idle",
@@ -141,7 +141,7 @@ internal sealed class UiText : IDisposable
     }
 
     /// <summary>
-    /// Traduce y formatea una cadena con argumentos variables.
+    /// Translates and formats a string with positional arguments.
     /// </summary>
     internal static string F(string english, params object?[] args)
     {
@@ -156,7 +156,7 @@ internal sealed class UiText : IDisposable
     }
 
     /// <summary>
-    /// Traduce y formatea una cadena interpolada con argumentos.
+    /// Translates and formats an interpolated string with localized parameter values.
     /// </summary>
     internal static string F(FormattableString text)
     {
@@ -186,7 +186,7 @@ internal sealed class UiText : IDisposable
     internal string Label(string key) => Resources?.GetString(key, false) ?? key;
 
     /// <summary>
-    /// Objeto nulo para ámbito de tipografía compatible con llamadas previas.
+    /// No-op scope token for font stacking compatibility.
     /// </summary>
     private sealed class EmptyScope : IDisposable
     {

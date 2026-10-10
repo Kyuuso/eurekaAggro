@@ -60,6 +60,7 @@ Write-Host "Bumping version from $currentVersion to $newVersion..." -ForegroundC
 # 3. Update EurekaSuite.json
 $jsonRaw = Get-Content $manifestPath -Raw
 $jsonUpdated = $jsonRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}$newVersion`${2}"
+$jsonUpdated = $jsonUpdated -replace '("TestingAssemblyVersion"\s*:\s*")[^"]+(")', "`${1}$newVersion`${2}"
 Set-Content -Path $manifestPath -Value $jsonUpdated -Encoding utf8
 
 # 4. Update EurekaSuite.csproj

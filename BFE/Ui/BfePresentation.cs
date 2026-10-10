@@ -6,7 +6,7 @@ using Dalamud.Interface.Textures.TextureWraps;
 namespace BFE.Ui;
 
 /// <summary>
-/// Provee constantes visuales y dibujo de recursos gráficos de forma nativa sin dependencias externas.
+/// Provides visual styling constants and native graphical drawing without external dependencies.
 /// </summary>
 internal static class BfePresentation
 {
@@ -14,7 +14,7 @@ internal static class BfePresentation
 
     internal static void DrawPluginIcon(ImDrawListPtr drawList, Vector2 min, Vector2 max)
     {
-        // En ausencia de textura, dibuja un fondo redondeado decorativo
+        // When no texture is present, render a rounded fallback background
         drawList.AddRectFilled(min, max, 0x44FFFFFF, 4f);
     }
 

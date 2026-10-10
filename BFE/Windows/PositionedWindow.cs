@@ -7,8 +7,8 @@ using Dalamud.Interface.Windowing;
 namespace BFE.Windows;
 
 /// <summary>
-/// Ventana base con posicionamiento automático y restablecimiento de coordenadas.
-/// Migrada a Dalamud nativo sin dependencias externas de librerías propietarias.
+/// Base window providing automated positioning and coordinate reset capabilities.
+/// Native Dalamud window implementation without external proprietary libraries.
 /// </summary>
 public abstract class PositionedWindow : Window
 {

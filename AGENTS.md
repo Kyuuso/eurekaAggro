@@ -52,7 +52,8 @@ When changes are pushed to `main`:
 
 ## 3. Language & Code Style Guidelines
 
-- **Code & Comments**: All identifiers, class names, member variables, docstrings, XML comments, and UI strings MUST be in **English**.
+- **MANDATORY English Code & Comments**: ALL identifiers, class names, member variables, local variables, parameters, XML documentation comments (`///`), inline comments (`//`), log messages, and UI strings MUST be in **English**. No Spanish or mixed language in source code. Code and comments must make technical sense and explain behavior accurately.
+- **Documentation Standards & Anti-Slop**: Follow `.agents/rules/no_ai_slop.md`. Avoid emdashes (`—`/`–`), promotional buzzwords, and redundant comments that merely echo member names.
 - **User Interactions**: Conversations with the repository owner in the chat interface must remain in **Spanish** unless requested otherwise.
 - **Zero Allocations**: Avoid heap allocations in rendering loops (`OverlayRenderer.cs`) to prevent GC stalls and memory leaks during gameplay.
 - **NO Unicode Emojis in UI or Chat**: NEVER use Unicode emojis in any ImGui strings, chat log messages (`ChatGui.Print`), toasts, notifications, or drawlists. Dalamud's ImGui font glyph atlas does NOT include standard Unicode emoji codepoints, which will inevitably render as broken characters (`=`, `?`, or missing glyphs). ALWAYS use `FontAwesomeIcon` via Dalamud's `ImGuiComponents.IconButton` / `FontAwesomeIcon.<Name>.ToIconString()`, or clean textual tags (e.g., `[OK]`, `[WARN]`, `[Combat]`, `[Key]`).

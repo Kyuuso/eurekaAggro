@@ -7,8 +7,8 @@ using BFE.Windows;
 namespace BFE.Ui.SettingWindow;
 
 /// <summary>
-/// Ventana de configuración de conejos de Eureka (BFE).
-/// Permite configurar reparaciones, teletransportes, AutoRetainer y apariencia.
+/// Eureka bunny automation settings window (Bunny Fate Engine).
+/// Configures gear repair thresholds, teleport triggers, AutoRetainer integration, and window appearance.
 /// </summary>
 internal class SettingsWindow : PositionedWindow
 {

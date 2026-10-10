@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
@@ -20,10 +20,9 @@ using BFE.Ui.SettingWindow;
 namespace EurekaSuite.Services;
 
 /// <summary>
-/// Servicio central de automatización de conejos de Eureka (BFE Takeover).
-/// Integra de forma nativa e integral en EurekaSuite toda la lógica de obtención de conejos,
-/// cofres de tesoro, navegación con vnavmesh, rotación con WrathCombo, evasión con BossMod,
-/// teletransportes e interacción con AutoRetainer.
+/// Central automation coordinator for Eureka bunny FATEs and treasure hunting.
+/// Integrates bunny acquisition, treasure hunting, navigation via vnavmesh,
+/// combat via WrathCombo, avoidance via BossMod, teleports, and AutoRetainer.
 /// </summary>
 public sealed class BunnyAutomationService : IDisposable
 {
@@ -39,16 +38,16 @@ public sealed class BunnyAutomationService : IDisposable
     internal Config config = null!;
     internal BfeAppearance appearance = null!;
 
-    // Ventanas de la interfaz de conejos
+    // Bunny user interface windows
     internal WindowSystem windowSystem = null!;
     internal MainWindow mainWindow = null!;
     internal SettingsWindow settingsWindow = null!;
     internal DebugWindow debugWindow = null!;
 
-    // Filtro de objetos e inventario
+    // Item filtering and inventory handling
     public Filter filter { get; private set; } = null!;
 
-    // IPCs y servicios de automatización
+    // IPC integrations and automation services
     internal AutoRetainerApi autoRetainerApi = null!;
     internal LifestreamIPC lifestream = null!;
     internal TaskManager taskManager = null!;
@@ -60,7 +59,7 @@ public sealed class BunnyAutomationService : IDisposable
     internal BunniesIPC bunniesIPC = null!;
     internal PluginDependencyService pluginDependencies = null!;
 
-    // Temporizadores de sesión
+    // Session runtime tracking
     internal Stopwatch stopwatch = null!;
     internal TimeSpan totalRunTime;
 
@@ -80,12 +79,12 @@ public sealed class BunnyAutomationService : IDisposable
 
         filter = new Filter();
 
-        // Inicialización de la configuración y apariencia
+        // Configuration and visual styling initialization
         EzConfig.Migrate<Config>();
         config = EzConfig.Init<Config>();
         appearance = new BfeAppearance(textureProvider);
 
-        // Inicialización de subsistemas de IPC y dependencias
+        // IPC subsystems and dependency initialization
         pluginDependencies = new PluginDependencyService();
         pluginDependencies.Refresh(true);
         taskManager = new TaskManager();
@@ -98,21 +97,21 @@ public sealed class BunnyAutomationService : IDisposable
         wrath = new WrathIPC();
         bunniesIPC = new BunniesIPC();
 
-        // Inicialización de ventanas
+        // Window registration
         windowSystem = new WindowSystem("Eureka Suite - Bunnies");
         mainWindow = new MainWindow();
         debugWindow = new DebugWindow();
         settingsWindow = new SettingsWindow();
 
-        // Cronómetro de actividad
+        // Activity stopwatch
         stopwatch = new Stopwatch();
 
         ResetSessionStats();
     }
 
     /// <summary>
-    /// Ciclo de actualización ejecutado en cada frame de Dalamud.
-    /// Actualiza el estado de dependencias y el planificador de conejos si está activo.
+    /// Update loop executed every Dalamud framework tick.
+    /// Refreshes dependency status and executes bunny scheduler ticks when enabled.
     /// </summary>
     public void Update()
     {
@@ -125,7 +124,7 @@ public sealed class BunnyAutomationService : IDisposable
     }
 
     /// <summary>
-    /// Dibuja las ventanas activas de conejos en la interfaz.
+    /// Draws active bunny windows in the UI builder pipeline.
     /// </summary>
     public void DrawUi()
     {
@@ -133,7 +132,7 @@ public sealed class BunnyAutomationService : IDisposable
     }
 
     /// <summary>
-    /// Procesa comandos de consola para controlar los conejos (/bfe o /bunnies).
+    /// Processes command-line instructions for bunny automation (/bfe or /bunnies).
     /// </summary>
     public void ProcessCommand(string command, string args)
     {

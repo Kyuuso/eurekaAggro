@@ -64,7 +64,7 @@ public class MainWindow : IDisposable
     private int targetMainTab = -1;
     public int ActiveMainTab { get; private set; } = 0;
 
-    // Sub-view states for each module ("cada pestaña con su cosa, con su configuración")
+    // Sub-view navigation state for each functional module tab
     public SubView AggroSubView = SubView.Main;
     public SubView FateSubView = SubView.Main;
     public SubView TrackerSubView = SubView.Main;

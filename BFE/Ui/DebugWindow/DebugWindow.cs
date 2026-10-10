@@ -7,7 +7,7 @@ using BFE.Windows;
 namespace BFE.Ui.DebugWindow;
 
 /// <summary>
-/// Ventana de depuración técnica para inspección de estadísticas y variables internas.
+/// Technical debug window for internal state and statistic inspection.
 /// </summary>
 internal class DebugWindow : PositionedWindow
 {

@@ -12,23 +12,22 @@ using BFE.Scheduler;
 namespace BFE.Ui.MainWindow;
 
 /// <summary>
-/// Vista principal de la automatización de conejos de Eureka.
-/// Reproduce con fidelidad el diseño oscuro con tarjetas de área,
-/// monitoreo de tareas, verificación de dependencias y botón de acción destacado.
+/// Main view for Eureka bunny automation (Bunny Fate Engine).
+/// Renders zone selection cards, task tracking, dependency verification, and execution controls.
 /// </summary>
 internal class StartBunnies
 {
     public static bool IsRunning = false;
 
-    // Colores de la paleta estética de BFE
-    private static readonly Vector4 ColorFondoTarjeta = new(0.106f, 0.110f, 0.133f, 1f);      // #1B1C22
-    private static readonly Vector4 ColorFondoCampo = new(0.086f, 0.090f, 0.110f, 1f);        // #16171C
-    private static readonly Vector4 ColorBordeNormal = new(0.157f, 0.165f, 0.212f, 1f);       // #282A36
-    private static readonly Vector4 ColorDoradoAcento = new(0.961f, 0.729f, 0.259f, 1f);      // #F5BA42
-    private static readonly Vector4 ColorDoradoOscuro = new(0.12f, 0.10f, 0.05f, 1f);
-    private static readonly Vector4 ColorVerdeDisponible = new(0.239f, 0.839f, 0.467f, 1f);   // #3DD677
-    private static readonly Vector4 ColorTextoSecundario = new(0.608f, 0.620f, 0.663f, 1f);   // #9B9EA9
-    private static readonly Vector4 ColorRojoDetener = new(0.851f, 0.255f, 0.255f, 1f);       // #D94141
+    // BFE aesthetic color palette
+    private static readonly Vector4 CardBackgroundColor = new(0.106f, 0.110f, 0.133f, 1f);      // #1B1C22
+    private static readonly Vector4 FieldBackgroundColor = new(0.086f, 0.090f, 0.110f, 1f);     // #16171C
+    private static readonly Vector4 NormalBorderColor = new(0.157f, 0.165f, 0.212f, 1f);        // #282A36
+    private static readonly Vector4 GoldAccentColor = new(0.961f, 0.729f, 0.259f, 1f);          // #F5BA42
+    private static readonly Vector4 DarkGoldColor = new(0.12f, 0.10f, 0.05f, 1f);
+    private static readonly Vector4 AvailableGreenColor = new(0.239f, 0.839f, 0.467f, 1f);      // #3DD677
+    private static readonly Vector4 SecondaryTextColor = new(0.608f, 0.620f, 0.663f, 1f);       // #9B9EA9
+    private static readonly Vector4 StopRedColor = new(0.851f, 0.255f, 0.255f, 1f);              // #D94141
 
     internal static string ActionLabel => IsRunning ? "Stop Pyros" : "Start Pyros";
 
@@ -55,7 +54,7 @@ internal class StartBunnies
     {
         var scale = ImGuiHelpers.GlobalScale;
 
-        // 1. SELECCIÓN DE ÁREA (Area Selection)
+        // 1. Area Selection
         ImGui.TextColored(Vector4.One, UiText.T("Area Selection"));
         ImGui.Spacing();
 
@@ -64,7 +63,7 @@ internal class StartBunnies
         ImGui.Spacing();
         ImGui.Spacing();
 
-        // 2. TAREA ACTUAL (Task)
+        // 2. Current Task
         ImGui.TextColored(Vector4.One, UiText.T("Task"));
         ImGui.Spacing();
         DrawTextField("TaskField", icurrentTask == "idle" ? "Idle. Select an area and press Start to begin." : icurrentTask, scale);
@@ -72,7 +71,7 @@ internal class StartBunnies
         ImGui.Spacing();
         ImGui.Spacing();
 
-        // 3. TIEMPO TRANSCURRIDO (Time elapsed)
+        // 3. Time elapsed
         ImGui.TextColored(Vector4.One, UiText.T("Time elapsed"));
         ImGui.Spacing();
         DrawTextField("TimeField", P.stopwatch.Elapsed.ToString(@"mm\:ss\.fff"), scale);
@@ -80,7 +79,7 @@ internal class StartBunnies
         ImGui.Spacing();
         ImGui.Spacing();
 
-        // 4. DEPENDENCIAS (Dependencies)
+        // 4. Dependencies
         ImGui.TextColored(Vector4.One, UiText.T("Dependencies"));
 
         ImGui.SameLine(ImGui.GetContentRegionAvail().X - 85f * scale);
@@ -95,75 +94,75 @@ internal class StartBunnies
         ImGui.Spacing();
         ImGui.Spacing();
 
-        // 5. BOTÓN DE ACCIÓN PRINCIPAL (Start Pyros / Stop)
+        // 5. Main Action Button (Start Pyros / Stop)
         DrawMainActionButton(scale);
     }
 
     /// <summary>
-    /// Dibuja las tres tarjetas de zona (Pagos, Pyros con badge WIP, Hydatos).
+    /// Renders the three zone cards (Pagos, Pyros with WIP badge, Hydatos).
     /// </summary>
     private static void DrawAreaCards(float scale)
     {
-        var anchoTotal = ImGui.GetContentRegionAvail().X;
-        var espacio = 12f * scale;
-        var anchoTarjeta = (anchoTotal - (espacio * 2f)) / 3f;
-        var altoTarjeta = 64f * scale;
+        var totalWidth = ImGui.GetContentRegionAvail().X;
+        var spacing = 12f * scale;
+        var cardWidth = (totalWidth - (spacing * 2f)) / 3f;
+        var cardHeight = 64f * scale;
 
-        // Tarjeta 1: Pagos (No disponible)
-        DrawCard(0, "Pagos", "Not available", false, false, anchoTarjeta, altoTarjeta, scale);
-        ImGui.SameLine(0, espacio);
+        // Card 1: Pagos (Unavailable)
+        DrawCard(0, "Pagos", "Not available", false, false, cardWidth, cardHeight, scale);
+        ImGui.SameLine(0, spacing);
 
-        // Tarjeta 2: Pyros (Activo y seleccionado con badge WIP)
-        DrawCard(1, "Pyros", "Select to start bunnies", true, true, anchoTarjeta, altoTarjeta, scale);
-        ImGui.SameLine(0, espacio);
+        // Card 2: Pyros (Active and selected with WIP badge)
+        DrawCard(1, "Pyros", "Select to start bunnies", true, true, cardWidth, cardHeight, scale);
+        ImGui.SameLine(0, spacing);
 
-        // Tarjeta 3: Hydatos (No disponible)
-        DrawCard(2, "Hydatos", "Not available", false, false, anchoTarjeta, altoTarjeta, scale);
+        // Card 3: Hydatos (Unavailable)
+        DrawCard(2, "Hydatos", "Not available", false, false, cardWidth, cardHeight, scale);
     }
 
-    private static void DrawCard(int index, string nombre, string descripcion, bool isSelected, bool isWip, float ancho, float alto, float scale)
+    private static void DrawCard(int index, string name, string description, bool isSelected, bool isWip, float width, float height, float scale)
     {
         var pos = ImGui.GetCursorScreenPos();
         var dl = ImGui.GetWindowDrawList();
 
-        // Color de fondo y borde según estado
-        var colorFondo = isSelected ? ColorFondoTarjeta : new Vector4(0.09f, 0.095f, 0.11f, 1f);
-        var colorBorde = isSelected ? ColorDoradoAcento : ColorBordeNormal;
+        // Background and border colors by selection state
+        var backgroundColor = isSelected ? CardBackgroundColor : new Vector4(0.09f, 0.095f, 0.11f, 1f);
+        var borderColor = isSelected ? GoldAccentColor : NormalBorderColor;
 
-        dl.AddRectFilled(pos, pos + new Vector2(ancho, alto), ImGui.ColorConvertFloat4ToU32(colorFondo), 6f * scale);
-        dl.AddRect(pos, pos + new Vector2(ancho, alto), ImGui.ColorConvertFloat4ToU32(colorBorde), 6f * scale, ImDrawFlags.None, isSelected ? 1.5f : 1.0f);
+        dl.AddRectFilled(pos, pos + new Vector2(width, height), ImGui.ColorConvertFloat4ToU32(backgroundColor), 6f * scale);
+        dl.AddRect(pos, pos + new Vector2(width, height), ImGui.ColorConvertFloat4ToU32(borderColor), 6f * scale, ImDrawFlags.None, isSelected ? 1.5f : 1.0f);
 
-        // Selector circular (Radio button visual)
-        var centroRadio = pos + new Vector2(24f * scale, alto * 0.5f);
-        var radioExterior = 8f * scale;
-        dl.AddCircle(centroRadio, radioExterior, ImGui.ColorConvertFloat4ToU32(isSelected ? ColorDoradoAcento : new Vector4(0.4f, 0.42f, 0.5f, 1f)), 24, 1.5f);
+        // Circular radio indicator
+        var radioCenter = pos + new Vector2(24f * scale, height * 0.5f);
+        var radioRadius = 8f * scale;
+        dl.AddCircle(radioCenter, radioRadius, ImGui.ColorConvertFloat4ToU32(isSelected ? GoldAccentColor : new Vector4(0.4f, 0.42f, 0.5f, 1f)), 24, 1.5f);
         if (isSelected)
         {
-            dl.AddCircleFilled(centroRadio, 4f * scale, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento));
+            dl.AddCircleFilled(radioCenter, 4f * scale, ImGui.ColorConvertFloat4ToU32(GoldAccentColor));
         }
 
-        // Título del área y Badge WIP
-        var posTexto = pos + new Vector2(42f * scale, 14f * scale);
-        dl.AddText(posTexto, ImGui.ColorConvertFloat4ToU32(isSelected ? Vector4.One : ColorTextoSecundario), nombre);
+        // Zone title and WIP badge
+        var textPos = pos + new Vector2(42f * scale, 14f * scale);
+        dl.AddText(textPos, ImGui.ColorConvertFloat4ToU32(isSelected ? Vector4.One : SecondaryTextColor), name);
 
         if (isWip)
         {
-            var anchoTextoNombre = ImGui.CalcTextSize(nombre).X;
-            var posBadgeMin = posTexto + new Vector2(anchoTextoNombre + 8f * scale, -1f * scale);
-            var posBadgeMax = posBadgeMin + new Vector2(34f * scale, 16f * scale);
-            dl.AddRectFilled(posBadgeMin, posBadgeMax, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento), 3f * scale);
-            dl.AddText(posBadgeMin + new Vector2(5f * scale, 1f * scale), 0xFF111111, "WIP");
+            var nameTextWidth = ImGui.CalcTextSize(name).X;
+            var badgeMin = textPos + new Vector2(nameTextWidth + 8f * scale, -1f * scale);
+            var badgeMax = badgeMin + new Vector2(34f * scale, 16f * scale);
+            dl.AddRectFilled(badgeMin, badgeMax, ImGui.ColorConvertFloat4ToU32(GoldAccentColor), 3f * scale);
+            dl.AddText(badgeMin + new Vector2(5f * scale, 1f * scale), 0xFF111111, "WIP");
         }
 
-        // Subtítulo descriptivo
-        var posDesc = pos + new Vector2(42f * scale, 34f * scale);
-        dl.AddText(posDesc, ImGui.ColorConvertFloat4ToU32(ColorTextoSecundario), UiText.T(descripcion));
+        // Descriptive subtitle
+        var descPos = pos + new Vector2(42f * scale, 34f * scale);
+        dl.AddText(descPos, ImGui.ColorConvertFloat4ToU32(SecondaryTextColor), UiText.T(description));
 
-        // Botón invisible para interacción táctil/ratón
+        // Invisible button for click interaction
         ImGui.SetCursorScreenPos(pos);
-        if (ImGui.InvisibleButton($"##Card_{nombre}", new Vector2(ancho, alto)))
+        if (ImGui.InvisibleButton($"##Card_{name}", new Vector2(width, height)))
         {
-            if (index == 1) // Solo Pyros está activo actualmente
+            if (index == 1) // Only Pyros is currently supported
             {
                 C.zoneSelected = (sbyte)index;
                 C.Save();
@@ -172,33 +171,32 @@ internal class StartBunnies
     }
 
     /// <summary>
-    /// Dibuja una caja de campo oscura con esquinas redondeadas.
+    /// Renders a dark input container with rounded corners.
     /// </summary>
-    private static void DrawTextField(string id, string texto, float scale)
+    private static void DrawTextField(string id, string text, float scale)
     {
         var pos = ImGui.GetCursorScreenPos();
-        var ancho = ImGui.GetContentRegionAvail().X;
-        var alto = 36f * scale;
+        var width = ImGui.GetContentRegionAvail().X;
+        var height = 36f * scale;
         var dl = ImGui.GetWindowDrawList();
 
-        dl.AddRectFilled(pos, pos + new Vector2(ancho, alto), ImGui.ColorConvertFloat4ToU32(ColorFondoCampo), 6f * scale);
-        dl.AddRect(pos, pos + new Vector2(ancho, alto), ImGui.ColorConvertFloat4ToU32(ColorBordeNormal), 6f * scale);
+        dl.AddRectFilled(pos, pos + new Vector2(width, height), ImGui.ColorConvertFloat4ToU32(FieldBackgroundColor), 6f * scale);
+        dl.AddRect(pos, pos + new Vector2(width, height), ImGui.ColorConvertFloat4ToU32(NormalBorderColor), 6f * scale);
 
-        var textoLocalizado = UiText.T(texto);
-        var tamTexto = ImGui.CalcTextSize(textoLocalizado);
-        var posTexto = pos + new Vector2(14f * scale, (alto - tamTexto.Y) * 0.5f);
-        dl.AddText(posTexto, ImGui.ColorConvertFloat4ToU32(ColorTextoSecundario), textoLocalizado);
+        var localizedText = UiText.T(text);
+        var textSize = ImGui.CalcTextSize(localizedText);
+        var textPos = pos + new Vector2(14f * scale, (height - textSize.Y) * 0.5f);
+        dl.AddText(textPos, ImGui.ColorConvertFloat4ToU32(SecondaryTextColor), localizedText);
 
-        ImGui.Dummy(new Vector2(ancho, alto));
+        ImGui.Dummy(new Vector2(width, height));
     }
 
     /// <summary>
-    /// Dibuja la lista de dependencias en una tabla estructurada con columnas independientes
-    /// para evitar cualquier solapamiento o desalineación visual.
+    /// Renders the dependency checklist in a structured table with fixed column sizing.
     /// </summary>
     private static void DrawDependenciesList(float scale)
     {
-        var dependencias = P.pluginDependencies.RequiredStatuses;
+        var dependencies = P.pluginDependencies.RequiredStatuses;
 
         if (ImGui.BeginTable("##DepsTable", 3, ImGuiTableFlags.BordersOuter | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
         {
@@ -207,20 +205,20 @@ internal class StartBunnies
             ImGui.TableSetupColumn("Repository", ImGuiTableColumnFlags.WidthFixed, 110f * scale);
             ImGui.TableHeadersRow();
 
-            foreach (var dep in dependencias)
+            foreach (var dep in dependencies)
             {
                 ImGui.TableNextRow(ImGuiTableRowFlags.None, 28f * scale);
 
-                // Columna 1: Icono + Nombre de la dependencia
+                // Column 1: Status indicator and dependency name
                 ImGui.TableNextColumn();
-                var estaCargado = dep.State == PluginDependencyState.Loaded;
-                var colorCheck = estaCargado ? ColorVerdeDisponible : (dep.State == PluginDependencyState.InstalledNotLoaded ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed);
+                var isLoaded = dep.State == PluginDependencyState.Loaded;
+                var checkColor = isLoaded ? AvailableGreenColor : (dep.State == PluginDependencyState.InstalledNotLoaded ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed);
 
                 var cellPos = ImGui.GetCursorScreenPos();
                 var dl = ImGui.GetWindowDrawList();
                 var center = cellPos + new Vector2(8f * scale, ImGui.GetTextLineHeight() * 0.5f + 3f * scale);
-                dl.AddCircleFilled(center, 5f * scale, ImGui.ColorConvertFloat4ToU32(colorCheck));
-                if (estaCargado)
+                dl.AddCircleFilled(center, 5f * scale, ImGui.ColorConvertFloat4ToU32(checkColor));
+                if (isLoaded)
                 {
                     dl.AddLine(center + new Vector2(-2.5f * scale, 0), center + new Vector2(-0.5f * scale, 2f * scale), 0xFF111111, 1.5f * scale);
                     dl.AddLine(center + new Vector2(-0.5f * scale, 2f * scale), center + new Vector2(3f * scale, -2f * scale), 0xFF111111, 1.5f * scale);
@@ -229,13 +227,13 @@ internal class StartBunnies
                 ImGui.SetCursorScreenPos(cellPos + new Vector2(20f * scale, 2f * scale));
                 ImGui.TextUnformatted(dep.DisplayName);
 
-                // Columna 2: Estado (Available / Missing)
+                // Column 2: Status (Available / Missing)
                 ImGui.TableNextColumn();
-                var textoEstado = estaCargado ? "Available" : dep.StateText;
+                var statusText = isLoaded ? "Available" : dep.StateText;
                 ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 2f * scale);
-                ImGui.TextColored(colorCheck, UiText.T(textoEstado));
+                ImGui.TextColored(checkColor, UiText.T(statusText));
 
-                // Columna 3: Botón de copiado de URL del repositorio
+                // Column 3: Copy repository URL button
                 ImGui.TableNextColumn();
                 if (ImGui.SmallButton($"Get Repo Url###Link_{dep.InternalName}"))
                 {
@@ -249,12 +247,12 @@ internal class StartBunnies
     }
 
     /// <summary>
-    /// Dibuja el botón destacado grande de inicio/parada al pie de la ventana.
+    /// Renders the large start/stop action button at the bottom of the window.
     /// </summary>
     private static void DrawMainActionButton(float scale)
     {
         var ready = P.pluginDependencies.RequiredDependenciesLoaded;
-        var btnColor = IsRunning ? ColorRojoDetener : ColorDoradoAcento;
+        var btnColor = IsRunning ? StopRedColor : GoldAccentColor;
         var hoverColor = IsRunning ? new Vector4(0.95f, 0.35f, 0.35f, 1f) : new Vector4(0.98f, 0.78f, 0.32f, 1f);
         var textColor = IsRunning ? Vector4.One : new Vector4(0.07f, 0.07f, 0.07f, 1f);
 
@@ -264,9 +262,9 @@ internal class StartBunnies
         ImGui.PushStyleColor(ImGuiCol.Text, textColor);
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 8f * scale);
 
-        var etiqueta = ActionLabel;
+        var label = ActionLabel;
 
-        if (ImGui.Button(etiqueta, new Vector2(ImGui.GetContentRegionAvail().X, 42f * scale)))
+        if (ImGui.Button(label, new Vector2(ImGui.GetContentRegionAvail().X, 42f * scale)))
         {
             RunActionFromUi();
         }

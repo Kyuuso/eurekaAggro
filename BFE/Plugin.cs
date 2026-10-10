@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using EurekaSuite.Services;
 
 namespace BFE;
 
 /// <summary>
-/// Puente estático de compatibilidad para el subsistema de conejos de Eureka.
-/// Expone la instancia activa del servicio nativo BunnyAutomationService hacia los schedulers y tareas internas.
+/// Static compatibility bridge for the Eureka bunny automation subsystem.
+/// Exposes the active BunnyAutomationService instance to schedulers and internal tasks.
 /// </summary>
 public static class Plugin
 {

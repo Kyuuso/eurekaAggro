@@ -25,7 +25,7 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
 {
     public string Name => "Eureka Suite";
 
-    // Servicios inyectados de Dalamud
+    // Injected Dalamud services
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IClientState ClientState { get; private set; } = null!;
@@ -42,7 +42,7 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
     [PluginService] internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
     [PluginService] internal static IFateTable FateTable { get; private set; } = null!;
 
-    // Componentes del núcleo de detección de Eureka
+    // Core Eureka detection components
     private readonly PluginConfiguration configuration;
     private readonly MobDatabase mobDatabase;
     private readonly ActionDatabase actionDatabase;
@@ -53,13 +53,13 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
     private readonly MainWindow mainWindow;
     private readonly CastAlertWindow castAlertWindow;
 
-    // Subsistema nativo de automatización de conejos (BFE)
+    // Bunny Fate Engine (BFE) native subsystem
     private readonly BunnyAutomationService bunnyAutomationService;
 
-    // Subsistema nativo de Eureka Tracker
+    // Eureka Tracker native subsystem
     private readonly TrackerManager trackerManager;
 
-    // Comandos de consola
+    // Console commands
     private const string MainCommand = "/eurekasuite";
     private const string SuiteShortCommand = "/es";
     private const string EurekaCommand = "/eureka";
@@ -75,7 +75,7 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
         configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
         configuration.Initialize(pluginInterface);
 
-        // Inicializamos ECommons directamente para el plugin principal
+        // Initialize ECommons directly for the primary plugin
         ECommonsMain.Init(pluginInterface, this, ECommons.Module.DalamudReflector, ECommons.Module.ObjectFunctions);
 
         var configDir = pluginInterface.GetPluginConfigDirectory();
@@ -88,10 +88,10 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
         dragonWalkService = new DragonWalkService(PluginLog, ClientState, ObjectTable, ChatGui, mobDatabase, configuration);
         overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, dragonWalkService, configuration);
 
-        // Inicializamos el servicio nativo de conejos de Eureka
+        // Initialize Eureka Bunny automation service
         bunnyAutomationService = new BunnyAutomationService(pluginInterface, ChatGui, ToastGui, PlayerState, TextureProvider);
 
-        // Inicializamos el gestor central de Eureka Tracker
+        // Initialize Eureka Tracker manager
         trackerManager = new TrackerManager(configuration, GameInteropProvider, ClientState, ObjectTable, DataManager, ChatGui, ToastGui, FateTable, Framework);
 
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
@@ -234,22 +234,22 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
             dragonWalkService.Update();
         }
 
-        // El motor de conejos procesa sus ticks y chequeo de dependencias
+        // The bunny engine processes its tick loops and dependency status
         bunnyAutomationService.Update();
     }
 
     private void OnDrawUi()
     {
-        // 1. Overlay 3D en pantalla
+        // 1. 3D screen overlay
         overlayRenderer.Draw();
 
-        // 2. Ventana de alerta de casteos tácticos
+        // 2. Tactical cast alert window
         castAlertWindow.Draw();
 
-        // 3. Ventana principal de radar y configuración
+        // 3. Main radar and configuration window
         mainWindow.Draw();
 
-        // 4. Ventanas de conejos si están abiertas
+        // 4. Bunny windows if open
         bunnyAutomationService.DrawUi();
     }
 
@@ -280,16 +280,16 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenMainUi -= OnOpenMainUi;
         Framework.Update -= OnFrameworkUpdate;
 
-        // Liberación de recursos de la ventana principal
+        // Dispose main window resources
         mainWindow?.Dispose();
 
-        // Liberación de recursos del tracker de Eureka
+        // Dispose Eureka tracker resources
         trackerManager?.Dispose();
 
-        // Liberación de recursos del subsistema de conejos
+        // Dispose bunny subsystem resources
         bunnyAutomationService?.Dispose();
 
-        // Liberación de recursos de ECommons
+        // Dispose ECommons resources
         ECommonsMain.Dispose();
 
         configuration.Save();
