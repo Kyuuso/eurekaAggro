@@ -54,57 +54,45 @@ internal class StartBunnies
     public static void Draw()
     {
         var scale = ImGuiHelpers.GlobalScale;
-        var drawList = ImGui.GetWindowDrawList();
 
-        // Marco contenedor principal
-        var posMarco = ImGui.GetCursorScreenPos();
-        var anchoDisponible = ImGui.GetContentRegionAvail().X;
-        var paddingMarco = 16f * scale;
+        // 1. SELECCIÓN DE ÁREA (Area Selection)
+        ImGui.TextColored(Vector4.One, UiText.T("Area Selection"));
+        ImGui.Spacing();
 
-        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(paddingMarco, paddingMarco));
-        ImGui.BeginChild("##MarcoContenedorBFE", new Vector2(anchoDisponible, ImGui.GetContentRegionAvail().Y - 54f * scale), true, ImGuiWindowFlags.None);
+        DrawAreaCards(scale);
+
+        ImGui.Spacing();
+        ImGui.Spacing();
+
+        // 2. TAREA ACTUAL (Task)
+        ImGui.TextColored(Vector4.One, UiText.T("Task"));
+        ImGui.Spacing();
+        DrawTextField("TaskField", icurrentTask == "idle" ? "Idle. Select an area and press Start to begin." : icurrentTask, scale);
+
+        ImGui.Spacing();
+        ImGui.Spacing();
+
+        // 3. TIEMPO TRANSCURRIDO (Time elapsed)
+        ImGui.TextColored(Vector4.One, UiText.T("Time elapsed"));
+        ImGui.Spacing();
+        DrawTextField("TimeField", P.stopwatch.Elapsed.ToString(@"mm\:ss\.fff"), scale);
+
+        ImGui.Spacing();
+        ImGui.Spacing();
+
+        // 4. DEPENDENCIAS (Dependencies)
+        ImGui.TextColored(Vector4.One, UiText.T("Dependencies"));
+
+        ImGui.SameLine(ImGui.GetContentRegionAvail().X - 85f * scale);
+        if (ImGui.SmallButton(UiText.T("Refresh") + "###RefreshDeps"))
         {
-            // 1. SELECCIÓN DE ÁREA (Area Selection)
-            ImGui.TextColored(Vector4.One, UiText.T("Area Selection"));
-            ImGui.Spacing();
-
-            DrawAreaCards(scale);
-
-            ImGui.Spacing();
-            ImGui.Spacing();
-
-            // 2. TAREA ACTUAL (Task)
-            ImGui.TextColored(Vector4.One, UiText.T("Task"));
-            ImGui.Spacing();
-            DrawTextField("TaskField", icurrentTask == "idle" ? "Idle. Select an area and press Start to begin." : icurrentTask, scale);
-
-            ImGui.Spacing();
-            ImGui.Spacing();
-
-            // 3. TIEMPO TRANSCURRIDO (Time elapsed)
-            ImGui.TextColored(Vector4.One, UiText.T("Time elapsed"));
-            ImGui.Spacing();
-            DrawTextField("TimeField", P.stopwatch.Elapsed.ToString(@"mm\:ss\.fff"), scale);
-
-            ImGui.Spacing();
-            ImGui.Spacing();
-
-            // 4. DEPENDENCIAS (Dependencies)
-            var posDep = ImGui.GetCursorScreenPos();
-            ImGui.TextColored(Vector4.One, UiText.T("Dependencies"));
-
-            ImGui.SameLine(ImGui.GetContentRegionAvail().X - 85f * scale);
-            if (ImGui.SmallButton(UiText.T("Refresh")))
-            {
-                P.pluginDependencies.Refresh(true);
-            }
-
-            ImGui.Spacing();
-            DrawDependenciesList(scale);
+            P.pluginDependencies.Refresh(true);
         }
-        ImGui.EndChild();
-        ImGui.PopStyleVar();
 
+        ImGui.Spacing();
+        DrawDependenciesList(scale);
+
+        ImGui.Spacing();
         ImGui.Spacing();
 
         // 5. BOTÓN DE ACCIÓN PRINCIPAL (Start Pyros / Stop)
@@ -205,65 +193,58 @@ internal class StartBunnies
     }
 
     /// <summary>
-    /// Dibuja la lista de dependencias con iconos de verificación circular y enlaces de repositorio.
+    /// Dibuja la lista de dependencias en una tabla estructurada con columnas independientes
+    /// para evitar cualquier solapamiento o desalineación visual.
     /// </summary>
     private static void DrawDependenciesList(float scale)
     {
-        var dl = ImGui.GetWindowDrawList();
         var dependencias = P.pluginDependencies.RequiredStatuses;
 
-        foreach (var dep in dependencias)
+        if (ImGui.BeginTable("##DepsTable", 3, ImGuiTableFlags.BordersOuter | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
         {
-            var pos = ImGui.GetCursorScreenPos();
-            var ancho = ImGui.GetContentRegionAvail().X;
-            var alto = 26f * scale;
+            ImGui.TableSetupColumn("Dependency", ImGuiTableColumnFlags.WidthStretch, 0.50f);
+            ImGui.TableSetupColumn("Status", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+            ImGui.TableSetupColumn("Repository", ImGuiTableColumnFlags.WidthFixed, 110f * scale);
+            ImGui.TableHeadersRow();
 
-            // Icono circular con check verde
-            var centroCheck = pos + new Vector2(10f * scale, alto * 0.5f);
-            var estaCargado = dep.State == PluginDependencyState.Loaded;
-            var colorCheck = estaCargado ? ColorVerdeDisponible : (dep.State == PluginDependencyState.InstalledNotLoaded ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed);
-
-            dl.AddCircleFilled(centroCheck, 8f * scale, ImGui.ColorConvertFloat4ToU32(colorCheck));
-            if (estaCargado)
+            foreach (var dep in dependencias)
             {
-                var p1 = centroCheck + new Vector2(-4f * scale, 0f * scale);
-                var p2 = centroCheck + new Vector2(-1f * scale, 3.5f * scale);
-                var p3 = centroCheck + new Vector2(4.5f * scale, -3.5f * scale);
-                dl.AddLine(p1, p2, 0xFF111111, 2f * scale);
-                dl.AddLine(p2, p3, 0xFF111111, 2f * scale);
+                ImGui.TableNextRow(ImGuiTableRowFlags.None, 28f * scale);
+
+                // Columna 1: Icono + Nombre de la dependencia
+                ImGui.TableNextColumn();
+                var estaCargado = dep.State == PluginDependencyState.Loaded;
+                var colorCheck = estaCargado ? ColorVerdeDisponible : (dep.State == PluginDependencyState.InstalledNotLoaded ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed);
+
+                var cellPos = ImGui.GetCursorScreenPos();
+                var dl = ImGui.GetWindowDrawList();
+                var center = cellPos + new Vector2(8f * scale, ImGui.GetTextLineHeight() * 0.5f + 3f * scale);
+                dl.AddCircleFilled(center, 5f * scale, ImGui.ColorConvertFloat4ToU32(colorCheck));
+                if (estaCargado)
+                {
+                    dl.AddLine(center + new Vector2(-2.5f * scale, 0), center + new Vector2(-0.5f * scale, 2f * scale), 0xFF111111, 1.5f * scale);
+                    dl.AddLine(center + new Vector2(-0.5f * scale, 2f * scale), center + new Vector2(3f * scale, -2f * scale), 0xFF111111, 1.5f * scale);
+                }
+
+                ImGui.SetCursorScreenPos(cellPos + new Vector2(20f * scale, 2f * scale));
+                ImGui.TextUnformatted(dep.DisplayName);
+
+                // Columna 2: Estado (Available / Missing)
+                ImGui.TableNextColumn();
+                var textoEstado = estaCargado ? "Available" : dep.StateText;
+                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 2f * scale);
+                ImGui.TextColored(colorCheck, UiText.T(textoEstado));
+
+                // Columna 3: Botón de copiado de URL del repositorio
+                ImGui.TableNextColumn();
+                if (ImGui.SmallButton($"Get Repo Url###Link_{dep.InternalName}"))
+                {
+                    ImGui.SetClipboardText(dep.RepoUrl);
+                    DuoLog.Information("Repo URL copied to clipboard.");
+                    Notify.Info(UiText.T("Repo URL Copied"));
+                }
             }
-            else
-            {
-                var tamIcono = ImGui.CalcTextSize("!");
-                dl.AddText(centroCheck - (tamIcono * 0.5f), 0xFF111111, "!");
-            }
-
-            // Nombre del plugin
-            dl.AddText(pos + new Vector2(26f * scale, 3f * scale), 0xFFFFFFFF, dep.DisplayName);
-
-            // Estado (Available / Missing)
-            var textoEstado = estaCargado ? "Available" : dep.StateText;
-            dl.AddText(pos + new Vector2(160f * scale, 3f * scale), ImGui.ColorConvertFloat4ToU32(colorCheck), UiText.T(textoEstado));
-
-            // Enlace de copiado del repositorio a la derecha
-            var textoEnlace = "Get Repo Url";
-            var tamEnlace = ImGui.CalcTextSize(textoEnlace);
-            var xEnlace = ancho - tamEnlace.X - 8f * scale;
-
-            ImGui.SetCursorScreenPos(pos + new Vector2(xEnlace, 0));
-            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.42f, 0.60f, 0.97f, 1f));
-            if (ImGui.SmallButton($"##Link_{dep.InternalName}"))
-            {
-                ImGui.SetClipboardText(dep.RepoUrl);
-                DuoLog.Information("Repo URL copied to clipboard.");
-                Notify.Info(UiText.T("Repo URL Copied"));
-            }
-            ImGui.PopStyleColor();
-
-            // Dibujamos el texto encima del botón invisible
-            dl.AddText(pos + new Vector2(xEnlace, 3f * scale), 0xFFF89A6C, textoEnlace);
-
-            ImGui.SetCursorScreenPos(pos + new Vector2(0, alto + 4f * scale));
+            ImGui.EndTable();
         }
     }
 

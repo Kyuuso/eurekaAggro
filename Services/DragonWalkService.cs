@@ -43,6 +43,7 @@ public unsafe class DragonWalkService
     private Vector3 lastPlayerPos = Vector3.Zero;
     private DateTime lastPosTime = DateTime.UtcNow;
     private float currentSpeed = 0f;
+    private bool hadCloseCallWithDragon = false;
 
     /// <summary>
     /// True when Auto-Walk has taken control of the character's movement mode.
@@ -91,11 +92,11 @@ public unsafe class DragonWalkService
     /// </summary>
     public void Update()
     {
-        if (!config.Enabled || !config.AutoWalkNearDragons)
+        if (!config.Enabled || !config.AutoWalkNearDragons || !ValidZones.IsValidZone(clientState.TerritoryType, config.OnlyInEureka))
         {
             if (wasAutoWalkForced)
             {
-                RestoreRunMode("Auto-Walk setting toggled off", false);
+                RestoreRunMode("Outside Eureka or Auto-Walk setting toggled off", false);
             }
             return;
         }
@@ -234,12 +235,20 @@ public unsafe class DragonWalkService
             lastDistance = nearestDist;
             activeDragonId = targetSleepingDragon.GameObjectId;
 
+            if (nearestDist <= 6.0f)
+            {
+                hadCloseCallWithDragon = true;
+            }
+
             if (!wasAutoWalkForced)
             {
                 // CRITICAL: Inspect player walk state BEFORE toggling
                 bool playerWasRunning = currentSpeed > walkSpeedLimit || !ctrl->IsWalking;
                 playerWasAlreadyWalking = !playerWasRunning;
                 wasAutoWalkForced = true;
+
+                config.SessionAutoWalkActivations++;
+                config.LifetimeAutoWalkActivations++;
 
                 string modeStr = isMounted ? "Mounted" : "On Foot";
                 log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{lastDragonName}' at {lastDistance:F1}m ({modeStr}, Speed: {currentSpeed:F1} m/s). Engaging WALK mode!");
@@ -297,6 +306,18 @@ public unsafe class DragonWalkService
         {
             log.Information("[EurekaAggro - AutoWalk] Leaving dragon area. Player had walking enabled manually before, keeping walking state.");
         }
+
+        if (!isCombatEmergency)
+        {
+            config.SessionDragonsBypassed++;
+            config.LifetimeDragonsBypassed++;
+            if (hadCloseCallWithDragon)
+            {
+                config.SessionCloseCallsAvoided++;
+                config.LifetimeCloseCallsAvoided++;
+            }
+        }
+        hadCloseCallWithDragon = false;
 
         wasAutoWalkForced = false;
         playerWasAlreadyWalking = false;

@@ -284,6 +284,37 @@ public class PluginConfiguration : IPluginConfiguration
         }
     }
 
+    // --- AGGRO LINES STATISTICS ---
+    public int LifetimeDragonsBypassed { get; set; } = 0;
+    public int LifetimeAutoWalkActivations { get; set; } = 0;
+    public int LifetimeCastAlertsTriggered { get; set; } = 0;
+    public int LifetimeCloseCallsAvoided { get; set; } = 0;
+
+    [NonSerialized]
+    public int SessionDragonsBypassed = 0;
+    [NonSerialized]
+    public int SessionAutoWalkActivations = 0;
+    [NonSerialized]
+    public int SessionCastAlertsTriggered = 0;
+    [NonSerialized]
+    public int SessionCloseCallsAvoided = 0;
+
+    /// <summary>
+    /// Resets all session and lifetime statistics for the Aggro Lines radar.
+    /// </summary>
+    public void ResetAggroStats()
+    {
+        LifetimeDragonsBypassed = 0;
+        LifetimeAutoWalkActivations = 0;
+        LifetimeCastAlertsTriggered = 0;
+        LifetimeCloseCallsAvoided = 0;
+        SessionDragonsBypassed = 0;
+        SessionAutoWalkActivations = 0;
+        SessionCastAlertsTriggered = 0;
+        SessionCloseCallsAvoided = 0;
+        Save();
+    }
+
     public void Save()
     {
         pluginInterface?.SavePluginConfig(this);

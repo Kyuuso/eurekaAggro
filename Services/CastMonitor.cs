@@ -65,7 +65,7 @@ public class CastMonitor
 
     public void Update()
     {
-        if (!config.Enabled || !config.ShowCastAlerts)
+        if (!config.Enabled || !config.ShowCastAlerts || !ValidZones.IsValidZone(clientState.TerritoryType, config.OnlyInEureka))
         {
             ResetAlert();
             return;
@@ -208,6 +208,9 @@ public class CastMonitor
         {
             currentCastingMobId = enemy.GameObjectId;
             currentCastActionId = actionId;
+
+            config.SessionCastAlertsTriggered++;
+            config.LifetimeCastAlertsTriggered++;
 
             ActiveAlert = new ActiveCastAlert
             {
