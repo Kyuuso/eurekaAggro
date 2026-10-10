@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
@@ -200,15 +200,15 @@ public class OverlayRenderer
                             {
                                 if (dragonWalkService.IsAutoWalkEngaged && distance <= config.AutoWalkDistance)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), "✔ AUTO-WALK ENGAGED (SAFE)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), "[OK] AUTO-WALK ENGAGED (SAFE)");
                                 }
                                 else if (distance <= totalRadius + 4.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
                                 }
                                 else if (distance <= totalRadius + 1.5f)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, "✔ SLEEPING DRAGON (SAFE)");
+                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, "[SAFE] SLEEPING DRAGON");
                                 }
                             }
                             else
@@ -216,7 +216,7 @@ public class OverlayRenderer
                                 // Non-dragon sound monsters (Clipper, Karlabos, Piranu, Crabs, etc.)
                                 if (distance <= totalRadius + 3.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "⚠ SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
                                 }
                             }
                         }
@@ -238,7 +238,7 @@ public class OverlayRenderer
 
                         if (isLowHp && gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.4f, 0), out var pAlert))
                         {
-                            drawList.AddText(pAlert - new Vector2(75, 0), borderColor, "☠ HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)");
+                            drawList.AddText(pAlert - new Vector2(75, 0), borderColor, "[ALERT] HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)");
                         }
                     }
                     break;
@@ -258,11 +258,11 @@ public class OverlayRenderer
                         {
                             if (player.IsCasting && distance <= magicRadius)
                             {
-                                drawList.AddText(pSprite - new Vector2(85, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.1f, 0.1f, 1f)), "⚡ CASTING DETECTED! SPRITE WILL AGGRO!");
+                                drawList.AddText(pSprite - new Vector2(85, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.1f, 0.1f, 1f)), "[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!");
                             }
                             else
                             {
-                                drawList.AddText(pSprite - new Vector2(60, 0), borderColor, "⚡ Sprite [DO NOT CAST SPELLS]");
+                                drawList.AddText(pSprite - new Vector2(60, 0), borderColor, "[MAGIC] Sprite: DO NOT CAST SPELLS");
                             }
                         }
                     }
@@ -371,7 +371,7 @@ public class OverlayRenderer
             var screenCenter = new Vector2(viewport.Size.X / 2f, viewport.Size.Y * 0.82f);
             var safeCol = ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText);
             var bgCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.04f, 0.04f, 0.06f, 0.85f));
-            string badgeText = $"✔ EUREKA AUTO-WALK ENGAGED ({dragonWalkService.CurrentDragonName} - {dragonWalkService.CurrentDistance:F1}m)";
+            string badgeText = $"[AUTO-WALK] ENGAGED ({dragonWalkService.CurrentDragonName} - {dragonWalkService.CurrentDistance:F1}m)";
             var textSize = ImGui.CalcTextSize(badgeText);
             var pMin = screenCenter - (textSize / 2f) - new Vector2(14, 6);
             var pMax = screenCenter + (textSize / 2f) + new Vector2(14, 6);

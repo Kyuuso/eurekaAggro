@@ -2,8 +2,8 @@
   "Author": "Kyuuso",
   "Name": "Eureka Suite",
   "InternalName": "EurekaSuite",
-  "AssemblyVersion": "2.0.0.0",
-  "TestingAssemblyVersion": "2.0.0.0",
+  "AssemblyVersion": "2.0.1.0",
+  "TestingAssemblyVersion": "2.0.1.0",
   "Punchline": "All-in-one Eureka suite: aggro radars, bunny fate automation & live tracker sync.",
   "Description": "All-in-one quality-of-life suite for Eureka (Anemos, Pagos, Pyros, Hydatos). Features lethal aggro radar visualizers (sleeping dragon sound aggro, low HP blood aggro, sprite magic aggro, vision cones, combat cast alerts), native BFE (Bunnies for Eureka) automated bunny fate routing & treasure hunting, and real-time ffxiv-eureka.com Phoenix WebSocket tracker synchronization.",
   "ApplicableVersion": "any",
@@ -26,4 +26,5 @@
     "hydatos"
   ]
 }
+
 

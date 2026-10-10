@@ -13,6 +13,8 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -120,9 +122,7 @@ jobs:
           generate_release_notes: true
 
       - name: Sync to Public Plugin Repository
-        if: env.SYNC_TOKEN != ''
-        env:
-          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        if: ${{ env.SYNC_TOKEN != '' }}
         shell: pwsh
         run: |
           git config --global user.name "github-actions[bot]"
