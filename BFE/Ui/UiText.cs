@@ -31,8 +31,18 @@ internal sealed class UiText : IDisposable
     [ThreadStatic] private static UiText? current;
     internal static UiText Current => current ?? FallbackInstance;
 
+    private static string activeLanguage = "en";
+    internal static string ActiveLanguage => activeLanguage;
+
     private static UiText? fallbackInstance;
-    private static UiText FallbackInstance => fallbackInstance ??= new UiText("en", null);
+    private static UiText FallbackInstance => fallbackInstance ??= new UiText(activeLanguage, null);
+
+    internal static void SetActiveLanguage(string language)
+    {
+        activeLanguage = Languages.Any(l => l.Code == language) ? language : "en";
+        fallbackInstance?.Dispose();
+        fallbackInstance = new UiText(activeLanguage, null);
+    }
 
     internal static readonly (string Code, string Name)[] Languages =
     [

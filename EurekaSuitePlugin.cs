@@ -6,6 +6,7 @@ using Dalamud.Plugin.Services;
 using ECommons;
 using EurekaSuite.Configuration;
 using EurekaSuite.Data;
+using EurekaSuite.Localization;
 using EurekaSuite.Rendering;
 using EurekaSuite.Services;
 using EurekaSuite.Tracker;
@@ -74,6 +75,7 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
     {
         configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
         configuration.Initialize(pluginInterface);
+        Loc.SetLanguage(configuration.UiLanguage);
 
         // Initialize ECommons directly for the primary plugin
         ECommonsMain.Init(pluginInterface, this, ECommons.Module.DalamudReflector, ECommons.Module.ObjectFunctions);

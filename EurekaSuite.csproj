@@ -19,7 +19,7 @@
 
   <PropertyGroup>
     <DalamudLibPath>$(DALAMUD_HOME)</DalamudLibPath>
-    <DalamudLibPath Condition="'$(DalamudLibPath)' == ''">C:\Users\shuns\AppData\Roaming\XIVLauncher\addon\Hooks\15.0.3.6</DalamudLibPath>
+    <DalamudLibPath Condition="'$(DalamudLibPath)' == ''">$(AppData)\XIVLauncher\addon\Hooks\15.0.3.6</DalamudLibPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -89,9 +89,6 @@
     <EmbeddedResource Include="Recursos\DB.json" />
     <EmbeddedResource Include="Recursos\DDCheckDB.json" />
     <EmbeddedResource Update="BFE\Localization\Strings_*.resx" LogicalName="BFE.Localization.%(Filename)" WithCulture="false" />
-    <EmbeddedResource Include="BFE\images\icon.png">
-      <LogicalName>BFE.images.icon.png</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ECommons" Version="3.1.0.1" />

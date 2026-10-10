@@ -29,7 +29,7 @@ Before committing any new feature or fix to `main`:
    # For major rewrites:
    .\scripts\bump-version.ps1 -Type major
    ```
-2. Verify that both [`EurekaSuite.json`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaSuite.json) (`"AssemblyVersion"`) and [`EurekaSuite.csproj`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaSuite.csproj) (`<Version>`) reflect the updated version number.
+2. Verify that both [`EurekaSuite.json`](EurekaSuite.json) (`"AssemblyVersion"`) and [`EurekaSuite.csproj`](EurekaSuite.csproj) (`<Version>`) reflect the updated version number.
 3. Commit with a descriptive conventional commit message (e.g., `fix: correct Pagos minotaur aggro (v1.0.1)`).
 
 ---
@@ -53,6 +53,7 @@ When changes are pushed to `main`:
 ## 3. Language & Code Style Guidelines
 
 - **MANDATORY English Code & Comments**: ALL identifiers, class names, member variables, local variables, parameters, XML documentation comments (`///`), inline comments (`//`), log messages, and UI strings MUST be in **English**. No Spanish or mixed language in source code. Code and comments must make technical sense and explain behavior accurately.
+- **NO Local Machine URLs or File URIs**: NEVER commit local file paths (e.g. `file:///C:/Users/...` or hardcoded Windows user paths) to markdown files, code, or scripts. Always use relative repository paths (e.g. `[`EurekaSuite.json`](EurekaSuite.json)`) or clean symbol references. Follow `.agents/rules/no_local_urls.md`.
 - **Documentation Standards & Anti-Slop**: Follow `.agents/rules/no_ai_slop.md`. Avoid emdashes (`—`/`–`), promotional buzzwords, and redundant comments that merely echo member names.
 - **User Interactions**: Conversations with the repository owner in the chat interface must remain in **Spanish** unless requested otherwise.
 - **Zero Allocations**: Avoid heap allocations in rendering loops (`OverlayRenderer.cs`) to prevent GC stalls and memory leaks during gameplay.

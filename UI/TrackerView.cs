@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
@@ -14,6 +14,7 @@ using EurekaSuite.Data;
 using EurekaSuite.Tracker;
 using EurekaSuite.Tracker.Model;
 using EurekaSuite.Tracker.Network;
+using EurekaSuite.Localization;
 
 namespace EurekaSuite.UI;
 
@@ -121,7 +122,7 @@ public class TrackerView : IDisposable
     private void DrawConnectionHeader(EurekaTrackerClient client, float scale)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.TextColored(GoldAccent, "Tracker:");
+        ImGui.TextColored(GoldAccent, Loc.T("Tracker:"));
         ImGui.SameLine();
 
         if (!client.IsConnected)
@@ -133,14 +134,14 @@ public class TrackerView : IDisposable
             }
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("Create a new Eureka Tracker on ffxiv-eureka.com");
+                ImGui.SetTooltip(Loc.T("Create a new Eureka Tracker on ffxiv-eureka.com"));
             }
 
             ImGui.SameLine();
 
             // Code Input
             ImGui.SetNextItemWidth(110 * scale);
-            if (ImGui.InputTextWithHint("##TrackerCode", "6-char Code", ref inputTrackerCode, 6))
+            if (ImGui.InputTextWithHint("##TrackerCode", Loc.T("6-char Code"), ref inputTrackerCode, 6))
             {
                 if (inputTrackerCode.Length == 6 && string.IsNullOrEmpty(inputTrackerPassword))
                 {
@@ -153,17 +154,17 @@ public class TrackerView : IDisposable
             }
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("Enter the 6-character code of an existing tracker");
+                ImGui.SetTooltip(Loc.T("Enter the 6-character code of an existing tracker"));
             }
 
             ImGui.SameLine();
 
             // Password Input
             ImGui.SetNextItemWidth(140 * scale);
-            ImGui.InputTextWithHint("##TrackerPassword", "Password (optional)", ref inputTrackerPassword, 50);
+            ImGui.InputTextWithHint("##TrackerPassword", Loc.T("Password (optional)"), ref inputTrackerPassword, 50);
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("Optional password. Required to modify pop timers if the tracker is protected.");
+                ImGui.SetTooltip(Loc.T("Optional password. Required to modify pop timers if the tracker is protected."));
             }
 
             bool hasSavedPwd = !string.IsNullOrEmpty(config.GetSavedPassword(inputTrackerCode));
@@ -201,7 +202,7 @@ public class TrackerView : IDisposable
             ImGui.SameLine();
 
             // Connect Button
-            if (ImGui.Button("Connect"))
+            if (ImGui.Button(Loc.T("Connect")))
             {
                 if (!string.IsNullOrWhiteSpace(inputTrackerCode))
                 {
@@ -447,7 +448,7 @@ public class TrackerView : IDisposable
         ImGui.BeginGroup();
         {
             ImGui.AlignTextToFramePadding();
-            ImGui.Text("Instance ID:");
+            ImGui.Text(Loc.T("Instance ID:"));
             ImGui.SameLine();
 
             ImGui.SetNextItemWidth(90 * scale);
@@ -614,13 +615,13 @@ public class TrackerView : IDisposable
         {
             if (config.TrackerShowLevelInTable)
             {
-                ImGui.TableSetupColumn("Lv", ImGuiTableColumnFlags.WidthFixed, 36 * scale);
+                ImGui.TableSetupColumn(Loc.T("Level"), ImGuiTableColumnFlags.WidthFixed, 36 * scale);
             }
-            ImGui.TableSetupColumn("NM Boss", ImGuiTableColumnFlags.WidthStretch, 140 * scale);
-            ImGui.TableSetupColumn("Spawn Mob", ImGuiTableColumnFlags.WidthStretch, 130 * scale);
-            ImGui.TableSetupColumn("Popped At", ImGuiTableColumnFlags.WidthFixed, 90 * scale);
-            ImGui.TableSetupColumn("Respawn In", ImGuiTableColumnFlags.WidthFixed, 100 * scale);
-            ImGui.TableSetupColumn("Action", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort, 80 * scale);
+            ImGui.TableSetupColumn(Loc.T("Name"), ImGuiTableColumnFlags.WidthStretch, 140 * scale);
+            ImGui.TableSetupColumn(Loc.T("Trigger"), ImGuiTableColumnFlags.WidthStretch, 130 * scale);
+            ImGui.TableSetupColumn(Loc.T("Pop Time"), ImGuiTableColumnFlags.WidthFixed, 90 * scale);
+            ImGui.TableSetupColumn(Loc.T("Respawn"), ImGuiTableColumnFlags.WidthFixed, 100 * scale);
+            ImGui.TableSetupColumn(Loc.T("Status"), ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort, 80 * scale);
 
             ImGui.TableSetupScrollFreeze(0, 1);
             ImGui.TableHeadersRow();
@@ -740,7 +741,7 @@ public class TrackerView : IDisposable
                     ImGui.SameLine();
                     ImGui.Text("ago");
 
-                    if (ImGui.Button("Apply"))
+                    if (ImGui.Button(Loc.T("Apply")))
                     {
                         if (int.TryParse(timeAgoHours, out int h) && int.TryParse(timeAgoMinutes, out int m))
                         {
@@ -751,7 +752,7 @@ public class TrackerView : IDisposable
                         ImGui.CloseCurrentPopup();
                     }
                     ImGui.SameLine();
-                    if (ImGui.Button("Cancel"))
+                    if (ImGui.Button(Loc.T("Cancel")))
                     {
                         ImGui.CloseCurrentPopup();
                     }

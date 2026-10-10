@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
 using EurekaSuite.Configuration;
@@ -98,8 +98,8 @@ public class CastAlertWindow
 
             // Header banner (shows drag hint when unlocked or previewing)
             string headerTitle = (!config.LockCastAlertPosition || IsPreviewMode)
-                ? "[!] ENEMY ACTION ALERT (Drag to move)"
-                : "[!] ENEMY ACTION ALERT";
+                ? EurekaSuite.Localization.Loc.T("[!] ENEMY ACTION ALERT (Drag to move)")
+                : EurekaSuite.Localization.Loc.T("[!] ENEMY ACTION ALERT");
 
             ImGui.TextColored(new Vector4(1.0f, 0.35f, 0.35f, 1.0f), headerTitle);
             ImGui.Separator();
@@ -107,28 +107,31 @@ public class CastAlertWindow
 
             // Main Tactical Instruction Banner
             Vector4 bannerColor;
-            string bannerText = alert.MainMessage;
+            string bannerText = !string.IsNullOrWhiteSpace(alert.MainMessage)
+                ? EurekaSuite.Localization.Loc.T(alert.MainMessage)
+                : string.Empty;
 
             if (alert.RequiresStun)
             {
                 bannerColor = new Vector4(1.0f, 0.65f, 0.15f, 1.0f);
-                if (string.IsNullOrWhiteSpace(bannerText)) bannerText = "STUN REQUIRED!";
+                if (string.IsNullOrWhiteSpace(bannerText)) bannerText = EurekaSuite.Localization.Loc.T("STUN REQUIRED!");
             }
             else if (alert.RequiresLineOfSight)
             {
                 bannerColor = new Vector4(0.35f, 0.85f, 1.0f, 1.0f);
-                if (string.IsNullOrWhiteSpace(bannerText)) bannerText = "BREAK LINE OF SIGHT (HIDE)!";
+                if (string.IsNullOrWhiteSpace(bannerText)) bannerText = EurekaSuite.Localization.Loc.T("BREAK LINE OF SIGHT (HIDE)!");
             }
             else
             {
                 bannerColor = new Vector4(1.0f, 0.95f, 0.15f, 1.0f);
-                if (string.IsNullOrWhiteSpace(bannerText)) bannerText = "INTERRUPT / SILENCE AVAILABLE!";
+                if (string.IsNullOrWhiteSpace(bannerText)) bannerText = EurekaSuite.Localization.Loc.T("INTERRUPT / SILENCE AVAILABLE!");
             }
 
             ImGui.TextColored(bannerColor, bannerText);
 
             // Mob & Action line
-            ImGui.TextColored(new Vector4(0.75f, 0.75f, 0.80f, 1.0f), $"{alert.MobName} is casting: ");
+            string castingLabel = EurekaSuite.Localization.Loc.F("{0} is casting: ", alert.MobName);
+            ImGui.TextColored(new Vector4(0.75f, 0.75f, 0.80f, 1.0f), castingLabel);
             ImGui.SameLine();
             ImGui.TextColored(new Vector4(0.40f, 0.85f, 1.0f, 1.0f), alert.ActionName);
 

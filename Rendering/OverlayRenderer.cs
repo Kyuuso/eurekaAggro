@@ -10,6 +10,7 @@ using EurekaSuite.Configuration;
 using EurekaSuite.Data;
 using EurekaSuite.Models;
 using EurekaSuite.Services;
+using EurekaSuite.Localization;
 
 namespace EurekaSuite.Rendering;
 
@@ -33,6 +34,43 @@ public class OverlayRenderer
     private float currentSpeed = 0.0f;
 
     private readonly DragonWalkService dragonWalkService;
+
+    // Cached localized overlay strings (zero allocations per rendering frame)
+    private static string cachedLanguage = string.Empty;
+    private static string textAutoWalkSafe = "[OK] AUTO-WALK ENGAGED (SAFE)";
+    private static string textRunningNearDragon = "[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)";
+    private static string textSleepingDragonSafe = "[SAFE] SLEEPING DRAGON";
+    private static string textSoundAggroWarn = "[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)";
+    private static string textBloodAggroAlert = "[ALERT] HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)";
+    private static string textCastingDetected = "[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!";
+    private static string textDoNotCastSpells = "[MAGIC] Sprite: DO NOT CAST SPELLS";
+    private static string labelSound = "[Sound - Walk!]";
+    private static string labelBlood = "[Blood / Undead]";
+    private static string labelMagic = "[Magic / Sprite]";
+    private static string labelProximity = "[Proximity]";
+    private static string labelSight = "[Sight]";
+    private static string labelUnknown = "[?]";
+
+    private static void EnsureLocalizedStrings()
+    {
+        var currentLang = Loc.CurrentLanguage;
+        if (cachedLanguage == currentLang) return;
+        cachedLanguage = currentLang;
+
+        textAutoWalkSafe = Loc.T("[OK] AUTO-WALK ENGAGED (SAFE)");
+        textRunningNearDragon = Loc.T("[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+        textSleepingDragonSafe = Loc.T("[SAFE] SLEEPING DRAGON");
+        textSoundAggroWarn = Loc.T("[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+        textBloodAggroAlert = Loc.T("[ALERT] HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)");
+        textCastingDetected = Loc.T("[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!");
+        textDoNotCastSpells = Loc.T("[MAGIC] Sprite: DO NOT CAST SPELLS");
+        labelSound = Loc.T("[Sound - Walk!]");
+        labelBlood = Loc.T("[Blood / Undead]");
+        labelMagic = Loc.T("[Magic / Sprite]");
+        labelProximity = Loc.T("[Proximity]");
+        labelSight = Loc.T("[Sight]");
+        labelUnknown = Loc.T("[?]");
+    }
 
     public OverlayRenderer(
         IGameGui gameGui,
@@ -58,6 +96,8 @@ public class OverlayRenderer
     public void Draw()
     {
         if (!config.Enabled || !clientState.IsLoggedIn) return;
+
+        EnsureLocalizedStrings();
 
         if (!ValidZones.IsValidZone(clientState.TerritoryType, config.OnlyInEureka))
         {
@@ -200,15 +240,15 @@ public class OverlayRenderer
                             {
                                 if (dragonWalkService.IsAutoWalkEngaged && distance <= config.AutoWalkDistance)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), "[OK] AUTO-WALK ENGAGED (SAFE)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), textAutoWalkSafe);
                                 }
                                 else if (distance <= totalRadius + 4.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), textRunningNearDragon);
                                 }
                                 else if (distance <= totalRadius + 1.5f)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, "[SAFE] SLEEPING DRAGON");
+                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, textSleepingDragonSafe);
                                 }
                             }
                             else
@@ -216,7 +256,7 @@ public class OverlayRenderer
                                 // Non-dragon sound monsters (Clipper, Karlabos, Piranu, Crabs, etc.)
                                 if (distance <= totalRadius + 3.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), textSoundAggroWarn);
                                 }
                             }
                         }
@@ -238,7 +278,7 @@ public class OverlayRenderer
 
                         if (isLowHp && gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.4f, 0), out var pAlert))
                         {
-                            drawList.AddText(pAlert - new Vector2(75, 0), borderColor, "[ALERT] HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)");
+                            drawList.AddText(pAlert - new Vector2(75, 0), borderColor, textBloodAggroAlert);
                         }
                     }
                     break;
@@ -258,11 +298,11 @@ public class OverlayRenderer
                         {
                             if (player.IsCasting && distance <= magicRadius)
                             {
-                                drawList.AddText(pSprite - new Vector2(85, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.1f, 0.1f, 1f)), "[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!");
+                                drawList.AddText(pSprite - new Vector2(85, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.1f, 0.1f, 1f)), textCastingDetected);
                             }
                             else
                             {
-                                drawList.AddText(pSprite - new Vector2(60, 0), borderColor, "[MAGIC] Sprite: DO NOT CAST SPELLS");
+                                drawList.AddText(pSprite - new Vector2(60, 0), borderColor, textDoNotCastSpells);
                             }
                         }
                     }
@@ -325,12 +365,12 @@ public class OverlayRenderer
                 {
                     var typeLabel = data.AggroType switch
                     {
-                        AggroType.Sound => "[Sound - Walk!]",
-                        AggroType.Blood => "[Blood / Undead]",
-                        AggroType.Magic => "[Magic / Sprite]",
-                        AggroType.Proximity => "[Proximity]",
-                        AggroType.Sight => "[Sight]",
-                        _ => "[?]"
+                        AggroType.Sound => labelSound,
+                        AggroType.Blood => labelBlood,
+                        AggroType.Magic => labelMagic,
+                        AggroType.Proximity => labelProximity,
+                        AggroType.Sight => labelSight,
+                        _ => labelUnknown
                     };
 
                     var textCol = ImGui.ColorConvertFloat4ToU32(

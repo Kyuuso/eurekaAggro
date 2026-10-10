@@ -24,6 +24,7 @@ using BFE.Ui.MainWindow;
 using BFE.Ui.SettingsWindow;
 using BFE.Scheduler;
 using EurekaSuite.Tracker;
+using EurekaSuite.Localization;
 
 namespace EurekaSuite.UI;
 
@@ -170,7 +171,7 @@ public class MainWindow : IDisposable
             {
                 // TAB 1: AGGRO LINES
                 var aggroFlags = (targetMainTab == 0) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("Aggro Lines###TabAggro", aggroFlags))
+                if (ImGui.BeginTabItem($"{Loc.T("Aggro Lines")}###TabAggro", aggroFlags))
                 {
                     ActiveMainTab = 0;
                     DrawModuleBody(0, scale);
@@ -179,7 +180,7 @@ public class MainWindow : IDisposable
 
                 // TAB 2: BUNNY FATE ENGINE
                 var fateFlags = (targetMainTab == 1) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("Bunny Fate Engine###TabFate", fateFlags))
+                if (ImGui.BeginTabItem($"{Loc.T("Bunny Fate Engine")}###TabFate", fateFlags))
                 {
                     ActiveMainTab = 1;
                     DrawModuleBody(1, scale);
@@ -188,7 +189,7 @@ public class MainWindow : IDisposable
 
                 // TAB 3: TRACKER
                 var trackerFlags = (targetMainTab == 2) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("Tracker###TabTracker", trackerFlags))
+                if (ImGui.BeginTabItem($"{Loc.T("Tracker")}###TabTracker", trackerFlags))
                 {
                     ActiveMainTab = 2;
                     DrawModuleBody(2, scale);
@@ -197,7 +198,7 @@ public class MainWindow : IDisposable
 
                 // TAB 4: ABOUT & CREDITS
                 var aboutFlags = (targetMainTab == 3) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("About & Credits###TabAbout", aboutFlags))
+                if (ImGui.BeginTabItem($"{Loc.T("About & Credits")}###TabAbout", aboutFlags))
                 {
                     ActiveMainTab = 3;
                     DrawAboutSection(scale);
@@ -244,19 +245,49 @@ public class MainWindow : IDisposable
             if (isEureka)
             {
                 int effectiveLvl = EurekaLevelService.GetEffectiveElementalLevel(territoryId, config.AutoDetectElementalLevel, config.PlayerElementalLevel);
-                string mode = config.AutoDetectElementalLevel ? "Auto-synced" : "Manual";
+                string mode = Loc.T(config.AutoDetectElementalLevel ? "Auto-synced" : "Manual");
                 string weather = environmentService.GetCurrentWeatherName();
                 int etHour = EurekaEnvironmentService.GetEorzeaHour();
-                string timeStr = $"{etHour:D2}:00 ET ({(EurekaEnvironmentService.IsNight() ? "Night" : "Day")})";
+                string timeStr = $"{etHour:D2}:00 ET ({Loc.T(EurekaEnvironmentService.IsNight() ? "Night" : "Day")})";
 
-                ImGui.TextColored(ImGuiColors.HealerGreen, $"● Location: {zoneName} (Elemental Lv. {effectiveLvl} [{mode}]) | {weather} | {timeStr}");
+                ImGui.TextColored(ImGuiColors.HealerGreen, $"● {Loc.F("Location: {0}", zoneName)} ({Loc.F("Elemental Lv. {0}", effectiveLvl)} [{mode}]) | {weather} | {timeStr}");
             }
             else
             {
-                ImGui.TextColored(ImGuiColors.DalamudGrey, $"○ Location: {zoneName} [Outside Eureka - Expedition features on standby]");
+                ImGui.TextColored(ImGuiColors.DalamudGrey, $"○ {Loc.F("Location: {0}", zoneName)} [{Loc.T("Outside Eureka - Expedition features on standby")}]");
             }
         }
         ImGui.EndGroup();
+
+        // Language Selector Combo on top right
+        var langComboWidth = 140 * scale;
+        var windowWidth = ImGui.GetWindowWidth();
+        if (windowWidth > 420 * scale)
+        {
+            ImGui.SameLine(windowWidth - langComboWidth - (24 * scale));
+            ImGui.SetNextItemWidth(langComboWidth);
+            var currentLang = Loc.CurrentLanguage;
+            var currentLangName = Loc.Languages.FirstOrDefault(l => l.Code == currentLang).Name ?? "English";
+            if (ImGui.BeginCombo("##UiLanguageMasterCombo", $"{FontAwesomeIcon.Globe.ToIconString()}  {currentLangName}"))
+            {
+                foreach (var (langCode, langName) in Loc.Languages)
+                {
+                    bool isSelected = (langCode == currentLang);
+                    if (ImGui.Selectable(langName, isSelected))
+                    {
+                        config.UiLanguage = langCode;
+                        config.Save();
+                        Loc.SetLanguage(langCode);
+                    }
+                    if (isSelected) ImGui.SetItemDefaultFocus();
+                }
+                ImGui.EndCombo();
+            }
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip(Loc.T("Select plugin interface language"));
+            }
+        }
     }
 
     /// <summary>
@@ -335,7 +366,7 @@ public class MainWindow : IDisposable
                 ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
             }
 
-            if (ImGui.Button($"Main###BottomMainBtn_{moduleIndex}", new Vector2(trackerBtnWidth, trackerBtnHeight)))
+            if (ImGui.Button($"{Loc.T("Main")}###BottomMainBtn_{moduleIndex}", new Vector2(trackerBtnWidth, trackerBtnHeight)))
             {
                 TrackerSubView = SubView.Main;
             }
@@ -356,7 +387,7 @@ public class MainWindow : IDisposable
                 ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
             }
 
-            if (ImGui.Button($"Configuration###BottomConfigBtn_{moduleIndex}", new Vector2(trackerBtnWidth, trackerBtnHeight)))
+            if (ImGui.Button($"{Loc.T("Configuration")}###BottomConfigBtn_{moduleIndex}", new Vector2(trackerBtnWidth, trackerBtnHeight)))
             {
                 TrackerSubView = SubView.Configuration;
             }
@@ -383,7 +414,7 @@ public class MainWindow : IDisposable
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
         }
 
-        if (ImGui.Button($"Main###BottomMainBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        if (ImGui.Button($"{Loc.T("Main")}###BottomMainBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
         {
             if (moduleIndex == 0) AggroSubView = SubView.Main;
             else FateSubView = SubView.Main;
@@ -405,7 +436,7 @@ public class MainWindow : IDisposable
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
         }
 
-        if (ImGui.Button($"Statistics###BottomStatsBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        if (ImGui.Button($"{Loc.T("Statistics")}###BottomStatsBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
         {
             if (moduleIndex == 0) AggroSubView = SubView.Statistics;
             else FateSubView = SubView.Statistics;
@@ -427,7 +458,7 @@ public class MainWindow : IDisposable
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
         }
 
-        if (ImGui.Button($"Configuration###BottomConfigBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        if (ImGui.Button($"{Loc.T("Configuration")}###BottomConfigBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
         {
             if (moduleIndex == 0) AggroSubView = SubView.Configuration;
             else FateSubView = SubView.Configuration;
@@ -445,23 +476,23 @@ public class MainWindow : IDisposable
         // 1. Status Overview Card
         ImGui.BeginGroup();
         {
-            var radarStatus = config.Enabled ? "Enabled" : "Disabled";
+            var radarStatus = Loc.T(config.Enabled ? "Enabled" : "Disabled");
             var radarColor = config.Enabled ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed;
 
-            ImGui.TextColored(GoldAccent, "Aggro Radar Status:");
+            ImGui.TextColored(GoldAccent, Loc.T("Aggro Radar Status:"));
             ImGui.SameLine();
             ImGui.TextColored(radarColor, $"● {radarStatus}");
 
             ImGui.SameLine(280 * scale);
-            ImGui.TextColored(GoldAccent, "Dragon Auto-Walk:");
+            ImGui.TextColored(GoldAccent, Loc.T("Dragon Auto-Walk:"));
             ImGui.SameLine();
-            var autoWalkStatus = config.AutoWalkNearDragons ? "Active" : "Disabled";
+            var autoWalkStatus = Loc.T(config.AutoWalkNearDragons ? "Active" : "Disabled");
             ImGui.TextColored(config.AutoWalkNearDragons ? ImGuiColors.HealerGreen : TextMuted, $"● {autoWalkStatus}");
 
             ImGui.SameLine(540 * scale);
-            ImGui.TextColored(GoldAccent, "Cast Alerts:");
+            ImGui.TextColored(GoldAccent, Loc.T("Cast Alerts:"));
             ImGui.SameLine();
-            var alertStatus = config.ShowCastAlerts ? "Active" : "Disabled";
+            var alertStatus = Loc.T(config.ShowCastAlerts ? "Active" : "Disabled");
             ImGui.TextColored(config.ShowCastAlerts ? ImGuiColors.HealerGreen : TextMuted, $"● {alertStatus}");
         }
         ImGui.EndGroup();
@@ -471,7 +502,7 @@ public class MainWindow : IDisposable
         ImGui.Spacing();
 
         // 2. Live Nearby Detected Threats
-        if (ImGui.CollapsingHeader("Live Nearby Threats (Radar Detection Range)", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader(Loc.T("Live Nearby Threats (Radar Detection Range)"), ImGuiTreeNodeFlags.DefaultOpen))
         {
             DrawLiveThreatsTable(scale);
         }
@@ -479,7 +510,7 @@ public class MainWindow : IDisposable
         ImGui.Spacing();
 
         // 3. Monsters Reference Database
-        if (ImGui.CollapsingHeader("Eureka Monsters Reference Database"))
+        if (ImGui.CollapsingHeader(Loc.T("Eureka Monsters Reference Database")))
         {
             DrawMonstersReferenceTable();
         }
@@ -487,7 +518,7 @@ public class MainWindow : IDisposable
         ImGui.Spacing();
 
         // 4. Enemy Actions & Counters Database
-        if (ImGui.CollapsingHeader("Enemy Actions & Tactical Counters Database"))
+        if (ImGui.CollapsingHeader(Loc.T("Enemy Actions & Tactical Counters Database")))
         {
             DrawActionsReferenceTable();
         }

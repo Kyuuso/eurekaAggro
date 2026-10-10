@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Dalamud.Configuration;
 using Dalamud.Plugin;
@@ -15,6 +15,11 @@ public class PluginConfiguration : IPluginConfiguration
     public int Version { get; set; } = 1;
 
     // --- GENERAL ACTIVATION ---
+
+    /// <summary>
+    /// Active UI language code (e.g., "en", "es", "de", "fr", "ja").
+    /// </summary>
+    public string UiLanguage { get; set; } = "en";
 
     /// <summary>
     /// Master toggle for radar processing and drawing.
