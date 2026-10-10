@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Belirli eklentilerle ilgili sorun ve önerileri görüşmek için “The Dumpster Fire” kanalına ilerleyin.</value>
+    <value>Belirli eklentilerle ilgili sorun ve önerileri görüşmek için "The Dumpster Fire" kanalına ilerleyin.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Yüklendi</value>
@@ -380,7 +380,7 @@
     <value>Günlük dışa aktarılıyor...</value>
   </data>
   <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
-    <value>Günlük ZIP’i hazır. Elle paylaşın ve artık gerekmeyen eski dışa aktarımları silin.</value>
+    <value>Günlük ZIP'i hazır. Elle paylaşın ve artık gerekmeyen eski dışa aktarımları silin.</value>
   </data>
   <data name="Log export failed." xml:space="preserve">
     <value>Günlük dışa aktarılamadı.</value>
@@ -389,7 +389,7 @@
     <value>Dışa Aktarım Klasörünü Aç</value>
   </data>
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
-    <value>Bu günlük Dalamud’un 100 MiB sınırına ulaştı. Kayıt durmuş olabilir; son etkinlikler eksik olabilir ve günlük mevcut sorunu teşhis etmeye yardımcı olmayabilir.</value>
+    <value>Bu günlük Dalamud'un 100 MiB sınırına ulaştı. Kayıt durmuş olabilir; son etkinlikler eksik olabilir ve günlük mevcut sorunu teşhis etmeye yardımcı olmayabilir.</value>
   </data>
   <data name="Open XA Slave log tools" xml:space="preserve">
     <value>XA Slave günlük araçlarını aç</value>
@@ -452,7 +452,7 @@
     <value>Ana Radar Etkinleştirme</value>
   </data>
   <data name="Only In Eureka Expeditions" xml:space="preserve">
-    <value>Sadece Eureka Expeditions’ta</value>
+    <value>Sadece Eureka Expeditions'ta</value>
   </data>
   <data name="Auto-Detect Elemental Level" xml:space="preserve">
     <value>Element Seviyesini Otomatik Olarak Algılama</value>
@@ -698,7 +698,7 @@
     <value>Bağlanıyor...</value>
   </data>
   <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
-    <value>Bir keşif gezisine girerken Eureka Tracker’a otomatik olarak bağlan</value>
+    <value>Bir keşif gezisine girerken Eureka Tracker'a otomatik olarak bağlan</value>
   </data>
   <data name="Sync Instance ID" xml:space="preserve">
     <value>Senkronizasyon Örneği Kimliği</value>
@@ -842,7 +842,7 @@
     <value>○ Eureka'nın dışında iken keşif radarı bekleme modundadır.</value>
   </data>
   <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
-    <value>Anemos, Pagos, Pyros veya Hydatos’a girdiğinizde, gerçek zamanlı tehdit algılama ve tehlike konileri otomatik olarak devreye girecektir.</value>
+    <value>Anemos, Pagos, Pyros veya Hydatos'a girdiğinizde, gerçek zamanlı tehdit algılama ve tehlike konileri otomatik olarak devreye girecektir.</value>
   </data>
   <data name="Threat / Name" xml:space="preserve">
     <value>Tehdit / Ad</value>
@@ -878,7 +878,7 @@
     <value>Ana Etkinleştirme</value>
   </data>
   <data name="Only Activate In Eureka" xml:space="preserve">
-    <value>Yalnızca Eureka’da Etkinleştir</value>
+    <value>Yalnızca Eureka'da Etkinleştir</value>
   </data>
   <data name="Detection Range (Meters)" xml:space="preserve">
     <value>Algılama Menzili (Metre)</value>
@@ -980,7 +980,7 @@
     <value>Ko-fi'de McVaxius'a destek olun</value>
   </data>
   <data name="Join Aethertek Discord" xml:space="preserve">
-    <value>Aethertek Discord’a katılın</value>
+    <value>Aethertek Discord'a katılın</value>
   </data>
   <data name="Eureka Suite GitHub Source" xml:space="preserve">
     <value>Eureka GitHub Kaynak Kodu</value>

@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Przewiń do kanału „The Dumpster Fire”, aby omówić problemy lub sugestie dotyczące konkretnych wtyczek.</value>
+    <value>Przewiń do kanału "The Dumpster Fire", aby omówić problemy lub sugestie dotyczące wtyczek.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Załadowano</value>
@@ -410,7 +410,7 @@
     <value>O nas i podziękowania</value>
   </data>
   <data name="Main" xml:space="preserve">
-    <value>Strona główna</value>
+    <value>Główne</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statystyki</value>
@@ -428,7 +428,7 @@
     <value>Lokalizacja: {0}</value>
   </data>
   <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
-    <value>Poza Eureką – przygotowania do wyprawy</value>
+    <value>Poza Eureką - funkcje ekspedycji w trybie czuwania</value>
   </data>
   <data name="Auto-synced" xml:space="preserve">
     <value>Synchronizacja automatyczna</value>
@@ -572,10 +572,10 @@
     <value>Magia kolorów (duchy / żywiołaki)</value>
   </data>
   <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
-    <value>Odległość kolorystyczna – bliska (&lt; 10 m)</value>
+    <value>Kolor bliskiej odległości (&lt; 10 m)</value>
   </data>
   <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
-    <value>Odległość kolorystyczna – duża (&gt;= 10 m)</value>
+    <value>Kolor dalekiej odległości (&gt;= 10 m)</value>
   </data>
   <data name="Reset Colors to Default" xml:space="preserve">
     <value>Przywróć domyślne ustawienia kolorów</value>
@@ -587,16 +587,16 @@
     <value>Zawsze pokazuj nieumarłych (krew)</value>
   </data>
   <data name="Always Show Sprites (Magic)" xml:space="preserve">
-    <value>Zawsze wyświetlaj sprite’y (Magia)</value>
+    <value>Zawsze wyświetlaj sprite'y (Magia)</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
-    <value>Trasa „Auto-Walk” w pobliżu Śpiących Smoków</value>
+    <value>Automatyczny chód przy Śpiących Smokach</value>
   </data>
   <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
     <value>Odległość uruchamiania funkcji Auto-Walk (m)</value>
   </data>
   <data name="Restore Running After Leaving Dragons" xml:space="preserve">
-    <value>Wznowienie gry po opuszczeniu „Dragons”</value>
+    <value>Wznów bieg po minięciu smoków</value>
   </data>
   <data name="Enable Sound / Beep Alerts" xml:space="preserve">
     <value>Włącz sygnały dźwiękowe / sygnały ostrzegawcze</value>
@@ -653,7 +653,7 @@
     <value>[MAGIA] Sprite: NIE RZUCAJ ZAKLĘĆ</value>
   </data>
   <data name="[Sound - Walk!]" xml:space="preserve">
-    <value>[Dźwięk – Chodź!]</value>
+    <value>[Dźwięk - Idź!]</value>
   </data>
   <data name="[Blood / Undead]" xml:space="preserve">
     <value>[Krew / Nieumarli]</value>
@@ -905,10 +905,10 @@
     <value>Narysuj kręgi agresji dźwiękowej</value>
   </data>
   <data name="Draw Blood Aggro Circles" xml:space="preserve">
-    <value>Narysuj krwawe kręgi agresji</value>
+    <value>Rysuj okręgi aggro krwi</value>
   </data>
   <data name="Draw Magic Aggro Warnings" xml:space="preserve">
-    <value>Wyświetl ostrzeżenia dotyczące magii agresywnej</value>
+    <value>Rysuj ostrzeżenia aggro magii</value>
   </data>
   <data name="Draw Proximity Circles" xml:space="preserve">
     <value>Narysuj okręgi zbliżeniowe</value>
@@ -965,10 +965,10 @@
     <value>Krąg Dźwięku Smoka</value>
   </data>
   <data name="Dragon Running Warning Text" xml:space="preserve">
-    <value>Tekst ostrzeżenia dotyczący biegu „Dragon Running”</value>
+    <value>Tekst ostrzeżenia przed biegiem przy smoku</value>
   </data>
   <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
-    <value>Dragon Auto-Walk – bezpieczny tekst</value>
+    <value>Tekst bezpiecznego chodu przy smoku</value>
   </data>
   <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
     <value>Linia bliskiego zasięgu (&lt; 10 m)</value>
@@ -983,7 +983,7 @@
     <value>Dołącz do serwera Aethertek na Discordzie</value>
   </data>
   <data name="Eureka Suite GitHub Source" xml:space="preserve">
-    <value>Eureka – kod źródłowy na GitHubie</value>
+    <value>Eureka Suite - kod źródłowy GitHub</value>
   </data>
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Linki dotyczące społeczności i linki zewnętrzne:</value>

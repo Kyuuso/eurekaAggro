@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Проблемы и предложения по плагинам обсуждаются в канале «The Dumpster Fire».</value>
+    <value>Проблемы и предложения по плагинам обсуждаются в канале "The Dumpster Fire".</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Загружено</value>
@@ -151,7 +151,7 @@
     <value>Бездействие</value>
   </data>
   <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
-    <value>Бездействие. Выберите зону и нажмите «Запустить».</value>
+    <value>Бездействие. Выберите зону и нажмите "Запустить".</value>
   </data>
   <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
     <value>Если ремесленники нужного уровня, использует тёмную материю для самостоятельного ремонта.</value>
@@ -325,7 +325,7 @@
     <value>Луковица-подражатель</value>
   </data>
   <data name="Petrel Mount" xml:space="preserve">
-    <value>Ездовое животное «Буревестник»</value>
+    <value>Ездовое животное "Буревестник"</value>
   </data>
   <data name="Repo URL Copied" xml:space="preserve">
     <value>URL репозитория скопирован</value>
@@ -428,7 +428,7 @@
     <value>Местоположение: {0}</value>
   </data>
   <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
-    <value>За пределами Эврики — экспедиционные возможности в режиме ожидания</value>
+    <value>За пределами Эврики - экспедиционные возможности в режиме ожидания</value>
   </data>
   <data name="Auto-synced" xml:space="preserve">
     <value>Автоматическая синхронизация</value>
@@ -452,7 +452,7 @@
     <value>Включение главного радара</value>
   </data>
   <data name="Only In Eureka Expeditions" xml:space="preserve">
-    <value>Только в «Eureka Expeditions»</value>
+    <value>Только в "Eureka Expeditions"</value>
   </data>
   <data name="Auto-Detect Elemental Level" xml:space="preserve">
     <value>Автоматическое определение уровня элементала</value>
@@ -473,7 +473,7 @@
     <value>Поиск монстров...</value>
   </data>
   <data name="Filter Safe Monsters" xml:space="preserve">
-    <value>Фильтр «Безопасные монстры»</value>
+    <value>Фильтр "Безопасные монстры"</value>
   </data>
   <data name="Safe Level Difference" xml:space="preserve">
     <value>Безопасная разница уровней</value>
@@ -485,7 +485,7 @@
     <value>Показать звуковые круги</value>
   </data>
   <data name="Show Blood Circles" xml:space="preserve">
-    <value>Показать «Кровавые круги»</value>
+    <value>Показать "Кровавые круги"</value>
   </data>
   <data name="Show Magic Warnings" xml:space="preserve">
     <value>Показать предупреждения о магии</value>
@@ -527,7 +527,7 @@
     <value>Близость</value>
   </data>
   <data name="True Sight" xml:space="preserve">
-    <value>«Истинное зрение»</value>
+    <value>"Истинное зрение"</value>
   </data>
   <data name="Safe" xml:space="preserve">
     <value>Безопасный</value>
@@ -566,16 +566,16 @@
     <value>Цвет и звук (Драконы / Слух)</value>
   </data>
   <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
-    <value>«Цвет крови» (Нежить / Ашкин)</value>
+    <value>"Цвет крови" (Нежить / Ашкин)</value>
   </data>
   <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
-    <value>«Магия цвета» (Спрайты / Элементали)</value>
+    <value>"Магия цвета" (Спрайты / Элементали)</value>
   </data>
   <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
-    <value>Расстояние в цвете «Близко» (&lt; 10 м)</value>
+    <value>Расстояние в цвете "Близко" (&lt; 10 м)</value>
   </data>
   <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
-    <value>Цветовое расстояние — дальнее (&gt;= 10 м)</value>
+    <value>Цветовое расстояние - дальнее (&gt;= 10 м)</value>
   </data>
   <data name="Reset Colors to Default" xml:space="preserve">
     <value>Сбросить настройки цветов до значений по умолчанию</value>
@@ -590,13 +590,13 @@
     <value>Всегда отображать спрайты (Магия)</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
-    <value>Автоматическая прогулка возле «Спящих драконов»</value>
+    <value>Автоматическая прогулка возле "Спящих драконов"</value>
   </data>
   <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
-    <value>Расстояние срабатывания функции «Auto-Walk» (м)</value>
+    <value>Расстояние срабатывания функции "Auto-Walk" (м)</value>
   </data>
   <data name="Restore Running After Leaving Dragons" xml:space="preserve">
-    <value>Возобновление игры после выхода из «Dragons»</value>
+    <value>Возобновление игры после выхода из "Dragons"</value>
   </data>
   <data name="Enable Sound / Beep Alerts" xml:space="preserve">
     <value>Включить звуковые / звуковые сигналы</value>
@@ -653,7 +653,7 @@
     <value>[MAGIC] Спрайт: НЕ ИСПОЛЬЗУЙ ЗАКЛИНАНИЯ</value>
   </data>
   <data name="[Sound - Walk!]" xml:space="preserve">
-    <value>[Звук — «Вперед!»]</value>
+    <value>[Звук - "Вперед!"]</value>
   </data>
   <data name="[Blood / Undead]" xml:space="preserve">
     <value>[Кровь / Нежить]</value>
@@ -791,7 +791,7 @@
     <value>Мнемоника</value>
   </data>
   <data name="Notorious Monsters Database" xml:space="preserve">
-    <value>База данных «Печально известные монстры»</value>
+    <value>База данных "Печально известные монстры"</value>
   </data>
   <data name="Zone" xml:space="preserve">
     <value>Зона</value>
@@ -812,7 +812,7 @@
     <value>Состояние Aggro Radar:</value>
   </data>
   <data name="Dragon Auto-Walk:" xml:space="preserve">
-    <value>Автоматическая ходьба «Дракон»:</value>
+    <value>Автоматическая ходьба "Дракон":</value>
   </data>
   <data name="Cast Alerts:" xml:space="preserve">
     <value>Уведомления о составе актерского состава:</value>
@@ -821,7 +821,7 @@
     <value>Близлежащие угрозы (дальность обнаружения радара)</value>
   </data>
   <data name="Eureka Monsters Reference Database" xml:space="preserve">
-    <value>Справочная база данных «Eureka Monsters»</value>
+    <value>Справочная база данных "Eureka Monsters"</value>
   </data>
   <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
     <value>База данных действий противника и тактических контрмер</value>
@@ -839,10 +839,10 @@
     <value>Персонаж игрока не вошёл в систему или недоступен.</value>
   </data>
   <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
-    <value>○ Радар «Экспедиции» находится в режиме ожидания, пока судно находится за пределами «Эврики».</value>
+    <value>○ Радар "Экспедиции" находится в режиме ожидания, пока судно находится за пределами "Эврики".</value>
   </data>
   <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
-    <value>Система оперативного обнаружения угроз и зоны опасности автоматически активируются, как только вы войдете в зоны «Анемос», «Пагос», «Пирос» или «Гидатос».</value>
+    <value>Система оперативного обнаружения угроз и зоны опасности автоматически активируются, как только вы войдете в зоны "Анемос", "Пагос", "Пирос" или "Гидатос".</value>
   </data>
   <data name="Threat / Name" xml:space="preserve">
     <value>Угроза / Название</value>
@@ -893,7 +893,7 @@
     <value>Уровень элементала в ручном режиме игры</value>
   </data>
   <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
-    <value>Фильтр «Безопасные монстры» (безопасная разница в уровнях)</value>
+    <value>Фильтр "Безопасные монстры" (безопасная разница в уровнях)</value>
   </data>
   <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
     <value>Графические фигуры и элементы рисования</value>
@@ -905,7 +905,7 @@
     <value>Нарисовать круги аггро звука</value>
   </data>
   <data name="Draw Blood Aggro Circles" xml:space="preserve">
-    <value>Нарисуйте круги агрессии «Draw Blood»</value>
+    <value>Нарисуйте круги агрессии "Draw Blood"</value>
   </data>
   <data name="Draw Magic Aggro Warnings" xml:space="preserve">
     <value>Предупреждения о магическом агрессивном поведении</value>
@@ -926,13 +926,13 @@
     <value>Угол обзора конуса (градусы)</value>
   </data>
   <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
-    <value>«Спящие драконы» и автоматизация с помощью функции «Auto-Walk»</value>
+    <value>"Спящие драконы" и автоматизация с помощью функции "Auto-Walk"</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
-    <value>Автоматический ход рядом со «Спящими драконами» (предотвращает пробуждение / привлечение аггро)</value>
+    <value>Автоматический ход рядом со "Спящими драконами" (предотвращает пробуждение / привлечение аггро)</value>
   </data>
   <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
-    <value>Расстояние срабатывания функции «Auto-Walk» (метры)</value>
+    <value>Расстояние срабатывания функции "Auto-Walk" (метры)</value>
   </data>
   <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
     <value>Восстановить бег при выходе из опасной зоны</value>
@@ -962,13 +962,13 @@
     <value>Палитра цветов и настройки</value>
   </data>
   <data name="Dragon Sound Circle" xml:space="preserve">
-    <value>Круг «Звук дракона»</value>
+    <value>Круг "Звук дракона"</value>
   </data>
   <data name="Dragon Running Warning Text" xml:space="preserve">
-    <value>Предупреждающий текст о «Беге дракона»</value>
+    <value>Предупреждающий текст о "Беге дракона"</value>
   </data>
   <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
-    <value>«Dragon Auto-Walk» — текст о безопасности</value>
+    <value>"Dragon Auto-Walk" - текст о безопасности</value>
   </data>
   <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
     <value>Линия ближнего расстояния (&lt; 10 м)</value>
@@ -983,7 +983,7 @@
     <value>Присоединяйтесь к Discord-серверу Aethertek</value>
   </data>
   <data name="Eureka Suite GitHub Source" xml:space="preserve">
-    <value>Eureka Suite — исходный код на GitHub</value>
+    <value>Eureka Suite - исходный код на GitHub</value>
   </data>
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Ссылки на ресурсы сообщества и внешние ресурсы:</value>

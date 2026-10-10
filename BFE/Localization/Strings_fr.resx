@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Consultez le canal « The Dumpster Fire » pour les problèmes et suggestions de plugins.</value>
+    <value>Consultez le canal " The Dumpster Fire " pour les problèmes et suggestions de plugins.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Chargé</value>
@@ -67,7 +67,7 @@
     <value>Automatisation des ALÉA lapins</value>
   </data>
   <data name="Click to Copy Repo URL" xml:space="preserve">
-    <value>Cliquer pour copier l’URL du dépôt</value>
+    <value>Cliquer pour copier l'URL du dépôt</value>
   </data>
   <data name="Copy Icon Guide Link" xml:space="preserve">
     <value>Copier le lien du guide des icônes</value>
@@ -109,7 +109,7 @@
     <value>Paramètres généraux</value>
   </data>
   <data name="Get Repo Url" xml:space="preserve">
-    <value>Copier l’URL du dépôt</value>
+    <value>Copier l'URL du dépôt</value>
   </data>
   <data name="Gil Earned" xml:space="preserve">
     <value>Gils gagnés</value>
@@ -130,10 +130,10 @@
     <value>Voyage vers le réparateur</value>
   </data>
   <data name="Gold Coffers" xml:space="preserve">
-    <value>Coffres d’or</value>
+    <value>Coffres d'or</value>
   </data>
   <data name="Silver Coffers" xml:space="preserve">
-    <value>Coffres d’argent</value>
+    <value>Coffres d'argent</value>
   </data>
   <data name="Bronze Coffers" xml:space="preserve">
     <value>Coffres de bronze</value>
@@ -172,7 +172,7 @@
     <value>Cumul</value>
   </data>
   <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
-    <value>Charger tous les plugins requis pour démarrer l’automatisation des lapins.</value>
+    <value>Charger tous les plugins requis pour démarrer l'automatisation des lapins.</value>
   </data>
   <data name="Logging Out" xml:space="preserve">
     <value>Déconnexion</value>
@@ -262,7 +262,7 @@
     <value>Se téléporter à la maison de CL</value>
   </data>
   <data name="Threshold to repair gear" xml:space="preserve">
-    <value>Seuil de réparation de l’équipement</value>
+    <value>Seuil de réparation de l'équipement</value>
   </data>
   <data name="Time elapsed" xml:space="preserve">
     <value>Temps écoulé</value>
@@ -274,7 +274,7 @@
     <value>Utilisation du réseau éthéré</value>
   </data>
   <data name="Using Retainer" xml:space="preserve">
-    <value>Utilisation d’un servant</value>
+    <value>Utilisation d'un servant</value>
   </data>
   <data name="WIP" xml:space="preserve">
     <value>En cours</value>
@@ -283,7 +283,7 @@
     <value>Attente de Navmesh</value>
   </data>
   <data name="Waiting at Fate" xml:space="preserve">
-    <value>Attente à l’ALÉA</value>
+    <value>Attente à l'ALÉA</value>
   </data>
   <data name="Will logout after looping is complete." xml:space="preserve">
     <value>Se déconnecte à la fin des cycles.</value>
@@ -295,16 +295,16 @@
     <value>{0} (ancien alias)</value>
   </data>
   <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
-    <value>AutoRetainer n’est pas installé ou activé. Cliquer pour copier le dépôt.</value>
+    <value>AutoRetainer n'est pas installé ou activé. Cliquer pour copier le dépôt.</value>
   </data>
   <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
-    <value>Répare automatiquement chez le marchand après le prochain ALÉA lapins lorsque le seuil d’état de l’équipement est atteint.</value>
+    <value>Répare automatiquement chez le marchand après le prochain ALÉA lapins lorsque le seuil d'état de l'équipement est atteint.</value>
   </data>
   <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
-    <value>Exécuter sans limite ou régler une durée allant jusqu’à 24 heures</value>
+    <value>Exécuter sans limite ou régler une durée allant jusqu'à 24 heures</value>
   </data>
   <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
-    <value>Automatisation restaurée des lapins d’Eurêka : trajets des ALÉA, recherche de coffres et statistiques.</value>
+    <value>Automatisation restaurée des lapins d'Eurêka : trajets des ALÉA, recherche de coffres et statistiques.</value>
   </data>
   <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
     <value>Les plugins suivants doivent être installés et activés : </value>
@@ -383,13 +383,13 @@
     <value>ZIP du journal prêt. Partagez-le manuellement ; supprimez les anciens exports devenus inutiles.</value>
   </data>
   <data name="Log export failed." xml:space="preserve">
-    <value>Échec de l’export du journal.</value>
+    <value>Échec de l'export du journal.</value>
   </data>
   <data name="Open Export Folder" xml:space="preserve">
     <value>Ouvrir le dossier d'exportation</value>
   </data>
   <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
-    <value>Ce journal a atteint la limite de 100 Mio de Dalamud. L’enregistrement a pu s’arrêter ; l’activité récente peut manquer et ce journal peut être inutile pour diagnostiquer le problème actuel.</value>
+    <value>Ce journal a atteint la limite de 100 Mio de Dalamud. L'enregistrement a pu s'arrêter ; l'activité récente peut manquer et ce journal peut être inutile pour diagnostiquer le problème actuel.</value>
   </data>
   <data name="Open XA Slave log tools" xml:space="preserve">
     <value>Ouvrir les outils de journaux XA Slave</value>
@@ -401,7 +401,7 @@
     <value>Impossible d'ouvrir les outils de journaux XA Slave.</value>
   </data>
   <data name="Aggro Lines" xml:space="preserve">
-    <value>Lignes « Aggro »</value>
+    <value>Lignes d'aggro</value>
   </data>
   <data name="Tracker" xml:space="preserve">
     <value>Tracker</value>
@@ -590,10 +590,10 @@
     <value>Toujours afficher les sprites (Magie)</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
-    <value>Parcours guidé près des « Dragons endormis »</value>
+    <value>Marche automatique près des dragons endormis</value>
   </data>
   <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
-    <value>Distance de déclenchement du mode « Auto-Walk » (m)</value>
+    <value>Distance d'activation de la marche automatique (m)</value>
   </data>
   <data name="Restore Running After Leaving Dragons" xml:space="preserve">
     <value>Reprendre la course après avoir quitté les Dragons</value>
@@ -605,7 +605,7 @@
     <value>Volume des alertes sonores</value>
   </data>
   <data name="Open Cast Alert Preview" xml:space="preserve">
-    <value>Aperçu de l'alerte « Open Cast »</value>
+    <value>Aperçu de l'alerte d'action</value>
   </data>
   <data name="Lock Cast Alert Position" xml:space="preserve">
     <value>Verrouiller la position de l'alerte de coulée</value>
@@ -905,10 +905,10 @@
     <value>Dessiner des cercles d'aggro sonores</value>
   </data>
   <data name="Draw Blood Aggro Circles" xml:space="preserve">
-    <value>Dessiner des cercles « Aggro » « Draw Blood »</value>
+    <value>Afficher les cercles d'aggro de sang</value>
   </data>
   <data name="Draw Magic Aggro Warnings" xml:space="preserve">
-    <value>Avertissements « Draw Magic Aggro »</value>
+    <value>Afficher les alertes d'aggro magique</value>
   </data>
   <data name="Draw Proximity Circles" xml:space="preserve">
     <value>Dessiner des cercles de proximité</value>
@@ -926,13 +926,13 @@
     <value>Angle d'arc du cône de vision (degrés)</value>
   </data>
   <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
-    <value>« Sleeping Dragons » et l'automatisation de la marche automatique</value>
+    <value>Dragons endormis et marche automatique</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
     <value>Marche automatique près des dragons endormis (pour éviter de les réveiller ou d'attirer leur attention)</value>
   </data>
   <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
-    <value>Distance d'activation de la fonction « Auto-Walk » (en mètres)</value>
+    <value>Distance d'activation de la marche automatique (mètres)</value>
   </data>
   <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
     <value>Reprendre la course dès que l'on sort du rayon de danger</value>
@@ -947,7 +947,7 @@
     <value>Verrouiller la position de la fenêtre</value>
   </data>
   <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
-    <value>Test / Aperçu de l'interface HUD « Cast Alert »</value>
+    <value>Tester / Prévisualiser l'alerte HUD</value>
   </data>
   <data name="Reset Window Position" xml:space="preserve">
     <value>Réinitialiser la position de la fenêtre</value>
@@ -965,7 +965,7 @@
     <value>Cercle du Son du Dragon</value>
   </data>
   <data name="Dragon Running Warning Text" xml:space="preserve">
-    <value>Texte d'avertissement « Dragon Running »</value>
+    <value>Texte d'avertissement " Dragon Running "</value>
   </data>
   <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
     <value>Dragon Auto-Walk : texte sécurisé</value>

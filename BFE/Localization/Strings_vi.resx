@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Cuộn xuống kênh “The Dumpster Fire” để thảo luận về lỗi hoặc góp ý cho từng plugin.</value>
+    <value>Cuộn xuống kênh "The Dumpster Fire" để thảo luận về lỗi hoặc góp ý cho từng plugin.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Đã tải</value>
@@ -965,7 +965,7 @@
     <value>Vòng tròn Âm thanh Rồng</value>
   </data>
   <data name="Dragon Running Warning Text" xml:space="preserve">
-    <value>Văn bản cảnh báo về sự kiện “Dragon Running”</value>
+    <value>Văn bản cảnh báo về sự kiện "Dragon Running"</value>
   </data>
   <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
     <value>Dragon Auto-Walk - Văn bản an toàn</value>

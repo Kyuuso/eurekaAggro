@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>플러그인 문제와 제안은 «The Dumpster Fire» 채널에서 이야기하세요.</value>
+    <value>플러그인 문제와 제안은 "The Dumpster Fire" 채널에서 이야기하세요.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>불러옴</value>
@@ -485,7 +485,7 @@
     <value>사운드 서클 표시</value>
   </data>
   <data name="Show Blood Circles" xml:space="preserve">
-    <value>‘블러드 서클’ 보기</value>
+    <value>'블러드 서클' 보기</value>
   </data>
   <data name="Show Magic Warnings" xml:space="preserve">
     <value>매직 경고 표시</value>
@@ -956,7 +956,7 @@
     <value>음성 알림</value>
   </data>
   <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
-    <value>어그로 위협 발생 시 ‘삐’ 경고음 재생</value>
+    <value>어그로 위협 발생 시 '삐' 경고음 재생</value>
   </data>
   <data name="Color Palette &amp; Customization" xml:space="preserve">
     <value>색상 팔레트 및 사용자 지정</value>

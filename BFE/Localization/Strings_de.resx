@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Besuche den Kanal „The Dumpster Fire“ für Probleme und Vorschläge zu Plugins.</value>
+    <value>Besuche den Kanal "The Dumpster Fire" für Probleme und Vorschläge zu Plugins.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Geladen</value>
@@ -410,7 +410,7 @@
     <value>Über uns &amp; Impressum</value>
   </data>
   <data name="Main" xml:space="preserve">
-    <value>Hand</value>
+    <value>Hauptseite</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistik</value>
@@ -428,7 +428,7 @@
     <value>Standort: {0}</value>
   </data>
   <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
-    <value>Außerhalb von Eureka – Expeditionsberichte in der Warteschleife</value>
+    <value>Außerhalb von Eureka - Expeditionsfunktionen in Bereitschaft</value>
   </data>
   <data name="Auto-synced" xml:space="preserve">
     <value>Automatisch synchronisiert</value>
@@ -473,7 +473,7 @@
     <value>Monster suchen...</value>
   </data>
   <data name="Filter Safe Monsters" xml:space="preserve">
-    <value>„Safe Monsters“ filtern</value>
+    <value>"Safe Monsters" filtern</value>
   </data>
   <data name="Safe Level Difference" xml:space="preserve">
     <value>Sichere Höhenunterschiede</value>
@@ -482,7 +482,7 @@
     <value>Sichtkegel anzeigen</value>
   </data>
   <data name="Show Sound Circles" xml:space="preserve">
-    <value>„Sound Circles“ anzeigen</value>
+    <value>"Sound Circles" anzeigen</value>
   </data>
   <data name="Show Blood Circles" xml:space="preserve">
     <value>Blutkreise anzeigen</value>
@@ -590,13 +590,13 @@
     <value>Sprites immer anzeigen (Magie)</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
-    <value>Auto-Walk in der Nähe der „Sleeping Dragons“</value>
+    <value>Auto-Walk in der Nähe der "Sleeping Dragons"</value>
   </data>
   <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
-    <value>Auslöseabstand für „Auto-Walk“ (m)</value>
+    <value>Auslöseabstand für "Auto-Walk" (m)</value>
   </data>
   <data name="Restore Running After Leaving Dragons" xml:space="preserve">
-    <value>Lauf wiederherstellen nach dem Verlassen von „Dragons“</value>
+    <value>Lauf wiederherstellen nach dem Verlassen von "Dragons"</value>
   </data>
   <data name="Enable Sound / Beep Alerts" xml:space="preserve">
     <value>Ton-/Signalton-Benachrichtigungen aktivieren</value>
@@ -605,7 +605,7 @@
     <value>Lautstärke der akustischen Warnsignale</value>
   </data>
   <data name="Open Cast Alert Preview" xml:space="preserve">
-    <value>Vorschau auf „Open Cast Alert“</value>
+    <value>Vorschau auf "Open Cast Alert"</value>
   </data>
   <data name="Lock Cast Alert Position" xml:space="preserve">
     <value>Position des Lock-Cast-Alarms sperren</value>
@@ -653,7 +653,7 @@
     <value>[MAGIE] Sprite: KEINE ZAUBER WIRKEN</value>
   </data>
   <data name="[Sound - Walk!]" xml:space="preserve">
-    <value>[Ton – Los geht’s!]</value>
+    <value>[Geräusch - Gehen!]</value>
   </data>
   <data name="[Blood / Undead]" xml:space="preserve">
     <value>[Blut / Untote]</value>
@@ -746,7 +746,7 @@
     <value>Alle anzeigen</value>
   </data>
   <data name="Hide Dead" xml:space="preserve">
-    <value>„Dead“ ausblenden</value>
+    <value>"Dead" ausblenden</value>
   </data>
   <data name="Copy Tracker Link" xml:space="preserve">
     <value>Tracker-Link kopieren</value>
@@ -890,10 +890,10 @@
     <value>Spieler-Elementarstufe automatisch erkennen</value>
   </data>
   <data name="Manual Player Elemental Level" xml:space="preserve">
-    <value>Manueller Spieler – Elementarstufe</value>
+    <value>Manuelle Elementarstufe des Spielers</value>
   </data>
   <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
-    <value>„Safe Monsters“ filtern (sichere Stufenunterschiede)</value>
+    <value>"Safe Monsters" filtern (sichere Stufenunterschiede)</value>
   </data>
   <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
     <value>Grafische Formen und Zeichenelemente</value>
@@ -905,10 +905,10 @@
     <value>Aggressionskreise zeichnen</value>
   </data>
   <data name="Draw Blood Aggro Circles" xml:space="preserve">
-    <value>Aggro-Kreise „Blut vergießen“</value>
+    <value>Blut-Aggro-Kreise anzeigen</value>
   </data>
   <data name="Draw Magic Aggro Warnings" xml:space="preserve">
-    <value>Warnungen vor „Draw Magic Aggro“</value>
+    <value>Magie-Aggro-Warnungen anzeigen</value>
   </data>
   <data name="Draw Proximity Circles" xml:space="preserve">
     <value>Nähekreise zeichnen</value>
@@ -926,13 +926,13 @@
     <value>Sichtkegel-Bogenwinkel (Grad)</value>
   </data>
   <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
-    <value>„Sleeping Dragons“ und „Auto-Walk“-Automatisierung</value>
+    <value>"Sleeping Dragons" und "Auto-Walk"-Automatisierung</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
     <value>Automatischer Lauf in der Nähe der schlafenden Drachen (verhindert das Aufwachen / Aggro)</value>
   </data>
   <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
-    <value>Aktivierungsabstand für „Auto-Walk“ (Meter)</value>
+    <value>Aktivierungsabstand für "Auto-Walk" (Meter)</value>
   </data>
   <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
     <value>Lauf wieder aufnehmen, sobald der Gefahrenradius verlassen wird</value>
@@ -947,7 +947,7 @@
     <value>Fensterposition fixieren</value>
   </data>
   <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
-    <value>Test / Vorschau „Cast Alert“-HUD</value>
+    <value>Test / Vorschau "Cast Alert"-HUD</value>
   </data>
   <data name="Reset Window Position" xml:space="preserve">
     <value>Fensterposition zurücksetzen</value>
@@ -965,10 +965,10 @@
     <value>Dragon Sound Circle</value>
   </data>
   <data name="Dragon Running Warning Text" xml:space="preserve">
-    <value>Warntext zu „Dragon Running“</value>
+    <value>Warntext zu "Dragon Running"</value>
   </data>
   <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
-    <value>Dragon Auto-Walk – Sicherer Text</value>
+    <value>Drachen Auto-Walk - Sicherer Text</value>
   </data>
   <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
     <value>Nahbereichslinie (&lt; 10 m)</value>
@@ -983,7 +983,7 @@
     <value>Tritt dem Aethertek-Discord bei</value>
   </data>
   <data name="Eureka Suite GitHub Source" xml:space="preserve">
-    <value>Eureka-Suite – GitHub-Quellcode</value>
+    <value>Eureka Suite - GitHub Quellcode</value>
   </data>
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Community &amp; Externe Links:</value>

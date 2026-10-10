@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>请在“The Dumpster Fire”频道讨论插件问题或建议。</value>
+    <value>请在"The Dumpster Fire"频道讨论插件问题或建议。</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>已加载</value>
@@ -428,7 +428,7 @@
     <value>位置：{0}</value>
   </data>
   <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
-    <value>《尤里卡之外——探险特辑》待播</value>
+    <value>《尤里卡之外--探险特辑》待播</value>
   </data>
   <data name="Auto-synced" xml:space="preserve">
     <value>自动同步</value>
@@ -470,10 +470,10 @@
     <value>附近的怪物 ({0})</value>
   </data>
   <data name="Search Monsters..." xml:space="preserve">
-    <value>搜索怪物……</value>
+    <value>搜索怪物......</value>
   </data>
   <data name="Filter Safe Monsters" xml:space="preserve">
-    <value>筛选“安全的怪物”</value>
+    <value>筛选"安全的怪物"</value>
   </data>
   <data name="Safe Level Difference" xml:space="preserve">
     <value>安全高程差</value>
@@ -482,7 +482,7 @@
     <value>显示视野锥</value>
   </data>
   <data name="Show Sound Circles" xml:space="preserve">
-    <value>显示“声音圈”</value>
+    <value>显示"声音圈"</value>
   </data>
   <data name="Show Blood Circles" xml:space="preserve">
     <value>显示血圈</value>
@@ -590,13 +590,13 @@
     <value>始终显示精灵（魔法）</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
-    <value>“睡龙”附近的自动漫步</value>
+    <value>"睡龙"附近的自动漫步</value>
   </data>
   <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
     <value>自动行走触发距离（米）</value>
   </data>
   <data name="Restore Running After Leaving Dragons" xml:space="preserve">
-    <value>离开“龙之队”后恢复跑步</value>
+    <value>离开"龙之队"后恢复跑步</value>
   </data>
   <data name="Enable Sound / Beep Alerts" xml:space="preserve">
     <value>启用声音/蜂鸣提示</value>
@@ -620,13 +620,13 @@
     <value>[!] 敌方行动警报（拖动以移动）</value>
   </data>
   <data name="STUN REQUIRED!" xml:space="preserve">
-    <value>必须使用“STUN”！</value>
+    <value>必须使用"STUN"！</value>
   </data>
   <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
     <value>切断视线（隐藏）！</value>
   </data>
   <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
-    <value>提供“打断”/“静音”功能！</value>
+    <value>提供"打断"/"静音"功能！</value>
   </data>
   <data name="{0} is casting: " xml:space="preserve">
     <value>{0}正在进行选角： </value>
@@ -653,7 +653,7 @@
     <value>[魔法] 精灵：请勿施放法术</value>
   </data>
   <data name="[Sound - Walk!]" xml:space="preserve">
-    <value>[音效——走！]</value>
+    <value>[音效--走！]</value>
   </data>
   <data name="[Blood / Undead]" xml:space="preserve">
     <value>[血液 / 不死族]</value>
@@ -722,7 +722,7 @@
     <value>未连接到追踪器</value>
   </data>
   <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
-    <value>在上面输入一个6位数的追踪码，或点击“+”生成一个新的。</value>
+    <value>在上面输入一个6位数的追踪码，或点击"+"生成一个新的。</value>
   </data>
   <data name="Pop Time" xml:space="preserve">
     <value>流行时刻</value>
@@ -893,7 +893,7 @@
     <value>手动玩家元素等级</value>
   </data>
   <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
-    <value>筛选“安全怪物”（安全等级差）</value>
+    <value>筛选"安全怪物"（安全等级差）</value>
   </data>
   <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
     <value>视觉形状与绘图元素</value>
@@ -902,13 +902,13 @@
     <value>绘制视野锥</value>
   </data>
   <data name="Draw Sound Aggro Circles" xml:space="preserve">
-    <value>绘制“声音仇恨圈”</value>
+    <value>绘制"声音仇恨圈"</value>
   </data>
   <data name="Draw Blood Aggro Circles" xml:space="preserve">
-    <value>绘制“流血”激进圈</value>
+    <value>绘制"流血"激进圈</value>
   </data>
   <data name="Draw Magic Aggro Warnings" xml:space="preserve">
-    <value>抽取“魔法”快攻警告</value>
+    <value>抽取"魔法"快攻警告</value>
   </data>
   <data name="Draw Proximity Circles" xml:space="preserve">
     <value>绘制邻近圆</value>
@@ -929,7 +929,7 @@
     <value>沉睡的巨龙与自动行走自动化</value>
   </data>
   <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
-    <value>在“沉睡的巨龙”附近自动行走（防止唤醒/吸引仇恨）</value>
+    <value>在"沉睡的巨龙"附近自动行走（防止唤醒/吸引仇恨）</value>
   </data>
   <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
     <value>自动行走激活距离（米）</value>
@@ -965,7 +965,7 @@
     <value>龙之声圈</value>
   </data>
   <data name="Dragon Running Warning Text" xml:space="preserve">
-    <value>“龙奔”警告文本</value>
+    <value>"龙奔"警告文本</value>
   </data>
   <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
     <value>Dragon Auto-Walk 安全提示文本</value>

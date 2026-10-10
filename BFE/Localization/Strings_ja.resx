@@ -470,7 +470,7 @@
     <value>近くのモンスター ({0})</value>
   </data>
   <data name="Search Monsters..." xml:space="preserve">
-    <value>モンスターを検索…</value>
+    <value>モンスターを検索...</value>
   </data>
   <data name="Filter Safe Monsters" xml:space="preserve">
     <value>「安全なモンスター」をフィルタリング</value>

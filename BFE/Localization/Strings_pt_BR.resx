@@ -43,7 +43,7 @@
     <value>Discord</value>
   </data>
   <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
-    <value>Role até o canal “The Dumpster Fire” para discutir problemas ou sugestões sobre plugins específicos.</value>
+    <value>Role até o canal "The Dumpster Fire" para discutir problemas ou sugestões sobre plugins específicos.</value>
   </data>
   <data name="Loaded" xml:space="preserve">
     <value>Carregado</value>
@@ -428,7 +428,7 @@
     <value>Localização: {0}</value>
   </data>
   <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
-    <value>Fora de Eureka — Reportagens sobre a expedição em espera</value>
+    <value>Fora de Eureka - Recursos de expedição em espera</value>
   </data>
   <data name="Auto-synced" xml:space="preserve">
     <value>Sincronizado automaticamente</value>
@@ -653,7 +653,7 @@
     <value>[MAGIA] Sprite: NÃO LANÇAR FEITIÇOS</value>
   </data>
   <data name="[Sound - Walk!]" xml:space="preserve">
-    <value>[Som — Ande!]</value>
+    <value>[Som - Ande!]</value>
   </data>
   <data name="[Blood / Undead]" xml:space="preserve">
     <value>[Sangue / Mortos-vivos]</value>
@@ -905,10 +905,10 @@
     <value>Desenhe círculos de aggro de som</value>
   </data>
   <data name="Draw Blood Aggro Circles" xml:space="preserve">
-    <value>Desenhe círculos de agressividade “Draw Blood”</value>
+    <value>Desenhar círculos de aggro por sangue</value>
   </data>
   <data name="Draw Magic Aggro Warnings" xml:space="preserve">
-    <value>Avisos sobre o “Draw Magic Aggro”</value>
+    <value>Desenhar avisos de aggro por magia</value>
   </data>
   <data name="Draw Proximity Circles" xml:space="preserve">
     <value>Desenhar círculos de proximidade</value>
@@ -983,7 +983,7 @@
     <value>Participe do Discord da Aethertek</value>
   </data>
   <data name="Eureka Suite GitHub Source" xml:space="preserve">
-    <value>Eureka Suite – Código-fonte no GitHub</value>
+    <value>Eureka Suite - Código-fonte no GitHub</value>
   </data>
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Links da comunidade e externos:</value>
