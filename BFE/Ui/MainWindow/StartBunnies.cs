@@ -65,7 +65,7 @@ internal class StartBunnies
         ImGui.BeginChild("##MarcoContenedorBFE", new Vector2(anchoDisponible, ImGui.GetContentRegionAvail().Y - 54f * scale), true, ImGuiWindowFlags.None);
         {
             // 1. SELECCIÓN DE ÁREA (Area Selection)
-            ImGui.TextColored(Vector4.One, $"{FontAwesomeIcon.MapMarkerAlt.ToIconString()}   {UiText.T("Area Selection")}");
+            ImGui.TextColored(Vector4.One, UiText.T("Area Selection"));
             ImGui.Spacing();
 
             DrawAreaCards(scale);
@@ -74,7 +74,7 @@ internal class StartBunnies
             ImGui.Spacing();
 
             // 2. TAREA ACTUAL (Task)
-            ImGui.TextColored(Vector4.One, $"{FontAwesomeIcon.FileAlt.ToIconString()}   {UiText.T("Task")}");
+            ImGui.TextColored(Vector4.One, UiText.T("Task"));
             ImGui.Spacing();
             DrawTextField("TaskField", icurrentTask == "idle" ? "Idle. Select an area and press Start to begin." : icurrentTask, scale);
 
@@ -82,7 +82,7 @@ internal class StartBunnies
             ImGui.Spacing();
 
             // 3. TIEMPO TRANSCURRIDO (Time elapsed)
-            ImGui.TextColored(Vector4.One, $"{FontAwesomeIcon.Clock.ToIconString()}   {UiText.T("Time elapsed")}");
+            ImGui.TextColored(Vector4.One, UiText.T("Time elapsed"));
             ImGui.Spacing();
             DrawTextField("TimeField", P.stopwatch.Elapsed.ToString(@"mm\:ss\.fff"), scale);
 
@@ -91,10 +91,10 @@ internal class StartBunnies
 
             // 4. DEPENDENCIAS (Dependencies)
             var posDep = ImGui.GetCursorScreenPos();
-            ImGui.TextColored(Vector4.One, $"{FontAwesomeIcon.Link.ToIconString()}   {UiText.T("Dependencies")}");
+            ImGui.TextColored(Vector4.One, UiText.T("Dependencies"));
 
             ImGui.SameLine(ImGui.GetContentRegionAvail().X - 85f * scale);
-            if (ImGui.SmallButton($"{FontAwesomeIcon.Sync.ToIconString()} {UiText.T("Refresh")}"))
+            if (ImGui.SmallButton(UiText.T("Refresh")))
             {
                 P.pluginDependencies.Refresh(true);
             }
@@ -224,9 +224,19 @@ internal class StartBunnies
             var colorCheck = estaCargado ? ColorVerdeDisponible : (dep.State == PluginDependencyState.InstalledNotLoaded ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed);
 
             dl.AddCircleFilled(centroCheck, 8f * scale, ImGui.ColorConvertFloat4ToU32(colorCheck));
-            var iconoCheck = estaCargado ? FontAwesomeIcon.Check.ToIconString() : "!";
-            var tamIcono = ImGui.CalcTextSize(iconoCheck);
-            dl.AddText(centroCheck - (tamIcono * 0.5f), 0xFF111111, iconoCheck);
+            if (estaCargado)
+            {
+                var p1 = centroCheck + new Vector2(-4f * scale, 0f * scale);
+                var p2 = centroCheck + new Vector2(-1f * scale, 3.5f * scale);
+                var p3 = centroCheck + new Vector2(4.5f * scale, -3.5f * scale);
+                dl.AddLine(p1, p2, 0xFF111111, 2f * scale);
+                dl.AddLine(p2, p3, 0xFF111111, 2f * scale);
+            }
+            else
+            {
+                var tamIcono = ImGui.CalcTextSize("!");
+                dl.AddText(centroCheck - (tamIcono * 0.5f), 0xFF111111, "!");
+            }
 
             // Nombre del plugin
             dl.AddText(pos + new Vector2(26f * scale, 3f * scale), 0xFFFFFFFF, dep.DisplayName);
@@ -236,7 +246,7 @@ internal class StartBunnies
             dl.AddText(pos + new Vector2(160f * scale, 3f * scale), ImGui.ColorConvertFloat4ToU32(colorCheck), UiText.T(textoEstado));
 
             // Enlace de copiado del repositorio a la derecha
-            var textoEnlace = $"{FontAwesomeIcon.ExternalLinkAlt.ToIconString()}  Get Repo Url";
+            var textoEnlace = "Get Repo Url";
             var tamEnlace = ImGui.CalcTextSize(textoEnlace);
             var xEnlace = ancho - tamEnlace.X - 8f * scale;
 
@@ -273,8 +283,7 @@ internal class StartBunnies
         ImGui.PushStyleColor(ImGuiCol.Text, textColor);
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 8f * scale);
 
-        var icono = IsRunning ? FontAwesomeIcon.Stop.ToIconString() : FontAwesomeIcon.Play.ToIconString();
-        var etiqueta = $"{icono}   {ActionLabel}";
+        var etiqueta = ActionLabel;
 
         if (ImGui.Button(etiqueta, new Vector2(ImGui.GetContentRegionAvail().X, 42f * scale)))
         {

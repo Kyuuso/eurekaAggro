@@ -154,7 +154,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         }
         else
         {
-            if (mainWindow.IsOpen && mainWindow.TargetMainTab == 1 && string.IsNullOrEmpty(clean))
+            if (mainWindow.IsOpen && mainWindow.ActiveMainTab == 1 && string.IsNullOrEmpty(clean))
             {
                 mainWindow.IsOpen = false;
             }

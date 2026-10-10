@@ -103,25 +103,25 @@ internal class MainWindow : PositionedWindow
         // Botones de acción rápida a la derecha
         ImGui.SetCursorScreenPos(pos + new Vector2(ancho - 370f * scale, 8f * scale));
 
-        if (ImGui.SmallButton($"{FontAwesomeIcon.Cog.ToIconString()} Settings"))
+        if (ImGui.SmallButton("Settings"))
         {
             P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton($"{FontAwesomeIcon.Heart.ToIconString()} Ko-fi"))
+        if (ImGui.SmallButton("Ko-fi"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.SupportUrl, UseShellExecute = true });
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton($"{FontAwesomeIcon.CommentDots.ToIconString()} Discord"))
+        if (ImGui.SmallButton("Discord"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.DiscordUrl, UseShellExecute = true });
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton($"{FontAwesomeIcon.User.ToIconString()} OG Author"))
+        if (ImGui.SmallButton("OG Author"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.OriginalAuthorUrl, UseShellExecute = true });
         }
@@ -154,21 +154,21 @@ internal class MainWindow : PositionedWindow
         ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(14f * scale, 8f * scale));
         if (ImGui.BeginTabBar("BunniesTabs", ImGuiTabBarFlags.FittingPolicyScroll))
         {
-            if (ImGui.BeginTabItem($"{FontAwesomeIcon.Play.ToIconString()}   {UiText.T("Start Bunnies")}"))
+            if (ImGui.BeginTabItem(UiText.T("Start Bunnies")))
             {
                 ImGui.Spacing();
                 StartBunnies.Draw();
                 ImGui.EndTabItem();
             }
 
-            if (ImGui.BeginTabItem($"{FontAwesomeIcon.ChartBar.ToIconString()}   {UiText.T("Stats")}"))
+            if (ImGui.BeginTabItem(UiText.T("Stats")))
             {
                 ImGui.Spacing();
                 DrawStatsTab(scale);
                 ImGui.EndTabItem();
             }
 
-            if (ImGui.BeginTabItem($"{FontAwesomeIcon.InfoCircle.ToIconString()}   {UiText.T("About")}"))
+            if (ImGui.BeginTabItem(UiText.T("About")))
             {
                 ImGui.Spacing();
                 About.Draw();

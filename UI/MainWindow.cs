@@ -56,9 +56,9 @@ public class MainWindow
 
     public bool IsOpen = false;
 
-    // Top module navigation state (0 = Aggro Lines, 1 = Fate Engine, 2 = About & Credits)
-    public int TargetMainTab = 0;
-    private int currentMainTab = -1;
+    // Programmatic target tab request (-1 = no request, user-driven selection)
+    private int targetMainTab = -1;
+    public int ActiveMainTab { get; private set; } = 0;
 
     // Sub-view states for each module ("cada pestaña con su cosa, con su configuración")
     public SubView AggroSubView = SubView.Main;
@@ -116,24 +116,21 @@ public class MainWindow
 
     public void OpenAggroRadar(SubView subView = SubView.Main)
     {
-        TargetMainTab = 0;
+        targetMainTab = 0;
         AggroSubView = subView;
-        currentMainTab = -1;
         IsOpen = true;
     }
 
     public void OpenFateEngine(SubView subView = SubView.Main)
     {
-        TargetMainTab = 1;
+        targetMainTab = 1;
         FateSubView = subView;
-        currentMainTab = -1;
         IsOpen = true;
     }
 
     public void OpenAbout()
     {
-        TargetMainTab = 2;
-        currentMainTab = -1;
+        targetMainTab = 2;
         IsOpen = true;
     }
 
@@ -146,7 +143,7 @@ public class MainWindow
 
         if (ImGui.Begin("Eureka Aggro Suite###EurekaAggroMainWindow", ref IsOpen))
         {
-            // 1. Top Master Header: Icon, Name, Credits summary, State, Links
+            // 1. Top Master Header: Icon, Name, Credits summary, State
             DrawMasterHeader(scale);
 
             ImGui.Separator();
@@ -156,46 +153,47 @@ public class MainWindow
             if (ImGui.BeginTabBar("##EurekaMasterTabs", ImGuiTabBarFlags.FittingPolicyScroll))
             {
                 // TAB 1: AGGRO LINES
-                var aggroFlags = (TargetMainTab == 0 && currentMainTab != 0) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("🛡️ Aggro Lines##TabAggro", ref IsOpen, aggroFlags))
+                var aggroFlags = (targetMainTab == 0) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("Aggro Lines###TabAggro", aggroFlags))
                 {
-                    currentMainTab = 0;
+                    ActiveMainTab = 0;
                     DrawModuleBody(0, scale);
                     ImGui.EndTabItem();
                 }
 
                 // TAB 2: FATE ENGINE (BUNNIES)
-                var fateFlags = (TargetMainTab == 1 && currentMainTab != 1) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("🐰 Fate Engine##TabFate", ref IsOpen, fateFlags))
+                var fateFlags = (targetMainTab == 1) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("Fate Engine###TabFate", fateFlags))
                 {
-                    currentMainTab = 1;
+                    ActiveMainTab = 1;
                     DrawModuleBody(1, scale);
                     ImGui.EndTabItem();
                 }
 
                 // TAB 3: ABOUT & CREDITS
-                var aboutFlags = (TargetMainTab == 2 && currentMainTab != 2) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
-                if (ImGui.BeginTabItem("ℹ️ About & Credits##TabAbout", ref IsOpen, aboutFlags))
+                var aboutFlags = (targetMainTab == 2) ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+                if (ImGui.BeginTabItem("About & Credits###TabAbout", aboutFlags))
                 {
-                    currentMainTab = 2;
+                    ActiveMainTab = 2;
                     DrawAboutSection(scale);
                     ImGui.EndTabItem();
                 }
 
                 ImGui.EndTabBar();
             }
+
+            // Consume programmatic navigation request so ImGui handles user clicks freely
+            targetMainTab = -1;
         }
         ImGui.End();
     }
 
     /// <summary>
     /// Master header displayed at the top of the suite window:
-    /// Plugin Icon, Title, Version, Active Expedition Status, Quick community links.
+    /// Plugin Icon, Title, Version, Active Expedition Status.
     /// </summary>
     private void DrawMasterHeader(float scale)
     {
-        var width = ImGui.GetContentRegionAvail().X;
-
         // Icon display
         if (iconTexture?.TryGetWrap(out var wrap, out _) == true && wrap != null)
         {
@@ -229,27 +227,6 @@ public class MainWindow
             else
             {
                 ImGui.TextColored(ImGuiColors.DalamudGrey, $"○ Location: {zoneName} [Outside Eureka - Expedition features on standby]");
-            }
-        }
-        ImGui.EndGroup();
-
-        // Quick action links on top right
-        ImGui.SameLine(width - 245 * scale);
-        ImGui.BeginGroup();
-        {
-            if (ImGui.SmallButton($"{FontAwesomeIcon.Heart.ToIconString()} Ko-fi"))
-            {
-                Process.Start(new ProcessStartInfo { FileName = "https://ko-fi.com/mcvaxius", UseShellExecute = true });
-            }
-            ImGui.SameLine();
-            if (ImGui.SmallButton($"{FontAwesomeIcon.CommentDots.ToIconString()} Discord"))
-            {
-                Process.Start(new ProcessStartInfo { FileName = "https://discord.gg/invite/aethertek", UseShellExecute = true });
-            }
-            ImGui.SameLine();
-            if (ImGui.SmallButton($"{FontAwesomeIcon.CodeBranch.ToIconString()} GitHub"))
-            {
-                Process.Start(new ProcessStartInfo { FileName = "https://github.com/Kyuuso/eurekaAggro", UseShellExecute = true });
             }
         }
         ImGui.EndGroup();
@@ -317,7 +294,7 @@ public class MainWindow
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
         }
 
-        if (ImGui.Button($"{FontAwesomeIcon.ThLarge.ToIconString()}   Main##BottomMainBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        if (ImGui.Button($"Main###BottomMainBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
         {
             if (moduleIndex == 0) AggroSubView = SubView.Main;
             else FateSubView = SubView.Main;
@@ -339,7 +316,7 @@ public class MainWindow
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.98f, 0.78f, 0.32f, 1f));
         }
 
-        if (ImGui.Button($"{FontAwesomeIcon.Cog.ToIconString()}   Configuration##BottomConfigBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
+        if (ImGui.Button($"Configuration###BottomConfigBtn_{moduleIndex}", new Vector2(btnWidth, btnHeight)))
         {
             if (moduleIndex == 0) AggroSubView = SubView.Configuration;
             else FateSubView = SubView.Configuration;
@@ -360,18 +337,18 @@ public class MainWindow
             var radarStatus = config.Enabled ? "Enabled" : "Disabled";
             var radarColor = config.Enabled ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed;
 
-            ImGui.TextColored(GoldAccent, $"{FontAwesomeIcon.ShieldAlt.ToIconString()}   Aggro Radar Status:");
+            ImGui.TextColored(GoldAccent, "Aggro Radar Status:");
             ImGui.SameLine();
             ImGui.TextColored(radarColor, $"● {radarStatus}");
 
-            ImGui.SameLine(320 * scale);
-            ImGui.TextColored(GoldAccent, $"{FontAwesomeIcon.Walking.ToIconString()}   Dragon Auto-Walk:");
+            ImGui.SameLine(280 * scale);
+            ImGui.TextColored(GoldAccent, "Dragon Auto-Walk:");
             ImGui.SameLine();
             var autoWalkStatus = config.AutoWalkNearDragons ? "Active" : "Disabled";
             ImGui.TextColored(config.AutoWalkNearDragons ? ImGuiColors.HealerGreen : TextMuted, $"● {autoWalkStatus}");
 
-            ImGui.SameLine(600 * scale);
-            ImGui.TextColored(GoldAccent, $"{FontAwesomeIcon.ExclamationTriangle.ToIconString()}   Cast Alerts:");
+            ImGui.SameLine(540 * scale);
+            ImGui.TextColored(GoldAccent, "Cast Alerts:");
             ImGui.SameLine();
             var alertStatus = config.ShowCastAlerts ? "Active" : "Disabled";
             ImGui.TextColored(config.ShowCastAlerts ? ImGuiColors.HealerGreen : TextMuted, $"● {alertStatus}");
@@ -1174,18 +1151,20 @@ public class MainWindow
         ImGui.Separator();
         ImGui.Spacing();
 
-        ImGui.TextColored(GoldAccent, "Support & Community Links:");
-        if (ImGui.Button($"{FontAwesomeIcon.Heart.ToIconString()}  Support McVaxius on Ko-fi"))
+        ImGui.TextColored(GoldAccent, "Community & External Links:");
+        ImGui.Spacing();
+
+        if (ImGui.Button("Support McVaxius on Ko-fi", new Vector2(240 * scale, 34 * scale)))
         {
             Process.Start(new ProcessStartInfo { FileName = "https://ko-fi.com/mcvaxius", UseShellExecute = true });
         }
         ImGui.SameLine();
-        if (ImGui.Button($"{FontAwesomeIcon.CommentDots.ToIconString()}  Join Aethertek Discord"))
+        if (ImGui.Button("Join Aethertek Discord", new Vector2(240 * scale, 34 * scale)))
         {
             Process.Start(new ProcessStartInfo { FileName = "https://discord.gg/invite/aethertek", UseShellExecute = true });
         }
         ImGui.SameLine();
-        if (ImGui.Button($"{FontAwesomeIcon.CodeBranch.ToIconString()}  EurekaAggro GitHub"))
+        if (ImGui.Button("EurekaAggro GitHub Source", new Vector2(240 * scale, 34 * scale)))
         {
             Process.Start(new ProcessStartInfo { FileName = "https://github.com/Kyuuso/eurekaAggro", UseShellExecute = true });
         }
