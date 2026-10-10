@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>Màu sắc</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>Xanh ngọc</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Xanh dương</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>Hồng</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>RGB tùy chỉnh</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>Chế độ gọn</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>Đang tải phông chữ giao diện...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>Không tải được phông chữ giao diện. Xem nhật ký plugin.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>Cuộn xuống kênh “The Dumpster Fire” để thảo luận về lỗi hoặc góp ý cho từng plugin.</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>Đã tải</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>Giới thiệu</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>Chọn khu vực</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>Cài đặt AutoRetainer</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>Cài đặt BFE</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>Thỏ</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>Bunny Fate Engine</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>Nhấn để sao chép URL kho mã</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>Sao chép liên kết hướng dẫn biểu tượng</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>Hiện chưa được hỗ trợ!</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>Thống kê gỡ lỗi</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Plugin cần thiết</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>Đang xuống thú cưỡi</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>Bật đăng xuất sau khi hoàn tất</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>Bật hỗ trợ nhiều nhân vật</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>Bật sửa chữa</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>Bật hỗ trợ người hầu</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>Bật hỗ trợ tàu ngầm</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>Bật hỗ trợ người hầu cho nhân vật này.</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>Đang vào Pyros</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>Cài đặt chung</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>Lấy URL kho mã</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>Gil kiếm được</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>Đến nhà riêng/FC sau khi hoàn tất</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>Đang đến Eureka</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>Đang đến FC</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>Đang về nhà riêng</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>Đang đến NPC sửa chữa</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>Rương vàng</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>Rương bạc</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>Rương đồng</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>Giữ Ctrl để bật nút.</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Giờ</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>Thống kê Hydatos</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Đang chờ</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>Đang chờ. Chọn khu vực rồi nhấn Bắt đầu.</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>Nếu đã nâng cấp nghề chế tạo, sẽ dùng Dark Matter để tự sửa chữa.</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>Đang tham gia FATE thỏ</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>Không giới hạn</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>Đã cài đặt, chưa tải</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>Đang rời nhiệm vụ</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>Tổng tích lũy</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>Tải tất cả plugin cần thiết để bắt đầu tự động hóa Bunnies.</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>Đang đăng xuất</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Phút</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Còn thiếu</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>Đang lên thú cưỡi</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>Đang di chuyển đến {0}</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>Không khả dụng</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>Tác giả gốc</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>Mở cửa sổ cài đặt</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>Thống kê Pagos</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>Nhấn để đặt lại thống kê.</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>Thống kê Pyros</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>ĐẶT LẠI THỐNG KÊ</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Làm mới</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>Ngưỡng sửa chữa</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>Đang cử lại người hầu</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>Chạy trong khoảng thời gian X</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Đang chạy</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>Chọn để bắt đầu săn thỏ</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>Tự sửa chữa</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>Đang tự sửa chữa</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>Phiên hiện tại</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>Bắt đầu săn thỏ</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>Bắt đầu Pyros</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>Trạng thái: {0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Thống kê</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Dừng</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Tác vụ</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>Dịch chuyển đến nhà riêng</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>Dịch chuyển đến FC</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>Ngưỡng sửa trang bị</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>Thời gian đã trôi qua</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>Tổng thống kê</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>Đang sử dụng Aethernet</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>Đang sử dụng người hầu</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>Đang phát triển</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Đang chờ Navmesh</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>Đang chờ tại FATE</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>Sẽ đăng xuất khi hoàn tất các vòng chạy.</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>Sẽ dịch chuyển đến nhà riêng hoặc nhà FC khi hoàn tất các vòng chạy.</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0} (tên thay thế cũ)</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer hiện chưa được cài đặt hoặc bật. Nhấn để sao chép kho mã.</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>Khi độ bền trang bị đạt ngưỡng, sẽ tự động sửa tại NPC sau FATE thỏ tiếp theo.</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>Chạy không giới hạn hoặc đặt thời gian tối đa 24 giờ</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>Tự động hóa Bunnies đã được khôi phục cho việc di chuyển giữa các FATE thỏ ở Eureka, tìm rương và thống kê lượt chạy.</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>Các plugin sau phải được cài đặt và bật: </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>Đang di chuyển đến NPC ở Kugane</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>Đang mở rương</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>Thú cưỡi Eldthurs</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>Kiểu tóc Pyros</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>Copycat Bulb</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>Thú cưỡi Petrel</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>Đã sao chép URL kho mã</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>Đang về nhà riêng</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#xA;{0}" xml:space="preserve">
+    <value>Các plugin cần thiết cho Bunnies không khả dụng:
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>Bắt đầu {0}</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>Gỡ lỗi BFE</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>Đột kích thường</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Giao diện cửa sổ</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Hiển thị chế độ gọn trên cửa sổ chính</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Hiển thị lựa chọn ngôn ngữ trên cửa sổ chính</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Độ trong suốt</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Độ đục (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Tự giảm độ đục khi mất tiêu điểm</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Độ đục khi mất tiêu điểm (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Độ trễ khi mất tiêu điểm (giây)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Sao chép / nén ZIP nhật ký Dalamud</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>Vẫn xuất nhật ký đã đầy</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>Đang xuất nhật ký...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>ZIP nhật ký đã sẵn sàng. Chia sẻ thủ công và xóa các bản xuất cũ không còn cần.</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>Xuất nhật ký thất bại.</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>Mở thư mục xuất</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>Nhật ký này đã đạt giới hạn 100 MiB của Dalamud. Việc ghi có thể đã dừng; hoạt động gần đây có thể bị thiếu nên nhật ký có thể không giúp chẩn đoán vấn đề hiện tại.</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve"><value>Mở công cụ nhật ký XA Slave</value></data>
+  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Mở bảng Utility &gt; XA Mods của XA Slave, chứa Dalamud Log Cleaner.</value></data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>Không thể mở công cụ nhật ký XA Slave.</value></data>
+</root>

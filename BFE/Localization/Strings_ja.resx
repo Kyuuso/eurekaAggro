@@ -1,0 +1,397 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>ティール</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>青</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>ピンク</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>カスタム RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>コンパクトモード</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>UI フォントを読み込み中...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>UI フォントの読み込みに失敗しました。ログを確認してください。</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>プラグインの問題や提案は「The Dumpster Fire」チャンネルでご相談ください。</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>読み込み済み</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>概要</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>エリア選択</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>AutoRetainer設定</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>BFE設定</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>うさぎ</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>うさぎFATE自動化</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>クリックでリポジトリURLをコピー</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>アイコンガイドのリンクをコピー</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>現在未対応です！</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>デバッグ統計</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>依存プラグイン</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>マウントから降りています</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>完了後にログアウト</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>マルチ対応を有効化</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>修理を有効化</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>リテイナー対応を有効化</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>潜水艦対応を有効化</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>このキャラクターのリテイナー対応を有効にします。</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>ピューロスに入場中</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>一般設定</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>リポジトリURLをコピー</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>獲得ギル</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>完了後に個人宅・FCハウスへ移動</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>エウレカへ移動中</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>FCハウスへ移動中</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>個人宅へ移動中</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>修理屋へ移動中</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>黄金の財宝</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>白銀の財宝</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>青銅の財宝</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>Ctrlを押したままにするとボタンを使用できます。</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>ヒュダトス統計</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>待機中</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>待機中。エリアを選択し、開始を押してください。</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>クラフターのレベルが足りる場合、ダークマターで自己修理します。</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>うさぎFATE中</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>無制限</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>インストール済み・未読み込み</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>コンテンツから退出中</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>累計</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>必要なプラグインをすべて読み込むと、うさぎの自動化を開始できます。</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>ログアウト中</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>分</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>未インストール</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>マウントに乗っています</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>{0}へ移動中</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>利用不可</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>原作者</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>設定ウィンドウを開く</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>パゴス統計</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>クリックすると統計をリセットします。</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>ピューロス統計</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>統計をリセット</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>修理しきい値</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>リテイナーを再派遣中</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>指定時間実行</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>実行中</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>うさぎを開始するエリアを選択</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>自己修理</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>自己修理中</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>セッション</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>うさぎを開始</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>ピューロス開始</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>状態：{0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>統計</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>タスク</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>個人宅へテレポ</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>FCハウスへテレポ</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>装備を修理する耐久度のしきい値</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>経過時間</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>合計統計</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>都市内エーテライトを使用中</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>リテイナーを利用中</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>開発中</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Navmesh待機中</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>FATE地点で待機中</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>周回が完了するとログアウトします。</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>周回が完了すると個人宅またはFCハウスへテレポします。</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0}（旧エイリアス）</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainerが未インストールまたは無効です。クリックでリポジトリをコピーできます。</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>装備の耐久度が条件を満たすと、次のうさぎFATE終了後に修理屋で自動修理します。</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>無制限で実行するか、最大24時間のタイマーを設定します</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>エウレカのうさぎFATE移動、財宝探索、実行統計に対応した復元版うさぎ自動化です。</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>以下のプラグインをインストールして有効にしてください： </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>クガネのNPCへ移動中</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>財宝を取得中</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>エルドスルスマウント</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>ピューロスのヘアカタログ</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>コピーキャット・バルブ</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>エウレカスワローマウント</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>リポジトリURLをコピーしました</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>個人宅へ移動中</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
+    <value>Bunniesに必要なプラグインを利用できません：
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>{0}開始</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>BFEデバッグ</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>ノーマルレイド</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>ウィンドウの外観</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>メインウィンドウにコンパクト切替を表示</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>メインウィンドウに言語選択を表示</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>不透明度 (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>フォーカスがないときに自動で薄くする</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>非フォーカス時の不透明度 (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>非フォーカス時の待機時間 (秒)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Dalamudログをコピー／ZIP化</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>上限に達したログをエクスポート</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>ログをエクスポート中...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>ログのZIPを作成しました。手動で共有し、不要になった古いファイルは削除してください。</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>ログのエクスポートに失敗しました。</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>エクスポートフォルダーを開く</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>このログはDalamudの100 MiB上限に達しています。記録が停止し、最近の動作が含まれていない可能性があるため、現在の問題の調査に役立たない場合があります。</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve"><value>XA Slaveのログツールを開く</value></data>
+  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Dalamud Log Cleanerを含むXA SlaveのUtility &gt; XA Modsパネルを開きます。</value></data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>XA Slaveのログツールを開けませんでした。</value></data>
+</root>

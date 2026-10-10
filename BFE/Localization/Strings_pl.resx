@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>Kolor</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>Turkusowy</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Niebieski</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>Różowy</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>Własny RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>Tryb kompaktowy</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>Ładowanie czcionek interfejsu...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>Nie udało się załadować czcionek interfejsu. Sprawdź dziennik wtyczki.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>Przewiń do kanału „The Dumpster Fire”, aby omówić problemy lub sugestie dotyczące konkretnych wtyczek.</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>Załadowano</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>O programie</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>Wybór obszaru</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>Ustawienia AutoRetainer</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>Ustawienia BFE</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>Króliki</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>Bunny Fate Engine</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>Kliknij, aby skopiować URL repozytorium</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>Kopiuj link do przewodnika po ikonach</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>Obecnie nieobsługiwane!</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>Statystyki diagnostyczne</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Zależności</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>Zsiadanie z wierzchowca</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>Wyloguj po zakończeniu</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>Włącz obsługę wielu postaci</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>Włącz naprawy</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>Włącz obsługę pomocników</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>Włącz obsługę łodzi podwodnych</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>Włącza obsługę pomocników dla tej postaci.</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>Wchodzenie do Pyros</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>Ustawienia ogólne</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>Pobierz URL repozytorium</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>Zdobyty gil</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>Idź do domu osobistego/FC po zakończeniu</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>Podróż do Eureki</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>Podróż do FC</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>Podróż do domu osobistego</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>Podróż do NPC naprawiającego sprzęt</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>Złote skrzynie</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>Srebrne skrzynie</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>Brązowe skrzynie</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>Przytrzymaj Ctrl, aby włączyć przycisk.</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Godziny</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>Statystyki Hydatos</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Bezczynność</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>Bezczynność. Wybierz obszar i naciśnij Rozpocznij.</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>Przy odpowiednim poziomie rzemiosła używa Dark Matter do samodzielnej naprawy.</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>W króliczym FATE</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>Bez limitu</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>Zainstalowano, ale nie załadowano</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>Opuszczanie instancji</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>Łącznie</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>Załaduj wszystkie wymagane wtyczki, aby uruchomić automatyzację Bunnies.</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>Wylogowywanie</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minuty</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Brak</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>Dosiadanie wierzchowca</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>Przemieszczanie do {0}</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>Niedostępne</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>Autor oryginału</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>Otwórz okno ustawień</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>Statystyki Pagos</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>Naciśnij, aby wyzerować statystyki.</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>Statystyki Pyros</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>ZERUJ STATYSTYKI</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Odśwież</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>Próg naprawy</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>Ponowne wysyłanie pomocników</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>Uruchom na czas X</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Działa</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>Wybierz, aby rozpocząć polowanie na króliki</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>Samodzielna naprawa</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>Samodzielne naprawianie</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>Sesja</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>Rozpocznij polowanie na króliki</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>Rozpocznij Pyros</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>Stan: {0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Statystyki</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Zatrzymaj</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Zadanie</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>Teleportuj do domu osobistego</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>Teleportuj do FC</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>Próg naprawy wyposażenia</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>Upłynęło</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>Statystyki ogółem</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>Korzystanie z Aethernet</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>Korzystanie z pomocnika</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>W trakcie prac</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Oczekiwanie na Navmesh</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>Oczekiwanie przy FATE</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>Wyloguje po zakończeniu wszystkich cykli.</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>Teleportuje do domu osobistego lub FC po zakończeniu wszystkich cykli.</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0} (dawna nazwa alternatywna)</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer nie jest zainstalowany lub włączony. Kliknij, aby skopiować repozytorium.</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>Gdy stan wyposażenia osiągnie próg, automatycznie naprawi je u sprzedawcy po następnym króliczym FATE.</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>Uruchom bez limitu lub ustaw czas działania do 24 godzin</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>Przywrócona automatyzacja Bunnies obsługująca trasy króliczych FATE w Eurece, szukanie skrzyń i statystyki działania.</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>Następujące wtyczki muszą być zainstalowane i włączone: </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>Przemieszczanie do NPC w Kugane</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>Otwieranie skrzyni</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>Wierzchowiec Eldthurs</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>Fryzury z Pyros</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>Copycat Bulb</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>Wierzchowiec Petrel</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>Skopiowano URL repozytorium</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>Podróż do domu osobistego</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#xA;{0}" xml:space="preserve">
+    <value>Wymagane wtyczki dla Bunnies są niedostępne:
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>Rozpocznij {0}</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>Diagnostyka BFE</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>Zwykły rajd</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Wygląd okna</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Pokaż tryb kompaktowy w oknie głównym</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Pokaż wybór języka w oknie głównym</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Przezroczystość</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Nieprzezroczystość (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Automatycznie przygaszaj bez fokusu</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Nieprzezroczystość bez fokusu (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Opóźnienie bez fokusu (sekundy)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Kopiuj / spakuj dziennik Dalamud</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>Mimo to eksportuj pełny dziennik</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>Eksportowanie dziennika...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>ZIP dziennika gotowy. Udostępnij go ręcznie i usuń niepotrzebne stare eksporty.</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>Eksport dziennika nie powiódł się.</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>Otwórz folder eksportu</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>Ten dziennik osiągnął limit 100 MiB Dalamud. Zapis mógł się zatrzymać; może brakować ostatniej aktywności, więc dziennik może nie pomóc w diagnozie obecnego problemu.</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve"><value>Otwórz narzędzia logów XA Slave</value></data>
+  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Otwiera panel Utility &gt; XA Mods w XA Slave, zawierający Dalamud Log Cleaner.</value></data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>Nie udało się otworzyć narzędzi logów XA Slave.</value></data>
+</root>

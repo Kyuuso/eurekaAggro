@@ -2,7 +2,7 @@ name: Build and Release
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, 'feature/*' ]
     tags:
       - 'v*'
   workflow_dispatch:
@@ -32,14 +32,28 @@ jobs:
           $rawVer = $manifest.AssemblyVersion
           if ([string]::IsNullOrWhiteSpace($rawVer)) { $rawVer = "1.0.0.0" }
           
-          # Short tag version: e.g. 1.0.0 from 1.0.0.0
           $parts = $rawVer.Split('.')
-          $tagVer = if ($parts.Length -ge 3) { "$($parts[0]).$($parts[1]).$($parts[2])" } else { $rawVer }
-          $tagName = "v$tagVer"
+          $baseVer = if ($parts.Length -ge 3) { "$($parts[0]).$($parts[1]).$($parts[2])" } else { $rawVer }
+          
+          # Detect feature branch or preview mode
+          $isFeatureBranch = ($env:GITHUB_REF -like "refs/heads/feature/*")
+          if ($isFeatureBranch) {
+              $branchName = $env:GITHUB_REF -replace "refs/heads/", ""
+              $tagName = "v$baseVer-preview"
+              $isPrerelease = "true"
+              $isTestingOnly = "true"
+              Write-Host "Detected feature branch ($branchName). Configuring PREVIEW build ($tagName)"
+          } else {
+              $tagName = "v$baseVer"
+              $isPrerelease = "false"
+              $isTestingOnly = "false"
+              Write-Host "Target version: $rawVer (Tag: $tagName)"
+          }
           
           echo "PLUGIN_VERSION=$rawVer" >> $env:GITHUB_ENV
           echo "TAG_NAME=$tagName" >> $env:GITHUB_ENV
-          Write-Host "Target version: $rawVer (Tag: $tagName)"
+          echo "IS_PRERELEASE=$isPrerelease" >> $env:GITHUB_ENV
+          echo "IS_TESTING_ONLY=$isTestingOnly" >> $env:GITHUB_ENV
 
       - name: Download and extract Dalamud
         shell: pwsh
@@ -60,23 +74,49 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path "package"
           New-Item -ItemType Directory -Force -Path "package/images"
+          
+          # Copy plugin binaries, dependencies (AethertekUI, ECommons), and metadata
           Copy-Item -Path "bin/Release/EurekaAggro.dll" -Destination "package/"
           Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "package/"
-          Copy-Item -Path "bin/Release/EurekaAggro.pdb" -Destination "package/"
-          Copy-Item -Path "bin/Release/EurekaAggro.deps.json" -Destination "package/"
-          Copy-Item -Path "images/icon.png" -Destination "package/images/icon.png"
-          Copy-Item -Path "images/icon.png" -Destination "package/icon.png"
+          Copy-Item -Path "bin/Release/EurekaAggro.pdb" -Destination "package/" -ErrorAction SilentlyContinue
+          Copy-Item -Path "bin/Release/EurekaAggro.deps.json" -Destination "package/" -ErrorAction SilentlyContinue
+          Copy-Item -Path "bin/Release/AethertekUI*.dll" -Destination "package/"
+          Copy-Item -Path "bin/Release/AethertekUI*.pdb" -Destination "package/" -ErrorAction SilentlyContinue
+          Copy-Item -Path "bin/Release/ECommons.dll" -Destination "package/"
+          Copy-Item -Path "images/icon.png" -Destination "package/images/icon.png" -Force
+          Copy-Item -Path "images/icon.png" -Destination "package/icon.png" -Force
+          if (Test-Path "bin/Release/BFE") {
+              Copy-Item -Path "bin/Release/BFE" -Destination "package/" -Recurse -Force
+          }
           
-          # Strictly versioned zip for release archives (never use latest.zip)
+          # Strictly versioned zip for release archives
           Compress-Archive -Path "package/*" -DestinationPath "EurekaAggro-${{ env.TAG_NAME }}.zip" -Force
+          
+          # If building preview, also create EurekaAggro-preview.zip
+          if ($env:IS_TESTING_ONLY -eq "true") {
+              Copy-Item -Path "EurekaAggro-${{ env.TAG_NAME }}.zip" -Destination "EurekaAggro-preview.zip" -Force
+          }
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.TAG_NAME }}-package
+          path: |
+            EurekaAggro-${{ env.TAG_NAME }}.zip
+            EurekaAggro-preview.zip
+            bin/Release/EurekaAggro.json
+            images/icon.png
+          if-no-files-found: ignore
 
       - name: Create or Update Versioned GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: Release ${{ env.TAG_NAME }}
+          prerelease: ${{ env.IS_PRERELEASE == 'true' }}
           files: |
             EurekaAggro-${{ env.TAG_NAME }}.zip
+            EurekaAggro-preview.zip
             bin/Release/EurekaAggro.json
             images/icon.png
           generate_release_notes: true
@@ -93,34 +133,58 @@ jobs:
           # Clone public repo using personal sync token
           git clone https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/Kyuuso/dalamud-plugins.git public_repo
           
-          # Copy strictly versioned release package and icon assets
           New-Item -ItemType Directory -Force -Path "public_repo/plugins/EurekaAggro"
           New-Item -ItemType Directory -Force -Path "public_repo/plugins/EurekaAggro/images"
-          Copy-Item -Path "EurekaAggro-${{ env.TAG_NAME }}.zip" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro-${{ env.TAG_NAME }}.zip" -Force
-          Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro.json" -Force
-          Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaAggro/images/icon.png" -Force
-          Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaAggro/icon.png" -Force
-          
-          # Update version, explicit versioned download links and icon URL in pluginmaster.json
           $pmPath = "public_repo/pluginmaster.json"
-          if (Test-Path $pmPath) {
-              $pmRaw = Get-Content $pmPath -Raw
-              $pmUpdated = $pmRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
-              $versionedZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/EurekaAggro-${{ env.TAG_NAME }}.zip"
-              $iconUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/images/icon.png"
-              $pmUpdated = $pmUpdated -replace '("DownloadLinkInstall"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
-              $pmUpdated = $pmUpdated -replace '("DownloadLinkUpdate"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
-              $pmUpdated = $pmUpdated -replace '("DownloadLinkTesting"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
-              if ($pmUpdated -match '"IconUrl"\s*:') {
-                  $pmUpdated = $pmUpdated -replace '("IconUrl"\s*:\s*")[^"]+(")', "`${1}$iconUrl`${2}"
-              } else {
-                  $pmUpdated = $pmUpdated -replace '("AssemblyVersion"\s*:\s*"[^"]+",)', "`$1`n    `"IconUrl`": `"$iconUrl`","
-              }
-              Set-Content -Path $pmPath -Value $pmUpdated -Encoding utf8
-          }
           
-          # Commit and push changes
-          cd public_repo
-          git add pluginmaster.json plugins/EurekaAggro/
-          git commit -m "Auto-update EurekaAggro plugin release to ${{ env.TAG_NAME }} (${{ env.PLUGIN_VERSION }})" || echo "No changes to commit"
-          git push origin main || git push origin master
+          if ($env:IS_TESTING_ONLY -eq "true") {
+              # PREVIEW / TESTING TRACK: Update only testing link & TestingAssemblyVersion
+              Write-Host "Deploying PREVIEW / Testing release to public repo..."
+              Copy-Item -Path "EurekaAggro-preview.zip" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro-preview.zip" -Force
+              
+              if (Test-Path $pmPath) {
+                  $pmRaw = Get-Content $pmPath -Raw
+                  $previewZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/EurekaAggro-preview.zip"
+                  $pmUpdated = $pmRaw -replace '("DownloadLinkTesting"\s*:\s*")[^"]+(")', "`${1}$previewZipUrl`${2}"
+                  
+                  if ($pmUpdated -match '"TestingAssemblyVersion"\s*:') {
+                      $pmUpdated = $pmUpdated -replace '("TestingAssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
+                  } else {
+                      $pmUpdated = $pmUpdated -replace '("AssemblyVersion"\s*:\s*"[^"]+",)', "`$1`n    `"TestingAssemblyVersion`": `"${{ env.PLUGIN_VERSION }}`","
+                  }
+                  Set-Content -Path $pmPath -Value $pmUpdated -Encoding utf8
+              }
+              
+              cd public_repo
+              git add pluginmaster.json plugins/EurekaAggro/
+              git commit -m "Auto-update EurekaAggro testing/preview release to ${{ env.PLUGIN_VERSION }}" || echo "No changes to commit"
+              git push origin main || git push origin master
+          } else {
+              # STABLE RELEASE TRACK
+              Write-Host "Deploying STABLE release to public repo..."
+              Copy-Item -Path "EurekaAggro-${{ env.TAG_NAME }}.zip" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro-${{ env.TAG_NAME }}.zip" -Force
+              Copy-Item -Path "bin/Release/EurekaAggro.json" -Destination "public_repo/plugins/EurekaAggro/EurekaAggro.json" -Force
+              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaAggro/images/icon.png" -Force
+              Copy-Item -Path "images/icon.png" -Destination "public_repo/plugins/EurekaAggro/icon.png" -Force
+              
+              if (Test-Path $pmPath) {
+                  $pmRaw = Get-Content $pmPath -Raw
+                  $pmUpdated = $pmRaw -replace '("AssemblyVersion"\s*:\s*")[^"]+(")', "`${1}${{ env.PLUGIN_VERSION }}`${2}"
+                  $versionedZipUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/EurekaAggro-${{ env.TAG_NAME }}.zip"
+                  $iconUrl = "https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/plugins/EurekaAggro/images/icon.png"
+                  $pmUpdated = $pmUpdated -replace '("DownloadLinkInstall"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
+                  $pmUpdated = $pmUpdated -replace '("DownloadLinkUpdate"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
+                  $pmUpdated = $pmUpdated -replace '("DownloadLinkTesting"\s*:\s*")[^"]+(")', "`${1}$versionedZipUrl`${2}"
+                  if ($pmUpdated -match '"IconUrl"\s*:') {
+                      $pmUpdated = $pmUpdated -replace '("IconUrl"\s*:\s*")[^"]+(")', "`${1}$iconUrl`${2}"
+                  } else {
+                      $pmUpdated = $pmUpdated -replace '("AssemblyVersion"\s*:\s*"[^"]+",)', "`$1`n    `"IconUrl`": `"$iconUrl`","
+                  }
+                  Set-Content -Path $pmPath -Value $pmUpdated -Encoding utf8
+              }
+              
+              cd public_repo
+              git add pluginmaster.json plugins/EurekaAggro/
+              git commit -m "Auto-update EurekaAggro plugin release to ${{ env.TAG_NAME }} (${{ env.PLUGIN_VERSION }})" || echo "No changes to commit"
+              git push origin main || git push origin master
+          }

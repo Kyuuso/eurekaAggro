@@ -35,6 +35,8 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
+    [PluginService] internal static IToastGui ToastGui { get; private set; } = null!;
+    [PluginService] internal static IPlayerState PlayerState { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
 
     // Internal components
@@ -47,6 +49,7 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
     private readonly OverlayRenderer overlayRenderer;
     private readonly MainWindow mainWindow;
     private readonly CastAlertWindow castAlertWindow;
+    private readonly BFE.Plugin bfePlugin;
 
     private const string MainCommand = "/eurekaaggro";
     private const string ShortCommand = "/ea";
@@ -66,8 +69,11 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         dragonWalkService = new DragonWalkService(PluginLog, ClientState, ObjectTable, ChatGui, mobDatabase, configuration);
         overlayRenderer = new OverlayRenderer(GameGui, ClientState, ObjectTable, mobDatabase, environmentService, dragonWalkService, configuration);
 
+        // Initialize BFE (Bunnies for Eureka) automation subsystem
+        bfePlugin = new BFE.Plugin(pluginInterface, this, ChatGui, ToastGui, PlayerState, TextureProvider);
+
         castAlertWindow = new CastAlertWindow(castMonitor, configuration);
-        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, pluginInterface);
+        mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, pluginInterface, bfePlugin);
 
         CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
         {
@@ -126,6 +132,8 @@ public sealed class EurekaAggroPlugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
         PluginInterface.UiBuilder.OpenMainUi -= OnOpenConfigUi;
         Framework.Update -= OnFrameworkUpdate;
+
+        bfePlugin?.Dispose();
 
         configuration.Save();
         mobDatabase.SaveIfDirty();

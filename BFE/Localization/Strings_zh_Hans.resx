@@ -1,0 +1,397 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>青色</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>蓝色</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>粉色</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>自定义 RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>紧凑模式</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>正在加载界面字体...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>界面字体加载失败。请查看插件日志。</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>请在“The Dumpster Fire”频道讨论插件问题或建议。</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>已加载</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>区域选择</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>AutoRetainer 设置</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>BFE 设置</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>兔子</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>兔子危命任务自动化</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>点击复制仓库 URL</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>复制图标指南链接</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>目前不支持！</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>调试统计</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>依赖插件</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>正在下坐骑</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>完成后登出</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>启用多角色支持</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>启用修理</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>启用雇员支持</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>启用潜水艇支持</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>为此角色启用雇员支持。</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>正在进入涌火之地</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>常规设置</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>复制仓库 URL</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>获得的金币</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>完成后前往个人或部队房屋</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>正在前往优雷卡</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>正在前往部队房屋</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>正在前往个人房屋</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>正在前往修理商</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>金宝箱</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>银宝箱</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>铜宝箱</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>按住 Ctrl 以启用按钮。</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>丰水之地统计</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>空闲</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>空闲。请选择区域并点击开始。</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>生产职业等级足够时，使用暗物质自行修理。</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>正在参与兔子危命任务</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>无限</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>已安装，未加载</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>正在退出副本</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>累计</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>加载全部必需插件后即可开始兔子自动化。</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>正在登出</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>分钟</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>未安装</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>正在上坐骑</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>正在前往 {0}</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>不可用</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>原作者</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>打开设置窗口</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>恒冰之地统计</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>点击重置统计。</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>涌火之地统计</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>重置统计</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>修理阈值</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>正在重新派遣雇员</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>运行指定时间</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>运行中</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>选择以开始兔子任务</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>自行修理</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>正在自行修理</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>本次会话</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>开始兔子任务</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>开始涌火之地</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>状态：{0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>统计</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>传送至个人房屋</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>传送至部队房屋</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>修理装备的耐久度阈值</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>经过时间</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>总计统计</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>正在使用以太之网</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>正在使用雇员</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>开发中</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>正在等待 Navmesh</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>正在危命任务地点等待</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>循环完成后登出。</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>循环完成后传送至个人或部队房屋。</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0}（旧别名）</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer 尚未安装或启用。点击复制仓库。</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>装备耐久度满足条件后，将在下一次兔子危命任务结束后自动前往商人修理。</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>设置为无限运行，或设定最长 24 小时的计时器</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>已恢复的优雷卡兔子自动化，提供危命任务路线、宝箱搜寻及运行统计。</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>必须安装并启用以下插件： </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>正在前往黄金港 NPC</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>正在领取宝箱</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>炎兽坐骑</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>涌火之地发型</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>模仿球根</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>优雷卡燕坐骑</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>已复制仓库 URL</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>正在前往个人房屋</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
+    <value>Bunnies 所需插件不可用：
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>开始 {0}</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>BFE 调试</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>普通大型任务</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>窗口外观</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>在主窗口显示紧凑模式开关</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>在主窗口显示语言选择</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>不透明度 (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>失去焦点后自动淡化</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>未聚焦时的不透明度 (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>失去焦点后的等待时间 (秒)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>复制 / 压缩 Dalamud 日志</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>仍然导出已满日志</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>正在导出日志...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>日志 ZIP 已就绪。请手动分享，并删除不再需要的旧导出文件。</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>日志导出失败。</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>打开导出文件夹</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>此日志已达到 Dalamud 的 100 MiB 上限。日志记录可能已停止，最近的活动可能缺失，因此可能无法帮助诊断当前问题。</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve"><value>打开XA Slave日志工具</value></data>
+  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>打开XA Slave的Utility &gt; XA Mods面板，其中包含Dalamud Log Cleaner。</value></data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>无法打开XA Slave日志工具。</value></data>
+</root>

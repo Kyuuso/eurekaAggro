@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>Renk</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Dil</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>Camgöbeği</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Mavi</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>Pembe</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>Özel RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>Kompakt mod</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>Arayüz yazı tipleri yükleniyor...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>Arayüz yazı tipleri yüklenemedi. Eklenti günlüğüne bakın.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>Belirli eklentilerle ilgili sorun ve önerileri görüşmek için “The Dumpster Fire” kanalına ilerleyin.</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>Yüklendi</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>Hakkında</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>Bölge seçimi</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>AutoRetainer ayarları</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>BFE ayarları</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>Tavşanlar</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>Bunny Fate Engine</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>Depo URL'sini kopyalamak için tıklayın</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>Simge kılavuzu bağlantısını kopyala</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>Henüz desteklenmiyor!</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>Tanılama istatistikleri</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Bağımlılıklar</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>Binekten iniliyor</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>Tamamlanınca çıkış yap</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>Birden fazla karakter desteğini etkinleştir</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>Onarımı etkinleştir</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>Hizmetkâr desteğini etkinleştir</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>Denizaltı desteğini etkinleştir</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>Bu karakter için hizmetkâr desteğini etkinleştirir.</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>Pyros'a giriliyor</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>Genel ayarlar</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>Depo URL'sini al</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>Kazanılan gil</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>Tamamlanınca kişisel/FC evine git</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>Eureka'ya gidiliyor</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>FC'ye gidiliyor</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>Kişisel eve gidiliyor</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>Tamirciye gidiliyor</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>Altın sandıklar</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>Gümüş sandıklar</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>Bronz sandıklar</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>Düğmeyi etkinleştirmek için Ctrl'yi basılı tutun.</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Saat</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>Hydatos istatistikleri</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Boşta</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>Boşta. Başlamak için bir bölge seçip Başlat'a basın.</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>Üretim mesleklerinin seviyesi yeterliyse kendi onarımı için Dark Matter kullanır.</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>Tavşan FATE'inde</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>Sınırsız</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>Kurulu, yüklenmemiş</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>İçerikten çıkılıyor</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>Toplam</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>Bunnies otomasyonunu başlatmak için gereken tüm eklentileri yükleyin.</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>Çıkış yapılıyor</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Dakika</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Eksik</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>Bineğe biniliyor</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>{0} konumuna gidiliyor</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>Kullanılamıyor</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>İlk geliştirici</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>Ayarlar penceresini aç</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>Pagos istatistikleri</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>İstatistikleri sıfırlamak için basın.</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>Pyros istatistikleri</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>İSTATİSTİKLERİ SIFIRLA</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Yenile</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>Onarım eşiği</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>Hizmetkârlar yeniden gönderiliyor</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>X süre boyunca çalıştır</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Çalışıyor</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>Tavşan avını başlatmak için seçin</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>Kendi ekipmanını onarma</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>Kendi ekipmanını onarıyor</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>Oturum</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>Tavşan avını başlat</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>Pyros'u başlat</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>Durum: {0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>İstatistikler</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Durdur</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Görev</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>Kişisel eve ışınlan</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>FC'ye ışınlan</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>Ekipmanı onarma eşiği</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>Geçen süre</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>Toplam istatistikler</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>Aethernet kullanılıyor</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>Hizmetkâr kullanılıyor</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>Geliştiriliyor</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Navmesh bekleniyor</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>FATE'te bekleniyor</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>Tüm döngüler tamamlanınca çıkış yapar.</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>Tüm döngüler tamamlanınca kişisel eve veya FC evine ışınlanır.</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0} (eski alternatif ad)</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer kurulu veya etkin değil. Depoyu kopyalamak için tıklayın.</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>Ekipmanın durumu eşiğe ulaştığında sonraki tavşan FATE'inden sonra satıcıda otomatik onarım yapar.</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>Sınırsız çalıştırın veya en fazla 24 saatlik bir süre belirleyin</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>Eureka'daki tavşan FATE rotaları, sandık arama ve çalışma istatistikleri için Bunnies otomasyonu geri getirildi.</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>Şu eklentilerin kurulu ve etkin olması gerekiyor: </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>Kugane'deki NPC'ye gidiliyor</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>Sandık açılıyor</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>Eldthurs bineği</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>Pyros saç modelleri</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>Copycat Bulb</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>Petrel bineği</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>Depo URL'si kopyalandı</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>Kişisel eve gidiliyor</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#xA;{0}" xml:space="preserve">
+    <value>Bunnies için gereken eklentiler kullanılamıyor:
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>{0} başlat</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>BFE tanılaması</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>Normal baskın</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Pencere görünümü</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Ana pencerede kompakt modu göster</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Ana pencerede dil seçimini göster</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Saydamlık</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Opaklık (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Odak yokken otomatik soldur</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Odak yokken opaklık (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Odak kaybı gecikmesi (saniye)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Dalamud günlüğünü kopyala / ZIP yap</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>Dolu günlüğü yine de dışa aktar</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>Günlük dışa aktarılıyor...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>Günlük ZIP’i hazır. Elle paylaşın ve artık gerekmeyen eski dışa aktarımları silin.</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>Günlük dışa aktarılamadı.</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>Dışa Aktarım Klasörünü Aç</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>Bu günlük Dalamud’un 100 MiB sınırına ulaştı. Kayıt durmuş olabilir; son etkinlikler eksik olabilir ve günlük mevcut sorunu teşhis etmeye yardımcı olmayabilir.</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve"><value>XA Slave günlük araçlarını aç</value></data>
+  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Dalamud Log Cleaner&apos;ı içeren XA Slave Utility &gt; XA Mods panelini açar.</value></data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>XA Slave günlük araçları açılamadı.</value></data>
+</root>

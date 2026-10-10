@@ -1,0 +1,397 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>Цвет</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>Бирюзовый</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>Розовый</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>Свой RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>Компактный режим</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>Загрузка шрифтов...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>Не удалось загрузить шрифты. См. журнал плагина.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>Проблемы и предложения по плагинам обсуждаются в канале «The Dumpster Fire».</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>Загружено</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>О плагине</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>Выбор зоны</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>Настройки AutoRetainer</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>Настройки BFE</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>Кролики</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>Автоматизация FATE с кроликами</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>Нажмите, чтобы скопировать URL репозитория</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>Копировать ссылку на руководство по значкам</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>Пока не поддерживается!</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>Отладочная статистика</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Зависимости</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>Спешивание</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>Выход после завершения</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>Включить поддержку Multi</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>Включить ремонт</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>Включить поддержку слуг</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>Включить поддержку подлодок</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>Включает поддержку слуг для этого персонажа.</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>Вход в Pyros</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>Общие настройки</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>Копировать URL репозитория</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>Получено гил</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>После завершения идти в личный дом/дом FC</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>Переход в Эврику</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>Переход в дом FC</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>Переход в личный дом</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>Переход к ремонтнику</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>Золотые сундуки</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>Серебряные сундуки</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>Бронзовые сундуки</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>Удерживайте Ctrl, чтобы активировать кнопку.</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Часы</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>Статистика Hydatos</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Бездействие</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>Бездействие. Выберите зону и нажмите «Запустить».</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>Если ремесленники нужного уровня, использует тёмную материю для самостоятельного ремонта.</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>В FATE с кроликами</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>Без ограничения</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>Установлен, не загружен</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>Выход из задания</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>За всё время</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>Загрузите все необходимые плагины для запуска автоматизации кроликов.</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>Выход из игры</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Минуты</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Отсутствует</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>Посадка на ездовое животное</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>Перемещение к {0}</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>Недоступно</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>Первоначальный автор</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>Открыть настройки</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>Статистика Pagos</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>Нажмите для сброса статистики.</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>Статистика Pyros</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>СБРОСИТЬ СТАТИСТИКУ</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>Порог ремонта</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>Повторная отправка слуг</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>Работать заданное время</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Работает</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>Выберите для запуска кроликов</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>Самостоятельный ремонт</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>Самостоятельный ремонт</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>Текущий сеанс</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>Запустить кроликов</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>Запустить Pyros</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>Состояние: {0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Задача</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>Телепорт в личный дом</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>Телепорт в дом FC</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>Порог для ремонта снаряжения</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>Прошло времени</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>Общая статистика</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>Использование эфирной сети</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>Работа со слугой</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>В разработке</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Ожидание Navmesh</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>Ожидание у FATE</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>Выходит из игры после завершения циклов.</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>Телепортируется в личный дом или дом FC после завершения циклов.</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0} (старый псевдоним)</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer не установлен или не включён. Нажмите, чтобы скопировать репозиторий.</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>Когда состояние снаряжения достигнет порога, ремонт у торговца будет выполнен после следующего FATE с кроликами.</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>Работать без ограничения или задать таймер до 24 часов</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>Восстановленная автоматизация кроликов в Эврике: маршруты FATE, поиск сундуков и статистика.</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>Следующие плагины должны быть установлены и включены: </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>Перемещение к NPC в Куганэ</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>Получение сундука</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>Ездовое животное Eldthurs</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>Причёски Pyros</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>Луковица-подражатель</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>Ездовое животное «Буревестник»</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>URL репозитория скопирован</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>Переход в личный дом</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
+    <value>Необходимые плагины для Bunnies недоступны:
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>Запустить {0}</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>Отладка BFE</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>Обычный рейд</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Внешний вид окна</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Показывать компактный режим в главном окне</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Показывать выбор языка в главном окне</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Прозрачность</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Непрозрачность (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Автоматически затемнять без фокуса</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Непрозрачность без фокуса (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Задержка без фокуса (секунды)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Копировать / ZIP журнала Dalamud</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>Всё равно экспортировать полный журнал</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>Экспорт журнала...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>ZIP журнала готов. Отправьте его вручную и удалите ненужные старые экспорты.</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>Не удалось экспортировать журнал.</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>Открыть папку экспорта</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>Этот журнал достиг лимита Dalamud в 100 МиБ. Запись могла остановиться; последние события могут отсутствовать, и журнал может не помочь в диагностике текущей проблемы.</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve"><value>Открыть инструменты журналов XA Slave</value></data>
+  <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Открывает панель Utility &gt; XA Mods в XA Slave, содержащую Dalamud Log Cleaner.</value></data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>Не удалось открыть инструменты журналов XA Slave.</value></data>
+</root>

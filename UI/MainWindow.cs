@@ -26,6 +26,7 @@ public class MainWindow
     private readonly DragonWalkService dragonWalkService;
     private readonly CastAlertWindow castAlertWindow;
     private readonly ISharedImmediateTexture? iconTexture;
+    private readonly BFE.Plugin bfePlugin;
 
     public bool IsOpen = false;
 
@@ -41,7 +42,8 @@ public class MainWindow
         DragonWalkService dragonWalkService,
         CastAlertWindow castAlertWindow,
         ITextureProvider textureProvider,
-        IDalamudPluginInterface pluginInterface)
+        IDalamudPluginInterface pluginInterface,
+        BFE.Plugin bfePlugin)
     {
         this.config = config;
         this.mobDatabase = mobDatabase;
@@ -50,6 +52,7 @@ public class MainWindow
         this.clientState = clientState;
         this.dragonWalkService = dragonWalkService;
         this.castAlertWindow = castAlertWindow;
+        this.bfePlugin = bfePlugin;
 
         if (!string.IsNullOrEmpty(pluginInterface.AssemblyLocation.DirectoryName))
         {
@@ -98,6 +101,12 @@ public class MainWindow
                 if (ImGui.BeginTabItem("Enemy Actions & Counters"))
                 {
                     DrawActionsTab();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("Bunny Automation (BFE)"))
+                {
+                    DrawBfeTab();
                     ImGui.EndTabItem();
                 }
 
@@ -754,5 +763,97 @@ public class MainWindow
 
             ImGui.EndTable();
         }
+    }
+
+    private void DrawBfeTab()
+    {
+        ImGui.TextColored(new Vector4(0.3f, 0.9f, 0.4f, 1.0f), "BFE (Bunnies for Eureka) - Automation Subsystem");
+        ImGui.TextWrapped("Automated routing, combat, fate completion, and coffer treasure hunting for Eureka bunny fates (Pyros, Pagos, Hydatos).");
+
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        // Status
+        bool isRunning = BFE.Scheduler.SchedulerMain.DoWeTick;
+        if (isRunning)
+        {
+            ImGui.TextColored(new Vector4(0.2f, 1.0f, 0.3f, 1.0f), "● Status: ACTIVE (Automation running)");
+        }
+        else
+        {
+            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "○ Status: Idle (Automation stopped)");
+        }
+
+        ImGui.Spacing();
+
+        // Control Buttons
+        if (ImGui.Button("Open BFE Window (/bfe)", new Vector2(210, 32)))
+        {
+            if (bfePlugin?.mainWindow != null)
+            {
+                bfePlugin.mainWindow.IsOpen = !bfePlugin.mainWindow.IsOpen;
+            }
+        }
+        ImGui.SameLine();
+        if (ImGui.Button("BFE Settings (/bfe settings)", new Vector2(210, 32)))
+        {
+            if (bfePlugin?.settingsWindow != null)
+            {
+                bfePlugin.settingsWindow.IsOpen = !bfePlugin.settingsWindow.IsOpen;
+            }
+        }
+
+        ImGui.Spacing();
+
+        if (!isRunning)
+        {
+            if (ImGui.Button("Start Pyros Bunnies (/bfe pyros)", new Vector2(210, 32)))
+            {
+                bfePlugin?.pluginDependencies.Refresh(true);
+                if (bfePlugin?.pluginDependencies.RequiredDependenciesLoaded == true)
+                {
+                    BFE.Plugin.C.zoneSelected = 1;
+                    BFE.Scheduler.SchedulerMain.EnablePlugin();
+                }
+            }
+        }
+        else
+        {
+            if (ImGui.Button("Stop Automation (/bfe stop)", new Vector2(210, 32)))
+            {
+                BFE.Scheduler.SchedulerMain.DisablePlugin();
+            }
+        }
+
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        // Stats summary
+        if (ImGui.CollapsingHeader("Pyros Session Statistics", ImGuiTreeNodeFlags.DefaultOpen))
+        {
+            var stats = BFE.Plugin.C?.pyrosSessionStats;
+            if (stats != null)
+            {
+                int total = stats.bronzeCoffer + stats.silverCoffer + stats.goldCoffer;
+                ImGui.Text($"Total Coffers Found: {total}");
+                ImGui.Text($"• Bronze: {stats.bronzeCoffer}  |  • Silver: {stats.silverCoffer}  |  • Gold: {stats.goldCoffer}");
+                ImGui.Text($"Total Gil Gained: {stats.gilEarned:N0} gil");
+                if (stats.eldthursCounter > 0) ImGui.Text($"Eldthurs Horns: {stats.eldthursCounter}");
+                if (stats.pyrosHairStyleCounter > 0) ImGui.Text($"Modern Aesthetics - Form and Function: {stats.pyrosHairStyleCounter}");
+            }
+        }
+
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        // Proper Credits & Attribution
+        ImGui.TextColored(new Vector4(1.0f, 0.85f, 0.4f, 1.0f), "Credits & Takeover Attribution");
+        ImGui.BulletText("Original Bunnies automation by Joshua-XIV (https://github.com/Joshua-XIV/Bunnies)");
+        ImGui.BulletText("Modern BFE engine, multi-language localization & S+ UI by DhogGPT / McVaxius (https://github.com/McVaxius/BFE)");
+        ImGui.BulletText("Takeover, unified EurekaAggro integration & maintenance by Kyuuso");
+        ImGui.BulletText("Support McVaxius on Ko-fi: https://ko-fi.com/mcvaxius");
     }
 }

@@ -53,13 +53,38 @@
 
 ---
 
+### 8. Integrated BFE (Bunnies for Eureka) Automation
+- **Bunny Fate Automation**: Automated routing, combat, fate completion, and bunny buff acquisition for Pyros (and upcoming zones).
+- **Coffer Hunting Engine**: Proximity-guided pathfinding, carrot usage, distance tracking, and safe coffer unlocking.
+- **Multilingual Support**: Fully localized in 15 languages (English, German, French, Spanish, Italian, Russian, Japanese, Korean, Simplified Chinese, Vietnamese, Brazilian Portuguese, Indonesian, Polish, Turkish, Hindi).
+- **Rich S+ Material UI**: Packed with area cards, live task monitor, elapsed timer, dependency tracker, and custom window styling.
+- **Deep IPC Integrations**: Integrates with BossMod, Navmesh, WrathCombo, Pandora, AutoRetainer, and Lifestream.
+- **Session Run Statistics**: Tracks coffers found (bronze, silver, gold), Eldthurs Horns, hairstyles, and gil earned.
+
+---
+
 ## Commands
 
 | Command | Description |
 | :--- | :--- |
 | `/eurekaaggro` | Opens or closes the main configuration window. |
 | `/ea` | Short alias to open or close the main configuration window. |
+| `/bfe` | Opens or closes the BFE Bunny Automation window. |
+| `/bfe settings` | Opens the BFE Settings window. |
+| `/bfe pyros` | Starts automated Pyros bunny farming. |
+| `/bfe stop` | Stops bunny automation. |
+| `/bunnies` | Legacy alias for `/bfe`. |
 | `/xllog` | Dalamud log console (view real-time auto-walk and cast monitor logs). |
+
+---
+
+## Credits & Acknowledgements
+
+The **EurekaAggro** project incorporates and maintains the **BFE (Bunnies for Eureka)** automation engine under open source collaboration:
+
+- **Joshua-XIV**: Original creator and author of [Bunnies](https://github.com/Joshua-XIV/Bunnies).
+- **DhogGPT / McVaxius**: Creator of [BFE](https://github.com/McVaxius/BFE), architecture modernization, 15-language localization, and S+ UI design ([aethertek.io](https://aethertek.io/)). [☕ Support McVaxius on Ko-fi](https://ko-fi.com/mcvaxius).
+- **Kyuuso**: Maintainer of EurekaAggro, takeover, aggro radar visualizer, and unified suite integration.
 
 ---
 
@@ -72,4 +97,6 @@
    https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/pluginmaster.json
    ```
 4. Search for **Eureka Aggro** in the plugin list and click **Install**.
+   - *To receive testing/preview builds, enable "Get testing versions" in the Dalamud plugin testing settings.*
+
 
