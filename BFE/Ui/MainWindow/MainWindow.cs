@@ -14,23 +14,23 @@ namespace BFE.Ui.MainWindow;
 
 /// <summary>
 /// Ventana principal de automatización de conejos de Eureka (BFE).
-/// Permite el control del ciclo de conejos, visualización de estadísticas y créditos de autoría.
+/// Recrea la estética de alto impacto con cabecera estilizada,
+/// pestañas elegantes y presentación fiel al diseño original.
 /// </summary>
 internal class MainWindow : PositionedWindow
 {
-    private bool showAllStats = true;
-    private bool showPagosStats = false;
-    private bool showPyrosStats = false;
-    private bool showHydatosStats = false;
+    private static readonly Vector4 ColorDoradoAcento = new(0.961f, 0.729f, 0.259f, 1f);      // #F5BA42
+    private static readonly Vector4 ColorFondoVentana = new(0.075f, 0.078f, 0.090f, 1f);      // #131417
+    private static readonly Vector4 ColorTextoSecundario = new(0.608f, 0.620f, 0.663f, 1f);
 
     public MainWindow() : base($"{PluginInfo.DisplayName} ###BFEMainWindow")
     {
         SizeConstraints = new()
         {
-            MinimumSize = new(680, 500),
+            MinimumSize = new(720, 560),
             MaximumSize = new(1800, 1400)
         };
-        Size = new(800, 600);
+        Size = new(840, 640);
         SizeCondition = ImGuiCond.FirstUseEver;
         Flags |= ImGuiWindowFlags.HorizontalScrollbar;
 
@@ -67,52 +67,43 @@ internal class MainWindow : PositionedWindow
 
     public override void Draw()
     {
-        DrawHeader();
-        ImGui.Separator();
+        var scale = ImGuiHelpers.GlobalScale;
+
+        // 1. Cabecera principal (Header con marca BFE y controles)
+        DrawHeader(scale);
+
         ImGui.Spacing();
 
-        if (ImGui.BeginTabBar("BunniesBarPrincipal", ImGuiTabBarFlags.FittingPolicyScroll))
-        {
-            if (ImGui.BeginTabItem($"{FontAwesomeIcon.Play.ToIconString()}  {UiText.T("Start Bunnies")}"))
-            {
-                ImGui.Spacing();
-                StartBunnies.Draw();
-                ImGui.EndTabItem();
-            }
+        // 2. Indicador de estado (State: Idle / Running)
+        DrawStateIndicator(scale);
 
-            if (ImGui.BeginTabItem($"{FontAwesomeIcon.ChartBar.ToIconString()}  {UiText.T("Stats")}"))
-            {
-                ImGui.Spacing();
-                DrawStatsTab();
-                ImGui.EndTabItem();
-            }
+        ImGui.Spacing();
 
-            if (ImGui.BeginTabItem($"{FontAwesomeIcon.InfoCircle.ToIconString()}  {UiText.T("About")}"))
-            {
-                ImGui.Spacing();
-                About.Draw();
-                ImGui.EndTabItem();
-            }
-
-            ImGui.EndTabBar();
-        }
+        // 3. Barra de navegación por pestañas
+        DrawTabs(scale);
 
         FinalizePendingWindowPlacement();
     }
 
-    private void DrawHeader()
+    private void DrawHeader(float scale)
     {
-        // Título del subsistema y estado de ejecución
-        ImGui.TextColored(ImGuiColors.ParsedGold, $"{PluginInfo.DisplayName} - Bunny Fate Engine");
-        ImGui.SameLine();
+        var pos = ImGui.GetCursorScreenPos();
+        var ancho = ImGui.GetContentRegionAvail().X;
+        var dl = ImGui.GetWindowDrawList();
 
-        var isRunning = SchedulerMain.DoWeTick;
-        var statusColor = isRunning ? ImGuiColors.HealerGreen : ImGuiColors.DalamudGrey;
-        var statusText = isRunning ? "En Ejecución" : "En Reposo";
-        ImGui.TextColored(statusColor, $"[{statusText}]");
+        // Icono de conejo estilizado (o símbolo dorado)
+        var posIcono = pos + new Vector2(4f * scale, 2f * scale);
+        dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.8f, posIcono, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento), "🐰");
 
-        ImGui.SameLine(ImGui.GetContentRegionAvail().X - 220f * ImGuiHelpers.GlobalScale);
-        if (ImGui.SmallButton($"{FontAwesomeIcon.Cog.ToIconString()} Ajustes"))
+        // Título BFE y subtítulo Bunny Fate Engine
+        var posTexto = pos + new Vector2(40f * scale, 0);
+        dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.5f, posTexto, ImGui.ColorConvertFloat4ToU32(ColorDoradoAcento), "BFE");
+        dl.AddText(posTexto + new Vector2(0, 22f * scale), 0xFFCCCCCC, "Bunny Fate Engine");
+
+        // Botones de acción rápida a la derecha
+        ImGui.SetCursorScreenPos(pos + new Vector2(ancho - 370f * scale, 8f * scale));
+
+        if (ImGui.SmallButton($"{FontAwesomeIcon.Cog.ToIconString()} Settings"))
         {
             P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
         }
@@ -124,19 +115,78 @@ internal class MainWindow : PositionedWindow
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton($"{FontAwesomeIcon.User.ToIconString()} Autor"))
+        if (ImGui.SmallButton($"{FontAwesomeIcon.CommentDots.ToIconString()} Discord"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = PluginInfo.DiscordUrl, UseShellExecute = true });
+        }
+
+        ImGui.SameLine();
+        if (ImGui.SmallButton($"{FontAwesomeIcon.User.ToIconString()} OG Author"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.OriginalAuthorUrl, UseShellExecute = true });
         }
+
+        ImGui.SameLine();
+        P.appearance.DrawSelector(true);
+
+        ImGui.SetCursorScreenPos(pos + new Vector2(0, 48f * scale));
     }
 
-    private void DrawStatsTab()
+    private void DrawStateIndicator(float scale)
     {
-        if (ImGui.BeginTabBar("StatsTabs"))
+        var pos = ImGui.GetCursorScreenPos();
+        var dl = ImGui.GetWindowDrawList();
+
+        var isRunning = SchedulerMain.DoWeTick;
+        var colorCirculo = isRunning ? new Vector4(0.239f, 0.839f, 0.467f, 1f) : new Vector4(0.42f, 0.43f, 0.47f, 1f);
+
+        var centroCirculo = pos + new Vector2(6f * scale, 8f * scale);
+        dl.AddCircleFilled(centroCirculo, 5f * scale, ImGui.ColorConvertFloat4ToU32(colorCirculo));
+
+        var textoEstado = isRunning ? "Running" : "Idle";
+        dl.AddText(pos + new Vector2(18f * scale, 0), 0xFFFFFFFF, $"State:  {textoEstado}");
+
+        ImGui.Dummy(new Vector2(100f * scale, 18f * scale));
+    }
+
+    private void DrawTabs(float scale)
+    {
+        ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(14f * scale, 8f * scale));
+        if (ImGui.BeginTabBar("BunniesTabs", ImGuiTabBarFlags.FittingPolicyScroll))
+        {
+            if (ImGui.BeginTabItem($"{FontAwesomeIcon.Play.ToIconString()}   {UiText.T("Start Bunnies")}"))
+            {
+                ImGui.Spacing();
+                StartBunnies.Draw();
+                ImGui.EndTabItem();
+            }
+
+            if (ImGui.BeginTabItem($"{FontAwesomeIcon.ChartBar.ToIconString()}   {UiText.T("Stats")}"))
+            {
+                ImGui.Spacing();
+                DrawStatsTab(scale);
+                ImGui.EndTabItem();
+            }
+
+            if (ImGui.BeginTabItem($"{FontAwesomeIcon.InfoCircle.ToIconString()}   {UiText.T("About")}"))
+            {
+                ImGui.Spacing();
+                About.Draw();
+                ImGui.EndTabItem();
+            }
+
+            ImGui.EndTabBar();
+        }
+        ImGui.PopStyleVar();
+    }
+
+    private void DrawStatsTab(float scale)
+    {
+        if (ImGui.BeginTabBar("StatsCategoryTabs"))
         {
             if (ImGui.BeginTabItem(UiText.T("Lifetime")))
             {
-                DrawStatsSection(C.stats, out bool reset, C.pyrosStats, C.pagosStats, C.hydatosStats);
+                DrawStatsSection(C.stats, out bool reset, C.pyrosStats, C.pagosStats, C.hydatosStats, scale);
                 if (reset)
                 {
                     C.stats = new();
@@ -150,7 +200,7 @@ internal class MainWindow : PositionedWindow
 
             if (ImGui.BeginTabItem(UiText.T("Session")))
             {
-                DrawStatsSection(C.sessionStats, out bool reset, C.pyrosSessionStats, C.pagosSessionStats, C.hydatosSessionStats);
+                DrawStatsSection(C.sessionStats, out bool reset, C.pyrosSessionStats, C.pagosSessionStats, C.hydatosSessionStats, scale);
                 if (reset)
                 {
                     C.sessionStats = new();
@@ -165,14 +215,14 @@ internal class MainWindow : PositionedWindow
         }
     }
 
-    private void DrawStatsSection(Stats stat, out bool reset, PyrosStats pyrosStat, PagosStats pagosStat, HydatosStats hydatosStat)
+    private void DrawStatsSection(Stats stat, out bool reset, PyrosStats pyrosStat, PagosStats pagosStat, HydatosStats hydatosStat, float scale)
     {
-        var buttonHeight = Math.Max(28f * ImGuiHelpers.GlobalScale, ImGui.GetFrameHeight());
+        var buttonHeight = Math.Max(30f * scale, ImGui.GetFrameHeight());
         var availableHeight = Math.Max(1, ImGui.GetContentRegionAvail().Y - buttonHeight - ImGui.GetStyle().ItemSpacing.Y);
 
         ImGui.BeginChild("StatsRegionScroll", new Vector2(0, availableHeight), true);
 
-        if (ImGui.CollapsingHeader("Estadísticas Totales", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader("Estadísticas Totales (Lifetime)", ImGuiTreeNodeFlags.DefaultOpen))
         {
             DrawDictionaryStats(new Dictionary<string, int>
             {
@@ -197,19 +247,6 @@ internal class MainWindow : PositionedWindow
                 { "Cofres de Bronce", pyrosStat.bronzeCoffer },
                 { "Montura Eldthurs", pyrosStat.eldthursCounter },
                 { "Peinados de Pyros", pyrosStat.pyrosHairStyleCounter }
-            });
-        }
-
-        if (ImGui.CollapsingHeader("Estadísticas de Pagos"))
-        {
-            DrawDictionaryStats(new Dictionary<string, int>
-            {
-                { "Gil Obtenido", pagosStat.gilEarned },
-                { "Cofres de Oro", pagosStat.goldCoffer },
-                { "Cofres de Plata", pagosStat.silverCoffer },
-                { "Cofres de Bronce", pagosStat.bronzeCoffer },
-                { "Minion Bulb", pagosStat.bulbMinion },
-                { "Ojo Hakutaku", pagosStat.hakutakuEye }
             });
         }
 
@@ -240,7 +277,7 @@ internal class MainWindow : PositionedWindow
                 ImGui.TextUnformatted(label);
 
                 ImGui.TableNextColumn();
-                ImGui.TextColored(ImGuiColors.ParsedGold, val.ToString("N0"));
+                ImGui.TextColored(ColorDoradoAcento, val.ToString("N0"));
             }
 
             ImGui.EndTable();

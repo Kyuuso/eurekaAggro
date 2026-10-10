@@ -767,48 +767,57 @@ public class MainWindow
 
     private void DrawBfeTab()
     {
-        ImGui.TextColored(new Vector4(0.3f, 0.9f, 0.4f, 1.0f), "BFE (Bunnies for Eureka) - Automation Subsystem");
-        ImGui.TextWrapped("Automated routing, combat, fate completion, and coffer treasure hunting for Eureka bunny fates (Pyros, Pagos, Hydatos).");
+        // 1. Cabecera de la sección
+        ImGui.TextColored(new Vector4(0.961f, 0.729f, 0.259f, 1f), "🐰  BFE (Bunny Fate Engine) - Automatización Integrada");
+        ImGui.TextColored(new Vector4(0.7f, 0.72f, 0.78f, 1f), "Enrutamiento automático, combate, resolución de FATEs y búsqueda de cofres en Eureka (Pyros / Pagos / Hydatos).");
+
+        ImGui.Spacing();
+
+        // 2. Barra de estado y accesos directos
+        bool isRunning = BFE.Scheduler.SchedulerMain.DoWeTick;
+        var estadoColor = isRunning ? new Vector4(0.239f, 0.839f, 0.467f, 1f) : new Vector4(0.5f, 0.52f, 0.58f, 1f);
+        var estadoTexto = isRunning ? "En Ejecución (Activo)" : "En Reposo (Detenido)";
+
+        ImGui.TextColored(estadoColor, $"● Estado: {estadoTexto}");
+        ImGui.SameLine(ImGui.GetContentRegionAvail().X - 320);
+
+        if (ImGui.SmallButton("Ventana Flotante BFE (/bfe)"))
+        {
+            if (bunnyService?.mainWindow != null)
+                bunnyService.mainWindow.IsOpen = !bunnyService.mainWindow.IsOpen;
+        }
+
+        ImGui.SameLine();
+        if (ImGui.SmallButton("Ajustes BFE (/bfe settings)"))
+        {
+            if (bunnyService?.settingsWindow != null)
+                bunnyService.settingsWindow.IsOpen = !bunnyService.settingsWindow.IsOpen;
+        }
 
         ImGui.Spacing();
         ImGui.Separator();
         ImGui.Spacing();
 
-        // Status
-        bool isRunning = BFE.Scheduler.SchedulerMain.DoWeTick;
-        if (isRunning)
-        {
-            ImGui.TextColored(new Vector4(0.2f, 1.0f, 0.3f, 1.0f), "● Status: ACTIVE (Automation running)");
-        }
-        else
-        {
-            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1.0f), "○ Status: Idle (Automation stopped)");
-        }
-
+        // 3. Control principal de zona y lanzamiento
+        ImGui.TextColored(Vector4.One, "Zona Activa: Eureka Pyros [WIP]");
         ImGui.Spacing();
 
-        // Control Buttons
-        if (ImGui.Button("Open BFE Window (/bfe)", new Vector2(210, 32)))
-        {
-            if (bunnyService?.mainWindow != null)
-            {
-                bunnyService.mainWindow.IsOpen = !bunnyService.mainWindow.IsOpen;
-            }
-        }
-        ImGui.SameLine();
-        if (ImGui.Button("BFE Settings (/bfe settings)", new Vector2(210, 32)))
-        {
-            if (bunnyService?.settingsWindow != null)
-            {
-                bunnyService.settingsWindow.IsOpen = !bunnyService.settingsWindow.IsOpen;
-            }
-        }
+        var btnColor = isRunning ? new Vector4(0.85f, 0.25f, 0.25f, 1f) : new Vector4(0.961f, 0.729f, 0.259f, 1f);
+        var hoverColor = isRunning ? new Vector4(0.95f, 0.35f, 0.35f, 1f) : new Vector4(0.98f, 0.78f, 0.32f, 1f);
+        var textColor = isRunning ? Vector4.One : new Vector4(0.07f, 0.07f, 0.07f, 1f);
 
-        ImGui.Spacing();
+        ImGui.PushStyleColor(ImGuiCol.Button, btnColor);
+        ImGui.PushStyleColor(ImGuiCol.ButtonHovered, hoverColor);
+        ImGui.PushStyleColor(ImGuiCol.Text, textColor);
 
-        if (!isRunning)
+        var btnEtiqueta = isRunning ? "■   Detener Automatización (/bfe stop)" : "▶   Iniciar Pyros Bunnies (/bfe pyros)";
+        if (ImGui.Button(btnEtiqueta, new Vector2(ImGui.GetContentRegionAvail().X, 38)))
         {
-            if (ImGui.Button("Start Pyros Bunnies (/bfe pyros)", new Vector2(210, 32)))
+            if (isRunning)
+            {
+                BFE.Scheduler.SchedulerMain.DisablePlugin();
+            }
+            else
             {
                 bunnyService?.pluginDependencies.Refresh(true);
                 if (bunnyService?.pluginDependencies.RequiredDependenciesLoaded == true)
@@ -818,30 +827,46 @@ public class MainWindow
                 }
             }
         }
-        else
-        {
-            if (ImGui.Button("Stop Automation (/bfe stop)", new Vector2(210, 32)))
-            {
-                BFE.Scheduler.SchedulerMain.DisablePlugin();
-            }
-        }
+        ImGui.PopStyleColor(3);
 
         ImGui.Spacing();
         ImGui.Separator();
         ImGui.Spacing();
 
-        // Stats summary
-        if (ImGui.CollapsingHeader("Pyros Session Statistics", ImGuiTreeNodeFlags.DefaultOpen))
+        // 4. Estadísticas de la sesión activa
+        if (ImGui.CollapsingHeader("Estadísticas de la Sesión en Pyros", ImGuiTreeNodeFlags.DefaultOpen))
         {
             var stats = BFE.Plugin.C?.pyrosSessionStats;
             if (stats != null)
             {
-                int total = stats.bronzeCoffer + stats.silverCoffer + stats.goldCoffer;
-                ImGui.Text($"Total Coffers Found: {total}");
-                ImGui.Text($"• Bronze: {stats.bronzeCoffer}  |  • Silver: {stats.silverCoffer}  |  • Gold: {stats.goldCoffer}");
-                ImGui.Text($"Total Gil Gained: {stats.gilEarned:N0} gil");
-                if (stats.eldthursCounter > 0) ImGui.Text($"Eldthurs Horns: {stats.eldthursCounter}");
-                if (stats.pyrosHairStyleCounter > 0) ImGui.Text($"Modern Aesthetics - Form and Function: {stats.pyrosHairStyleCounter}");
+                int totalCofres = stats.bronzeCoffer + stats.silverCoffer + stats.goldCoffer;
+
+                if (ImGui.BeginTable("##TablaStatsPyros", 4, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
+                {
+                    ImGui.TableSetupColumn("Total Cofres", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                    ImGui.TableSetupColumn("Cofres Oro", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                    ImGui.TableSetupColumn("Cofres Plata", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                    ImGui.TableSetupColumn("Gil Obtenido", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+                    ImGui.TableHeadersRow();
+
+                    ImGui.TableNextRow();
+                    ImGui.TableNextColumn();
+                    ImGui.TextColored(Vector4.One, totalCofres.ToString());
+                    ImGui.TableNextColumn();
+                    ImGui.TextColored(new Vector4(0.961f, 0.729f, 0.259f, 1f), stats.goldCoffer.ToString());
+                    ImGui.TableNextColumn();
+                    ImGui.TextColored(new Vector4(0.7f, 0.85f, 1f, 1f), stats.silverCoffer.ToString());
+                    ImGui.TableNextColumn();
+                    ImGui.TextColored(new Vector4(0.961f, 0.729f, 0.259f, 1f), $"{stats.gilEarned:N0} gil");
+
+                    ImGui.EndTable();
+                }
+
+                if (stats.eldthursCounter > 0 || stats.pyrosHairStyleCounter > 0)
+                {
+                    ImGui.Spacing();
+                    ImGui.Text($"• Cuernos de Eldthurs: {stats.eldthursCounter}  |  • Peinados de Pyros: {stats.pyrosHairStyleCounter}");
+                }
             }
         }
 
@@ -849,11 +874,11 @@ public class MainWindow
         ImGui.Separator();
         ImGui.Spacing();
 
-        // Proper Credits & Attribution
-        ImGui.TextColored(new Vector4(1.0f, 0.85f, 0.4f, 1.0f), "Credits & Takeover Attribution");
-        ImGui.BulletText("Original Bunnies automation by Joshua-XIV (https://github.com/Joshua-XIV/Bunnies)");
-        ImGui.BulletText("Modern BFE engine, multi-language localization & S+ UI by DhogGPT / McVaxius (https://github.com/McVaxius/BFE)");
-        ImGui.BulletText("Takeover, unified EurekaAggro integration & maintenance by Kyuuso");
-        ImGui.BulletText("Support McVaxius on Ko-fi: https://ko-fi.com/mcvaxius");
+        // 5. Créditos de autoría y atribución
+        ImGui.TextColored(new Vector4(1.0f, 0.85f, 0.4f, 1.0f), "Créditos & Atribución de Autoría");
+        ImGui.BulletText("Automatización original de conejos por Joshua-XIV (https://github.com/Joshua-XIV/Bunnies)");
+        ImGui.BulletText("Motor moderno BFE, localización en 15 idiomas y diseño de interfaz por DhogGPT / McVaxius (https://github.com/McVaxius/BFE)");
+        ImGui.BulletText("Takeover, unificación en suite EurekaAggro y mantenimiento por Kyuuso");
+        ImGui.BulletText("Apoya a McVaxius en Ko-fi: https://ko-fi.com/mcvaxius");
     }
 }
