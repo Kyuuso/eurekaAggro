@@ -74,14 +74,6 @@ public unsafe class DragonWalkService
     [DllImport("user32.dll")]
     private static extern uint MapVirtualKeyA(uint uCode, uint uMapType);
 
-    [DllImport("user32.dll")]
-    private static extern nint GetForegroundWindow();
-
-    [DllImport("user32.dll")]
-    private static extern uint GetWindowThreadProcessId(nint hWnd, out uint lpdwProcessId);
-
-    private static readonly uint CurrentProcessId = (uint)Environment.ProcessId;
-
     public DragonWalkService(
         IPluginLog log,
         IClientState clientState,
@@ -408,7 +400,8 @@ public unsafe class DragonWalkService
 
         // keybd_event is global OS input: only send it while the game window has focus,
         // otherwise the keystroke would land in whatever application is in front.
-        bool gameHasFocus = IsGameWindowFocused();
+        // Dalamud's check is maintained for both Windows and Wine (Linux / macOS)
+        bool gameHasFocus = Dalamud.Utility.Util.ApplicationIsActivated();
         if (gameHasFocus)
         {
             // Send a single key down and key up via keybd_event (DirectInput / raw input in FFXIV processes this once).
@@ -425,14 +418,6 @@ public unsafe class DragonWalkService
         lastToggleTime = DateTime.UtcNow;
         log.Information($"[EurekaSuite - AutoWalk] SetDesiredWalkState (Target: {(wantWalking ? "Walk" : "Run")}, Prior: {(currentWalking ? "Walk" : "Run")}, VK: 0x{vkCode:X2}, Force: {force}, KeySent: {gameHasFocus})");
         return true;
-    }
-
-    private static bool IsGameWindowFocused()
-    {
-        var foreground = GetForegroundWindow();
-        if (foreground == 0) return false;
-        GetWindowThreadProcessId(foreground, out var pid);
-        return pid == CurrentProcessId;
     }
 
     /// <summary>
