@@ -1,0 +1,5 @@
+interface:
+  display_name: "Check Plugin Updates"
+  short_description: "Review exact upstream plugin deltas"
+  default_prompt: "Use $check-plugin-updates to compare exact old and new plugin endpoints, map concrete overlap, and report required actions and open validation gates."
+

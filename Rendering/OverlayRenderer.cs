@@ -6,12 +6,13 @@ using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Models;
-using EurekaAggro.Services;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Models;
+using EurekaSuite.Services;
+using EurekaSuite.Localization;
 
-namespace EurekaAggro.Rendering;
+namespace EurekaSuite.Rendering;
 
 /// <summary>
 /// Real-time 3D in-game overlay renderer for Eureka.
@@ -33,6 +34,97 @@ public class OverlayRenderer
     private float currentSpeed = 0.0f;
 
     private readonly DragonWalkService dragonWalkService;
+
+    // Game defaults that the "Base monster aggro radius" and "Sight cone arc angle" sliders are relative to
+    private const float BuiltInAggroDistance = 10.2f;
+    private const float BuiltInSightDegrees = 100.0f;
+
+    /// <summary>
+    /// Per-object data that only changes when the object, its level, or the UI language changes.
+    /// Avoids reading the SeString name and rebuilding label text on every frame.
+    /// </summary>
+    private sealed class MobRenderCache
+    {
+        public uint BaseId;
+        // Localized name as shown on nameplates, used to look up nameplate levels
+        public string Name = string.Empty;
+        // English name, used for classification keywords on any client language
+        public string EnglishName = string.Empty;
+        public bool IsPet;
+        public string LabelPrefix = string.Empty;
+        public string LabelDataName = string.Empty;
+        public string LabelTypeText = string.Empty;
+        public byte LabelLevel;
+        public float LabelPrefixWidth;
+        public float LabelFontSize;
+        public long LastSeenFrame;
+    }
+
+    private readonly Dictionary<ulong, MobRenderCache> mobCache = new();
+    private readonly List<ulong> staleCacheKeys = new();
+    private long frameCounter;
+    private uint lastTerritory;
+    private const int CachePruneIntervalFrames = 600;
+
+    // " (12.3m)" for every 0.1m step up to the maximum detection range, built once
+    private static readonly string[] DistanceTexts = BuildDistanceTexts(1000);
+
+    private string cachedBadgeName = string.Empty;
+    private int cachedBadgeDistance = -1;
+    private string cachedBadgeText = string.Empty;
+
+    private static string[] BuildDistanceTexts(int steps)
+    {
+        var texts = new string[steps + 1];
+        for (int i = 0; i <= steps; i++)
+        {
+            texts[i] = $" ({i / 10f:F1}m)";
+        }
+        return texts;
+    }
+
+    private static string GetDistanceText(float distance)
+    {
+        int index = (int)MathF.Round(distance * 10f);
+        return DistanceTexts[Math.Clamp(index, 0, DistanceTexts.Length - 1)];
+    }
+
+    // Cached localized overlay strings (zero allocations per rendering frame)
+    private static string cachedLanguage = string.Empty;
+    private static string textAutoWalkSafe = "[OK] AUTO-WALK ENGAGED (SAFE)";
+    private static string textRunningNearDragon = "[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)";
+    private static string textSleepingDragonSafe = "[SAFE] SLEEPING DRAGON";
+    private static string textSoundAggroWarn = "[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)";
+    private static string textBloodAggroAlert = "[ALERT] HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)";
+    private static string textCastingDetected = "[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!";
+    private static string textDoNotCastSpells = "[MAGIC] Sprite: DO NOT CAST SPELLS";
+    private static string labelSound = "[Sound - Walk!]";
+    private static string labelBlood = "[Blood / Undead]";
+    private static string labelMagic = "[Magic / Sprite]";
+    private static string labelProximity = "[Proximity]";
+    private static string labelSight = "[Sight]";
+    private static string labelUnknown = "[?]";
+
+    private static void EnsureLocalizedStrings()
+    {
+        var currentLang = Loc.CurrentLanguage;
+        if (cachedLanguage == currentLang) return;
+        cachedLanguage = currentLang;
+
+        textAutoWalkSafe = Loc.T("[OK] AUTO-WALK ENGAGED (SAFE)");
+        textRunningNearDragon = Loc.T("[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+        textSleepingDragonSafe = Loc.T("[SAFE] SLEEPING DRAGON");
+        textSoundAggroWarn = Loc.T("[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+        textBloodAggroAlert = Loc.T("[ALERT] HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)");
+        textCastingDetected = Loc.T("[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!");
+        textDoNotCastSpells = Loc.T("[MAGIC] Sprite: DO NOT CAST SPELLS");
+        labelSound = Loc.T("[Sound - Walk!]");
+        labelBlood = Loc.T("[Blood / Undead]");
+        labelMagic = Loc.T("[Magic / Sprite]");
+        labelProximity = Loc.T("[Proximity]");
+        labelSight = Loc.T("[Sight]");
+        labelUnknown = Loc.T("[?]");
+    }
 
     public OverlayRenderer(
         IGameGui gameGui,
@@ -59,6 +151,8 @@ public class OverlayRenderer
     {
         if (!config.Enabled || !clientState.IsLoggedIn) return;
 
+        EnsureLocalizedStrings();
+
         if (!ValidZones.IsValidZone(clientState.TerritoryType, config.OnlyInEureka))
         {
             return;
@@ -66,6 +160,20 @@ public class OverlayRenderer
 
         var player = objectTable.LocalPlayer;
         if (player == null) return;
+
+        frameCounter++;
+        var territory = clientState.TerritoryType;
+        if (territory != lastTerritory)
+        {
+            // Object IDs are reused between instances
+            lastTerritory = territory;
+            mobCache.Clear();
+            EurekaLevelService.ClearObjectLevels();
+        }
+        else if (frameCounter % CachePruneIntervalFrames == 0)
+        {
+            PruneMobCache();
+        }
 
         // Scan active in-game Nameplates to read exact Eureka Elemental Levels in real time
         EurekaLevelService.ScanNameplates();
@@ -114,14 +222,15 @@ public class OverlayRenderer
                 continue;
             }
 
-            // Name-based safety guard against pets and summons
-            var mobName = mob.Name.TextValue;
-            if (MobDatabase.IsPlayerPetOrCompanion(mobName)) continue;
-
             var distance = Vector3.Distance(playerPos, mob.Position);
             if (distance > config.DetectionRange) continue;
 
-            var data = mobDatabase.GetOrRegister(mob.BaseId, mob.Name.TextValue, mob.HitboxRadius);
+            // Name-based safety guard against pets and summons
+            var cache = GetMobCache(mob);
+            if (cache.IsPet) continue;
+            var mobName = cache.EnglishName;
+
+            var data = mobDatabase.GetOrRegister(mob.BaseId, mobName, mob.HitboxRadius);
 
             // In Eureka (especially Pagos & Pyros cliffs and caves), standard mobs cannot aggro across vertical ledges.
             // However, Sleeping Dragons have 3D spherical sound detection and ALWAYS aggro regardless of height!
@@ -142,7 +251,7 @@ public class OverlayRenderer
             byte mobLevel = EurekaLevelService.GetMobElementalLevel(
                 mob.GameObjectId,
                 mob.BaseId,
-                mob.Name.TextValue,
+                cache.Name,
                 mob.Level,
                 data.ElementalLevel);
 
@@ -171,8 +280,17 @@ public class OverlayRenderer
                 }
             }
 
+            // Sound radius comes from the dragon slider; sight and proximity ranges are shifted by the base radius slider
+            float aggroDistance = data.AggroType switch
+            {
+                AggroType.Sound => config.DragonRunAggroDistance,
+                AggroType.Blood or AggroType.Magic => data.AggroDistance,
+                _ => data.AggroDistance + (config.DefaultAggroDistance - BuiltInAggroDistance)
+            };
+
             // Apply user-configured latency/safety margin buffer
-            var totalRadius = data.TotalRadius + config.SafetyMargin;
+            var totalRadius = data.HitboxRadius + MathF.Max(0f, aggroDistance) + config.SafetyMargin;
+            float sightAngle = data.SightRadian * (config.SightAngleDegrees / BuiltInSightDegrees);
 
             switch (data.AggroType)
             {
@@ -200,15 +318,15 @@ public class OverlayRenderer
                             {
                                 if (dragonWalkService.IsAutoWalkEngaged && distance <= config.AutoWalkDistance)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), "✔ AUTO-WALK ENGAGED (SAFE)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText), textAutoWalkSafe);
                                 }
                                 else if (distance <= totalRadius + 4.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "⚠ RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(75, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), textRunningNearDragon);
                                 }
                                 else if (distance <= totalRadius + 1.5f)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, "✔ SLEEPING DRAGON (SAFE)");
+                                    drawList.AddText(pWarn - new Vector2(50, 0), borderColor, textSleepingDragonSafe);
                                 }
                             }
                             else
@@ -216,7 +334,7 @@ public class OverlayRenderer
                                 // Non-dragon sound monsters (Clipper, Karlabos, Piranu, Crabs, etc.)
                                 if (distance <= totalRadius + 3.0f && isRunning)
                                 {
-                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), "⚠ SOUND AGGRO! WALK TO AVOID (KEYPAD /)");
+                                    drawList.AddText(pWarn - new Vector2(65, 0), ImGui.ColorConvertFloat4ToU32(config.ColorDragonWarningText), textSoundAggroWarn);
                                 }
                             }
                         }
@@ -238,7 +356,7 @@ public class OverlayRenderer
 
                         if (isLowHp && gameGui.WorldToScreen(mob.Position + new Vector3(0, mob.HitboxRadius + 1.4f, 0), out var pAlert))
                         {
-                            drawList.AddText(pAlert - new Vector2(75, 0), borderColor, "☠ HP < 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)");
+                            drawList.AddText(pAlert - new Vector2(75, 0), borderColor, textBloodAggroAlert);
                         }
                     }
                     break;
@@ -258,11 +376,11 @@ public class OverlayRenderer
                         {
                             if (player.IsCasting && distance <= magicRadius)
                             {
-                                drawList.AddText(pSprite - new Vector2(85, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.1f, 0.1f, 1f)), "⚡ CASTING DETECTED! SPRITE WILL AGGRO!");
+                                drawList.AddText(pSprite - new Vector2(85, 0), ImGui.ColorConvertFloat4ToU32(new Vector4(1f, 0.1f, 0.1f, 1f)), textCastingDetected);
                             }
                             else
                             {
-                                drawList.AddText(pSprite - new Vector2(60, 0), borderColor, "⚡ Sprite [DO NOT CAST SPELLS]");
+                                drawList.AddText(pSprite - new Vector2(60, 0), borderColor, textDoNotCastSpells);
                             }
                         }
                     }
@@ -287,7 +405,7 @@ public class OverlayRenderer
                         var borderColor = ImGui.ColorConvertFloat4ToU32(colVision);
                         var fillColor = ImGui.ColorConvertFloat4ToU32(new Vector4(colVision.X, colVision.Y, colVision.Z, config.FillOpacity));
 
-                        DrawVisionCone3D(drawList, mob.Position, mob.Rotation, totalRadius, data.SightRadian, borderColor, fillColor, config.FillShapes, 20);
+                        DrawVisionCone3D(drawList, mob.Position, mob.Rotation, totalRadius, sightAngle, borderColor, fillColor, config.FillShapes, 20);
                     }
 
                     // In FFXIV Eureka, sight monsters also trigger aggro if touched within close proximity from behind
@@ -325,12 +443,12 @@ public class OverlayRenderer
                 {
                     var typeLabel = data.AggroType switch
                     {
-                        AggroType.Sound => "[Sound - Walk!]",
-                        AggroType.Blood => "[Blood / Undead]",
-                        AggroType.Magic => "[Magic / Sprite]",
-                        AggroType.Proximity => "[Proximity]",
-                        AggroType.Sight => "[Sight]",
-                        _ => "[?]"
+                        AggroType.Sound => labelSound,
+                        AggroType.Blood => labelBlood,
+                        AggroType.Magic => labelMagic,
+                        AggroType.Proximity => labelProximity,
+                        AggroType.Sight => labelSight,
+                        _ => labelUnknown
                     };
 
                     var textCol = ImGui.ColorConvertFloat4ToU32(
@@ -338,9 +456,11 @@ public class OverlayRenderer
                             ? config.ColorCustomMobText
                             : GetDangerColor(data.DangerLevel));
 
-                    string levelPrefix = mobLevel > 0 ? $"Lv.{mobLevel} " : string.Empty;
-                    string fullText = $"{levelPrefix}{data.Name} {typeLabel} ({distance:F1}m)";
-                    drawList.AddText(pText - new Vector2(30, 0), textCol, fullText);
+                    // The prefix is rebuilt only when level, name or language changes; the distance comes from a prebuilt table
+                    var labelPos = pText - new Vector2(30, 0);
+                    var prefix = GetLabelPrefix(cache, mobLevel, data.Name, typeLabel);
+                    drawList.AddText(labelPos, textCol, prefix);
+                    drawList.AddText(labelPos + new Vector2(cache.LabelPrefixWidth, 0), textCol, GetDistanceText(distance));
 
                     // Real-time Mutation & Adaptation triggers
                     if (config.ShowMutationStatus)
@@ -348,16 +468,10 @@ public class OverlayRenderer
                         var mut = environmentService.CheckMutation(data.Name);
                         if (mut.CanMutate)
                         {
-                            if (mut.IsActiveNow)
-                            {
-                                var mutCol = ImGui.ColorConvertFloat4ToU32(config.ColorMutationActiveText);
-                                drawList.AddText(pText - new Vector2(30, -14), mutCol, $"🧬 CAN MUTATE NOW: {mut.HintMessage}");
-                            }
-                            else
-                            {
-                                var dimCol = ImGui.ColorConvertFloat4ToU32(config.ColorMutationInactiveText);
-                                drawList.AddText(pText - new Vector2(30, -14), dimCol, $"[Mutates: {mut.HintMessage}]");
-                            }
+                            var mutCol = ImGui.ColorConvertFloat4ToU32(mut.IsActiveNow
+                                ? config.ColorMutationActiveText
+                                : config.ColorMutationInactiveText);
+                            drawList.AddText(pText - new Vector2(30, -14), mutCol, mut.OverlayText);
                         }
                     }
                 }
@@ -371,13 +485,85 @@ public class OverlayRenderer
             var screenCenter = new Vector2(viewport.Size.X / 2f, viewport.Size.Y * 0.82f);
             var safeCol = ImGui.ColorConvertFloat4ToU32(config.ColorDragonSafeText);
             var bgCol = ImGui.ColorConvertFloat4ToU32(new Vector4(0.04f, 0.04f, 0.06f, 0.85f));
-            string badgeText = $"✔ EUREKA AUTO-WALK ENGAGED ({dragonWalkService.CurrentDragonName} - {dragonWalkService.CurrentDistance:F1}m)";
+            string badgeText = GetBadgeText(dragonWalkService.CurrentDragonName, dragonWalkService.CurrentDistance);
             var textSize = ImGui.CalcTextSize(badgeText);
             var pMin = screenCenter - (textSize / 2f) - new Vector2(14, 6);
             var pMax = screenCenter + (textSize / 2f) + new Vector2(14, 6);
             drawList.AddRectFilled(pMin, pMax, bgCol, 6f);
             drawList.AddRect(pMin, pMax, safeCol, 6f, ImDrawFlags.None, 1.5f);
             drawList.AddText(screenCenter - (textSize / 2f), safeCol, badgeText);
+        }
+    }
+
+    private MobRenderCache GetMobCache(IBattleChara mob)
+    {
+        if (!mobCache.TryGetValue(mob.GameObjectId, out var cache) || cache.BaseId != mob.BaseId)
+        {
+            var englishName = MobNameResolver.GetEnglishName(mob);
+            cache = new MobRenderCache
+            {
+                BaseId = mob.BaseId,
+                Name = mob.Name.TextValue,
+                EnglishName = englishName,
+                IsPet = MobDatabase.IsPlayerPetOrCompanion(englishName),
+            };
+            mobCache[mob.GameObjectId] = cache;
+        }
+
+        cache.LastSeenFrame = frameCounter;
+        return cache;
+    }
+
+    private static string GetLabelPrefix(MobRenderCache cache, byte level, string dataName, string typeLabel)
+    {
+        float fontSize = ImGui.GetFontSize();
+        bool textChanged = cache.LabelLevel != level ||
+                           !ReferenceEquals(cache.LabelDataName, dataName) ||
+                           !ReferenceEquals(cache.LabelTypeText, typeLabel) ||
+                           cache.LabelPrefix.Length == 0;
+
+        if (textChanged)
+        {
+            cache.LabelLevel = level;
+            cache.LabelDataName = dataName;
+            cache.LabelTypeText = typeLabel;
+            cache.LabelPrefix = level > 0 ? $"Lv.{level} {dataName} {typeLabel}" : $"{dataName} {typeLabel}";
+        }
+
+        if (textChanged || cache.LabelFontSize != fontSize)
+        {
+            cache.LabelFontSize = fontSize;
+            cache.LabelPrefixWidth = ImGui.CalcTextSize(cache.LabelPrefix).X;
+        }
+
+        return cache.LabelPrefix;
+    }
+
+    private string GetBadgeText(string dragonName, float distance)
+    {
+        int bucket = (int)MathF.Round(distance * 10f);
+        if (bucket != cachedBadgeDistance || !ReferenceEquals(dragonName, cachedBadgeName))
+        {
+            cachedBadgeDistance = bucket;
+            cachedBadgeName = dragonName;
+            cachedBadgeText = $"[AUTO-WALK] ENGAGED ({dragonName} - {distance:F1}m)";
+        }
+        return cachedBadgeText;
+    }
+
+    private void PruneMobCache()
+    {
+        staleCacheKeys.Clear();
+        foreach (var (id, entry) in mobCache)
+        {
+            if (frameCounter - entry.LastSeenFrame > CachePruneIntervalFrames)
+            {
+                staleCacheKeys.Add(id);
+            }
+        }
+        foreach (var id in staleCacheKeys)
+        {
+            mobCache.Remove(id);
         }
     }
 

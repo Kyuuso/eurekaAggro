@@ -1,0 +1,1000 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>Teal</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>Pink</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>Custom RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>Compact mode</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>Loading UI fonts...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>UI fonts failed to load. See the plugin log.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>Scroll down to "The Dumpster Fire" channel to discuss issues / suggestions for specific plugins.</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>Loaded</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>Area Selection</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>AutoRetainer Settings</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>BFE Settings</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>Bunnies</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>Bunny Fate Engine</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>Click to Copy Repo URL</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>Copy Icon Guide Link</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>Currently Not Supported!</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>Debug Stats</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>Dependencies</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>Dismounting</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>Enable Logout After Completion</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>Enable Multi Support</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>Enable Repair</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>Enable Retainer Support</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>Enable Submarine Support</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>Enables retainer support for this character.</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>Entering Pyros</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>Get Repo Url</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>Gil Earned</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>Go To Personal/FC House After Completion</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>Going to Eureka</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>Going to FC</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>Going to Personal</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>Going to Repair Mender</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>Gold Coffers</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>Silver Coffers</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>Bronze Coffers</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>Hold Ctrl to enable the button.</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>Hydatos Stats</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>Idle. Select an area and press Start to begin.</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>If crafters are leveled, uses dark matter for self repair.</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>In Bunny Fate</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>Infinite</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>Installed, not loaded</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>Leaving Duty</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>Lifetime</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>Load all required plugins to start Bunnies automation.</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>Logging Out</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Missing</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>Mounting Up</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>Moving to {0}</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>Not available</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>OG Author</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>Open settings window</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>Pagos Stats</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>Press to reset your stats.</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>Pyros Stats</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>RESET STATS</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>Repair Value</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>Resending Retainers</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>Run for X time</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>Select to start bunnies</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>Self Repair</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>Self Repairing</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>Session</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>Start Bunnies</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>Start Pyros</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>State: {0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Stats</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>Teleport To Personal</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>Teleport to Free Company</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>Threshold to repair gear</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>Time elapsed</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>Total Stats</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>Using Aethernet</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>Using Retainer</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>WIP</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Waiting Navmesh</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>Waiting at Fate</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>Will logout after looping is complete.</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>Will teleport to Personal or FC house after looping is complete.</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0} (legacy alias)</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer is currently not installed or enabled. Click to copy Repo.</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate.</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>Set to Run Infinitely or set a timer up to 24 hours</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats.</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>The following plugins are required to be installed and enabled: </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>Moving to Kugane Npc</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>Grabbing Coffer</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>Eldthurs Mount</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>Pyros Hairstyles</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>Copycat Bulb</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>Petrel Mount</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>Repo URL Copied</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>Going to Personal House</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
+    <value>Required plugins unavailable for Bunnies:
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>Start {0}</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>BFE Debug</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>Normal Raid</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Window appearance</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Compact visible on main window</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Language visible on main window</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparency</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Opacity (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Auto-fade when unfocused</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Unfocused opacity (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Unfocused delay (seconds)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Copy / ZIP Dalamud log</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>Export capped log anyway</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>Exporting log...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>Log ZIP ready. Share it manually; remove old exports when you no longer need them.</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>Log export failed.</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>Open Export Folder</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue.</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>Open XA Slave log tools</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner.</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>XA Slave log tools could not be opened.</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>Aggro Lines</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>Tracker</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>About &amp; Credits</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>Select plugin interface language</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>Location: {0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>Outside Eureka - Expedition features on standby</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>Auto-synced</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>Night</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>Elemental Lv. {0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>Radar Controls &amp; Filters</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>Master Radar Enable</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>Only In Eureka Expeditions</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>Auto-Detect Elemental Level</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>Manual Elemental Level</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>Safe Zone Distance (m)</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>Safety Margin (m)</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>Monsters Nearby ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>Search Monsters...</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>Filter Safe Monsters</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>Safe Level Difference</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>Show Vision Cones</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>Show Sound Circles</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>Show Blood Circles</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>Show Magic Warnings</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>Show Proximity Circles</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>Show Distance Lines</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>Show Mob Labels</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>Fill Shapes (Solid)</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>Fill Opacity</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>Aggro Cone Arc (Degrees)</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>Aggro Types</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>Sight</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Sound</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>Blood</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>Magic</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Proximity</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>True Sight</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>Safe</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>Aggro Risk</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>In Range</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>Aggro Type</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Range</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>Color Configuration</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>Color Vision (Sight)</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>Color Sound (Dragons / Hearing)</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>Color Blood (Undead / Ashkin)</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>Color Magic (Sprites / Elementals)</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>Color Distance Near (&lt; 10m)</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>Color Distance Far (&gt;= 10m)</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>Reset Colors to Default</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>Always Show Sleeping Dragons</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>Always Show Undead (Blood)</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>Always Show Sprites (Magic)</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>Auto-Walk Near Sleeping Dragons</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>Auto-Walk Trigger Distance (m)</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>Restore Running After Leaving Dragons</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>Enable Sound / Beep Alerts</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>Audio Alert Volume</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>Open Cast Alert Preview</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>Lock Cast Alert Position</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>Reset Cast Alert Position</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] ENEMY ACTION ALERT</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] ENEMY ACTION ALERT (Drag to move)</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>STUN REQUIRED!</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>BREAK LINE OF SIGHT (HIDE)!</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>INTERRUPT / SILENCE AVAILABLE!</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0} is casting: </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[OK] AUTO-WALK ENGAGED (SAFE)</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[SAFE] SLEEPING DRAGON</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[MAGIC] Sprite: DO NOT CAST SPELLS</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[Sound - Walk!]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[Blood / Undead]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[Magic / Sprite]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[Proximity]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[Sight]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>Tracker:</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>Create a new Eureka Tracker on ffxiv-eureka.com</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>6-char Code</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>Enter the 6-character code of an existing tracker</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>Password (optional)</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>Optional password. Required to modify pop timers if the tracker is protected.</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>Copy password to clipboard</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>Auto-connect to Eureka Tracker when entering an expedition</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>Sync Instance ID</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>Instance ID:</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>Auto-detected</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>Manual Entry</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>Not in Eureka</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>Set</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>Not Connected to a Tracker</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>Enter a 6-character tracker code above or click (+) to create a new one.</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>Pop Time</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>Respawn</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>Alive</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>Dead</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>Spawn Conditions</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>Weather Forecast</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>Show All</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>Hide Dead</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>Copy Tracker Link</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>Copy Flag</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>Reset Timer</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>Set Pop Time</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>Minutes Ago</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>Hours Ago</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>Logograms &amp; Actions Database</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>Search Actions...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>Recipe</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>Mnemonic</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>Notorious Monsters Database</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>Zone</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>Anemos</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>Pagos</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>Pyros</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>Hydatos</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>Aggro Radar Status:</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>Dragon Auto-Walk:</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>Cast Alerts:</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>Live Nearby Threats (Radar Detection Range)</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>Eureka Monsters Reference Database</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>Enemy Actions &amp; Tactical Counters Database</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>Player character not logged in or unavailable.</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ Expedition radar is on standby while outside Eureka.</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos.</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>Threat / Name</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>Lv</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>Danger</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>Tactical Action</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>Source Mob</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>Counter Measure</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>Cast Time</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>Action Name</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>All Zones</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>General Detection &amp; Safety</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>Master Enable</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>Only Activate In Eureka</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>Detection Range (Meters)</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>Safety Margin (Meters)</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>Auto-Detect Player Elemental Level</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>Manual Player Elemental Level</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>Filter Safe Monsters (Safe Level Difference)</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>Visual Shapes &amp; Drawing Elements</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>Draw Vision Cones</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>Draw Sound Aggro Circles</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>Draw Blood Aggro Circles</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>Draw Magic Aggro Warnings</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>Draw Proximity Circles</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>Draw Distance Guide Lines (&lt; 12m)</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>Draw Floating Monster Labels</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>Solid Shape Fills</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>Vision Cone Arc Angle (Degrees)</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>Sleeping Dragons &amp; Auto-Walk Automation</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>Auto-Walk Activation Distance (Meters)</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>Restore Running Upon Leaving Danger Radius</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>Tactical Cast Alerts HUD</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>Display On-Screen Floating Enemy Action Alert</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>Lock Window Position</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>Test / Preview Cast Alert HUD</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>Reset Window Position</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>Audio Sound Alerts</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>Play Beep Warning On Aggro Threat</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>Color Palette &amp; Customization</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>Dragon Sound Circle</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>Dragon Running Warning Text</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>Dragon Auto-Walk Safe Text</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>Near Distance Line (&lt; 10m)</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>Far Distance Line (&gt;= 10m)</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>Support McVaxius on Ko-fi</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>Join Aethertek Discord</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>Eureka Suite GitHub Source</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>Community &amp; External Links:</value>
+  </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>Dependency</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repository</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+</root>

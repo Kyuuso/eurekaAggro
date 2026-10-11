@@ -1,4 +1,4 @@
-namespace EurekaAggro.Models;
+﻿namespace EurekaSuite.Models;
 
 /// <summary>
 /// Threat or danger level of an enemy.

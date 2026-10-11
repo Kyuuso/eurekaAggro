@@ -1,0 +1,1000 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <data name="Color" xml:space="preserve">
+    <value>रंग</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>भाषा</value>
+  </data>
+  <data name="Teal" xml:space="preserve">
+    <value>हरित-नीला</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>नीला</value>
+  </data>
+  <data name="Pink" xml:space="preserve">
+    <value>गुलाबी</value>
+  </data>
+  <data name="Custom RGB" xml:space="preserve">
+    <value>कस्टम RGB</value>
+  </data>
+  <data name="Compact mode" xml:space="preserve">
+    <value>संक्षिप्त मोड</value>
+  </data>
+  <data name="Loading UI fonts..." xml:space="preserve">
+    <value>UI फ़ॉन्ट लोड हो रहे हैं...</value>
+  </data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve">
+    <value>UI फ़ॉन्ट लोड नहीं हो सके। प्लगइन लॉग देखें।</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>सेटिंग्स</value>
+  </data>
+  <data name="Ko-fi" xml:space="preserve">
+    <value>Ko-fi</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="Scroll down to &quot;The Dumpster Fire&quot; channel to discuss issues / suggestions for specific plugins." xml:space="preserve">
+    <value>विशिष्ट प्लगइन की समस्याओं या सुझावों पर चर्चा करने के लिए नीचे "The Dumpster Fire" चैनल तक जाएँ।</value>
+  </data>
+  <data name="Loaded" xml:space="preserve">
+    <value>लोड किया गया</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>परिचय</value>
+  </data>
+  <data name="Area Selection" xml:space="preserve">
+    <value>क्षेत्र का चयन</value>
+  </data>
+  <data name="AutoRetainer Settings" xml:space="preserve">
+    <value>AutoRetainer सेटिंग्स</value>
+  </data>
+  <data name="BFE Settings" xml:space="preserve">
+    <value>BFE सेटिंग्स</value>
+  </data>
+  <data name="Bunnies" xml:space="preserve">
+    <value>बन्नी</value>
+  </data>
+  <data name="Bunny Fate Engine" xml:space="preserve">
+    <value>Bunny Fate Engine</value>
+  </data>
+  <data name="Click to Copy Repo URL" xml:space="preserve">
+    <value>रेपो URL कॉपी करने के लिए क्लिक करें</value>
+  </data>
+  <data name="Copy Icon Guide Link" xml:space="preserve">
+    <value>आइकन गाइड का लिंक कॉपी करें</value>
+  </data>
+  <data name="Currently Not Supported!" xml:space="preserve">
+    <value>अभी समर्थित नहीं है!</value>
+  </data>
+  <data name="Debug Stats" xml:space="preserve">
+    <value>डिबग आँकड़े</value>
+  </data>
+  <data name="Dependencies" xml:space="preserve">
+    <value>आवश्यक प्लगइन</value>
+  </data>
+  <data name="Dismounting" xml:space="preserve">
+    <value>सवारी से उतर रहे हैं</value>
+  </data>
+  <data name="Enable Logout After Completion" xml:space="preserve">
+    <value>पूरा होने पर लॉग आउट करें</value>
+  </data>
+  <data name="Enable Multi Support" xml:space="preserve">
+    <value>कई पात्रों का समर्थन सक्षम करें</value>
+  </data>
+  <data name="Enable Repair" xml:space="preserve">
+    <value>मरम्मत सक्षम करें</value>
+  </data>
+  <data name="Enable Retainer Support" xml:space="preserve">
+    <value>रिटेनर समर्थन सक्षम करें</value>
+  </data>
+  <data name="Enable Submarine Support" xml:space="preserve">
+    <value>पनडुब्बी समर्थन सक्षम करें</value>
+  </data>
+  <data name="Enables retainer support for this character." xml:space="preserve">
+    <value>इस पात्र के लिए रिटेनर समर्थन सक्षम करता है।</value>
+  </data>
+  <data name="Entering Pyros" xml:space="preserve">
+    <value>Pyros में प्रवेश कर रहे हैं</value>
+  </data>
+  <data name="General Settings" xml:space="preserve">
+    <value>सामान्य सेटिंग्स</value>
+  </data>
+  <data name="Get Repo Url" xml:space="preserve">
+    <value>रेपो URL प्राप्त करें</value>
+  </data>
+  <data name="Gil Earned" xml:space="preserve">
+    <value>अर्जित गिल</value>
+  </data>
+  <data name="Go To Personal/FC House After Completion" xml:space="preserve">
+    <value>पूरा होने पर निजी या FC घर जाएँ</value>
+  </data>
+  <data name="Going to Eureka" xml:space="preserve">
+    <value>Eureka जा रहे हैं</value>
+  </data>
+  <data name="Going to FC" xml:space="preserve">
+    <value>FC घर जा रहे हैं</value>
+  </data>
+  <data name="Going to Personal" xml:space="preserve">
+    <value>निजी घर जा रहे हैं</value>
+  </data>
+  <data name="Going to Repair Mender" xml:space="preserve">
+    <value>मरम्मत करने वाले के पास जा रहे हैं</value>
+  </data>
+  <data name="Gold Coffers" xml:space="preserve">
+    <value>सोने के संदूक</value>
+  </data>
+  <data name="Silver Coffers" xml:space="preserve">
+    <value>चाँदी के संदूक</value>
+  </data>
+  <data name="Bronze Coffers" xml:space="preserve">
+    <value>काँसे के संदूक</value>
+  </data>
+  <data name="Hold Ctrl to enable the button." xml:space="preserve">
+    <value>बटन सक्षम करने के लिए Ctrl दबाए रखें।</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>घंटे</value>
+  </data>
+  <data name="Hydatos Stats" xml:space="preserve">
+    <value>Hydatos आँकड़े</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>निष्क्रिय</value>
+  </data>
+  <data name="Idle. Select an area and press Start to begin." xml:space="preserve">
+    <value>निष्क्रिय। शुरू करने के लिए क्षेत्र चुनें और शुरू करें दबाएँ।</value>
+  </data>
+  <data name="If crafters are leveled, uses dark matter for self repair." xml:space="preserve">
+    <value>क्राफ्टर का स्तर पर्याप्त होने पर डार्क मैटर से स्वयं मरम्मत करता है।</value>
+  </data>
+  <data name="In Bunny Fate" xml:space="preserve">
+    <value>Bunny FATE में</value>
+  </data>
+  <data name="Infinite" xml:space="preserve">
+    <value>असीमित</value>
+  </data>
+  <data name="Installed, not loaded" xml:space="preserve">
+    <value>स्थापित है, लोड नहीं है</value>
+  </data>
+  <data name="Leaving Duty" xml:space="preserve">
+    <value>ड्यूटी छोड़ रहे हैं</value>
+  </data>
+  <data name="Lifetime" xml:space="preserve">
+    <value>कुल अवधि</value>
+  </data>
+  <data name="Load all required plugins to start Bunnies automation." xml:space="preserve">
+    <value>बन्नी ऑटोमेशन शुरू करने के लिए सभी आवश्यक प्लगइन लोड करें।</value>
+  </data>
+  <data name="Logging Out" xml:space="preserve">
+    <value>लॉग आउट हो रहे हैं</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>मिनट</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>अनुपस्थित</value>
+  </data>
+  <data name="Mounting Up" xml:space="preserve">
+    <value>सवारी पर चढ़ रहे हैं</value>
+  </data>
+  <data name="Moving to {0}" xml:space="preserve">
+    <value>{0} की ओर जा रहे हैं</value>
+  </data>
+  <data name="Not available" xml:space="preserve">
+    <value>उपलब्ध नहीं</value>
+  </data>
+  <data name="OG Author" xml:space="preserve">
+    <value>मूल लेखक</value>
+  </data>
+  <data name="Open settings window" xml:space="preserve">
+    <value>सेटिंग्स विंडो खोलें</value>
+  </data>
+  <data name="Pagos Stats" xml:space="preserve">
+    <value>Pagos आँकड़े</value>
+  </data>
+  <data name="Press to reset your stats." xml:space="preserve">
+    <value>अपने आँकड़े रीसेट करने के लिए दबाएँ।</value>
+  </data>
+  <data name="Pyros Stats" xml:space="preserve">
+    <value>Pyros आँकड़े</value>
+  </data>
+  <data name="RESET STATS" xml:space="preserve">
+    <value>आँकड़े रीसेट करें</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>ताज़ा करें</value>
+  </data>
+  <data name="Repair Value" xml:space="preserve">
+    <value>मरम्मत सीमा</value>
+  </data>
+  <data name="Resending Retainers" xml:space="preserve">
+    <value>रिटेनर फिर भेज रहे हैं</value>
+  </data>
+  <data name="Run for X time" xml:space="preserve">
+    <value>निर्धारित समय तक चलाएँ</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>चल रहा है</value>
+  </data>
+  <data name="Select to start bunnies" xml:space="preserve">
+    <value>बन्नी शुरू करने के लिए चुनें</value>
+  </data>
+  <data name="Self Repair" xml:space="preserve">
+    <value>स्वयं मरम्मत</value>
+  </data>
+  <data name="Self Repairing" xml:space="preserve">
+    <value>स्वयं मरम्मत कर रहे हैं</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>सत्र</value>
+  </data>
+  <data name="Start Bunnies" xml:space="preserve">
+    <value>बन्नी शुरू करें</value>
+  </data>
+  <data name="Start Pyros" xml:space="preserve">
+    <value>Pyros शुरू करें</value>
+  </data>
+  <data name="State: {0}" xml:space="preserve">
+    <value>स्थिति: {0}</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>आँकड़े</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>रोकें</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>कार्य</value>
+  </data>
+  <data name="Teleport To Personal" xml:space="preserve">
+    <value>निजी घर टेलीपोर्ट करें</value>
+  </data>
+  <data name="Teleport to Free Company" xml:space="preserve">
+    <value>Free Company में टेलीपोर्ट करें</value>
+  </data>
+  <data name="Threshold to repair gear" xml:space="preserve">
+    <value>उपकरण की मरम्मत की सीमा</value>
+  </data>
+  <data name="Time elapsed" xml:space="preserve">
+    <value>बीता समय</value>
+  </data>
+  <data name="Total Stats" xml:space="preserve">
+    <value>कुल आँकड़े</value>
+  </data>
+  <data name="Using Aethernet" xml:space="preserve">
+    <value>Aethernet का उपयोग कर रहे हैं</value>
+  </data>
+  <data name="Using Retainer" xml:space="preserve">
+    <value>रिटेनर का उपयोग कर रहे हैं</value>
+  </data>
+  <data name="WIP" xml:space="preserve">
+    <value>कार्य प्रगति पर है</value>
+  </data>
+  <data name="Waiting Navmesh" xml:space="preserve">
+    <value>Navmesh की प्रतीक्षा</value>
+  </data>
+  <data name="Waiting at Fate" xml:space="preserve">
+    <value>FATE पर प्रतीक्षा</value>
+  </data>
+  <data name="Will logout after looping is complete." xml:space="preserve">
+    <value>चक्र पूरे होने पर लॉग आउट होगा।</value>
+  </data>
+  <data name="Will teleport to Personal or FC house after looping is complete." xml:space="preserve">
+    <value>चक्र पूरे होने पर निजी या FC घर टेलीपोर्ट होगा।</value>
+  </data>
+  <data name="{0} (legacy alias)" xml:space="preserve">
+    <value>{0} (पुराना नाम)</value>
+  </data>
+  <data name="AutoRetainer is currently not installed or enabled. Click to copy Repo." xml:space="preserve">
+    <value>AutoRetainer अभी स्थापित या सक्षम नहीं है। रेपो कॉपी करने के लिए क्लिक करें।</value>
+  </data>
+  <data name="Once gear conditions are met, will automatically repair at the vendor after next Bunny Fate." xml:space="preserve">
+    <value>उपकरण की स्थिति सीमा तक पहुँचने पर अगले Bunny FATE के बाद विक्रेता के पास अपने आप मरम्मत होगी।</value>
+  </data>
+  <data name="Set to Run Infinitely or set a timer up to 24 hours" xml:space="preserve">
+    <value>असीमित चलाएँ या अधिकतम 24 घंटे का टाइमर सेट करें</value>
+  </data>
+  <data name="Recovered Bunnies automation for Eureka bunny fate routing, coffer hunting, and run stats." xml:space="preserve">
+    <value>Eureka बन्नी FATE मार्ग, संदूक खोज और रन के आँकड़ों के लिए बहाल किया गया बन्नी ऑटोमेशन।</value>
+  </data>
+  <data name="The following plugins are required to be installed and enabled: " xml:space="preserve">
+    <value>इन प्लगइन का स्थापित और सक्षम होना आवश्यक है: </value>
+  </data>
+  <data name="Moving to Kugane Npc" xml:space="preserve">
+    <value>Kugane NPC की ओर जा रहे हैं</value>
+  </data>
+  <data name="Grabbing Coffer" xml:space="preserve">
+    <value>संदूक ले रहे हैं</value>
+  </data>
+  <data name="Eldthurs Mount" xml:space="preserve">
+    <value>Eldthurs सवारी</value>
+  </data>
+  <data name="Pyros Hairstyles" xml:space="preserve">
+    <value>Pyros केश शैलियाँ</value>
+  </data>
+  <data name="Copycat Bulb" xml:space="preserve">
+    <value>Copycat Bulb</value>
+  </data>
+  <data name="Petrel Mount" xml:space="preserve">
+    <value>Petrel सवारी</value>
+  </data>
+  <data name="Repo URL Copied" xml:space="preserve">
+    <value>रेपो URL कॉपी हो गया</value>
+  </data>
+  <data name="Going to Personal House" xml:space="preserve">
+    <value>निजी घर जा रहे हैं</value>
+  </data>
+  <data name="Required plugins unavailable for Bunnies:&#10;{0}" xml:space="preserve">
+    <value>बन्नी के लिए आवश्यक प्लगइन उपलब्ध नहीं हैं:
+{0}</value>
+  </data>
+  <data name="Start {0}" xml:space="preserve">
+    <value>{0} शुरू करें</value>
+  </data>
+  <data name="BFE Debug" xml:space="preserve">
+    <value>BFE डिबग</value>
+  </data>
+  <data name="Normal Raid" xml:space="preserve">
+    <value>सामान्य रेड</value>
+  </data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>विंडो का स्वरूप</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>मुख्य विंडो पर संक्षिप्त मोड दिखाएँ</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>मुख्य विंडो पर भाषा दिखाएँ</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>पारदर्शिता</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>अपारदर्शिता (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>फ़ोकस हटने पर अपने आप धुँधला करें</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>फ़ोकस हटने पर अपारदर्शिता (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>फ़ोकस हटने के बाद विलंब (सेकंड)</value>
+  </data>
+  <data name="Copy / ZIP Dalamud log" xml:space="preserve">
+    <value>Dalamud लॉग कॉपी / ZIP करें</value>
+  </data>
+  <data name="Export capped log anyway" xml:space="preserve">
+    <value>भरा हुआ लॉग फिर भी निर्यात करें</value>
+  </data>
+  <data name="Exporting log..." xml:space="preserve">
+    <value>लॉग निर्यात हो रहा है...</value>
+  </data>
+  <data name="Log ZIP ready. Share it manually; remove old exports when you no longer need them." xml:space="preserve">
+    <value>लॉग ZIP तैयार है। इसे स्वयं साझा करें और पुराने अनावश्यक निर्यात हटाएँ।</value>
+  </data>
+  <data name="Log export failed." xml:space="preserve">
+    <value>लॉग निर्यात विफल हुआ।</value>
+  </data>
+  <data name="Open Export Folder" xml:space="preserve">
+    <value>निर्यात फ़ोल्डर खोलें</value>
+  </data>
+  <data name="This log has reached Dalamud's 100 MiB limit. Logging may have stopped, so recent activity may be missing and this log may not help troubleshoot your current issue." xml:space="preserve">
+    <value>यह लॉग Dalamud की 100 MiB सीमा पर पहुँच गया है। लॉग लिखना रुक गया हो सकता है; हाल की गतिविधि गायब हो सकती है और यह लॉग वर्तमान समस्या की जाँच में उपयोगी नहीं हो सकता।</value>
+  </data>
+  <data name="Open XA Slave log tools" xml:space="preserve">
+    <value>XA Slave के लॉग उपकरण खोलें</value>
+  </data>
+  <data name="Opens XA Slave's Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve">
+    <value>XA Slave का Utility &gt; XA Mods पैनल खोलता है, जिसमें Dalamud Log Cleaner है।</value>
+  </data>
+  <data name="XA Slave log tools could not be opened." xml:space="preserve">
+    <value>XA Slave के लॉग उपकरण नहीं खोले जा सके।</value>
+  </data>
+  <data name="Aggro Lines" xml:space="preserve">
+    <value>आक्रामक रेखाएँ</value>
+  </data>
+  <data name="Tracker" xml:space="preserve">
+    <value>ट्रैकर</value>
+  </data>
+  <data name="About &amp; Credits" xml:space="preserve">
+    <value>परिचय और श्रेय</value>
+  </data>
+  <data name="Main" xml:space="preserve">
+    <value>मुख्य</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>सांख्यिकी</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>संरचना</value>
+  </data>
+  <data name="Language:" xml:space="preserve">
+    <value>भाषा:</value>
+  </data>
+  <data name="Select plugin interface language" xml:space="preserve">
+    <value>प्लगइन इंटरफ़ेस भाषा चुनें</value>
+  </data>
+  <data name="Location: {0}" xml:space="preserve">
+    <value>स्थान: {0}</value>
+  </data>
+  <data name="Outside Eureka - Expedition features on standby" xml:space="preserve">
+    <value>यूरेका के बाहर - अभियान सुविधाएँ स्टैंडबाय पर</value>
+  </data>
+  <data name="Auto-synced" xml:space="preserve">
+    <value>स्वचालित रूप से सिंक किया गया</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>हस्तपुस्तिका</value>
+  </data>
+  <data name="Night" xml:space="preserve">
+    <value>रात</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>दिन</value>
+  </data>
+  <data name="Elemental Lv. {0}" xml:space="preserve">
+    <value>तत्वीय स्तर{0}</value>
+  </data>
+  <data name="Radar Controls &amp; Filters" xml:space="preserve">
+    <value>रडार नियंत्रण और फ़िल्टर</value>
+  </data>
+  <data name="Master Radar Enable" xml:space="preserve">
+    <value>मास्टर रडार सक्षम करें</value>
+  </data>
+  <data name="Only In Eureka Expeditions" xml:space="preserve">
+    <value>केवल यूरेका एक्सपेडिशन में</value>
+  </data>
+  <data name="Auto-Detect Elemental Level" xml:space="preserve">
+    <value>तत्वीय स्तर स्वतः-पत्ता लगाएँ</value>
+  </data>
+  <data name="Manual Elemental Level" xml:space="preserve">
+    <value>मैनुअल तत्व स्तर</value>
+  </data>
+  <data name="Safe Zone Distance (m)" xml:space="preserve">
+    <value>सुरक्षित क्षेत्र की दूरी (मीटर)</value>
+  </data>
+  <data name="Safety Margin (m)" xml:space="preserve">
+    <value>सुरक्षा मार्जिन (मीटर)</value>
+  </data>
+  <data name="Monsters Nearby ({0})" xml:space="preserve">
+    <value>नज़दीकी राक्षस ({0})</value>
+  </data>
+  <data name="Search Monsters..." xml:space="preserve">
+    <value>राक्षसों को खोजें...</value>
+  </data>
+  <data name="Filter Safe Monsters" xml:space="preserve">
+    <value>सुरक्षित राक्षसों को फ़िल्टर करें</value>
+  </data>
+  <data name="Safe Level Difference" xml:space="preserve">
+    <value>सुरक्षित स्तर का अंतर</value>
+  </data>
+  <data name="Show Vision Cones" xml:space="preserve">
+    <value>दृष्टि शंकु दिखाएँ</value>
+  </data>
+  <data name="Show Sound Circles" xml:space="preserve">
+    <value>ध्वनि वृत्त दिखाएँ</value>
+  </data>
+  <data name="Show Blood Circles" xml:space="preserve">
+    <value>रक्त परिसंचरण दिखाएँ</value>
+  </data>
+  <data name="Show Magic Warnings" xml:space="preserve">
+    <value>जादू चेतावनियाँ दिखाएँ</value>
+  </data>
+  <data name="Show Proximity Circles" xml:space="preserve">
+    <value>निकटता वृत्त दिखाएँ</value>
+  </data>
+  <data name="Show Distance Lines" xml:space="preserve">
+    <value>दूरी रेखाएँ दिखाएँ</value>
+  </data>
+  <data name="Show Mob Labels" xml:space="preserve">
+    <value>मोब लेबल दिखाएँ</value>
+  </data>
+  <data name="Fill Shapes (Solid)" xml:space="preserve">
+    <value>आकार भरें (ठोस)</value>
+  </data>
+  <data name="Fill Opacity" xml:space="preserve">
+    <value>भरापन</value>
+  </data>
+  <data name="Aggro Cone Arc (Degrees)" xml:space="preserve">
+    <value>एग्रो कोन चाप (डिग्री)</value>
+  </data>
+  <data name="Aggro Types" xml:space="preserve">
+    <value>एग्रो टाइप्स</value>
+  </data>
+  <data name="Sight" xml:space="preserve">
+    <value>दृष्टि</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>ध्वनि</value>
+  </data>
+  <data name="Blood" xml:space="preserve">
+    <value>रक्त</value>
+  </data>
+  <data name="Magic" xml:space="preserve">
+    <value>जादू</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>निकटता</value>
+  </data>
+  <data name="True Sight" xml:space="preserve">
+    <value>वास्तविक दृष्टि</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>सुरक्षित</value>
+  </data>
+  <data name="Aggro Risk" xml:space="preserve">
+    <value>आक्रामक जोखिम</value>
+  </data>
+  <data name="In Range" xml:space="preserve">
+    <value>दायरे में</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>नाम</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>स्तर</value>
+  </data>
+  <data name="Aggro Type" xml:space="preserve">
+    <value>आक्रामक प्रकार</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>दायरा</value>
+  </data>
+  <data name="Distance" xml:space="preserve">
+    <value>दूरी</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>स्थिति</value>
+  </data>
+  <data name="Color Configuration" xml:space="preserve">
+    <value>रंग विन्यास</value>
+  </data>
+  <data name="Color Vision (Sight)" xml:space="preserve">
+    <value>वर्ण दृष्टि (दृष्टि)</value>
+  </data>
+  <data name="Color Sound (Dragons / Hearing)" xml:space="preserve">
+    <value>रंग ध्वनि (ड्रैगन / श्रवण)</value>
+  </data>
+  <data name="Color Blood (Undead / Ashkin)" xml:space="preserve">
+    <value>रक्त का रंग (अमर / ऐशकिन)</value>
+  </data>
+  <data name="Color Magic (Sprites / Elementals)" xml:space="preserve">
+    <value>रंग जादू (स्प्रिट्स / एलिमेंटल्स)</value>
+  </data>
+  <data name="Color Distance Near (&lt; 10m)" xml:space="preserve">
+    <value>रंग दूरी निकट (&lt; 10 मीटर)</value>
+  </data>
+  <data name="Color Distance Far (&gt;= 10m)" xml:space="preserve">
+    <value>रंग दूरी दूर (&gt;= 10 मीटर)</value>
+  </data>
+  <data name="Reset Colors to Default" xml:space="preserve">
+    <value>रंगों को डिफ़ॉल्ट पर रीसेट करें</value>
+  </data>
+  <data name="Always Show Sleeping Dragons" xml:space="preserve">
+    <value>हमेशा सोते हुए ड्रैगन दिखाएँ</value>
+  </data>
+  <data name="Always Show Undead (Blood)" xml:space="preserve">
+    <value>हमेशा अमर (रक्त) दिखाएँ</value>
+  </data>
+  <data name="Always Show Sprites (Magic)" xml:space="preserve">
+    <value>हमेशा स्प्राइट्स दिखाएँ (जादू)</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons" xml:space="preserve">
+    <value>सोते हुए ड्रैगनों के पास ऑटो-वॉक</value>
+  </data>
+  <data name="Auto-Walk Trigger Distance (m)" xml:space="preserve">
+    <value>स्वचालित-वॉक ट्रिगर दूरी (मीटर)</value>
+  </data>
+  <data name="Restore Running After Leaving Dragons" xml:space="preserve">
+    <value>ड्रैगन छोड़ने के बाद दौड़ फिर से शुरू करें</value>
+  </data>
+  <data name="Enable Sound / Beep Alerts" xml:space="preserve">
+    <value>ध्वनि / बीप अलर्ट सक्षम करें</value>
+  </data>
+  <data name="Audio Alert Volume" xml:space="preserve">
+    <value>ऑडियो अलर्ट वॉल्यूम</value>
+  </data>
+  <data name="Open Cast Alert Preview" xml:space="preserve">
+    <value>ओपन कास्ट अलर्ट पूर्वावलोकन</value>
+  </data>
+  <data name="Lock Cast Alert Position" xml:space="preserve">
+    <value>लॉक कास्ट अलर्ट स्थिति</value>
+  </data>
+  <data name="Reset Cast Alert Position" xml:space="preserve">
+    <value>कास्ट अलर्ट स्थिति रीसेट करें</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT" xml:space="preserve">
+    <value>[!] दुश्मन की कार्रवाई की चेतावनी</value>
+  </data>
+  <data name="[!] ENEMY ACTION ALERT (Drag to move)" xml:space="preserve">
+    <value>[!] दुश्मन की कार्रवाई की चेतावनी (खींचें और छोड़ें)</value>
+  </data>
+  <data name="STUN REQUIRED!" xml:space="preserve">
+    <value>स्टन आवश्यक!</value>
+  </data>
+  <data name="BREAK LINE OF SIGHT (HIDE)!" xml:space="preserve">
+    <value>दृष्टि रेखा तोड़ो (छिपो)!</value>
+  </data>
+  <data name="INTERRUPT / SILENCE AVAILABLE!" xml:space="preserve">
+    <value>इंटरप्ट / साइलेंस उपलब्ध!</value>
+  </data>
+  <data name="{0} is casting: " xml:space="preserve">
+    <value>{0} कास्ट कर रहा है: </value>
+  </data>
+  <data name="[OK] AUTO-WALK ENGAGED (SAFE)" xml:space="preserve">
+    <value>[ठीक है] ऑटो-वॉक सक्रिय (सुरक्षित)</value>
+  </data>
+  <data name="[WARN] RUNNING NEAR DRAGON! WALK NOW (KEYPAD /)" xml:space="preserve">
+    <value>[चेतावनी] ड्रैगन के पास दौड़ रहे हैं! अभी चलें (कीपैड /)</value>
+  </data>
+  <data name="[SAFE] SLEEPING DRAGON" xml:space="preserve">
+    <value>[सुरक्षित] सोया हुआ ड्रैगन</value>
+  </data>
+  <data name="[WARN] SOUND AGGRO! WALK TO AVOID (KEYPAD /)" xml:space="preserve">
+    <value>[चेतावनी] जोरदार शोर! बचना है तो चलें (कीपैड /)</value>
+  </data>
+  <data name="[ALERT] HP &lt; 80%: BLOOD AGGRO ACTIVE (HEAL TO SAFE)" xml:space="preserve">
+    <value>[चेतावनी] HP &lt; 80%: ब्लड एग्रो सक्रिय (सुरक्षित होने तक उपचार करें)</value>
+  </data>
+  <data name="[ALERT] CASTING DETECTED! SPRITE WILL AGGRO!" xml:space="preserve">
+    <value>[चेतावनी] कास्टिंग का पता चला! स्प्राइट हमला करेगा!</value>
+  </data>
+  <data name="[MAGIC] Sprite: DO NOT CAST SPELLS" xml:space="preserve">
+    <value>[जादू] स्प्रাইট: जादू मत लगाओ</value>
+  </data>
+  <data name="[Sound - Walk!]" xml:space="preserve">
+    <value>[ध्वनि - चलो!]</value>
+  </data>
+  <data name="[Blood / Undead]" xml:space="preserve">
+    <value>[रक्त / अमरमृत]</value>
+  </data>
+  <data name="[Magic / Sprite]" xml:space="preserve">
+    <value>[जादू / स्प्रिट]</value>
+  </data>
+  <data name="[Proximity]" xml:space="preserve">
+    <value>[निकटता]</value>
+  </data>
+  <data name="[Sight]" xml:space="preserve">
+    <value>[दृश्य]</value>
+  </data>
+  <data name="Tracker:" xml:space="preserve">
+    <value>ट्रैकर:</value>
+  </data>
+  <data name="Create a new Eureka Tracker on ffxiv-eureka.com" xml:space="preserve">
+    <value>ffxiv-eureka.com पर एक नया यूरेका ट्रैकर बनाएँ</value>
+  </data>
+  <data name="6-char Code" xml:space="preserve">
+    <value>6-अक्षर कोड</value>
+  </data>
+  <data name="Enter the 6-character code of an existing tracker" xml:space="preserve">
+    <value>मौजूदा ट्रैकर का 6-अंकीय कोड दर्ज करें</value>
+  </data>
+  <data name="Password (optional)" xml:space="preserve">
+    <value>पासवर्ड (वैकल्पिक)</value>
+  </data>
+  <data name="Optional password. Required to modify pop timers if the tracker is protected." xml:space="preserve">
+    <value>वैकल्पिक पासवर्ड। यदि ट्रैकर संरक्षित है तो पॉप टाइमर संशोधित करने के लिए आवश्यक।</value>
+  </data>
+  <data name="Copy password to clipboard" xml:space="preserve">
+    <value>पासवर्ड क्लिपबोर्ड पर कॉपी करें</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>कनेक्ट</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>अनप्लग करें</value>
+  </data>
+  <data name="Connecting..." xml:space="preserve">
+    <value>जुड़ रहा है...</value>
+  </data>
+  <data name="Auto-connect to Eureka Tracker when entering an expedition" xml:space="preserve">
+    <value>अभियान में प्रवेश करते समय यूरेका ट्रैकर से स्वतः कनेक्ट हो जाएं</value>
+  </data>
+  <data name="Sync Instance ID" xml:space="preserve">
+    <value>सिंक इंस्टेंस आईडी</value>
+  </data>
+  <data name="Instance ID:" xml:space="preserve">
+    <value>उदाहरण आईडी:</value>
+  </data>
+  <data name="Auto-detected" xml:space="preserve">
+    <value>स्वचालित रूप से पता लगाया गया</value>
+  </data>
+  <data name="Manual Entry" xml:space="preserve">
+    <value>मैनुअल प्रविष्टि</value>
+  </data>
+  <data name="Not in Eureka" xml:space="preserve">
+    <value>यूरेका में नहीं</value>
+  </data>
+  <data name="Set" xml:space="preserve">
+    <value>सेट</value>
+  </data>
+  <data name="Not Connected to a Tracker" xml:space="preserve">
+    <value>ट्रैकर से जुड़ा नहीं है</value>
+  </data>
+  <data name="Enter a 6-character tracker code above or click (+) to create a new one." xml:space="preserve">
+    <value>ऊपर 6-अक्षर का ट्रैकर कोड दर्ज करें या नया बनाने के लिए (+) पर क्लिक करें।</value>
+  </data>
+  <data name="Pop Time" xml:space="preserve">
+    <value>पॉप टाइम</value>
+  </data>
+  <data name="Respawn" xml:space="preserve">
+    <value>पुनर्जीवन</value>
+  </data>
+  <data name="Alive" xml:space="preserve">
+    <value>जीवित</value>
+  </data>
+  <data name="Dead" xml:space="preserve">
+    <value>मृत</value>
+  </data>
+  <data name="Spawn Conditions" xml:space="preserve">
+    <value>उत्पत्ति की शर्तें</value>
+  </data>
+  <data name="Weather Forecast" xml:space="preserve">
+    <value>मौसम पूर्वानुमान</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>सब दिखाएँ</value>
+  </data>
+  <data name="Hide Dead" xml:space="preserve">
+    <value>मृत छिपाएँ</value>
+  </data>
+  <data name="Copy Tracker Link" xml:space="preserve">
+    <value>कॉपी ट्रैकर लिंक</value>
+  </data>
+  <data name="Copy Flag" xml:space="preserve">
+    <value>प्रतिलिपि ध्वज</value>
+  </data>
+  <data name="Reset Timer" xml:space="preserve">
+    <value>टाइमर रीसेट करें</value>
+  </data>
+  <data name="Set Pop Time" xml:space="preserve">
+    <value>पॉप समय सेट करें</value>
+  </data>
+  <data name="Minutes Ago" xml:space="preserve">
+    <value>कुछ मिनट पहले</value>
+  </data>
+  <data name="Hours Ago" xml:space="preserve">
+    <value>कुछ घंटे पहले</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>लागू करें</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>रद्द करें</value>
+  </data>
+  <data name="Logograms &amp; Actions Database" xml:space="preserve">
+    <value>लोगोग्राम और क्रियाएँ डेटाबेस</value>
+  </data>
+  <data name="Search Actions..." xml:space="preserve">
+    <value>कार्रवाई खोजें...</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>रेसिपी</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>भूमिका</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>विवरण</value>
+  </data>
+  <data name="Mnemonic" xml:space="preserve">
+    <value>स्मृति-सहायक</value>
+  </data>
+  <data name="Notorious Monsters Database" xml:space="preserve">
+    <value>कुख्यात राक्षसों का डेटाबेस</value>
+  </data>
+  <data name="Zone" xml:space="preserve">
+    <value>क्षेत्र</value>
+  </data>
+  <data name="Anemos" xml:space="preserve">
+    <value>चलो चलते हैं</value>
+  </data>
+  <data name="Pagos" xml:space="preserve">
+    <value>भुगतान</value>
+  </data>
+  <data name="Pyros" xml:space="preserve">
+    <value>आग</value>
+  </data>
+  <data name="Hydatos" xml:space="preserve">
+    <value>जलस्रोत</value>
+  </data>
+  <data name="Aggro Radar Status:" xml:space="preserve">
+    <value>एग्रो रडार स्थिति:</value>
+  </data>
+  <data name="Dragon Auto-Walk:" xml:space="preserve">
+    <value>ड्रैगन ऑटो-वॉक:</value>
+  </data>
+  <data name="Cast Alerts:" xml:space="preserve">
+    <value>कास्ट अलर्ट्स:</value>
+  </data>
+  <data name="Live Nearby Threats (Radar Detection Range)" xml:space="preserve">
+    <value>नज़दीकी खतरों (रडार पता लगाने की सीमा)</value>
+  </data>
+  <data name="Eureka Monsters Reference Database" xml:space="preserve">
+    <value>यूरेका मॉन्स्टर्स संदर्भ डेटाबेस</value>
+  </data>
+  <data name="Enemy Actions &amp; Tactical Counters Database" xml:space="preserve">
+    <value>शत्रु कार्रवाइयाँ और सामरिक प्रत्युत्तर डेटाबेस</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>सक्रिय</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>अक्षम</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>सक्षम</value>
+  </data>
+  <data name="Player character not logged in or unavailable." xml:space="preserve">
+    <value>खिलाड़ी पात्र लॉग इन नहीं है या अनुपलब्ध है।</value>
+  </data>
+  <data name="○ Expedition radar is on standby while outside Eureka." xml:space="preserve">
+    <value>○ यूरेका के बाहर एक्सपेडिशन रडार स्टैंडबाय पर है।</value>
+  </data>
+  <data name="Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos." xml:space="preserve">
+    <value>जैसे ही आप एनेमोस, पागोस, पायरोस या हायडैटोस में प्रवेश करेंगे, लाइव खतरे का पता लगाने और खतरा क्षेत्र स्वचालित रूप से सक्रिय हो जाएंगे।</value>
+  </data>
+  <data name="Threat / Name" xml:space="preserve">
+    <value>खतरा / नाम</value>
+  </data>
+  <data name="Lv" xml:space="preserve">
+    <value>स्तर</value>
+  </data>
+  <data name="Danger" xml:space="preserve">
+    <value>खतरा</value>
+  </data>
+  <data name="Tactical Action" xml:space="preserve">
+    <value>रणनीतिक कार्रवाई</value>
+  </data>
+  <data name="Source Mob" xml:space="preserve">
+    <value>मूल भीड़</value>
+  </data>
+  <data name="Counter Measure" xml:space="preserve">
+    <value>प्रतिकारक उपाय</value>
+  </data>
+  <data name="Cast Time" xml:space="preserve">
+    <value>कास्ट समय</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>कार्रवाई का नाम</value>
+  </data>
+  <data name="All Zones" xml:space="preserve">
+    <value>सभी क्षेत्र</value>
+  </data>
+  <data name="General Detection &amp; Safety" xml:space="preserve">
+    <value>सामान्य पता लगाने और सुरक्षा</value>
+  </data>
+  <data name="Master Enable" xml:space="preserve">
+    <value>मास्टर सक्षम करें</value>
+  </data>
+  <data name="Only Activate In Eureka" xml:space="preserve">
+    <value>केवल यूरेका में सक्रिय करें</value>
+  </data>
+  <data name="Detection Range (Meters)" xml:space="preserve">
+    <value>खोज सीमा (मीटर)</value>
+  </data>
+  <data name="Safety Margin (Meters)" xml:space="preserve">
+    <value>सुरक्षा मार्जिन (मीटर)</value>
+  </data>
+  <data name="Auto-Detect Player Elemental Level" xml:space="preserve">
+    <value>स्वचालित रूप से पता लगाने वाला प्लेयर तत्व स्तर</value>
+  </data>
+  <data name="Manual Player Elemental Level" xml:space="preserve">
+    <value>मैनुअल प्लेयर मौलिक स्तर</value>
+  </data>
+  <data name="Filter Safe Monsters (Safe Level Difference)" xml:space="preserve">
+    <value>सुरक्षित राक्षसों को फ़िल्टर करें (सुरक्षित स्तर का अंतर)</value>
+  </data>
+  <data name="Visual Shapes &amp; Drawing Elements" xml:space="preserve">
+    <value>दृश्य आकृतियाँ और ड्राइंग तत्व</value>
+  </data>
+  <data name="Draw Vision Cones" xml:space="preserve">
+    <value>दृष्टि शंकु खींचें</value>
+  </data>
+  <data name="Draw Sound Aggro Circles" xml:space="preserve">
+    <value>ध्वनि आक्रोश वृत्त बनाएं</value>
+  </data>
+  <data name="Draw Blood Aggro Circles" xml:space="preserve">
+    <value>रक्तमय आक्रामक वृत्त बनाओ</value>
+  </data>
+  <data name="Draw Magic Aggro Warnings" xml:space="preserve">
+    <value>ड्रा मैजिक एग्रो चेतावनियाँ</value>
+  </data>
+  <data name="Draw Proximity Circles" xml:space="preserve">
+    <value>निकटता वृत्त खींचें</value>
+  </data>
+  <data name="Draw Distance Guide Lines (&lt; 12m)" xml:space="preserve">
+    <value>दूरी मार्गदर्शन रेखाएँ खींचें (&lt; 12 मीटर)</value>
+  </data>
+  <data name="Draw Floating Monster Labels" xml:space="preserve">
+    <value>फ्लोटिंग मॉन्स्टर लेबल बनाएँ</value>
+  </data>
+  <data name="Solid Shape Fills" xml:space="preserve">
+    <value>ठोस आकार भरण</value>
+  </data>
+  <data name="Vision Cone Arc Angle (Degrees)" xml:space="preserve">
+    <value>दृष्टि शंकु चाप कोण (डिग्री)</value>
+  </data>
+  <data name="Sleeping Dragons &amp; Auto-Walk Automation" xml:space="preserve">
+    <value>सोते हुए ड्रैगन और ऑटो-वॉक स्वचालन</value>
+  </data>
+  <data name="Auto-Walk Near Sleeping Dragons (Prevents Waking / Aggro)" xml:space="preserve">
+    <value>सोते हुए ड्रैगन के पास ऑटो-वॉक (जागने/हमले से रोकता है)</value>
+  </data>
+  <data name="Auto-Walk Activation Distance (Meters)" xml:space="preserve">
+    <value>स्वचालित-चाल सक्रियण दूरी (मीटर)</value>
+  </data>
+  <data name="Restore Running Upon Leaving Danger Radius" xml:space="preserve">
+    <value>खतरे के दायरे से बाहर निकलते ही दौड़ फिर से शुरू करें</value>
+  </data>
+  <data name="Tactical Cast Alerts HUD" xml:space="preserve">
+    <value>टैक्टिकल कास्ट अलर्ट्स HUD</value>
+  </data>
+  <data name="Display On-Screen Floating Enemy Action Alert" xml:space="preserve">
+    <value>स्क्रीन पर तैरते दुश्मन कार्रवाई अलर्ट प्रदर्शित करें</value>
+  </data>
+  <data name="Lock Window Position" xml:space="preserve">
+    <value>खिड़की की स्थिति लॉक करें</value>
+  </data>
+  <data name="Test / Preview Cast Alert HUD" xml:space="preserve">
+    <value>परीक्षण / पूर्वावलोकन कास्ट अलर्ट HUD</value>
+  </data>
+  <data name="Reset Window Position" xml:space="preserve">
+    <value>विंडो की स्थिति रीसेट करें</value>
+  </data>
+  <data name="Audio Sound Alerts" xml:space="preserve">
+    <value>ऑडियो ध्वनि अलर्ट</value>
+  </data>
+  <data name="Play Beep Warning On Aggro Threat" xml:space="preserve">
+    <value>एग्रो खतरे पर बीप चेतावनी बजाएँ</value>
+  </data>
+  <data name="Color Palette &amp; Customization" xml:space="preserve">
+    <value>रंग पैलेट और अनुकूलन</value>
+  </data>
+  <data name="Dragon Sound Circle" xml:space="preserve">
+    <value>ड्रैगन साउंड सर्कल</value>
+  </data>
+  <data name="Dragon Running Warning Text" xml:space="preserve">
+    <value>ड्रैगन रनिंग चेतावनी पाठ</value>
+  </data>
+  <data name="Dragon Auto-Walk Safe Text" xml:space="preserve">
+    <value>ड्रैगन ऑटो-वॉक सुरक्षित टेक्स्ट</value>
+  </data>
+  <data name="Near Distance Line (&lt; 10m)" xml:space="preserve">
+    <value>निकट दूरी रेखा (&lt; 10 मीटर)</value>
+  </data>
+  <data name="Far Distance Line (&gt;= 10m)" xml:space="preserve">
+    <value>दूर की रेखा (&gt;= 10 मीटर)</value>
+  </data>
+  <data name="Support McVaxius on Ko-fi" xml:space="preserve">
+    <value>को-फाई पर मैकवैक्सियस को सपोर्ट करें</value>
+  </data>
+  <data name="Join Aethertek Discord" xml:space="preserve">
+    <value>एथरटेक डिस्कोर्ड से जुड़ें</value>
+  </data>
+  <data name="Eureka Suite GitHub Source" xml:space="preserve">
+    <value>यूरेका सूट गिटहब स्रोत</value>
+  </data>
+  <data name="Community &amp; External Links:" xml:space="preserve">
+    <value>सामुदायिक और बाहरी लिंक:</value>
+  </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>निर्भरता</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>रिपॉजिटरी</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>उपलब्ध</value>
+  </data>
+</root>

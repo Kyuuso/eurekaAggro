@@ -1,0 +1,5 @@
+interface:
+  display_name: "FFXIV Dalamud Plugin Builder"
+  short_description: "Build and verify Dalamud plugins"
+  default_prompt: "Use $ffxiv-dalamud-plugin-builder to make the narrowest authorized project change, follow current repository conventions, and report each verification gate separately."
+

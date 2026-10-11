@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Active cast alert data shown on screen.
@@ -65,7 +65,7 @@ public class CastMonitor
 
     public void Update()
     {
-        if (!config.Enabled || !config.ShowCastAlerts)
+        if (!config.Enabled || !config.ShowCastAlerts || !ValidZones.IsValidZone(clientState.TerritoryType, config.OnlyInEureka))
         {
             ResetAlert();
             return;
@@ -151,12 +151,20 @@ public class CastMonitor
             progress = Math.Clamp(enemy.CurrentCastTime / enemy.TotalCastTime, 0f, 1f);
         }
 
-        // If it is the same ongoing cast, just update progress without creating new objects or spamming chat
-        if (currentCastingMobId == enemy.GameObjectId && currentCastActionId == actionId && ActiveAlert != null)
+        // If it is the same ongoing cast, just update progress without creating new objects or spamming chat.
+        // Casts that produced no alert are remembered too, so their lookup is not repeated every tick.
+        if (currentCastingMobId == enemy.GameObjectId && currentCastActionId == actionId)
         {
-            ActiveAlert.CastProgress = progress;
+            if (ActiveAlert != null)
+            {
+                ActiveAlert.CastProgress = progress;
+            }
             return;
         }
+
+        currentCastingMobId = enemy.GameObjectId;
+        currentCastActionId = actionId;
+        ActiveAlert = null;
 
         var mobName = enemy.Name.TextValue;
         var isInterruptible = enemy.IsCastInterruptible;
@@ -206,8 +214,8 @@ public class CastMonitor
 
         if (!string.IsNullOrEmpty(message))
         {
-            currentCastingMobId = enemy.GameObjectId;
-            currentCastActionId = actionId;
+            config.SessionCastAlertsTriggered++;
+            config.LifetimeCastAlertsTriggered++;
 
             ActiveAlert = new ActiveCastAlert
             {
@@ -226,7 +234,7 @@ public class CastMonitor
             // Only print once when cast starts
             if (config.NotifyCastInChat)
             {
-                chat.Print($"[EurekaAggro] Alert: {mobName} is casting {data.ActionName} -> {message}");
+                chat.Print($"[Eureka Suite] Alert: {mobName} is casting {data.ActionName} -> {message}");
             }
         }
     }

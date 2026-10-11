@@ -1,6 +1,6 @@
 # AGENTS.md - Development & Versioning Guidelines
 
-This document provides mandatory guidelines and workflow instructions for AI coding agents and human contributors working on **EurekaAggro**.
+This document provides mandatory guidelines and workflow instructions for AI coding agents and human contributors working on **Eureka Suite**.
 
 ---
 
@@ -29,29 +29,32 @@ Before committing any new feature or fix to `main`:
    # For major rewrites:
    .\scripts\bump-version.ps1 -Type major
    ```
-2. Verify that both [`EurekaAggro.json`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaAggro.json) (`"AssemblyVersion"`) and [`EurekaAggro.csproj`](file:///c:/Users/shuns/Desktop/cosa2/eurekaAggro/EurekaAggro.csproj) (`<Version>`) reflect the updated version number.
+2. Verify that both [`EurekaSuite.json`](EurekaSuite.json) (`"AssemblyVersion"`) and [`EurekaSuite.csproj`](EurekaSuite.csproj) (`<Version>`) reflect the updated version number.
 3. Commit with a descriptive conventional commit message (e.g., `fix: correct Pagos minotaur aggro (v1.0.1)`).
 
 ---
 
 ## 2. CI/CD & Automated Distribution Pipeline
 
-- **Private Source Repository**: `https://github.com/Kyuuso/eurekaAggro`
+- **Private Source Repository**: `https://github.com/Kyuuso/EurekaSuite`
 - **Public Plugin Distribution Repository**: `https://github.com/Kyuuso/dalamud-plugins`
 - **Dalamud Custom Repository Feed**:
   `https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/pluginmaster.json`
 
 ### Automated Workflow
 When changes are pushed to `main`:
-1. `.github/workflows/build.yml` reads the version from `EurekaAggro.json`.
+1. `.github/workflows/build.yml` reads the version from `EurekaSuite.json`.
 2. Downloads the matching Dalamud SDK and compiles in `Release` mode using .NET 10.
-3. Creates a versioned GitHub Release (e.g. `Release v1.0.6` with tag `v1.0.6`) containing `EurekaAggro-v1.0.6.zip` (NEVER use `latest.zip` to prevent Fastly/GitHub CDN caching collisions).
-4. Automatically commits the versioned `EurekaAggro-v1.0.6.zip`, `EurekaAggro.json`, and updates `pluginmaster.json` in `Kyuuso/dalamud-plugins` with direct versioned download URLs (`DownloadLinkInstall`, `DownloadLinkUpdate`, `DownloadLinkTesting`).
+3. Creates a versioned GitHub Release (e.g. `Release v1.0.6` with tag `v1.0.6`) containing `EurekaSuite-v1.0.6.zip` (NEVER use `latest.zip` to prevent Fastly/GitHub CDN caching collisions).
+4. Automatically commits the versioned `EurekaSuite-v1.0.6.zip`, `EurekaSuite.json`, and updates `pluginmaster.json` in `Kyuuso/dalamud-plugins` with direct versioned download URLs (`DownloadLinkInstall`, `DownloadLinkUpdate`, `DownloadLinkTesting`).
 
 ---
 
 ## 3. Language & Code Style Guidelines
 
-- **Code & Comments**: All identifiers, class names, member variables, docstrings, XML comments, and UI strings MUST be in **English**.
+- **MANDATORY English Code & Comments**: ALL identifiers, class names, member variables, local variables, parameters, XML documentation comments (`///`), inline comments (`//`), log messages, and UI strings MUST be in **English**. No Spanish or mixed language in source code. Code and comments must make technical sense and explain behavior accurately.
+- **NO Local Machine URLs or File URIs**: NEVER commit local file paths (e.g. `file:///C:/Users/...` or hardcoded Windows user paths) to markdown files, code, or scripts. Always use relative repository paths (e.g. `[`EurekaSuite.json`](EurekaSuite.json)`) or clean symbol references. Follow `.agents/rules/no_local_urls.md`.
+- **Documentation Standards & Anti-Slop**: Follow `.agents/rules/no_ai_slop.md`. Avoid emdashes (`—`/`–`), promotional buzzwords, and redundant comments that merely echo member names.
 - **User Interactions**: Conversations with the repository owner in the chat interface must remain in **Spanish** unless requested otherwise.
 - **Zero Allocations**: Avoid heap allocations in rendering loops (`OverlayRenderer.cs`) to prevent GC stalls and memory leaks during gameplay.
+- **NO Unicode Emojis in UI or Chat**: NEVER use Unicode emojis in any ImGui strings, chat log messages (`ChatGui.Print`), toasts, notifications, or drawlists. Dalamud's ImGui font glyph atlas does NOT include standard Unicode emoji codepoints, which will inevitably render as broken characters (`=`, `?`, or missing glyphs). ALWAYS use `FontAwesomeIcon` via Dalamud's `ImGuiComponents.IconButton` / `FontAwesomeIcon.<Name>.ToIconString()`, or clean textual tags (e.g., `[OK]`, `[WARN]`, `[Combat]`, `[Key]`).

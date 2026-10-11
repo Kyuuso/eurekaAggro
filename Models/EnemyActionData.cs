@@ -1,4 +1,4 @@
-namespace EurekaAggro.Models;
+﻿namespace EurekaSuite.Models;
 
 /// <summary>
 /// Data regarding an enemy action or spell cast, indicating required defensive counters.

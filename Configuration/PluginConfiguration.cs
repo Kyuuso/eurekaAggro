@@ -3,10 +3,10 @@ using System.Numerics;
 using Dalamud.Configuration;
 using Dalamud.Plugin;
 
-namespace EurekaAggro.Configuration;
+namespace EurekaSuite.Configuration;
 
 /// <summary>
-/// Persistent plugin configuration for EurekaAggro.
+/// Persistent plugin configuration for EurekaSuite.
 /// Stores visual settings, detection ranges, safety margins, and color palettes.
 /// </summary>
 [Serializable]
@@ -15,6 +15,11 @@ public class PluginConfiguration : IPluginConfiguration
     public int Version { get; set; } = 1;
 
     // --- GENERAL ACTIVATION ---
+
+    /// <summary>
+    /// Active UI language code (e.g., "en", "es", "de", "fr", "ja").
+    /// </summary>
+    public string UiLanguage { get; set; } = "en";
 
     /// <summary>
     /// Master toggle for radar processing and drawing.
@@ -284,8 +289,163 @@ public class PluginConfiguration : IPluginConfiguration
         }
     }
 
+    // --- EUREKA TRACKER SETTINGS ---
+    public bool TrackerAutoCreate { get; set; } = false;
+    public bool TrackerCreatePublic { get; set; } = true;
+    public bool TrackerAutoJoinExisting { get; set; } = true;
+    public bool TrackerAutoPopFate { get; set; } = true;
+    public bool TrackerDisplayFatePop { get; set; } = true;
+    public bool TrackerDisplayToastPop { get; set; } = true;
+    public bool TrackerPlayPopSound { get; set; } = true;
+    public bool TrackerDisplayServerIdInChat { get; set; } = true;
+    public bool TrackerShowLevelInTable { get; set; } = true;
+    public string TrackerLastCode { get; set; } = string.Empty;
+    public string TrackerLastPassword { get; set; } = string.Empty;
+    public string TrackerCustomInstanceId { get; set; } = string.Empty;
+
+    // --- TRACKER PASSWORD & HISTORY MEMORY ---
+    public Dictionary<string, string> SavedTrackerPasswords { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public List<TrackerHistoryEntry> TrackerHistory { get; set; } = new();
+
+    /// <summary>
+    /// Remembers a tracker, its password, instance ID, and updates last used timestamp.
+    /// </summary>
+    public void RememberTracker(string trackerId, string? password = null, string? instanceId = null, int zoneId = 0)
+    {
+        if (string.IsNullOrWhiteSpace(trackerId)) return;
+        string cleanId = trackerId.Trim();
+
+        TrackerLastCode = cleanId;
+
+        if (!string.IsNullOrWhiteSpace(password))
+        {
+            string cleanPwd = password.Trim();
+            TrackerLastPassword = cleanPwd;
+            SavedTrackerPasswords[cleanId] = cleanPwd;
+        }
+        else if (SavedTrackerPasswords.TryGetValue(cleanId, out var existingPwd))
+        {
+            TrackerLastPassword = existingPwd;
+        }
+
+        var existing = TrackerHistory.Find(e => string.Equals(e.TrackerId, cleanId, StringComparison.OrdinalIgnoreCase));
+        if (existing != null)
+        {
+            existing.LastUsedAt = DateTimeOffset.UtcNow;
+            if (!string.IsNullOrWhiteSpace(password)) existing.Password = password.Trim();
+            if (!string.IsNullOrWhiteSpace(instanceId)) existing.InstanceId = instanceId.Trim();
+            if (zoneId > 0) existing.ZoneId = zoneId;
+        }
+        else
+        {
+            TrackerHistory.Insert(0, new TrackerHistoryEntry
+            {
+                TrackerId = cleanId,
+                Password = !string.IsNullOrWhiteSpace(password) ? password.Trim() : (SavedTrackerPasswords.TryGetValue(cleanId, out var p) ? p : string.Empty),
+                InstanceId = instanceId?.Trim() ?? string.Empty,
+                ZoneId = zoneId,
+                CreatedAt = DateTimeOffset.UtcNow,
+                LastUsedAt = DateTimeOffset.UtcNow,
+            });
+        }
+
+        // Keep last 30 entries
+        if (TrackerHistory.Count > 30)
+        {
+            TrackerHistory.RemoveRange(30, TrackerHistory.Count - 30);
+        }
+
+        Save();
+    }
+
+    /// <summary>
+    /// Retrieves a saved edit password for a tracker ID if known.
+    /// </summary>
+    public string? GetSavedPassword(string? trackerId)
+    {
+        if (string.IsNullOrWhiteSpace(trackerId)) return null;
+        if (SavedTrackerPasswords.TryGetValue(trackerId.Trim(), out var pwd) && !string.IsNullOrWhiteSpace(pwd))
+        {
+            return pwd;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Forgets a tracker and its password from history.
+    /// </summary>
+    public void ForgetTracker(string trackerId)
+    {
+        if (string.IsNullOrWhiteSpace(trackerId)) return;
+        string cleanId = trackerId.Trim();
+        SavedTrackerPasswords.Remove(cleanId);
+        TrackerHistory.RemoveAll(e => string.Equals(e.TrackerId, cleanId, StringComparison.OrdinalIgnoreCase));
+        if (string.Equals(TrackerLastCode, cleanId, StringComparison.OrdinalIgnoreCase))
+        {
+            TrackerLastCode = string.Empty;
+            TrackerLastPassword = string.Empty;
+        }
+        Save();
+    }
+
+    // --- AGGRO LINES STATISTICS ---
+    public int LifetimeDragonsBypassed { get; set; } = 0;
+    public int LifetimeAutoWalkActivations { get; set; } = 0;
+    public int LifetimeCastAlertsTriggered { get; set; } = 0;
+    public int LifetimeCloseCallsAvoided { get; set; } = 0;
+
+    [NonSerialized]
+    public int SessionDragonsBypassed = 0;
+    [NonSerialized]
+    public int SessionAutoWalkActivations = 0;
+    [NonSerialized]
+    public int SessionCastAlertsTriggered = 0;
+    [NonSerialized]
+    public int SessionCloseCallsAvoided = 0;
+
+    /// <summary>
+    /// Resets all session and lifetime statistics for the Aggro Lines radar.
+    /// </summary>
+    public void ResetAggroStats()
+    {
+        LifetimeDragonsBypassed = 0;
+        LifetimeAutoWalkActivations = 0;
+        LifetimeCastAlertsTriggered = 0;
+        LifetimeCloseCallsAvoided = 0;
+        SessionDragonsBypassed = 0;
+        SessionAutoWalkActivations = 0;
+        SessionCastAlertsTriggered = 0;
+        SessionCloseCallsAvoided = 0;
+        Save();
+    }
+
     public void Save()
     {
         pluginInterface?.SavePluginConfig(this);
+    }
+}
+
+/// <summary>
+/// Persisted history entry for a previously visited or created Eureka Tracker.
+/// Stores edit password, instance ID, zone, and visit timestamps.
+/// </summary>
+public class TrackerHistoryEntry
+{
+    public string TrackerId { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string InstanceId { get; set; } = string.Empty;
+    public int ZoneId { get; set; }
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset LastUsedAt { get; set; } = DateTimeOffset.UtcNow;
+
+    public bool HasPassword => !string.IsNullOrWhiteSpace(Password);
+
+    public string GetAgeString()
+    {
+        var elapsed = DateTimeOffset.UtcNow - LastUsedAt.ToUniversalTime();
+        if (elapsed.TotalMinutes < 1) return "just now";
+        if (elapsed.TotalMinutes < 60) return $"{(int)elapsed.TotalMinutes}m ago";
+        if (elapsed.TotalHours < 24) return $"{(int)elapsed.TotalHours}h ago";
+        return $"{(int)elapsed.TotalDays}d ago";
     }
 }

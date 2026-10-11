@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using FFXIVClientStructs.FFXIV.Client.Game.Event;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.UI;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Provides real-time Eureka Elemental Level detection and zone cap synchronizations.
@@ -17,6 +17,18 @@ public static class EurekaLevelService
     private static readonly ConcurrentDictionary<string, byte> MobNameLevels = new();
 
     private static DateTime lastScanTime = DateTime.MinValue;
+
+    // Safety cap for the per-object cache in case zone changes are missed
+    private const int MaxObjectLevelEntries = 4000;
+
+    /// <summary>
+    /// Clears per-object levels. Object IDs are reused across instances, so this runs on every zone change.
+    /// Species-level caches (BaseId and name) stay valid and are kept.
+    /// </summary>
+    public static void ClearObjectLevels()
+    {
+        MobObjectLevels.Clear();
+    }
 
     /// <summary>
     /// Scans the 50 visible nameplates in real time from RaptureAtkModule to extract exact Eureka Elemental Levels.
@@ -31,6 +43,11 @@ public static class EurekaLevelService
             return;
         }
         lastScanTime = now;
+
+        if (MobObjectLevels.Count > MaxObjectLevelEntries)
+        {
+            MobObjectLevels.Clear();
+        }
 
         try
         {

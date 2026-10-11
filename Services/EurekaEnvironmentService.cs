@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using Lumina.Excel.Sheets;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Status and trigger conditions for monster mutations and adaptations in Eureka.
@@ -13,7 +13,8 @@ public record struct MutationInfo(
     bool CanMutate,
     string TriggerName,
     bool IsActiveNow,
-    string HintMessage
+    string HintMessage,
+    string OverlayText
 );
 
 /// <summary>
@@ -26,6 +27,23 @@ public class EurekaEnvironmentService
 
     // Cache of weather names by WeatherId to avoid lookups
     private readonly Dictionary<byte, string> weatherNameCache = new();
+
+    // English weather names, used to match mutation triggers regardless of the client language
+    private readonly Dictionary<byte, string> englishWeatherNameCache = new();
+
+    // Resolved mutation rule per monster name (null when the monster never mutates)
+    private readonly Dictionary<string, MutationRule?> ruleByMobName = new(StringComparer.Ordinal);
+
+    private sealed class MutationRule
+    {
+        public string Trigger = string.Empty;
+        public bool IsTimeBased;
+        public string[] WeatherOptions = Array.Empty<string>();
+        public string ActiveHint = string.Empty;
+        public string InactiveHint = string.Empty;
+        public string ActiveOverlay = string.Empty;
+        public string InactiveOverlay = string.Empty;
+    }
 
     // Known Eureka mutation and adaptation triggers by monster keyword
     // Key: Lowercase keyword/species; Value: (Required Weather or "Night" / "Day")
@@ -161,7 +179,40 @@ public class EurekaEnvironmentService
     }
 
     /// <summary>
+    /// Resolves the English name of the active weather. Mutation triggers are defined in English,
+    /// so comparing against the localized name would never match on non-English clients.
+    /// </summary>
+    private string GetCurrentWeatherEnglishName()
+    {
+        byte id = GetCurrentWeatherId();
+        if (id == 0) return string.Empty;
+
+        if (englishWeatherNameCache.TryGetValue(id, out var cachedName))
+        {
+            return cachedName;
+        }
+
+        var name = string.Empty;
+        try
+        {
+            var sheet = dataManager.GetExcelSheet<Weather>(Dalamud.Game.ClientLanguage.English);
+            if (sheet != null && sheet.TryGetRow(id, out var row))
+            {
+                name = row.Name.ToString();
+            }
+        }
+        catch
+        {
+            // Fallback
+        }
+
+        englishWeatherNameCache[id] = name;
+        return name;
+    }
+
+    /// <summary>
     /// Checks if a monster can mutate or adapt, and evaluates whether current environmental conditions trigger it.
+    /// Called per monster per frame: rule lookup and hint strings are cached so this does not allocate.
     /// </summary>
     public MutationInfo CheckMutation(string mobName)
     {
@@ -170,53 +221,72 @@ public class EurekaEnvironmentService
             return default;
         }
 
-        foreach (var (key, (trigger, isTimeBased)) in MutationTriggers)
+        if (!ruleByMobName.TryGetValue(mobName, out var rule))
         {
-            if (mobName.Contains(key, StringComparison.OrdinalIgnoreCase))
+            rule = FindMutationRule(mobName);
+            ruleByMobName[mobName] = rule;
+        }
+
+        if (rule == null)
+        {
+            return default;
+        }
+
+        bool isActive;
+        if (rule.IsTimeBased)
+        {
+            bool night = IsNight();
+            isActive = rule.Trigger.Equals("Night", StringComparison.OrdinalIgnoreCase) ? night : !night;
+        }
+        else
+        {
+            // Some mobs mutate in either of several weathers (e.g. Fog or Blizzards)
+            string currentWeather = GetCurrentWeatherEnglishName();
+            isActive = false;
+            if (currentWeather.Length > 0)
             {
-                bool isActive;
-                string hint;
-
-                if (isTimeBased)
+                foreach (var option in rule.WeatherOptions)
                 {
-                    bool night = IsNight();
-                    isActive = trigger.Equals("Night", StringComparison.OrdinalIgnoreCase) ? night : !night;
-                    hint = isActive ? "Night (Active)" : "Requires Night (18:00 ET)";
-                }
-                else
-                {
-                    string currentWeather = GetCurrentWeatherName();
-                    // Some mobs mutate in either Fog or Blizzards
-                    if (trigger.Contains("/"))
+                    if (currentWeather.Contains(option, StringComparison.OrdinalIgnoreCase))
                     {
-                        var parts = trigger.Split('/');
-                        isActive = false;
-                        foreach (var p in parts)
-                        {
-                            if (currentWeather.Contains(p.Trim(), StringComparison.OrdinalIgnoreCase))
-                            {
-                                isActive = true;
-                                break;
-                            }
-                        }
+                        isActive = true;
+                        break;
                     }
-                    else
-                    {
-                        isActive = currentWeather.Contains(trigger, StringComparison.OrdinalIgnoreCase);
-                    }
-
-                    hint = isActive ? $"{trigger} (Active)" : $"Requires {trigger}";
                 }
-
-                return new MutationInfo(
-                    CanMutate: true,
-                    TriggerName: trigger,
-                    IsActiveNow: isActive,
-                    HintMessage: hint
-                );
             }
         }
 
-        return default;
+        return new MutationInfo(
+            CanMutate: true,
+            TriggerName: rule.Trigger,
+            IsActiveNow: isActive,
+            HintMessage: isActive ? rule.ActiveHint : rule.InactiveHint,
+            OverlayText: isActive ? rule.ActiveOverlay : rule.InactiveOverlay
+        );
+    }
+
+    private static MutationRule? FindMutationRule(string mobName)
+    {
+        foreach (var (key, (trigger, isTimeBased)) in MutationTriggers)
+        {
+            if (!mobName.Contains(key, StringComparison.OrdinalIgnoreCase)) continue;
+
+            var activeHint = isTimeBased ? "Night (Active)" : $"{trigger} (Active)";
+            var inactiveHint = isTimeBased ? "Requires Night (18:00 ET)" : $"Requires {trigger}";
+            var options = trigger.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            return new MutationRule
+            {
+                Trigger = trigger,
+                IsTimeBased = isTimeBased,
+                WeatherOptions = options,
+                ActiveHint = activeHint,
+                InactiveHint = inactiveHint,
+                ActiveOverlay = $"[CAN MUTATE NOW]: {activeHint}",
+                InactiveOverlay = $"[Mutates: {inactiveHint}]",
+            };
+        }
+
+        return null;
     }
 }

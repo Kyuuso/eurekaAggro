@@ -1,10 +1,18 @@
+param(
+    [string]$SourcePath = "images\icon.png"
+)
+
 Add-Type -AssemblyName System.Drawing
 
-$srcPath = "C:\Users\shuns\.gemini\antigravity-ide\brain\75d4ed24-4a40-4045-8420-214ffc22b405\.user_uploaded\media_1791188669477.jpg"
+if (-not (Test-Path $SourcePath)) {
+    Write-Error "Source image not found at $SourcePath"
+    exit 1
+}
+
 $destImgPath = "images\icon.png"
 $destRootPath = "icon.png"
 
-$src = [System.Drawing.Image]::FromFile($srcPath)
+$src = [System.Drawing.Image]::FromFile($SourcePath)
 $bmp = New-Object System.Drawing.Bitmap(512, 512)
 $graphics = [System.Drawing.Graphics]::FromImage($bmp)
 

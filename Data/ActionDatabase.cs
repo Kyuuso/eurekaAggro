@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Models;
+using EurekaSuite.Models;
 using Newtonsoft.Json.Linq;
 
-namespace EurekaAggro.Data;
+namespace EurekaSuite.Data;
 
 /// <summary>
 /// Manages enemy channeling actions and counters (Stun, Silence, Line of Sight, Regen).
@@ -24,7 +24,13 @@ public class ActionDatabase
     public ActionDatabase(IPluginLog log, string configDirectory)
     {
         this.log = log;
-        userStoragePath = Path.Combine(configDirectory, "eurekaaggro_actions.json");
+        userStoragePath = Path.Combine(configDirectory, "eurekasuite_actions.json");
+        var legacyPath = Path.Combine(configDirectory, "EurekaSuite_actions.json");
+        if (!File.Exists(userStoragePath) && File.Exists(legacyPath))
+        {
+            try { File.Copy(legacyPath, userStoragePath); } catch { }
+        }
+
         LoadEmbeddedDatabase();
         LoadUserOverrides();
     }
@@ -34,7 +40,7 @@ public class ActionDatabase
         try
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("EurekaAggro.Recursos.DDCheckDB.json");
+            using var stream = assembly.GetManifestResourceStream("EurekaSuite.Resources.DDCheckDB.json");
             if (stream == null)
             {
                 log.Warning("Embedded DDCheckDB.json resource was not found.");
@@ -140,6 +146,11 @@ public class ActionDatabase
         {
             log.Error(ex, "Failed to save action database overrides.");
         }
+    }
+
+    public void MarkDirty()
+    {
+        isDirty = true;
     }
 
     public void SaveIfDirty()

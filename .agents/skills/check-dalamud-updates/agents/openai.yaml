@@ -1,0 +1,4 @@
+interface:
+  display_name: "Check Dalamud Updates"
+  short_description: "Review Dalamud deltas and stage wiki reports"
+  default_prompt: "Use $check-dalamud-updates to compare exact official Dalamud endpoints, assess real plugin overlap, produce a timestamped public-safe impact report, and prepare the local wiki release handoff while keeping upload manual."

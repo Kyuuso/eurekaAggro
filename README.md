@@ -1,41 +1,41 @@
-# EurekaAggro
+# Eureka Suite
 
-**EurekaAggro** is a Dalamud tactical radar and safety assistant plugin for Final Fantasy XIV, engineered specifically for the Forbidden Land, Eureka expeditions (**Anemos, Pagos, Pyros, Hydatos**, and the **Baldesion Arsenal**).
+**Eureka Suite** is an all-in-one Dalamud expedition assistant plugin for Final Fantasy XIV, engineered specifically for the Forbidden Land, Eureka expeditions (**Anemos, Pagos, Pyros, Hydatos**, and the **Baldesion Arsenal**).
 
 ---
 
 ## Key Features
 
-### 1. Accurate Aggro Taxonomy & 3D Overlays
-- 🦻 **Sound Aggro (10.5m radius)**: Running triggers monsters; **walking is 100% safe**. Covers lethal Sleeping Dragons (*Sleeping Dragon*, *Slumbering Dragon*, *Voidragon*), crabs, bats, worms, salamanders, and blind cave creatures.
-- 🌀 **Proximity Aggro (10.2m radius)**: 360-degree detection regardless of walking or running (slimes, carnivorous plants, cactuars, mandragoras, golems, magitek constructs).
-- 🩸 **Blood Aggro (25.0m radius)**: Detects low HP players (< 80%) across large distances (ashkin, wraiths, specters, corpses, skeletons, zombies, dullahans).
-- ✨ **Magic Aggro (18.0m radius)**: Detects spellcasting within range (sprites and elementals). Displays *"DO NOT CAST SPELLS"* warnings.
-- 👁️ **Sight Aggro (10.2m range, ~100° cone)**: Frontal directional field of view. Passing behind or to the sides is safe (beasts, birds, reptiles).
+### 1. Aggro Taxonomy and 3D Overlays
+- **Sound Aggro (10.5m radius)**: Running triggers monsters; **walking is 100% safe**. Covers lethal Sleeping Dragons (*Sleeping Dragon*, *Slumbering Dragon*, *Voidragon*), crabs, bats, worms, salamanders, and blind cave creatures.
+- **Proximity Aggro (10.2m radius)**: 360-degree detection regardless of walking or running (slimes, carnivorous plants, cactuars, mandragoras, golems, magitek constructs).
+- **Blood Aggro (25.0m radius)**: Detects low HP players (< 80%) across large distances (ashkin, wraiths, specters, corpses, skeletons, zombies, dullahans).
+- **Magic Aggro (18.0m radius)**: Detects spellcasting within range (sprites and elementals). Displays *"DO NOT CAST SPELLS"* warnings.
+- **Sight Aggro (10.2m range, ~100° cone)**: Frontal directional field of view. Passing behind or to the sides is safe (beasts, birds, reptiles).
 
-### 2. Auto-Walk Safety Trigger for Sleeping Dragons
-- **Automatic Walk Mode**: Automatically engages Walk mode when entering a configurable proximity range (default: 12.0m) near lethal Sleeping Dragons.
+### 2. Auto-Walk Proximity Trigger for Sleeping Dragons
+- **Automatic Walk Mode**: Engages Walk mode when entering a configurable proximity range (default: 12.0m) near lethal Sleeping Dragons.
 - **Prevents Running Wipes**: Eliminates accidental aggro while exploring or navigating narrow passages.
-- **Auto-Restore**: Automatically restores Run mode once you are at a safe distance.
-- **HUD Indicator**: Displays an unmistakable on-screen badge `✔ EUREKA AUTO-WALK ENGAGED (Dragon - Dist)` when active.
-- **Full Logging**: Outputs events to the Dalamud console (`/xllog`) and has an optional toggle for in-game chat notifications.
+- **Auto-Restore**: Restores Run mode once you are at a safe distance.
+- **HUD Indicator**: Displays an on-screen badge `[AUTO-WALK] ENGAGED (Dragon - Dist)` when active.
+- **Full Logging**: Outputs events to the Dalamud console (`/xllog`) with an optional toggle for in-game chat notifications.
 
-### 3. Enemy Action Alerts (HUD Cast Monitor)
-- **Real-Time Tactical HUD Alert**: A floating alert window displays whenever a nearby or targeted enemy begins casting a dangerous ability.
-- **Interrupt / Silence Prompts**: Highlights interruptible spells (`⚡ INTERRUPT / SILENCE AVAILABLE`) so tanks and ranged DPS can cancel them before completion.
-- **Stun & Line of Sight (LOS) Reminders**: Warns you to stun enemies or break line of sight behind terrain to avoid lethal gaze attacks and room-wide debuffs.
+### 3. Enemy Action Cast Monitor
+- **Tactical HUD Alert**: A floating alert window displays whenever a nearby or targeted enemy begins casting a dangerous ability.
+- **Interrupt and Silence Prompts**: Highlights interruptible spells (`[INTERRUPT] AVAILABLE`) so tanks and ranged DPS can cancel them before completion.
+- **Stun and Line of Sight Reminders**: Warns you to stun enemies or break line of sight behind terrain to avoid gaze attacks and room-wide debuffs.
 - **Cast Progress Bar**: Live progress bar showing cast completion percentage and remaining time.
 - **Lumina Action Resolution**: Reads the game's actual action database to show the real ability name (*Dread Gaze*, *Grim Halo*, *Bad Breath*, etc.).
 
-### 4. Real-Time Mutation & Adaptation Tracker
+### 4. Mutation and Adaptation Tracker
 - Checks active weather and Eorzea time against Eureka mutation rules.
-- Adds indicators above eligible monsters (e.g. `🧬 CAN MUTATE NOW: Fog / Night`) to maximize Mutation Box farming efficiency.
+- Adds indicators above eligible monsters (`CAN MUTATE NOW: Fog / Night`) to maximize Mutation Box farming efficiency.
 
 ### 5. In-Game Database Browser
-- `/eurekaaggro` or `/ea` opens a multi-tab configuration interface:
-  - **General & Visual Settings**: Adjust detection ranges, vertical cliff tolerance, safety margins, color pickers, and test Walk mode.
+- `/eurekasuite`, `/eureka`, or `/ea` opens a multi-tab configuration interface:
+  - **General and Visual Settings**: Adjust detection ranges, vertical cliff tolerance, safety margins, color pickers, and test Walk mode.
   - **Eureka Monsters**: Fully responsive, searchable table with every Eureka mob, elemental level, danger tier, and aggro type.
-  - **Enemy Actions & Counters**: Searchable table of dangerous enemy casts, interruptibility, and counter strategies.
+  - **Enemy Actions and Counters**: Searchable table of dangerous enemy casts, interruptibility, and counter strategies.
 
 ### 6. Full Color Customization
 - Integrated RGBA color pickers for every visual element:
@@ -53,13 +53,42 @@
 
 ---
 
+### 8. Bunny Fate Engine Automation
+- **Bunny Fate Automation**: Automated routing, combat, fate completion, and bunny buff acquisition for Pyros (and upcoming zones).
+- **Coffer Hunting Engine**: Proximity-guided pathfinding, carrot usage, distance tracking, and safe coffer unlocking.
+- **Multilingual Support**: Fully localized in 15 languages (English, German, French, Spanish, Italian, Russian, Japanese, Korean, Simplified Chinese, Vietnamese, Brazilian Portuguese, Indonesian, Polish, Turkish, Hindi).
+- **Custom Dashboard UI**: Area cards, live task monitor, elapsed timer, dependency tracker, and custom window styling.
+- **IPC Integrations**: Integrates with BossMod, Navmesh, WrathCombo, Pandora, AutoRetainer, and Lifestream.
+- **Session Run Statistics**: Tracks coffers found (bronze, silver, gold), Eldthurs Horns, hairstyles, and gil earned.
+
+---
+
 ## Commands
 
 | Command | Description |
 | :--- | :--- |
-| `/eurekaaggro` | Opens or closes the main configuration window. |
-| `/ea` | Short alias to open or close the main configuration window. |
-| `/xllog` | Dalamud log console (view real-time auto-walk and cast monitor logs). |
+| `/eurekasuite` | Opens or closes the Eureka Suite window. |
+| `/eureka` | Alias to open the Eureka Suite main overview. |
+| `/es` | Short alias to open or close Eureka Suite. |
+| `/aggro` | Opens the Aggro Radar tab directly. |
+| `/bfe` | Opens or closes the Bunny Fate Engine tab. |
+| `/bfe settings` | Opens the BFE Settings window. |
+| `/bfe pyros` | Starts automated Pyros bunny farming. |
+| `/bfe stop` | Stops bunny automation. |
+| `/bunnies` | Legacy alias for `/bfe`. |
+| `/etracker` | Opens the Eureka Tracker live NM view. |
+| `/ea`, `/eurekaaggro` | Legacy aliases for backwards compatibility. |
+| `/xllog` | Dalamud log console. |
+
+---
+
+## Credits & Acknowledgements
+
+The **Eureka Suite** project incorporates and maintains the **BFE (Bunnies for Eureka)** automation engine under open source collaboration:
+
+- **Joshua-XIV**: Original creator and author of [Bunnies](https://github.com/Joshua-XIV/Bunnies).
+- **DhogGPT / McVaxius**: Creator of BFE, architecture modernization, 15-language localization, and dashboard UI design ([aethertek.io](https://aethertek.io/)). [Support McVaxius on Ko-fi](https://ko-fi.com/mcvaxius).
+- **Kyuuso**: Maintainer of Eureka Suite, takeover, aggro radar visualizer, and unified suite integration.
 
 ---
 
@@ -71,5 +100,7 @@
    ```
    https://raw.githubusercontent.com/Kyuuso/dalamud-plugins/main/pluginmaster.json
    ```
-4. Search for **Eureka Aggro** in the plugin list and click **Install**.
+4. Search for **Eureka Suite** in the plugin list and click **Install**.
+   - *To receive testing/preview builds, enable "Get testing versions" in the Dalamud plugin testing settings.*
+
 

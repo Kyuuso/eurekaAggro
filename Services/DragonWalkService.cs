@@ -6,13 +6,13 @@ using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-using EurekaAggro.Configuration;
-using EurekaAggro.Data;
-using EurekaAggro.Models;
+using EurekaSuite.Configuration;
+using EurekaSuite.Data;
+using EurekaSuite.Models;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using FFXIVClientStructs.FFXIV.Client.System.Input;
 
-namespace EurekaAggro.Services;
+namespace EurekaSuite.Services;
 
 /// <summary>
 /// Proximity-based monitoring service for lethal Sleeping Dragons in Eureka zones.
@@ -31,6 +31,10 @@ public unsafe class DragonWalkService
     private bool wasAutoWalkForced = false;
     private bool playerWasAlreadyWalking = false;
     private DateTime lastToggleTime = DateTime.MinValue;
+
+    // Toggles blocked by the anti-flap cooldown are retried on later ticks
+    private bool pendingWalkEngage = false;
+    private bool pendingRunRestore = false;
     private string lastDragonName = string.Empty;
     private float lastDistance = 0f;
 
@@ -43,6 +47,7 @@ public unsafe class DragonWalkService
     private Vector3 lastPlayerPos = Vector3.Zero;
     private DateTime lastPosTime = DateTime.UtcNow;
     private float currentSpeed = 0f;
+    private bool hadCloseCallWithDragon = false;
 
     /// <summary>
     /// True when Auto-Walk has taken control of the character's movement mode.
@@ -91,11 +96,11 @@ public unsafe class DragonWalkService
     /// </summary>
     public void Update()
     {
-        if (!config.Enabled || !config.AutoWalkNearDragons)
+        if (!config.Enabled || !config.AutoWalkNearDragons || !ValidZones.IsValidZone(clientState.TerritoryType, config.OnlyInEureka))
         {
             if (wasAutoWalkForced)
             {
-                RestoreRunMode("Auto-Walk setting toggled off", false);
+                RestoreRunMode("Outside Eureka or Auto-Walk setting toggled off", false);
             }
             return;
         }
@@ -103,13 +108,26 @@ public unsafe class DragonWalkService
         var player = objectTable.LocalPlayer;
         if (player == null)
         {
+            // Loading screens and zone changes: never leave the character stuck in walk mode
             if (wasAutoWalkForced)
             {
+                if (!playerWasAlreadyWalking)
+                {
+                    pendingRunRestore = !SetDesiredWalkState(false, force: true);
+                }
                 wasAutoWalkForced = false;
                 playerWasAlreadyWalking = false;
+                pendingWalkEngage = false;
                 activeDragonId = 0;
+                lastDragonName = string.Empty;
+                lastDistance = 0f;
             }
             return;
+        }
+
+        if (pendingRunRestore && !wasAutoWalkForced)
+        {
+            pendingRunRestore = !SetDesiredWalkState(false);
         }
 
         var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)player.Address;
@@ -159,6 +177,7 @@ public unsafe class DragonWalkService
 
         IBattleNpc? targetSleepingDragon = null;
         float nearestDist = float.MaxValue;
+        float ignoredDragonDist = float.MaxValue;
 
         // Scan nearby GameObjects for Sleeping Dragons
         foreach (var obj in objectTable)
@@ -183,13 +202,19 @@ public unsafe class DragonWalkService
                 return;
             }
 
+            // If this dragon previously triggered an emergency release, do not re-trap the player while still near it.
+            // Its distance is still tracked so the ignore flag clears once the player has moved away.
+            if (mob.GameObjectId == ignoredDragonId)
+            {
+                ignoredDragonDist = Vector3.Distance(playerPos, mob.Position);
+                continue;
+            }
+
             // Skip awake, engaged, damaged, or casting dragons (walking provides zero protection against awake mobs!)
             if (isAwakeOrAggroed) continue;
 
-            // If this dragon previously triggered an emergency release, do not re-trap the player while still near it
-            if (mob.GameObjectId == ignoredDragonId) continue;
-
-            var name = mob.Name.TextValue;
+            // English name so the keyword checks below work on every client language (cached, no allocation)
+            var name = MobNameResolver.GetEnglishName(mob);
             if (string.IsNullOrWhiteSpace(name)) continue;
             if (MobDatabase.IsPlayerPetOrCompanion(name)) continue;
 
@@ -230,9 +255,14 @@ public unsafe class DragonWalkService
 
         if (targetSleepingDragon != null)
         {
-            lastDragonName = targetSleepingDragon.Name.TextValue;
+            lastDragonName = MobNameResolver.GetEnglishName(targetSleepingDragon);
             lastDistance = nearestDist;
             activeDragonId = targetSleepingDragon.GameObjectId;
+
+            if (nearestDist <= 6.0f)
+            {
+                hadCloseCallWithDragon = true;
+            }
 
             if (!wasAutoWalkForced)
             {
@@ -241,18 +271,26 @@ public unsafe class DragonWalkService
                 playerWasAlreadyWalking = !playerWasRunning;
                 wasAutoWalkForced = true;
 
+                config.SessionAutoWalkActivations++;
+                config.LifetimeAutoWalkActivations++;
+
                 string modeStr = isMounted ? "Mounted" : "On Foot";
-                log.Information($"[EurekaAggro - AutoWalk] Approaching Sleeping Dragon '{lastDragonName}' at {lastDistance:F1}m ({modeStr}, Speed: {currentSpeed:F1} m/s). Engaging WALK mode!");
+                log.Information($"[EurekaSuite - AutoWalk] Approaching Sleeping Dragon '{lastDragonName}' at {lastDistance:F1}m ({modeStr}, Speed: {currentSpeed:F1} m/s). Engaging WALK mode!");
 
                 if (config.LogAutoWalkToChat)
                 {
-                    chatGui.Print($"[EurekaAggro] ✔ Auto-Walk engaged near '{lastDragonName}' ({lastDistance:F1}m, {modeStr}).");
+                    chatGui.Print($"[Eureka Suite] Auto-Walk engaged near '{lastDragonName}' ({lastDistance:F1}m, {modeStr}).");
                 }
 
                 if (playerWasRunning)
                 {
-                    SetDesiredWalkState(true);
+                    pendingWalkEngage = !SetDesiredWalkState(true);
                 }
+            }
+            else if (pendingWalkEngage)
+            {
+                // The initial toggle was blocked by the cooldown; retry until it lands once
+                pendingWalkEngage = !SetDesiredWalkState(true);
             }
             // CRITICAL: We do NOT lock ctrl->IsWalking = true on every frame!
             // FFXIV maintains its walk toggle state naturally.
@@ -262,11 +300,26 @@ public unsafe class DragonWalkService
         {
             RestoreRunMode($"Safely cleared sleeping dragon range (nearest was '{lastDragonName}')", false);
         }
-        else if (ignoredDragonId != 0 && nearestDist > triggerDistance + 5.0f)
+
+        if (ignoredDragonId != 0 && ignoredDragonDist > triggerDistance + 5.0f)
         {
-            // Safely far enough away from previously ignored dragon; reset ignore flag
+            // Safely far enough away from previously ignored dragon (or it despawned); reset ignore flag
             ignoredDragonId = 0;
         }
+    }
+
+    /// <summary>
+    /// Restores run mode on plugin unload if Auto-Walk is still holding the character in walk mode.
+    /// </summary>
+    public void Dispose()
+    {
+        if (wasAutoWalkForced && !playerWasAlreadyWalking)
+        {
+            SetDesiredWalkState(false, force: true);
+        }
+        wasAutoWalkForced = false;
+        pendingWalkEngage = false;
+        pendingRunRestore = false;
     }
 
     /// <summary>
@@ -274,32 +327,45 @@ public unsafe class DragonWalkService
     /// </summary>
     private void RestoreRunMode(string reason, bool isCombatEmergency = false)
     {
-        log.Information($"[EurekaAggro - AutoWalk] Restoring RUN mode. Reason: {reason} (Emergency: {isCombatEmergency})");
+        log.Information($"[Eureka Suite - AutoWalk] Restoring RUN mode. Reason: {reason} (Emergency: {isCombatEmergency})");
 
         if (config.LogAutoWalkToChat)
         {
             if (isCombatEmergency)
             {
-                chatGui.Print("[EurekaAggro] ⚠ In combat / Aggroed! Auto-Walk disengaged, RUN mode restored!");
+                chatGui.Print("[Eureka Suite] [Combat] In combat / Aggroed! Auto-Walk disengaged, RUN mode restored!");
             }
             else
             {
-                chatGui.Print("[EurekaAggro] ✔ Safely left dragon zone. Run mode restored.");
+                chatGui.Print("[Eureka Suite] Safely left dragon zone. Run mode restored.");
             }
         }
 
         if (!playerWasAlreadyWalking || isCombatEmergency)
         {
             // Toggle back to running (bypasses cooldown in emergencies)
-            SetDesiredWalkState(false, force: isCombatEmergency);
+            pendingRunRestore = !SetDesiredWalkState(false, force: isCombatEmergency);
         }
         else
         {
-            log.Information("[EurekaAggro - AutoWalk] Leaving dragon area. Player had walking enabled manually before, keeping walking state.");
+            log.Information("[EurekaSuite - AutoWalk] Leaving dragon area. Player had walking enabled manually before, keeping walking state.");
         }
+
+        if (!isCombatEmergency)
+        {
+            config.SessionDragonsBypassed++;
+            config.LifetimeDragonsBypassed++;
+            if (hadCloseCallWithDragon)
+            {
+                config.SessionCloseCallsAvoided++;
+                config.LifetimeCloseCallsAvoided++;
+            }
+        }
+        hadCloseCallWithDragon = false;
 
         wasAutoWalkForced = false;
         playerWasAlreadyWalking = false;
+        pendingWalkEngage = false;
         activeDragonId = 0;
         lastDragonName = string.Empty;
         lastDistance = 0f;
@@ -308,11 +374,12 @@ public unsafe class DragonWalkService
     /// <summary>
     /// Synchronizes the game client's Walk/Run state to the desired mode.
     /// Only sends the keypress IF the client is not already in the desired state!
+    /// Returns false when the toggle was skipped by the anti-flap cooldown so the caller can retry.
     /// </summary>
-    public void SetDesiredWalkState(bool wantWalking, bool force = false)
+    public bool SetDesiredWalkState(bool wantWalking, bool force = false)
     {
         var ctrl = Control.Instance();
-        if (ctrl == null) return;
+        if (ctrl == null) return false;
 
         bool currentWalking = ctrl->IsWalking;
 
@@ -320,29 +387,37 @@ public unsafe class DragonWalkService
         if (currentWalking == wantWalking)
         {
             ctrl->IsWalkingDuringAutorun = wantWalking;
-            return;
+            return true;
         }
 
         // Cooldown check (minimum 350ms to prevent rapid key flapping, unless emergency force)
         if (!force && (DateTime.UtcNow - lastToggleTime).TotalMilliseconds < 350)
-            return;
+            return false;
 
         byte vkCode = ResolveWalkKeybind();
         uint scanCode = MapVirtualKeyA(vkCode, 0);
         uint extended = (vkCode == 0x6F) ? KEYEVENTF_EXTENDEDKEY : 0;
 
-        // Send a single key down and key up via keybd_event (DirectInput / raw input in FFXIV processes this once).
-        // NEVER send PostMessage to MainWindowHandle at the same time, because that produces a duplicate keystroke
-        // which immediately inverts the toggle back to where it started!
-        keybd_event(vkCode, (byte)scanCode, extended, 0);
-        keybd_event(vkCode, (byte)scanCode, extended | KEYEVENTF_KEYUP, 0);
+        // keybd_event is global OS input: only send it while the game window has focus,
+        // otherwise the keystroke would land in whatever application is in front.
+        // Dalamud's check is maintained for both Windows and Wine (Linux / macOS)
+        bool gameHasFocus = Dalamud.Utility.Util.ApplicationIsActivated();
+        if (gameHasFocus)
+        {
+            // Send a single key down and key up via keybd_event (DirectInput / raw input in FFXIV processes this once).
+            // NEVER send PostMessage to MainWindowHandle at the same time, because that produces a duplicate keystroke
+            // which immediately inverts the toggle back to where it started!
+            keybd_event(vkCode, (byte)scanCode, extended, 0);
+            keybd_event(vkCode, (byte)scanCode, extended | KEYEVENTF_KEYUP, 0);
+        }
 
         // Update memory flags to match the new state
         ctrl->IsWalking = wantWalking;
         ctrl->IsWalkingDuringAutorun = wantWalking;
 
         lastToggleTime = DateTime.UtcNow;
-        log.Information($"[EurekaAggro - AutoWalk] SetDesiredWalkState (Target: {(wantWalking ? "Walk" : "Run")}, Prior: {(currentWalking ? "Walk" : "Run")}, VK: 0x{vkCode:X2}, Force: {force})");
+        log.Information($"[EurekaSuite - AutoWalk] SetDesiredWalkState (Target: {(wantWalking ? "Walk" : "Run")}, Prior: {(currentWalking ? "Walk" : "Run")}, VK: 0x{vkCode:X2}, Force: {force}, KeySent: {gameHasFocus})");
+        return true;
     }
 
     /// <summary>
@@ -381,7 +456,7 @@ public unsafe class DragonWalkService
     {
         var ctrl = Control.Instance();
         bool current = ctrl != null && ctrl->IsWalking;
-        log.Information($"[EurekaAggro - AutoWalk] Manual test toggle requested from settings. Current IsWalking: {current}");
+        log.Information($"[EurekaSuite - AutoWalk] Manual test toggle requested from settings. Current IsWalking: {current}");
         SetDesiredWalkState(!current, force: true);
     }
 }

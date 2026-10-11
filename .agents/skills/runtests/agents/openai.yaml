@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Tests"
+  short_description: "Run bounded tests and exact function audits"
+  default_prompt: "Use $runtests to inventory this project, run bounded test commands, verify exact test mappings, report required versus optional measured execution, and create a timestamped failure gameplan with open runtime gates."
