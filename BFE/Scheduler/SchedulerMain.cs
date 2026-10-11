@@ -17,9 +17,11 @@ namespace BFE.Scheduler
         public static bool BunniesRun = false; // Used for N-Raid Toggle
         public static bool hasEnqueuedDutyFinder = false; // used for enque throtle flag
         public static string BunniesTask = "idle";
-        public static bool InitatedRotation = false;
         private static uint PreviousArea = 0;
         private static int ZoneSelected = 0;
+
+        // Pyros is the only zone with an implemented bunny route
+        internal const sbyte PyrosZoneIndex = 1;
 
         internal static bool AreWeTicking;
         internal static bool DoWeTick
@@ -30,6 +32,11 @@ namespace BFE.Scheduler
 
         internal static bool EnablePlugin()
         {
+            if (C.zoneSelected != PyrosZoneIndex)
+            {
+                C.zoneSelected = PyrosZoneIndex;
+                C.Save();
+            }
             if (P.pandora.GetFeatureEnabled("Automatically Open Chests"))
             {
                 HadAutoChestOn = true;
@@ -52,28 +59,49 @@ namespace BFE.Scheduler
 
         internal static bool DisablePlugin()
         {
-            ToggleRotationAIOff();
             StartBunnies.IsRunning = false;
-            DoWeTick= false;
-            P.taskManager.Abort();
-            P.navmesh.Stop();
-            BunniesRun= false;
-            P.stopwatch.Restart();
-            P.stopwatch.Stop();
+            DoWeTick = false;
+            BunniesRun = false;
             BunniesTask = "idle";
             UpdateCurrentTask("idle");
-            if (InitatedRotation)
+
+            // Each step is isolated so a missing plugin or failed IPC call cannot skip the remaining cleanup
+            RunCleanupStep("abort tasks", () => P.taskManager.Abort());
+            RunCleanupStep("stop navmesh", () => P.navmesh.Stop());
+            RunCleanupStep("disable rotation AI", ToggleRotationAIOff);
+            RunCleanupStep("reset stopwatch", () =>
             {
-                ToggleRotation(false);
-                InitatedRotation = false;
-            }
+                P.stopwatch.Restart();
+                P.stopwatch.Stop();
+            });
+
+            // Restore the Pandora features that EnablePlugin turned off
             if (HadAutoChestOn)
-                P.pandora.SetFeatureEnabled("Automatically Open Chests", false);
+                RunCleanupStep("restore Pandora auto chests", () => P.pandora.SetFeatureEnabled("Automatically Open Chests", true));
             if (HadAutoInteractOn)
-                P.pandora.SetFeatureEnabled("Auto-interact with Objects in Instances", false);
+                RunCleanupStep("restore Pandora auto interact", () => P.pandora.SetFeatureEnabled("Auto-interact with Objects in Instances", true));
             HadAutoChestOn = false;
-            HadAutoChestOn = false;
+            HadAutoInteractOn = false;
             return true;
+        }
+
+        private static void RunCleanupStep(string name, Action step)
+        {
+            try
+            {
+                step();
+            }
+            catch (Exception ex)
+            {
+                PluginLog.Warning($"Bunny automation cleanup step '{name}' failed: {ex.Message}");
+            }
+        }
+
+        private static void StopInUnsupportedZone(string zoneName)
+        {
+            PluginLog.Information($"Bunny automation is not implemented for {zoneName}, disabling plugin.");
+            P.ChatGui.Print($"[Eureka Suite] Bunny automation only supports Eureka Pyros. Stopped because you are in {zoneName}.");
+            DisablePlugin();
         }
 
         internal static void Tick()
@@ -84,11 +112,18 @@ namespace BFE.Scheduler
                 {
                     if (BunniesRun)
                     {
-                        if (IsInZone(Pagos) || IsInZone(Pyros) || IsInZone(Hydatos))
+                        if (IsInZone(Pagos))
+                        {
+                            StopInUnsupportedZone("Eureka Pagos");
+                        }
+                        else if (IsInZone(Hydatos))
+                        {
+                            StopInUnsupportedZone("Eureka Hydatos");
+                        }
+                        else if (IsInZone(Pyros))
                         {
                             P.stopwatch.Start();
                             double timeElasped = P.stopwatch.Elapsed.TotalSeconds;
-                            uint ZoneID = CurrentZoneID();
                             if (timeElasped > (C.hours * 3600 + C.minutes * 60) && !C.runInfinite && !HasBunnyStatus() && !IsInBunnyFate())
                             {
                                 P.taskManager.Enqueue(() => UpdateCurrentTask("Leaving Duty"));
@@ -120,20 +155,12 @@ namespace BFE.Scheduler
                             else if (C.enableRetainers && ARRetainersWaitingToBeProcessed() && !HasBunnyStatus() && !IsInBunnyFate())
                             {
                                 P.taskManager.Enqueue(() => UpdateCurrentTask("Resending Retainers"));
-                                if (CurrentZoneID() == Pagos || CurrentZoneID() == Pyros || CurrentZoneID() == Hydatos)
-                                    P.taskManager.Enqueue(LeaveDuty);
+                                P.taskManager.Enqueue(LeaveDuty);
                                 P.taskManager.Enqueue(() => CurrentZoneID() == Kugane);
                                 P.taskManager.Enqueue(PlayerNotBusy);
                                 P.taskManager.EnqueueDelay(1000);
                             }
-                            else if (ZoneID == Pagos)
-                            {
-                                // Go To Bunny Location
-                                // Wait for Fate
-                                // Do Fate
-                            }
-
-                            else if (ZoneID == Pyros)
+                            else
                             {
                                 // Go To Bunny Location
                                 // Wait for Fate
@@ -200,17 +227,6 @@ namespace BFE.Scheduler
                                     }
                                 }
                             }
-
-                            else if (ZoneID == Hydatos)
-                            {
-                                // Run Hydatos Bunny
-                            }
-
-                            else
-                            {
-                                PluginLog.Information("Not in Zones, disabling plugin.");
-                                DisablePlugin();
-                            }
                         }
                         else if (TryGetAddonByName<AtkUnitBase>("RetainerList", out var RetainerAddon) && IsAddonReady(RetainerAddon) && !ARRetainersWaitingToBeProcessed())
                         {
@@ -236,13 +252,8 @@ namespace BFE.Scheduler
                             TaskInteract.Enqueue(KuganeNpcObjectID);
                             P.taskManager.Enqueue(() =>
                             {
-                                if (C.zoneSelected == 0)
+                                if (C.zoneSelected == PyrosZoneIndex)
                                 {
-                                    // Go To Pagos
-                                }
-                                else if (C.zoneSelected == 1)
-                                {
-                                    // Go To Pyros
                                     UpdateCurrentTask("Entering Pyros");
                                     P.taskManager.Enqueue(() => GenericHandler.FireCallback("SelectString", true, 1));
                                     P.taskManager.Enqueue(() => GenericHandler.FireCallback("SelectYesno", true, 0));
@@ -251,15 +262,11 @@ namespace BFE.Scheduler
                                     P.taskManager.Enqueue(() => CurrentZoneID() == Pyros);
                                     P.taskManager.Enqueue(PlayerNotBusy);
                                     P.taskManager.Enqueue(P.navmesh.IsReady);
-
-                                }
-                                else if (C.zoneSelected == 2)
-                                {
-                                    // Go To Hydatos
                                 }
                                 else
                                 {
-                                    PluginLog.Information("Zone Selected Not Valid, disabling plugin");
+                                    PluginLog.Information($"Selected zone {C.zoneSelected} is not implemented, disabling plugin.");
+                                    P.ChatGui.Print("[Eureka Suite] Bunny automation only supports Eureka Pyros. Stopped.");
                                     DisablePlugin();
                                 }
                             });

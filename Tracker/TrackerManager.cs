@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dalamud.Game.Text.SeStringHandling;
@@ -18,6 +19,9 @@ namespace EurekaSuite.Tracker;
 /// </summary>
 public class TrackerManager : IDisposable
 {
+    private const long PublicTrackersRefreshIntervalMs = 60_000;
+    private const long PublicTrackersMaxBackoffMs = 600_000;
+
     private readonly PluginConfiguration config;
     private readonly IClientState clientState;
     private readonly IObjectTable objectTable;
@@ -25,7 +29,15 @@ public class TrackerManager : IDisposable
     private readonly IChatGui chatGui;
     private readonly IFramework framework;
 
-    private bool isAutoCreatingTracker;
+    private volatile bool isAutoCreatingTracker;
+
+    // Auto-join is deferred to the framework tick so it runs once the local player (and data center) is available.
+    private bool autoJoinPending;
+    private uint? pendingServerId;
+
+    // Environment.TickCount64 of the last public directory fetch attempt (0 = never attempted).
+    private long lastPublicTrackersAttemptTick;
+    private int publicTrackersFailureCount;
 
     public EurekaTrackerClient Client { get; }
     public InstanceTrackerService InstanceService { get; }
@@ -53,6 +65,30 @@ public class TrackerManager : IDisposable
     public DateTimeOffset? LastPublicTrackersFetch { get; private set; }
     public event Action? OnPublicTrackersUpdated;
 
+    /// <summary>
+    /// True when the public tracker directory has never been requested, or when the last attempt is older
+    /// than the refresh interval. Failed attempts back off exponentially (60s, 120s, 240s, up to 10 minutes).
+    /// </summary>
+    public bool IsPublicTrackersRefreshDue
+    {
+        get
+        {
+            if (IsFetchingPublicTrackers) return false;
+
+            long lastAttempt = Interlocked.Read(ref lastPublicTrackersAttemptTick);
+            if (lastAttempt == 0) return true;
+
+            long intervalMs = PublicTrackersRefreshIntervalMs;
+            int failures = publicTrackersFailureCount;
+            if (failures > 1)
+            {
+                intervalMs = Math.Min(PublicTrackersMaxBackoffMs, PublicTrackersRefreshIntervalMs << Math.Min(failures - 1, 4));
+            }
+
+            return Environment.TickCount64 - lastAttempt >= intervalMs;
+        }
+    }
+
     public TrackerManager(
         PluginConfiguration config,
         IGameInteropProvider interopProvider,
@@ -73,11 +109,12 @@ public class TrackerManager : IDisposable
 
         Client = new EurekaTrackerClient();
         InstanceService = new InstanceTrackerService(interopProvider, clientState, chatGui, config);
-        FateMonitor = new FateMonitorService(fateTable, toastGui, chatGui, config, Client);
+        FateMonitor = new FateMonitorService(fateTable, toastGui, chatGui, clientState, config, Client, InstanceService);
 
         clientState.TerritoryChanged += OnTerritoryChanged;
         framework.Update += OnFrameworkUpdate;
         InstanceService.OnEurekaZoneEntered += OnEurekaZoneEntered;
+        Client.OnRequestRejected += OnTrackerRequestRejected;
 
         UpdateCurrentZone(clientState.TerritoryType);
     }
@@ -101,12 +138,18 @@ public class TrackerManager : IDisposable
         if (CurrentZoneTracker == null)
         {
             InstanceService.ResetServerId();
-            AvailablePublicTrackers.Clear();
+            autoJoinPending = false;
+            pendingServerId = null;
+            AvailablePublicTrackers = new();
             OnPublicTrackersUpdated?.Invoke();
+
+            // Let the UI fetch the all-zones list once, unless the directory is currently backing off.
+            if (publicTrackersFailureCount == 0)
+                Interlocked.Exchange(ref lastPublicTrackersAttemptTick, 0);
         }
         else
         {
-            TryAutoJoinOrCreateTracker();
+            autoJoinPending = true;
         }
 
         FateMonitor.Reset();
@@ -114,12 +157,14 @@ public class TrackerManager : IDisposable
 
     private void OnEurekaZoneEntered(uint serverId, ushort territoryId)
     {
+        // Also covers instance changes within the same territory, which must reset the FATE snapshot.
         UpdateCurrentZone(territoryId);
-        TryAutoJoinOrCreateTracker(serverId);
+        pendingServerId = serverId;
     }
 
     /// <summary>
     /// Fetches all active public trackers for the player's current data center.
+    /// Must be called from the framework thread because it reads the local player.
     /// </summary>
     public async Task RefreshPublicTrackersAsync(CancellationToken cancellationToken = default)
     {
@@ -129,10 +174,7 @@ public class TrackerManager : IDisposable
         IsFetchingPublicTrackers = true;
         try
         {
-            var trackers = await EurekaTrackerClient.FetchPublicTrackersAsync(dcId.Value, cancellationToken);
-            AvailablePublicTrackers = trackers;
-            LastPublicTrackersFetch = DateTimeOffset.UtcNow;
-            OnPublicTrackersUpdated?.Invoke();
+            await FetchAndStorePublicTrackersAsync(dcId.Value, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -145,6 +187,37 @@ public class TrackerManager : IDisposable
     }
 
     /// <summary>
+    /// Fetches the public directory, records the attempt for backoff purposes, and stores the result on success.
+    /// Returns null if the directory could not be reached.
+    /// </summary>
+    private async Task<List<PublicTrackerInfo>?> FetchAndStorePublicTrackersAsync(int dcId, CancellationToken cancellationToken = default)
+    {
+        Interlocked.Exchange(ref lastPublicTrackersAttemptTick, Environment.TickCount64);
+
+        var trackers = await EurekaTrackerClient.FetchPublicTrackersAsync(dcId, cancellationToken);
+        if (trackers == null)
+        {
+            Interlocked.Increment(ref publicTrackersFailureCount);
+            return null;
+        }
+
+        Interlocked.Exchange(ref publicTrackersFailureCount, 0);
+        AvailablePublicTrackers = trackers;
+        LastPublicTrackersFetch = DateTimeOffset.UtcNow;
+        OnPublicTrackersUpdated?.Invoke();
+        return trackers;
+    }
+
+    /// <summary>
+    /// Saves a tracker to the configuration history on the framework thread, so the UI never observes
+    /// the history list while it is being modified.
+    /// </summary>
+    public Task RememberTrackerAsync(string trackerId, string? password, string? instanceId, int zoneId)
+    {
+        return framework.RunOnFrameworkThread(() => config.RememberTracker(trackerId, password, instanceId, zoneId));
+    }
+
+    /// <summary>
     /// Legacy alias for TryAutoJoinOrCreateTracker.
     /// </summary>
     public void TryAutoCreateTracker() => TryAutoJoinOrCreateTracker();
@@ -154,13 +227,16 @@ public class TrackerManager : IDisposable
     /// 1. If an active public tracker with the same Server ID is already open on this data center, auto-connects to it.
     /// 2. If no matching tracker exists and AutoCreate is enabled, creates a new one (public or private based on config) and injects Server ID.
     /// 3. Otherwise, refreshes the public tracker directory so the user can connect in 1 click.
+    /// Must be called from the framework thread.
     /// </summary>
     public void TryAutoJoinOrCreateTracker(uint? specificServerId = null)
     {
         if (Client.IsConnected || isAutoCreatingTracker || CurrentZoneTracker == null)
             return;
 
-        string detectedId = specificServerId?.ToString() ?? InstanceService.GetBestDetectedInstanceId();
+        string detectedId = specificServerId.HasValue && specificServerId.Value > 0
+            ? specificServerId.Value.ToString()
+            : InstanceService.GetBestDetectedInstanceId();
         int zoneId = CurrentZoneTracker.ZoneId;
         string zoneName = CurrentZoneTracker.ZoneName;
         int? dcId = GetCurrentDataCenterId();
@@ -173,10 +249,7 @@ public class TrackerManager : IDisposable
                 // 1. Check existing public trackers on this datacenter if enabled
                 if (dcId.HasValue && config.TrackerAutoJoinExisting && !string.IsNullOrEmpty(detectedId))
                 {
-                    var publicTrackers = await EurekaTrackerClient.FetchPublicTrackersAsync(dcId.Value);
-                    AvailablePublicTrackers = publicTrackers;
-                    LastPublicTrackersFetch = DateTimeOffset.UtcNow;
-                    OnPublicTrackersUpdated?.Invoke();
+                    var publicTrackers = await FetchAndStorePublicTrackersAsync(dcId.Value) ?? new List<PublicTrackerInfo>();
 
                     var matchingTrackers = publicTrackers
                         .Where(t => t.ZoneId == zoneId &&
@@ -192,7 +265,7 @@ public class TrackerManager : IDisposable
                         bool joined = await Client.JoinTrackerAsync(matching.TrackerId, savedPwd);
                         if (joined)
                         {
-                            config.RememberTracker(matching.TrackerId, savedPwd, detectedId, zoneId);
+                            await RememberTrackerAsync(matching.TrackerId, savedPwd, detectedId, zoneId);
 
                             var sb = new SeStringBuilder()
                                 .AddUiForeground(45)
@@ -230,7 +303,7 @@ public class TrackerManager : IDisposable
                     var (newTrackerId, password, _) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
                     if (!string.IsNullOrEmpty(newTrackerId))
                     {
-                        config.RememberTracker(newTrackerId, password, detectedId, zoneId);
+                        await RememberTrackerAsync(newTrackerId, password, detectedId, zoneId);
 
                         bool joined = await Client.JoinTrackerAsync(newTrackerId, password);
                         if (joined)
@@ -255,10 +328,10 @@ public class TrackerManager : IDisposable
                         }
                     }
                 }
-                else if (dcId.HasValue && AvailablePublicTrackers.Count == 0)
+                else if (dcId.HasValue && AvailablePublicTrackers.Count == 0 && IsPublicTrackersRefreshDue)
                 {
                     // Fetch public trackers so they are immediately visible in the UI
-                    _ = RefreshPublicTrackersAsync();
+                    await FetchAndStorePublicTrackersAsync(dcId.Value);
                 }
             }
             catch (Exception ex)
@@ -272,16 +345,46 @@ public class TrackerManager : IDisposable
         });
     }
 
+    private void OnTrackerRequestRejected(string requestName, string reason)
+    {
+        _ = framework.RunOnFrameworkThread(() =>
+        {
+            chatGui.PrintError(new SeStringBuilder()
+                .AddText("[Eureka Suite] ")
+                .AddText($"Tracker rejected '{requestName}': {reason}")
+                .BuiltString);
+        });
+    }
+
     private void OnFrameworkUpdate(IFramework _)
     {
-        if (CurrentZoneTracker != null)
+        var zoneTracker = CurrentZoneTracker;
+        if (zoneTracker == null || !InstanceTrackerService.IsEurekaTerritory(clientState.TerritoryType))
+            return;
+
+        // Wait for the local player so the data center and FATE table are valid after a zone change.
+        if (objectTable.LocalPlayer == null)
+            return;
+
+        if (autoJoinPending && !isAutoCreatingTracker)
         {
-            FateMonitor.Update(Client.ActiveTracker ?? CurrentZoneTracker);
+            autoJoinPending = false;
+            uint? serverId = pendingServerId;
+            pendingServerId = null;
+            TryAutoJoinOrCreateTracker(serverId);
         }
+
+        // Only hand the live tracker to the monitor when it belongs to the zone the player is in.
+        var liveTracker = Client.ActiveTracker;
+        if (liveTracker != null && liveTracker.ZoneId != zoneTracker.ZoneId)
+            liveTracker = null;
+
+        FateMonitor.Update(zoneTracker, liveTracker);
     }
 
     /// <summary>
     /// Resolves the player's current data center numeric ID for ffxiv-eureka.com.
+    /// Must be called from the framework thread.
     /// </summary>
     public int? GetCurrentDataCenterId()
     {
@@ -304,6 +407,7 @@ public class TrackerManager : IDisposable
 
     /// <summary>
     /// Resolves the player's current data center name string (e.g. "Chaos", "Light").
+    /// Must be called from the framework thread.
     /// </summary>
     public string? GetCurrentDataCenterName()
     {
@@ -324,6 +428,7 @@ public class TrackerManager : IDisposable
         clientState.TerritoryChanged -= OnTerritoryChanged;
         framework.Update -= OnFrameworkUpdate;
         InstanceService.OnEurekaZoneEntered -= OnEurekaZoneEntered;
+        Client.OnRequestRejected -= OnTrackerRequestRejected;
 
         Client.Dispose();
         InstanceService.Dispose();

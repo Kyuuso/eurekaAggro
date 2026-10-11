@@ -43,7 +43,7 @@ public class MobDatabase
         try
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("EurekaSuite.Recursos.DB.json");
+            using var stream = assembly.GetManifestResourceStream("EurekaSuite.Resources.DB.json");
             if (stream == null)
             {
                 log.Warning("Embedded DB.json resource was not found.");
@@ -260,13 +260,21 @@ public class MobDatabase
     public static bool IsPlayerPetOrCompanion(string name)
     {
         if (string.IsNullOrWhiteSpace(name)) return false;
-        var lower = name.ToLowerInvariant();
-        return lower.Contains("carbuncle") || lower.Contains("eos") || lower.Contains("selene") ||
-               lower.Contains("titan-egi") || lower.Contains("ifrit-egi") || lower.Contains("garuda-egi") ||
-               lower.Contains("bahamut") || lower.Contains("phoenix") || lower.Contains("automaton") ||
-               lower.Contains("chocobo") || lower.Contains("seraph") || lower.Contains("living shadow") ||
-               lower.Contains("esteem");
+        foreach (var keyword in PetKeywords)
+        {
+            if (name.Contains(keyword, StringComparison.OrdinalIgnoreCase)) return true;
+        }
+        return false;
     }
+
+    private static readonly string[] PetKeywords =
+    {
+        "carbuncle", "eos", "selene", "titan-egi", "ifrit-egi", "garuda-egi", "bahamut", "phoenix",
+        "automaton", "chocobo", "seraph", "living shadow", "esteem"
+    };
+
+    // BaseIds whose Sight classification was already re-checked this session
+    private readonly ConcurrentDictionary<uint, byte> reclassifiedIds = new();
 
     private void LoadUserOverrides()
     {
@@ -406,7 +414,7 @@ public class MobDatabase
             }
 
             // Upgrade previously unclassified Sight mobs to their true Eureka aggro type (e.g. Piranu -> Sound)
-            if (existing.AggroType == AggroType.Sight)
+            if (existing.AggroType == AggroType.Sight && reclassifiedIds.TryAdd(baseId, 0))
             {
                 var (inferred, defaultD) = ClassifyEurekaMob(name);
                 if (inferred != AggroType.Sight)

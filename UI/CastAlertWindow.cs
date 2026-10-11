@@ -88,9 +88,10 @@ public class CastAlertWindow
 
         if (ImGui.Begin("##EurekaSuite_CastAlert", flags))
         {
-            // Persist position whenever user moves the window
+            // Persist position once the user releases the window, not on every frame of the drag
             var currentPos = ImGui.GetWindowPos();
-            if (currentPos != config.CastAlertPosition && (currentPos.X >= 0 && currentPos.Y >= 0))
+            if (currentPos != config.CastAlertPosition && (currentPos.X >= 0 && currentPos.Y >= 0) &&
+                !ImGui.IsMouseDown(ImGuiMouseButton.Left))
             {
                 config.CastAlertPosition = currentPos;
                 config.Save();

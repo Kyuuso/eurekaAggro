@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin.Services;
@@ -19,57 +17,96 @@ namespace EurekaSuite.Tracker.Services;
 /// </summary>
 public class FateMonitorService
 {
+    // After a zone change the FATE table fills in over several frames, so every FATE seen during
+    // this window is treated as already active instead of freshly spawned.
+    private const long SeedGracePeriodMs = 3000;
+
     private readonly IFateTable fateTable;
     private readonly IToastGui toastGui;
     private readonly IChatGui chatGui;
+    private readonly IClientState clientState;
     private readonly PluginConfiguration config;
     private readonly EurekaTrackerClient trackerClient;
+    private readonly InstanceTrackerService instanceService;
 
-    private readonly HashSet<ushort> previousFates = new();
+    private HashSet<ushort> previousFates = new();
+    private HashSet<ushort> currentFates = new();
+
+    // Environment.TickCount64 of the first update after a reset (0 = not started yet).
+    private long seedStartTick;
 
     public FateMonitorService(
         IFateTable fateTable,
         IToastGui toastGui,
         IChatGui chatGui,
+        IClientState clientState,
         PluginConfiguration config,
-        EurekaTrackerClient trackerClient)
+        EurekaTrackerClient trackerClient,
+        InstanceTrackerService instanceService)
     {
         this.fateTable = fateTable;
         this.toastGui = toastGui;
         this.chatGui = chatGui;
+        this.clientState = clientState;
         this.config = config;
         this.trackerClient = trackerClient;
+        this.instanceService = instanceService;
     }
 
-    public void Update(IEurekaZoneTracker? currentZoneTracker)
+    /// <summary>
+    /// Diffs the FATE table against the previous tick. Must be called from the framework thread
+    /// once the local player is loaded.
+    /// </summary>
+    /// <param name="zoneTracker">Static NM data for the zone the player is in.</param>
+    /// <param name="liveTracker">Live tracker state, or null if not connected to a tracker for this zone.</param>
+    public void Update(IEurekaZoneTracker zoneTracker, IEurekaZoneTracker? liveTracker)
     {
-        if (currentZoneTracker == null) return;
-
-        var currentFates = fateTable.Select(f => f.FateId).ToHashSet();
-
-        // Detect newly spawned FATEs
-        var newlySpawned = currentFates.Except(previousFates).ToList();
-        if (newlySpawned.Count > 0)
+        currentFates.Clear();
+        for (int i = 0; i < fateTable.Length; i++)
         {
-            var zoneFates = currentZoneTracker.GetFates();
-            foreach (var fateId in newlySpawned)
+            var fate = fateTable[i];
+            if (fate == null) continue;
+            currentFates.Add(fate.FateId);
+        }
+
+        if (seedStartTick == 0)
+        {
+            seedStartTick = Environment.TickCount64;
+        }
+
+        bool seeding = Environment.TickCount64 - seedStartTick < SeedGracePeriodMs;
+        if (!seeding)
+        {
+            List<EurekaFate>? zoneFates = null;
+            foreach (var fateId in currentFates)
             {
-                var match = zoneFates.FirstOrDefault(f => f.FateId == fateId);
+                if (previousFates.Contains(fateId)) continue;
+
+                zoneFates ??= zoneTracker.GetFates();
+                var match = FindFate(zoneFates, fateId);
                 if (match != null && !match.IsBunnyFate)
                 {
-                    OnFatePopped(match);
+                    OnFatePopped(match, zoneTracker, liveTracker);
                 }
             }
         }
 
-        previousFates.Clear();
-        foreach (var id in currentFates)
-        {
-            previousFates.Add(id);
-        }
+        (previousFates, currentFates) = (currentFates, previousFates);
     }
 
-    private unsafe void OnFatePopped(EurekaFate fate)
+    private static EurekaFate? FindFate(List<EurekaFate>? fates, ushort fateId)
+    {
+        if (fates == null) return null;
+
+        for (int i = 0; i < fates.Count; i++)
+        {
+            if (fates[i].FateId == fateId) return fates[i];
+        }
+
+        return null;
+    }
+
+    private unsafe void OnFatePopped(EurekaFate fate, IEurekaZoneTracker zoneTracker, IEurekaZoneTracker? liveTracker)
     {
         // 1. Toast Notification
         if (config.TrackerDisplayToastPop)
@@ -118,15 +155,47 @@ public class FateMonitorService
         }
 
         // 4. Auto Pop to live Eureka Tracker
-        if (config.TrackerAutoPopFate && trackerClient.IsConnected && trackerClient.CanModify)
+        if (config.TrackerAutoPopFate && CanReportPop(fate, zoneTracker, liveTracker))
         {
             long nowMs = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             _ = trackerClient.SetPopTimeAsync(fate.TrackerId, nowMs);
         }
     }
 
+    /// <summary>
+    /// Only reports pops while the player stands in the tracker's zone and instance,
+    /// and never overwrites a pop time the tracker already holds.
+    /// </summary>
+    private bool CanReportPop(EurekaFate fate, IEurekaZoneTracker zoneTracker, IEurekaZoneTracker? liveTracker)
+    {
+        if (liveTracker == null || !trackerClient.IsConnected || !trackerClient.CanModify)
+            return false;
+
+        if (clientState.TerritoryType != zoneTracker.TerritoryId || fate.TerritoryId != zoneTracker.TerritoryId)
+            return false;
+
+        string trackerInstance = trackerClient.InstanceId;
+        if (!string.IsNullOrEmpty(trackerInstance))
+        {
+            string detectedInstance = instanceService.GetBestDetectedInstanceId();
+            if (!string.IsNullOrEmpty(detectedInstance) &&
+                !string.Equals(trackerInstance, detectedInstance, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+        }
+
+        var liveFate = FindFate(liveTracker.GetFates(), fate.FateId);
+        return liveFate != null && !liveFate.IsPopped();
+    }
+
+    /// <summary>
+    /// Clears the FATE snapshot. The next updates re-seed it silently for the grace period.
+    /// </summary>
     public void Reset()
     {
         previousFates.Clear();
+        currentFates.Clear();
+        seedStartTick = 0;
     }
 }

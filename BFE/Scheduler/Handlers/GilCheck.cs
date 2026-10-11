@@ -1,6 +1,5 @@
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ECommons.Automation;
-using ECommons.Automation.LegacyTaskManager;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using ECommons.UIHelpers.AddonMasterImplementations;
 using ECommons.DalamudServices;
@@ -13,7 +12,6 @@ namespace BFE.Scheduler.Handlers
 {
     internal static unsafe class GilCheck
     {
-        internal static TaskManager taskManager = new();
         private static int PreviousGil = (int)GetGil();
         private static int PreviousEldthurs = GetItemCount(24219);
         private static int PreviousPryosHairStyle = GetItemCount(24233);

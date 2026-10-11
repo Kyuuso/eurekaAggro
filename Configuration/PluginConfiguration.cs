@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using Dalamud.Configuration;
 using Dalamud.Plugin;
+using Newtonsoft.Json;
 
 namespace EurekaSuite.Configuration;
 
@@ -287,6 +288,13 @@ public class PluginConfiguration : IPluginConfiguration
             Version = 3;
             Save();
         }
+
+        // Rewrite the file so tracker passwords no longer appear in plain text
+        if (LegacyPlaintextFound)
+        {
+            LegacyPlaintextFound = false;
+            Save();
+        }
     }
 
     // --- EUREKA TRACKER SETTINGS ---
@@ -300,12 +308,80 @@ public class PluginConfiguration : IPluginConfiguration
     public bool TrackerDisplayServerIdInChat { get; set; } = true;
     public bool TrackerShowLevelInTable { get; set; } = true;
     public string TrackerLastCode { get; set; } = string.Empty;
-    public string TrackerLastPassword { get; set; } = string.Empty;
     public string TrackerCustomInstanceId { get; set; } = string.Empty;
 
     // --- TRACKER PASSWORD & HISTORY MEMORY ---
+    // Passwords stay in plain text in memory (the UI shows and shares them) but are written to disk
+    // encrypted with DPAPI through the *Protected properties below.
+    [JsonIgnore]
+    public string TrackerLastPassword { get; set; } = string.Empty;
+
+    [JsonIgnore]
     public Dictionary<string, string> SavedTrackerPasswords { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+
     public List<TrackerHistoryEntry> TrackerHistory { get; set; } = new();
+
+    [JsonProperty]
+    private string TrackerLastPasswordProtected
+    {
+        get => SecretProtector.Protect(TrackerLastPassword);
+        set => TrackerLastPassword = SecretProtector.Unprotect(value);
+    }
+
+    // Replace: otherwise Newtonsoft fills the temporary dictionary returned by the getter and never calls the setter
+    [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    private Dictionary<string, string> SavedTrackerPasswordsProtected
+    {
+        get
+        {
+            var result = new Dictionary<string, string>(SavedTrackerPasswords.Count, StringComparer.OrdinalIgnoreCase);
+            foreach (var (id, pwd) in SavedTrackerPasswords)
+            {
+                result[id] = SecretProtector.Protect(pwd);
+            }
+            return result;
+        }
+        set
+        {
+            if (value == null) return;
+            foreach (var (id, stored) in value)
+            {
+                var pwd = SecretProtector.Unprotect(stored);
+                if (!string.IsNullOrEmpty(pwd)) SavedTrackerPasswords[id] = pwd;
+            }
+        }
+    }
+
+    // Plain-text fields written by 1.9.2 and earlier: read once for migration, never written again
+    [JsonProperty("TrackerLastPassword")]
+    private string? LegacyTrackerLastPassword
+    {
+        set
+        {
+            if (string.IsNullOrEmpty(value)) return;
+            LegacyPlaintextFound = true;
+            if (string.IsNullOrEmpty(TrackerLastPassword)) TrackerLastPassword = value;
+        }
+    }
+
+    [JsonProperty("SavedTrackerPasswords")]
+    private Dictionary<string, string>? LegacySavedTrackerPasswords
+    {
+        set
+        {
+            if (value == null || value.Count == 0) return;
+            LegacyPlaintextFound = true;
+            foreach (var (id, pwd) in value)
+            {
+                if (!string.IsNullOrEmpty(pwd)) SavedTrackerPasswords.TryAdd(id, pwd);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Set while loading when the file still contains plain-text passwords, so Initialize rewrites it encrypted.
+    /// </summary>
+    internal static bool LegacyPlaintextFound;
 
     /// <summary>
     /// Remembers a tracker, its password, instance ID, and updates last used timestamp.
@@ -432,7 +508,29 @@ public class PluginConfiguration : IPluginConfiguration
 public class TrackerHistoryEntry
 {
     public string TrackerId { get; set; } = string.Empty;
+
+    [JsonIgnore]
     public string Password { get; set; } = string.Empty;
+
+    [JsonProperty]
+    private string ProtectedPassword
+    {
+        get => SecretProtector.Protect(Password);
+        set => Password = SecretProtector.Unprotect(value);
+    }
+
+    // Plain-text field written by 1.9.2 and earlier: read once for migration, never written again
+    [JsonProperty("Password")]
+    private string? LegacyPassword
+    {
+        set
+        {
+            if (string.IsNullOrEmpty(value)) return;
+            PluginConfiguration.LegacyPlaintextFound = true;
+            if (string.IsNullOrEmpty(Password)) Password = value;
+        }
+    }
+
     public string InstanceId { get; set; } = string.Empty;
     public int ZoneId { get; set; }
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;

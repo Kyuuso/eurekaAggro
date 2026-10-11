@@ -210,9 +210,12 @@ public class TrackerView : IDisposable
                     int zoneId = trackerManager.CurrentZoneTracker?.ZoneId ?? 0;
                     config.RememberTracker(inputTrackerCode, inputTrackerPassword, detectedId, zoneId);
 
+                    // Capture the inputs now: the text fields may change before the task runs
+                    string code = inputTrackerCode;
+                    string pwd = inputTrackerPassword;
                     _ = Task.Run(async () =>
                     {
-                        await client.JoinTrackerAsync(inputTrackerCode, inputTrackerPassword);
+                        await client.JoinTrackerAsync(code, pwd);
                     });
                 }
             }
@@ -220,7 +223,8 @@ public class TrackerView : IDisposable
         else
         {
             // Connected controls
-            ImGui.TextColored(ImGuiColors.HealerGreen, $"● ID: {client.TrackerId}");
+            MainWindow.StatusDot(ImGuiColors.HealerGreen, true);
+            ImGui.TextColored(ImGuiColors.HealerGreen, $"ID: {client.TrackerId}");
             ImGui.SameLine();
             ImGui.TextDisabled($"| Viewers: {client.Viewers}");
             ImGui.SameLine();
@@ -398,13 +402,16 @@ public class TrackerView : IDisposable
 
     private void CreateAndJoinTracker(int zoneId)
     {
+        // Game state is read here on the draw thread; the task below only does network work
+        string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
+        int? dcId = config.TrackerCreatePublic ? trackerManager.GetCurrentDataCenterId() : null;
+
         _ = Task.Run(async () =>
         {
             var (newTrackerId, password, err) = await EurekaTrackerClient.CreateTrackerAsync(zoneId);
             if (!string.IsNullOrEmpty(newTrackerId))
             {
-                string detectedId = trackerManager.InstanceService.GetBestDetectedInstanceId();
-                config.RememberTracker(newTrackerId, password, detectedId, zoneId);
+                await trackerManager.RememberTrackerAsync(newTrackerId, password, detectedId, zoneId);
 
                 inputTrackerCode = newTrackerId;
                 inputTrackerPassword = password;
@@ -414,7 +421,6 @@ public class TrackerView : IDisposable
                 {
                     // Auto-sync detected Server ID if present
                     inputInstanceId = detectedId;
-                    int? dcId = config.TrackerCreatePublic ? trackerManager.GetCurrentDataCenterId() : null;
                     if (!string.IsNullOrEmpty(detectedId) || dcId.HasValue)
                     {
                         await trackerManager.Client.SetInstanceInformationAsync(detectedId, dcId);
@@ -553,19 +559,20 @@ public class TrackerView : IDisposable
 
     private void DrawWeatherForecastButton(EurekaTrackerClient client)
     {
-        if (client.ActiveTracker == null) return;
+        // Copied once: a background disconnect can clear ActiveTracker mid-frame
+        var tracker = client.ActiveTracker;
+        if (tracker == null) return;
 
         ImGuiComponents.IconButton(FontAwesomeIcon.CloudSun);
         if (ImGui.IsItemHovered())
         {
             ImGui.BeginTooltip();
 
-            var tracker = client.ActiveTracker;
             var currentWeather = tracker.GetCurrentWeatherInfo();
             var etNow = EorzeaTime.Now;
 
             ImGui.TextColored(GoldAccent, $"Eorzea Time: {etNow.EorzeaDateTime:HH:mm} ET");
-            bool isNight = etNow.EorzeaDateTime.Hour < 6 || etNow.EorzeaDateTime.Hour >= 19;
+            bool isNight = etNow.EorzeaDateTime.Hour < 6 || etNow.EorzeaDateTime.Hour >= 18;
             if (isNight)
             {
                 ImGui.TextColored(ImGuiColors.DalamudViolet, $"(Night) - Daylight in {etNow.TimeUntilDay():mm'm 'ss's'}");
@@ -630,8 +637,10 @@ public class TrackerView : IDisposable
             var sortSpecs = ImGui.TableGetSortSpecs();
             var sortedFates = fates.AsEnumerable();
 
-            if (sortSpecs.SpecsDirty && sortSpecs.SpecsCount > 0)
+            // Sort every frame: pop times change while the specs stay the same, so SpecsDirty alone is not enough
+            if (sortSpecs.SpecsCount > 0)
             {
+                sortSpecs.SpecsDirty = false;
                 var spec = sortSpecs.Specs;
                 int colIdx = spec.ColumnIndex;
                 if (!config.TrackerShowLevelInTable) colIdx++;
@@ -777,7 +786,8 @@ public class TrackerView : IDisposable
                     }
                     else
                     {
-                        ImGui.TextColored(OrangeColorText, $"{first.Action} in {first.Time:mm'm'}");
+                        string waitFmt = first.Time.TotalHours >= 1 ? $"{(int)first.Time.TotalHours}h {first.Time.Minutes:D2}m" : $"{first.Time.Minutes}m";
+                        ImGui.TextColored(OrangeColorText, $"{first.Action} in {waitFmt}");
                     }
                 }
 
@@ -867,9 +877,9 @@ public class TrackerView : IDisposable
         int? dcId = trackerManager.GetCurrentDataCenterId();
         string dcName = trackerManager.GetCurrentDataCenterName() ?? "Data Center";
 
-        // Auto-refresh when opening or when stale (> 60s)
-        if (dcId.HasValue && !trackerManager.IsFetchingPublicTrackers &&
-            (trackerManager.AvailablePublicTrackers.Count == 0 || !trackerManager.LastPublicTrackersFetch.HasValue || (DateTimeOffset.UtcNow - trackerManager.LastPublicTrackersFetch.Value).TotalSeconds > 60))
+        // Auto-refresh on first open and when the last attempt is stale; failures back off.
+        // An empty list is a valid result and must not trigger a new connection every frame.
+        if (dcId.HasValue && trackerManager.IsPublicTrackersRefreshDue)
         {
             _ = trackerManager.RefreshPublicTrackersAsync();
         }

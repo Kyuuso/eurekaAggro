@@ -40,7 +40,7 @@ public class ActionDatabase
         try
         {
             var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream("EurekaSuite.Recursos.DDCheckDB.json");
+            using var stream = assembly.GetManifestResourceStream("EurekaSuite.Resources.DDCheckDB.json");
             if (stream == null)
             {
                 log.Warning("Embedded DDCheckDB.json resource was not found.");
@@ -146,6 +146,11 @@ public class ActionDatabase
         {
             log.Error(ex, "Failed to save action database overrides.");
         }
+    }
+
+    public void MarkDirty()
+    {
+        isDirty = true;
     }
 
     public void SaveIfDirty()

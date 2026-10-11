@@ -159,7 +159,11 @@ public static unsafe class Helpers
     // Returns if the player is currently within level range of the Bunny fate
     public static bool Sync()
     {
-        if (AgentHUD.Instance()->ExpContentLevel > FateManager.Instance()->CurrentFate->MaxLevel)
+        var fateManager = FateManager.Instance();
+        if (fateManager == null || fateManager->CurrentFate == null)
+            return true;
+
+        if (AgentHUD.Instance()->ExpContentLevel > fateManager->CurrentFate->MaxLevel)
         {
             RunCommand("lsync");
             return false;
@@ -294,160 +298,7 @@ public static unsafe class Helpers
         return range;
     }
 
-    // Toggle Rotation using BM or BMR or Wrath instead of RSR
-    public static void ToggleRotation(bool enable)
-    {
-        if (enable)
-        {
-            float range = 2.8f;
-            int altrange = 2;
-            var j = GetClassJobID();
-            if (Svc.Data.GetExcelSheet<ClassJob>().TryGetRow(j, out var row))
-            {
-                switch (row.ClassJobCategory.RowId)
-                {
-                    case 30:
-                        // Physical DPS Class;
-                        range = 2.8f;
-                        altrange = 2;
-                        break;
-                    case 31:
-                        // Magicic DPS Class
-                        range = 15.0f;
-                        altrange = 15;
-                        break;
-                    default:
-                        range = 2.8f;
-                        break;
-                }
-            }
-
-            if (PluginInstalled("WrathCombo"))
-            {
-                EnableWrathAuto();
-
-                if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModInternalName)) // If you have Veyns BossMod and Wrath Installed at the same time
-                {
-                    P.bossmod.AddPreset("ROR Passive", Resources.BMRotations.rootPassive);
-                    P.bossmod.SetPreset("ROR Passive");
-                    P.bossmod.SetRange(range);
-                    RunCommand("vbm ai on");
-                }
-                if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModRebornInternalName)) // If you have... alternative bossmod installed & also Wrath
-                {
-                    RunCommand($"vbmai maxdistancetarget {altrange}");
-                    RunCommand("vbmai on");
-                    RunCommand("vbmai followtarget on");
-                    RunCommand("vbmai followcombat on");
-                }
-            }
-            else if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModInternalName)) // If you have ONLY Veyn's BossMod
-            {
-                RunCommand("vbm ai on");
-                P.bossmod.AddPreset("RoR Boss", Resources.BMRotations.rootBoss);
-                P.bossmod.SetPreset("RoR Boss");
-                P.bossmod.SetRange(range);
-            }
-        }
-        else if (!enable)
-        {
-            if (PluginInstalled("WrathCombo"))
-            {
-                //RunCommand("wrath auto off");
-                ReleaseWrathControl();
-                if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModInternalName))
-                {
-                    P.bossmod.DisablePresets();
-                    RunCommand("vbm ai off");
-                }
-                if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModRebornInternalName))
-                {
-                    RunCommand("vbmai off");
-                }
-            }
-            else
-            {
-                if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModInternalName))
-                {
-                    RunCommand("vbm ai off");
-                    P.bossmod.DisablePresets();
-                }
-                if (P.pluginDependencies.IsLoaded(PluginDependencyService.BossModRebornInternalName))
-                {
-                    RunCommand("vbmai off");
-                }
-            }
-        }
-    }
-
 #endregion AUTOROTATION
-
-#region WRATH
-
-    public static void EnableWrathAuto()
-    {
-        if (!WrathIPC.IsEnabled) return;
-        try
-        {
-            var lease = (Guid)WrathIPC.CurrentLease!;
-            // enable Wrath Combo Auto-Rotation
-
-            WrathIPC.SetAutoRotationState(lease, true);
-            // make sure the job is ready for Auto-Rotation
-
-            WrathIPC.SetCurrentJobAutoRotationReady(lease);
-            // if the job is ready, all the user's settings are locked
-            // if the job is not ready, it turns on the job's simple modes, or if those don't
-            // exist, it turns on the job's advanced modes with all options enabled
-        }
-        catch (Exception e)
-        {
-            PluginLog.Error("Unknown Wrath IPC error," +
-                            "probably inability to register a lease." +
-                            "\n" + e.Message);
-        }
-    }
-
-    public static void EnableWrathAutoAndConfigureIt()
-    {
-        if (!WrathIPC.IsEnabled) return;
-        try
-        {
-            var lease = (Guid)WrathIPC.CurrentLease!;
-            WrathIPC.SetAutoRotationState(lease, true);
-            WrathIPC.SetCurrentJobAutoRotationReady(lease);
-            WrathIPC.SetAutoRotationConfigState(lease,
-                WrathIPC.AutoRotationConfigOption.InCombatOnly, false);
-            WrathIPC.SetAutoRotationConfigState(lease,
-                WrathIPC.AutoRotationConfigOption.AutoRez, true);
-            WrathIPC.SetAutoRotationConfigState(lease,
-                WrathIPC.AutoRotationConfigOption.SingleTargetHPP, 60);
-        }
-        catch (Exception e)
-        {
-            PluginLog.Error("Unknown Wrath IPC error," +
-                            "probably inability to register a lease." +
-                            "\n" + e.Message);
-        }
-    }
-
-    public static void ReleaseWrathControl()
-    {
-        if (!WrathIPC.IsEnabled) return;
-        try
-        {
-            WrathIPC.ReleaseControl((Guid)WrathIPC.CurrentLease!);
-            WrathIPC.BunniesLease = null;
-        }
-        catch (Exception e)
-        {
-            PluginLog.Error("Unknown Wrath IPC error," +
-                            "probably inability to register a lease." +
-                            "\n" + e.Message);
-        }
-    }
-
-    #endregion WRATH
 
 #region REPAIR
     // Returns if the player's gear condition are under a certain threshold
@@ -495,16 +346,54 @@ public static unsafe class Helpers
     public static int ToUnixTimestamp(this DateTime value) => (int)Math.Truncate(value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds);
 
     // Uses autoreatiner API to return all characters in autoreatiner
-    private static unsafe ParallelQuery<ulong> GetAllEnabledCharacters() => P.autoRetainerApi.GetRegisteredCharacters().AsParallel().Where(c => P.autoRetainerApi.GetOfflineCharacterData(c).Enabled);
+    private static unsafe ParallelQuery<ulong> GetAllEnabledCharacters() => P.autoRetainerApi.GetRegisteredCharacters().AsParallel().Where(c => P.autoRetainerApi.GetOfflineCharacterData(c)?.Enabled == true);
+
+    // The scheduler polls the current character every idle frame, so the IPC result is cached briefly
+    private const long RetainerCheckIntervalMs = 1500;
+    private static long retainerCheckExpiresAt;
+    private static bool retainerCheckCached;
+
+    private static bool HasRetainersWaiting(ulong contentId)
+    {
+        var retainers = P.autoRetainerApi.GetOfflineCharacterData(contentId)?.RetainerData;
+        if (retainers == null) return false;
+        var now = DateTime.Now.ToUnixTimestamp();
+        return retainers.Any(x => x.HasVenture && x.VentureEndsAt <= now);
+    }
 
     // Returns if any retainers are completed on current character
     public static unsafe bool ARRetainersWaitingToBeProcessed(bool allCharacters = false)
     {
         if (!PluginInstalled("AutoRetainer")) return false;
         if (!C.enableRetainers) return false;
-        return !allCharacters
-            ? P.autoRetainerApi.GetOfflineCharacterData(P.PlayerState.ContentId).RetainerData.AsParallel().Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp())
-            : GetAllEnabledCharacters().Any(character => P.autoRetainerApi.GetOfflineCharacterData(character).RetainerData.Any(x => x.HasVenture && x.VentureEndsAt <= DateTime.Now.ToUnixTimestamp()));
+
+        if (allCharacters)
+        {
+            try
+            {
+                return GetAllEnabledCharacters().Any(HasRetainersWaiting);
+            }
+            catch (Exception ex)
+            {
+                PluginLog.Debug($"AutoRetainer retainer query failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        var tick = Environment.TickCount64;
+        if (tick < retainerCheckExpiresAt) return retainerCheckCached;
+        retainerCheckExpiresAt = tick + RetainerCheckIntervalMs;
+
+        try
+        {
+            retainerCheckCached = HasRetainersWaiting(P.PlayerState.ContentId);
+        }
+        catch (Exception ex)
+        {
+            PluginLog.Debug($"AutoRetainer retainer query failed: {ex.Message}");
+            retainerCheckCached = false;
+        }
+        return retainerCheckCached;
     }
 
     // Returns if any submarines are completed on current character
@@ -512,9 +401,18 @@ public static unsafe class Helpers
     {
         if (!PluginInstalled("AutoRetainer")) return false;
         if (!C.enableRetainers) return false;
-        return !allCharacters
-            ? P.autoRetainerApi.GetOfflineCharacterData(P.PlayerState.ContentId).OfflineSubmarineData.AsParallel().Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp())
-            : GetAllEnabledCharacters().Any(c => P.autoRetainerApi.GetOfflineCharacterData(c).OfflineSubmarineData.Any(x => x.ReturnTime <= DateTime.Now.ToUnixTimestamp()));
+        try
+        {
+            var now = DateTime.Now.ToUnixTimestamp();
+            return !allCharacters
+                ? P.autoRetainerApi.GetOfflineCharacterData(P.PlayerState.ContentId)?.OfflineSubmarineData?.Any(x => x.ReturnTime <= now) == true
+                : GetAllEnabledCharacters().Any(c => P.autoRetainerApi.GetOfflineCharacterData(c)?.OfflineSubmarineData?.Any(x => x.ReturnTime <= now) == true);
+        }
+        catch (Exception ex)
+        {
+            PluginLog.Debug($"AutoRetainer submarine query failed: {ex.Message}");
+            return false;
+        }
     }
 
 #endregion AUTORETAINER
@@ -731,7 +629,7 @@ public static unsafe class Helpers
     internal static bool? TargetByID(IGameObject? gameObject)
     {
         var x = gameObject;
-        if (Svc.Targets.Target != null && Svc.Targets.Target.DataId == x.DataId)
+        if (x != null && Svc.Targets.Target != null && Svc.Targets.Target.DataId == x.DataId)
             return true;
 
         if (!IsOccupied())

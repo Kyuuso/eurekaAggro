@@ -18,6 +18,18 @@ public static class EurekaLevelService
 
     private static DateTime lastScanTime = DateTime.MinValue;
 
+    // Safety cap for the per-object cache in case zone changes are missed
+    private const int MaxObjectLevelEntries = 4000;
+
+    /// <summary>
+    /// Clears per-object levels. Object IDs are reused across instances, so this runs on every zone change.
+    /// Species-level caches (BaseId and name) stay valid and are kept.
+    /// </summary>
+    public static void ClearObjectLevels()
+    {
+        MobObjectLevels.Clear();
+    }
+
     /// <summary>
     /// Scans the 50 visible nameplates in real time from RaptureAtkModule to extract exact Eureka Elemental Levels.
     /// Optimized with a 500ms throttle and zero-allocation byte parsing to have virtually 0% CPU impact.
@@ -31,6 +43,11 @@ public static class EurekaLevelService
             return;
         }
         lastScanTime = now;
+
+        if (MobObjectLevels.Count > MaxObjectLevelEntries)
+        {
+            MobObjectLevels.Clear();
+        }
 
         try
         {

@@ -29,7 +29,7 @@ internal class StartBunnies
     private static readonly Vector4 SecondaryTextColor = new(0.608f, 0.620f, 0.663f, 1f);       // #9B9EA9
     private static readonly Vector4 StopRedColor = new(0.851f, 0.255f, 0.255f, 1f);              // #D94141
 
-    internal static string ActionLabel => IsRunning ? "Stop Pyros" : "Start Pyros";
+    internal static string ActionLabel => IsRunning ? "Stop" : "Start Pyros";
 
     internal static string ActionTitleTooltip => UiText.T(ActionLabel) + "\n" + UiText.T(
         !IsRunning && !P.pluginDependencies.RequiredDependenciesLoaded
@@ -200,9 +200,10 @@ internal class StartBunnies
 
         if (ImGui.BeginTable("##DepsTable", 3, ImGuiTableFlags.BordersOuter | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchProp))
         {
-            ImGui.TableSetupColumn("Dependency", ImGuiTableColumnFlags.WidthStretch, 0.50f);
-            ImGui.TableSetupColumn("Status", ImGuiTableColumnFlags.WidthStretch, 0.25f);
-            ImGui.TableSetupColumn("Repository", ImGuiTableColumnFlags.WidthFixed, 110f * scale);
+            // The ### suffix keeps column IDs stable so widths survive a language change
+            ImGui.TableSetupColumn(UiText.T("Dependency") + "###DepName", ImGuiTableColumnFlags.WidthStretch, 0.50f);
+            ImGui.TableSetupColumn(UiText.T("Status") + "###DepStatus", ImGuiTableColumnFlags.WidthStretch, 0.25f);
+            ImGui.TableSetupColumn(UiText.T("Repository") + "###DepRepo", ImGuiTableColumnFlags.WidthFixed, 110f * scale);
             ImGui.TableHeadersRow();
 
             foreach (var dep in dependencies)
@@ -235,7 +236,7 @@ internal class StartBunnies
 
                 // Column 3: Copy repository URL button
                 ImGui.TableNextColumn();
-                if (ImGui.SmallButton($"Get Repo Url###Link_{dep.InternalName}"))
+                if (ImGui.SmallButton($"{UiText.T("Get Repo Url")}###Link_{dep.InternalName}"))
                 {
                     ImGui.SetClipboardText(dep.RepoUrl);
                     DuoLog.Information("Repo URL copied to clipboard.");
@@ -262,7 +263,7 @@ internal class StartBunnies
         ImGui.PushStyleColor(ImGuiCol.Text, textColor);
         ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 8f * scale);
 
-        var label = ActionLabel;
+        var label = UiText.T(ActionLabel) + "###BfeMainAction";
 
         if (ImGui.Button(label, new Vector2(ImGui.GetContentRegionAvail().X, 42f * scale)))
         {

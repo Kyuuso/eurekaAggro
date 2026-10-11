@@ -56,7 +56,7 @@ public class Config : IEzConfig
     public bool selfRepair { get; set; } = false;
 
     // Zone Config
-    public sbyte zoneSelected { get; set; } = 0;
+    public sbyte zoneSelected { get; set; } = 1;
 
     // AutoReatiner Config
     public bool enableRetainers { get; set; } = false;

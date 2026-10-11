@@ -1,7 +1,6 @@
 using System;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
-using Dalamud.Interface.Textures.TextureWraps;
 
 namespace BFE.Ui;
 
@@ -10,8 +9,6 @@ namespace BFE.Ui;
 /// </summary>
 internal static class BfePresentation
 {
-    internal static IDalamudTextureWrap? OriginalIcon => null;
-
     internal static void DrawPluginIcon(ImDrawListPtr drawList, Vector2 min, Vector2 max)
     {
         // When no texture is present, render a rounded fallback background

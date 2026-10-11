@@ -8,14 +8,13 @@ namespace BFE.IPC
     {
         public const string Name = "vnavmesh";
         public const string Repo = "https://puni.sh/api/repository/veyn";
-        public NavmeshIPC() => EzIPC.Init(this, Name);
+        public NavmeshIPC() => EzIPC.Init(this, Name, SafeWrapper.AnyException);
         public bool Installed => PluginInstalled(Name);
 
         [EzIPC("Nav.%m")] public readonly Func<bool> IsReady;
         [EzIPC("Nav.%m")] public readonly Func<float> BuildProgress;
         [EzIPC("Nav.%m")] public readonly Func<bool> Reload;
         [EzIPC("Nav.%m")] public readonly Func<bool> Rebuild;
-        [EzIPC("Nav.%m")] public readonly Func<Vector3, Vector3, bool, Vector3> Pathfind;
 
         [EzIPC("SimpleMove.%m")] public readonly Func<Vector3, bool, bool> PathfindAndMoveTo;
         [EzIPC("SimpleMove.%m")] public readonly Func<bool> PathfindInProgress;

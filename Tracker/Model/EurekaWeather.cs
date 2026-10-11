@@ -74,9 +74,10 @@ public static class EorzeaWeather
 {
     public static int CalculateTarget(DateTime dateTime)
     {
-        var unix = (int)(dateTime - EorzeaTime.Zero).TotalSeconds;
+        // long: an int seconds counter overflows in 2038
+        var unix = (long)(dateTime - EorzeaTime.Zero).TotalSeconds;
         var bell = unix / 175;
-        var increment = ((uint)(bell + 8 - (bell % 8))) % 24;
+        var increment = (uint)((bell + 8 - (bell % 8)) % 24);
 
         var totalDays = (uint)(unix / 4200);
         var calcBase = (totalDays * 0x64) + increment;

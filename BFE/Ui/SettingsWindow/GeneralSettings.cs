@@ -116,6 +116,7 @@ namespace BFE.Ui.SettingsWindow
                         Minutes = 0;
                     }
                     C.hours = Hours;
+                    C.minutes = Minutes;
                     C.Save();
                 }
                 UiGui.Text("Minutes");
@@ -128,7 +129,7 @@ namespace BFE.Ui.SettingsWindow
                     else if (Minutes >= 60)
                         Minutes = 60;
                     C.minutes = Minutes;
-
+                    C.Save();
                 }
                 ImGui.Unindent();
             }

@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Topluluk ve Dış Bağlantılar:</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>Bağımlılık</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Depo</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Mevcut</value>
+  </data>
 </root>

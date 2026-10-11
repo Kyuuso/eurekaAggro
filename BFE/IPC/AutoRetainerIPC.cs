@@ -8,7 +8,7 @@ namespace BFE.IPC
         public const string Name = "AutoRetainer";
         public const string Repo = "https://love.puni.sh/ment.json";
         #pragma warning disable CS8618 
-        public AutoRetainerIPC() => EzIPC.Init(this, Name);
+        public AutoRetainerIPC() => EzIPC.Init(this, Name, SafeWrapper.AnyException);
         #pragma warning restore CS8618 
         public bool Installed => PluginInstalled(Name);
 

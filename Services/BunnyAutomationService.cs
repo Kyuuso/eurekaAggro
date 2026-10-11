@@ -55,7 +55,6 @@ public sealed class BunnyAutomationService : IDisposable
     internal PandoraIPC pandora = null!;
     internal NavmeshIPC navmesh = null!;
     internal BossModIPC bossmod = null!;
-    internal WrathIPC wrath = null!;
     internal BunniesIPC bunniesIPC = null!;
     internal PluginDependencyService pluginDependencies = null!;
 
@@ -80,9 +79,8 @@ public sealed class BunnyAutomationService : IDisposable
         filter = new Filter();
 
         // Configuration and visual styling initialization
-        EzConfig.Migrate<Config>();
         config = EzConfig.Init<Config>();
-        appearance = new BfeAppearance(textureProvider);
+        appearance = new BfeAppearance();
 
         // IPC subsystems and dependency initialization
         pluginDependencies = new PluginDependencyService();
@@ -94,7 +92,6 @@ public sealed class BunnyAutomationService : IDisposable
         navmesh = new NavmeshIPC();
         pandora = new PandoraIPC();
         bossmod = new BossModIPC();
-        wrath = new WrathIPC();
         bunniesIPC = new BunniesIPC();
 
         // Window registration
@@ -219,8 +216,18 @@ public sealed class BunnyAutomationService : IDisposable
 
     public void Dispose()
     {
+        // Stop automation while ECommons and the IPC subscribers are still alive
+        try
+        {
+            if (SchedulerMain.DoWeTick || SchedulerMain.HadAutoChestOn || SchedulerMain.HadAutoInteractOn)
+                SchedulerMain.DisablePlugin();
+        }
+        catch (Exception ex)
+        {
+            Svc.Log.Warning($"Failed to stop bunny automation during dispose: {ex.Message}");
+        }
+
         windowSystem.RemoveAllWindows();
-        appearance?.Dispose();
         filter?.Dispose();
         autoRetainerApi?.Dispose();
     }

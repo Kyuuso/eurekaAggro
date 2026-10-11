@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>コミュニティおよび外部リンク：</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>依存関係</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>リポジトリ</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>利用可能</value>
+  </data>
 </root>

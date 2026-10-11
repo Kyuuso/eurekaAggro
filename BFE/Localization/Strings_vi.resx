@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Liên kết cộng đồng và bên ngoài:</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>Phụ thuộc</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Kho lưu trữ</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Có sẵn</value>
+  </data>
 </root>

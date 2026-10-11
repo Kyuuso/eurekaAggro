@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Ссылки на ресурсы сообщества и внешние ресурсы:</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>Зависимость</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Репозиторий</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Доступно</value>
+  </data>
 </root>

@@ -121,9 +121,10 @@ public class EurekaFate
             }
         }
 
-        if (SpawnByRequiredNight && EorzeaTime.Now.EorzeaDateTime.Hour >= 6 && EorzeaTime.Now.EorzeaDateTime.Hour < 19)
+        var etNow = EorzeaTime.Now;
+        if (SpawnByRequiredNight && etNow.EorzeaDateTime.Hour >= 6 && etNow.EorzeaDateTime.Hour < 18)
         {
-            requirements.Add(("Night", EorzeaTime.Now.TimeUntilNight()));
+            requirements.Add(("Night", etNow.TimeUntilNight()));
         }
 
         return requirements;

@@ -73,7 +73,6 @@ namespace BFE.Scheduler.Handlers
             TaskMoveTo.Enqueue(firstjumpspot, "first jump spot", 1f);
             TaskMoveToAndJump.Enqueue(secondjumpspot, "second jump spot", 0.5f);
             GoToCofferLocation(finalLocation, direction);
-            CheckCofferHandler.CheckCoffer();
         }
         internal static void MoveToCliff()
         {

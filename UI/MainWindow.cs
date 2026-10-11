@@ -240,7 +240,7 @@ public class MainWindow : IDisposable
             ImGui.SameLine();
             ImGui.TextDisabled($"v{GetType().Assembly.GetName().Version?.ToString(3) ?? "1.2.3"}");
             ImGui.SameLine();
-            ImGui.TextDisabled("• by Kyuuso, DhogGPT & Joshua-XIV");
+            ImGui.TextDisabled("by Kyuuso, DhogGPT & Joshua-XIV");
 
             if (isEureka)
             {
@@ -250,11 +250,13 @@ public class MainWindow : IDisposable
                 int etHour = EurekaEnvironmentService.GetEorzeaHour();
                 string timeStr = $"{etHour:D2}:00 ET ({Loc.T(EurekaEnvironmentService.IsNight() ? "Night" : "Day")})";
 
-                ImGui.TextColored(ImGuiColors.HealerGreen, $"● {Loc.F("Location: {0}", zoneName)} ({Loc.F("Elemental Lv. {0}", effectiveLvl)} [{mode}]) | {weather} | {timeStr}");
+                StatusDot(ImGuiColors.HealerGreen, true);
+                ImGui.TextColored(ImGuiColors.HealerGreen, $"{Loc.F("Location: {0}", zoneName)} ({Loc.F("Elemental Lv. {0}", effectiveLvl)} [{mode}]) | {weather} | {timeStr}");
             }
             else
             {
-                ImGui.TextColored(ImGuiColors.DalamudGrey, $"○ {Loc.F("Location: {0}", zoneName)} [{Loc.T("Outside Eureka - Expedition features on standby")}]");
+                StatusDot(ImGuiColors.DalamudGrey, false);
+                ImGui.TextColored(ImGuiColors.DalamudGrey, $"{Loc.F("Location: {0}", zoneName)} [{Loc.T("Outside Eureka - Expedition features on standby")}]");
             }
         }
         ImGui.EndGroup();
@@ -481,19 +483,24 @@ public class MainWindow : IDisposable
 
             ImGui.TextColored(GoldAccent, Loc.T("Aggro Radar Status:"));
             ImGui.SameLine();
-            ImGui.TextColored(radarColor, $"● {radarStatus}");
+            StatusDot(radarColor, true);
+            ImGui.TextColored(radarColor, radarStatus);
 
             ImGui.SameLine(280 * scale);
             ImGui.TextColored(GoldAccent, Loc.T("Dragon Auto-Walk:"));
             ImGui.SameLine();
             var autoWalkStatus = Loc.T(config.AutoWalkNearDragons ? "Active" : "Disabled");
-            ImGui.TextColored(config.AutoWalkNearDragons ? ImGuiColors.HealerGreen : TextMuted, $"● {autoWalkStatus}");
+            var autoWalkColor = config.AutoWalkNearDragons ? ImGuiColors.HealerGreen : TextMuted;
+            StatusDot(autoWalkColor, true);
+            ImGui.TextColored(autoWalkColor, autoWalkStatus);
 
             ImGui.SameLine(540 * scale);
             ImGui.TextColored(GoldAccent, Loc.T("Cast Alerts:"));
             ImGui.SameLine();
             var alertStatus = Loc.T(config.ShowCastAlerts ? "Active" : "Disabled");
-            ImGui.TextColored(config.ShowCastAlerts ? ImGuiColors.HealerGreen : TextMuted, $"● {alertStatus}");
+            var alertColor = config.ShowCastAlerts ? ImGuiColors.HealerGreen : TextMuted;
+            StatusDot(alertColor, true);
+            ImGui.TextColored(alertColor, alertStatus);
         }
         ImGui.EndGroup();
 
@@ -537,7 +544,8 @@ public class MainWindow : IDisposable
         if (!ValidZones.IsEureka(territoryId))
         {
             ImGui.Spacing();
-            ImGui.TextColored(ImGuiColors.DalamudGrey, "○ Expedition radar is on standby while outside Eureka.");
+            StatusDot(ImGuiColors.DalamudGrey, false);
+            ImGui.TextColored(ImGuiColors.DalamudGrey, "Expedition radar is on standby while outside Eureka.");
             ImGui.TextDisabled("Live threat detection and danger cones will automatically activate once you enter Anemos, Pagos, Pyros, or Hydatos.");
             ImGui.Spacing();
             return;
@@ -558,7 +566,7 @@ public class MainWindow : IDisposable
             float dist = Vector3.Distance(playerPos, mob.Position);
             if (dist <= config.DetectionRange)
             {
-                var data = mobDatabase.GetOrRegister(mob.BaseId, mob.Name.TextValue, mob.HitboxRadius);
+                var data = mobDatabase.GetOrRegister(mob.BaseId, MobNameResolver.GetEnglishName(mob), mob.HitboxRadius);
                 var aggro = data.AggroType;
                 var danger = data.DangerLevel;
                 var isDragon = aggro == AggroType.Sound || data.Name.Contains("dragon", StringComparison.OrdinalIgnoreCase);
@@ -773,6 +781,11 @@ public class MainWindow : IDisposable
                 if (ImGui.InputText($"##Msg_{action.ActionId}", ref msg, 120))
                 {
                     action.AlertMessage = msg;
+                    actionDatabase.MarkDirty();
+                }
+                if (ImGui.IsItemDeactivatedAfterEdit())
+                {
+                    actionDatabase.SaveIfDirty();
                 }
             }
 
@@ -878,15 +891,15 @@ public class MainWindow : IDisposable
         if (ImGui.SliderFloat("Detection range", ref range, 10.0f, 100.0f, "%.1f m"))
         {
             config.DetectionRange = range;
-            config.Save();
         }
+        SaveAfterEdit();
 
         float margin = config.SafetyMargin;
         if (ImGui.SliderFloat("Latency / Safety margin buffer", ref margin, 0.0f, 1.5f, "+%.2f m"))
         {
             config.SafetyMargin = margin;
-            config.Save();
         }
+        SaveAfterEdit();
         if (ImGui.IsItemHovered())
         {
             ImGui.SetTooltip("Adds an extra safety buffer to aggro circles to account for network ping and server tick latency.");
@@ -909,8 +922,8 @@ public class MainWindow : IDisposable
             if (ImGui.SliderFloat("Vertical elevation tolerance", ref vertTol, 3.0f, 12.0f, "%.1f m"))
             {
                 config.VerticalTolerance = vertTol;
-                config.Save();
             }
+            SaveAfterEdit();
         }
 
         ImGui.Separator();
@@ -949,8 +962,8 @@ public class MainWindow : IDisposable
                 if (ImGui.SliderInt("Manual Elemental Level", ref playerLvl, 1, 60))
                 {
                     config.PlayerElementalLevel = playerLvl;
-                    config.Save();
                 }
+                SaveAfterEdit();
 
                 ImGui.TextDisabled("Quick Level Presets:");
                 ImGui.SameLine();
@@ -967,8 +980,8 @@ public class MainWindow : IDisposable
             if (ImGui.SliderInt("Safe level difference threshold", ref safeDiff, 1, 5, "%d levels below"))
             {
                 config.SafeLevelDifference = safeDiff;
-                config.Save();
             }
+            SaveAfterEdit();
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip("In FFXIV Eureka, standard sight/proximity monsters 2 or more levels below you will never aggro. (Default: 2)");
@@ -1012,8 +1025,8 @@ public class MainWindow : IDisposable
             if (ImGui.SliderFloat("Sleeping Dragon sound aggro radius", ref soundDist, 8.0f, 15.0f, "%.1f m"))
             {
                 config.DragonRunAggroDistance = soundDist;
-                config.Save();
             }
+            SaveAfterEdit();
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip("Sleeping Dragons have a running sound aggro radius of ~10.5m. Walking is 100% safe.");
@@ -1037,8 +1050,8 @@ public class MainWindow : IDisposable
             if (ImGui.SliderFloat("Auto-Walk trigger distance", ref autoDist, 10.5f, 25.0f, "%.1f m"))
             {
                 config.AutoWalkDistance = autoDist;
-                config.Save();
             }
+            SaveAfterEdit();
 
             bool chatAlert = config.LogAutoWalkToChat;
             if (ImGui.Checkbox("Log Auto-Walk activation in chat", ref chatAlert))
@@ -1074,7 +1087,11 @@ public class MainWindow : IDisposable
             if (ImGui.SliderFloat("Sight cone arc angle", ref coneAngle, 45.0f, 140.0f, "%.0f deg"))
             {
                 config.SightAngleDegrees = coneAngle;
-                config.Save();
+            }
+            SaveAfterEdit();
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Field of view of sight monsters. The game default is 100 degrees; monsters with a known custom cone keep their ratio.");
             }
         }
 
@@ -1091,8 +1108,8 @@ public class MainWindow : IDisposable
             if (ImGui.SliderFloat("Blood detection radius", ref bloodDist, 15.0f, 35.0f, "%.1f m"))
             {
                 config.BloodAggroDistance = bloodDist;
-                config.Save();
             }
+            SaveAfterEdit();
         }
 
         bool magic = config.ShowMagicWarnings;
@@ -1108,15 +1125,19 @@ public class MainWindow : IDisposable
             if (ImGui.SliderFloat("Magic detection radius", ref magicDist, 10.0f, 25.0f, "%.1f m"))
             {
                 config.MagicAggroDistance = magicDist;
-                config.Save();
             }
+            SaveAfterEdit();
         }
 
         float baseDist = config.DefaultAggroDistance;
         if (ImGui.SliderFloat("Base monster aggro radius", ref baseDist, 8.0f, 15.0f, "%.1f m"))
         {
             config.DefaultAggroDistance = baseDist;
-            config.Save();
+        }
+        SaveAfterEdit();
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip("Aggro range of sight and proximity monsters, measured from their hitbox edge. The game default is 10.2m; monsters with a known custom range are shifted by the same amount.");
         }
 
         bool distLines = config.ShowDistanceLines;
@@ -1180,36 +1201,36 @@ public class MainWindow : IDisposable
         if (ImGui.ColorEdit4("Sound Aggro (Dragons)", ref colDragon, ImGuiColorEditFlags.AlphaBar))
         {
             config.ColorDragonSound = colDragon;
-            config.Save();
         }
+        SaveAfterEdit();
 
         var colDanger = config.ColorDanger;
         if (ImGui.ColorEdit4("Danger Cone / Circle", ref colDanger, ImGuiColorEditFlags.AlphaBar))
         {
             config.ColorDanger = colDanger;
-            config.Save();
         }
+        SaveAfterEdit();
 
         var colBlood = config.ColorBlood;
         if (ImGui.ColorEdit4("Blood Aggro (Undead)", ref colBlood, ImGuiColorEditFlags.AlphaBar))
         {
             config.ColorBlood = colBlood;
-            config.Save();
         }
+        SaveAfterEdit();
 
         var colMagic = config.ColorMagic;
         if (ImGui.ColorEdit4("Magic Aggro (Sprites)", ref colMagic, ImGuiColorEditFlags.AlphaBar))
         {
             config.ColorMagic = colMagic;
-            config.Save();
         }
+        SaveAfterEdit();
 
         var colEasy = config.ColorEasy;
         if (ImGui.ColorEdit4("Safe Level Mob", ref colEasy, ImGuiColorEditFlags.AlphaBar))
         {
             config.ColorEasy = colEasy;
-            config.Save();
         }
+        SaveAfterEdit();
 
         if (ImGui.Button("Reset All Colors to Default"))
         {
@@ -1260,7 +1281,7 @@ public class MainWindow : IDisposable
             if (stats.eldthursCounter > 0 || stats.pyrosHairStyleCounter > 0)
             {
                 ImGui.Spacing();
-                ImGui.Text($"• Eldthurs Horns: {stats.eldthursCounter}  |  • Pyros Hairstyles: {stats.pyrosHairStyleCounter}");
+                ImGui.Text($"Eldthurs Horns: {stats.eldthursCounter}  |  Pyros Hairstyles: {stats.pyrosHairStyleCounter}");
             }
         }
 
@@ -1431,6 +1452,39 @@ public class MainWindow : IDisposable
         }
     }
     #endregion
+
+    /// <summary>
+    /// Draws a status circle inline before the next item. Replaces glyphs such as U+25CF that are
+    /// missing from some Dalamud font configurations.
+    /// </summary>
+    internal static void StatusDot(Vector4 color, bool filled)
+    {
+        var size = ImGui.GetTextLineHeight();
+        var center = ImGui.GetCursorScreenPos() + new Vector2(size * 0.5f, size * 0.5f);
+        var col = ImGui.ColorConvertFloat4ToU32(color);
+        var drawList = ImGui.GetWindowDrawList();
+        if (filled)
+        {
+            drawList.AddCircleFilled(center, size * 0.28f, col);
+        }
+        else
+        {
+            drawList.AddCircle(center, size * 0.28f, col, 16, 1.5f);
+        }
+        ImGui.Dummy(new Vector2(size, size));
+        ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.X);
+    }
+
+    /// <summary>
+    /// Persists the configuration once a slider or color drag ends instead of on every frame of the drag.
+    /// </summary>
+    private void SaveAfterEdit()
+    {
+        if (ImGui.IsItemDeactivatedAfterEdit())
+        {
+            config.Save();
+        }
+    }
 
     public void Dispose()
     {

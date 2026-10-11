@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -23,10 +24,20 @@ public class EurekaTrackerClient : IDisposable
 
     private static readonly HttpClient HttpClient = new() { Timeout = TimeSpan.FromSeconds(15) };
 
+    // Serializes connect/disconnect so only one session owns webSocket/cts at a time.
+    private readonly SemaphoreSlim connectionLock = new(1, 1);
+    // ClientWebSocket does not allow concurrent SendAsync calls.
+    private readonly SemaphoreSlim sendLock = new(1, 1);
+    // Event names of in-flight channel requests keyed by message ref, used to label rejected replies.
+    private readonly ConcurrentDictionary<int, string> pendingRequests = new();
+
     private ClientWebSocket? webSocket;
     private CancellationTokenSource? cts;
     private int messageId;
     private int lastHeartbeatId = -1;
+    private int joinMessageId = -1;
+    // Incremented on every connect and disconnect; loops bound to an older value are stale.
+    private int sessionId;
     private TaskCompletionSource<bool>? joinTcs;
 
     public bool IsConnected { get; private set; }
@@ -44,15 +55,24 @@ public class EurekaTrackerClient : IDisposable
     public event Action? OnTrackerUpdated;
     public event Action? OnConnectionStatusChanged;
 
+    /// <summary>
+    /// Raised from the network thread when the server rejects a channel request other than the join
+    /// (for example set_kill_time with a wrong password). Arguments: event name, rejection reason.
+    /// </summary>
+    public event Action<string, string>? OnRequestRejected;
+
     public bool CanModify => !string.IsNullOrWhiteSpace(TrackerPassword);
 
     /// <summary>
     /// Fetches all active public trackers for a given data center from ffxiv-eureka.com.
     /// Connects via Phoenix WebSocket to datacenter:{dataCenterId} and collects the initial_payload.
+    /// Returns null if the directory could not be reached or did not answer in time, so callers can
+    /// tell a failure apart from a data center that has no public trackers.
     /// </summary>
-    public static async Task<List<PublicTrackerInfo>> FetchPublicTrackersAsync(int dataCenterId, CancellationToken cancellationToken = default)
+    public static async Task<List<PublicTrackerInfo>?> FetchPublicTrackersAsync(int dataCenterId, CancellationToken cancellationToken = default)
     {
         var results = new List<PublicTrackerInfo>();
+        bool received = false;
         using var clientWs = new ClientWebSocket();
         using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(6));
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
@@ -158,6 +178,7 @@ public class EurekaTrackerClient : IDisposable
                             });
                         }
 
+                        received = true;
                         break;
                     }
                 }
@@ -165,13 +186,20 @@ public class EurekaTrackerClient : IDisposable
 
             if (clientWs.State == WebSocketState.Open)
             {
-                await clientWs.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+                using var closeCts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                await clientWs.CloseAsync(WebSocketCloseStatus.NormalClosure, "done", closeCts.Token);
             }
         }
         catch (OperationCanceledException) { }
         catch (Exception ex)
         {
             EurekaSuitePlugin.PluginLog.Debug($"FetchPublicTrackersAsync for DC {dataCenterId}: {ex.Message}");
+        }
+
+        if (!received)
+        {
+            EurekaSuitePlugin.PluginLog.Debug($"FetchPublicTrackersAsync for DC {dataCenterId}: no directory payload received.");
+            return null;
         }
 
         return results;
@@ -267,78 +295,107 @@ public class EurekaTrackerClient : IDisposable
     /// </summary>
     public async Task<bool> JoinTrackerAsync(string trackerId, string password = "")
     {
-        if (IsConnected)
-        {
-            await DisconnectAsync();
-        }
-
-        ErrorMessage = null;
-        IsInvalid = false;
-        TrackerId = trackerId.Trim();
-        TrackerPassword = password.Trim();
-
+        await connectionLock.WaitAsync();
         try
         {
-            cts = new CancellationTokenSource();
-            webSocket = new ClientWebSocket();
-            joinTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            // Always tear down the previous session (connected, joining, or half-open) first.
+            await DisconnectCoreAsync();
 
-            await webSocket.ConnectAsync(new Uri(TrackerWebSocketUrl), cts.Token);
-            _ = ReceiveLoop(cts.Token);
+            ErrorMessage = null;
+            IsInvalid = false;
+            TrackerId = trackerId.Trim();
+            TrackerPassword = password.Trim();
 
-            // Send phx_join
-            var joinPayload = string.IsNullOrWhiteSpace(TrackerPassword)
-                ? new JObject()
-                : new JObject { ["password"] = TrackerPassword };
+            var sessionCts = new CancellationTokenSource();
+            var socket = new ClientWebSocket();
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            int session = Interlocked.Increment(ref sessionId);
 
-            EurekaTrackerMessage joinMsg = new(
-                setJoinRef: true,
-                messageId: ++messageId,
-                channel: $"instance:{TrackerId}",
-                @event: "phx_join",
-                payload: joinPayload);
+            cts = sessionCts;
+            webSocket = socket;
+            joinTcs = tcs;
 
-            await SendRawAsync(joinMsg.ToMessage(), cts.Token);
-
-            // Start 30s heartbeat loop
-            _ = HeartbeatLoop(cts.Token);
-
-            // Wait for initial_payload or rejection from ffxiv-eureka.com (up to 8s timeout)
-            using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(8));
-            using (timeoutCts.Token.Register(() => joinTcs?.TrySetResult(false)))
+            try
             {
-                bool joined = await joinTcs.Task;
-                return joined && IsConnected;
+                using (var connectCts = CancellationTokenSource.CreateLinkedTokenSource(sessionCts.Token))
+                {
+                    connectCts.CancelAfter(TimeSpan.FromSeconds(10));
+                    await socket.ConnectAsync(new Uri(TrackerWebSocketUrl), connectCts.Token);
+                }
+
+                _ = ReceiveLoop(socket, session, sessionCts.Token);
+
+                // Send phx_join
+                var joinPayload = string.IsNullOrWhiteSpace(TrackerPassword)
+                    ? new JObject()
+                    : new JObject { ["password"] = TrackerPassword };
+
+                int joinRef = Interlocked.Increment(ref messageId);
+                joinMessageId = joinRef;
+
+                EurekaTrackerMessage joinMsg = new(
+                    setJoinRef: true,
+                    messageId: joinRef,
+                    channel: $"instance:{TrackerId}",
+                    @event: "phx_join",
+                    payload: joinPayload);
+
+                await SendRawAsync(joinMsg.ToMessage(), socket, sessionCts.Token);
+
+                // Start 30s heartbeat loop
+                _ = HeartbeatLoop(socket, sessionCts.Token);
+
+                // Wait for initial_payload or rejection from ffxiv-eureka.com (up to 8s timeout)
+                bool joined;
+                using (var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(8)))
+                using (timeoutCts.Token.Register(() => tcs.TrySetResult(false)))
+                using (sessionCts.Token.Register(() => tcs.TrySetResult(false)))
+                {
+                    joined = await tcs.Task;
+                }
+
+                if (joined && IsConnected)
+                    return true;
+
+                if (string.IsNullOrEmpty(ErrorMessage))
+                    ErrorMessage = "Timed out waiting for the tracker to respond.";
             }
-        }
-        catch (Exception ex)
-        {
-            ErrorMessage = $"Connection error: {ex.Message}";
-            EurekaSuitePlugin.PluginLog.Error(ex, $"Failed to connect to tracker {trackerId}");
-            await DisconnectAsync();
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Connection error: {ex.Message}";
+                EurekaSuitePlugin.PluginLog.Error(ex, $"Failed to connect to tracker {trackerId}");
+            }
+
+            // A failed or timed-out join must not leave the socket and its loops running.
+            await DisconnectCoreAsync();
             return false;
+        }
+        finally
+        {
+            connectionLock.Release();
         }
     }
 
-    private async Task HeartbeatLoop(CancellationToken token)
+    private async Task HeartbeatLoop(ClientWebSocket socket, CancellationToken token)
     {
         try
         {
             while (!token.IsCancellationRequested)
             {
                 await Task.Delay(TimeSpan.FromSeconds(30), token);
-                if (!IsConnected && webSocket?.State != WebSocketState.Open)
+                if (socket.State != WebSocketState.Open)
                     break;
 
+                int heartbeatRef = Interlocked.Increment(ref messageId);
                 EurekaTrackerMessage heartbeat = new(
                     setJoinRef: false,
-                    messageId: ++messageId,
+                    messageId: heartbeatRef,
                     channel: "phoenix",
                     @event: "heartbeat",
                     payload: new JObject());
 
-                lastHeartbeatId = messageId;
-                await SendRawAsync(heartbeat.ToMessage(), token);
+                lastHeartbeatId = heartbeatRef;
+                await SendRawAsync(heartbeat.ToMessage(), socket, token);
             }
         }
         catch (OperationCanceledException) { }
@@ -348,23 +405,28 @@ public class EurekaTrackerClient : IDisposable
         }
     }
 
-    private async Task ReceiveLoop(CancellationToken token)
+    private async Task ReceiveLoop(ClientWebSocket socket, int session, CancellationToken token)
     {
         var buffer = new byte[4096];
         var segment = new ArraySegment<byte>(buffer);
 
         try
         {
-            while (!token.IsCancellationRequested && webSocket?.State == WebSocketState.Open)
+            while (!token.IsCancellationRequested && socket.State == WebSocketState.Open)
             {
                 using var ms = new MemoryStream();
                 WebSocketReceiveResult result;
                 do
                 {
-                    result = await webSocket.ReceiveAsync(segment, token);
+                    result = await socket.ReceiveAsync(segment, token);
                     if (result.MessageType == WebSocketMessageType.Close)
                     {
-                        await DisconnectAsync();
+                        if (IsCurrentSession(session))
+                        {
+                            ErrorMessage = "Tracker closed the connection.";
+                            joinTcs?.TrySetResult(false);
+                            await DisconnectSessionAsync(session);
+                        }
                         return;
                     }
                     ms.Write(buffer, 0, result.Count);
@@ -374,6 +436,9 @@ public class EurekaTrackerClient : IDisposable
                 using var reader = new StreamReader(ms, Encoding.UTF8);
                 string jsonText = await reader.ReadToEndAsync(token);
 
+                // A message still in flight on a replaced socket must not touch the new session's state.
+                if (!IsCurrentSession(session)) return;
+
                 ProcessMessage(jsonText);
             }
         }
@@ -381,11 +446,34 @@ public class EurekaTrackerClient : IDisposable
         catch (Exception ex)
         {
             EurekaSuitePlugin.PluginLog.Debug($"ReceiveLoop disconnected: {ex.Message}");
-            if (IsConnected)
+            if (IsCurrentSession(session))
             {
                 ErrorMessage = "Connection closed unexpectedly.";
-                await DisconnectAsync();
+                joinTcs?.TrySetResult(false);
+                await DisconnectSessionAsync(session);
             }
+        }
+    }
+
+    private bool IsCurrentSession(int session) => Volatile.Read(ref sessionId) == session;
+
+    /// <summary>
+    /// Disconnects only if the given session is still the active one, so a stale loop can never
+    /// tear down a newer connection.
+    /// </summary>
+    private async Task DisconnectSessionAsync(int session)
+    {
+        await connectionLock.WaitAsync();
+        try
+        {
+            if (IsCurrentSession(session))
+            {
+                await DisconnectCoreAsync();
+            }
+        }
+        finally
+        {
+            connectionLock.Release();
         }
     }
 
@@ -452,23 +540,35 @@ public class EurekaTrackerClient : IDisposable
     {
         if (payload == null) return;
 
+        pendingRequests.TryRemove(msgRef, out var requestEvent);
+
         string status = (string?)payload["status"] ?? string.Empty;
         if (!string.Equals(status, "ok", StringComparison.OrdinalIgnoreCase))
         {
             var response = payload["response"];
             string reason = response?.Type == JTokenType.String ? (string)response : (string?)response?["reason"] ?? "Unknown rejection";
-            if (reason.Contains("does not exist", StringComparison.OrdinalIgnoreCase))
+
+            if (msgRef == joinMessageId)
             {
-                IsInvalid = true;
-                ErrorMessage = "Tracker does not exist.";
-            }
-            else
-            {
-                ErrorMessage = $"Tracker error: {reason}";
+                // Only a rejected join ends the session; JoinTrackerAsync tears the socket down.
+                if (reason.Contains("does not exist", StringComparison.OrdinalIgnoreCase))
+                {
+                    IsInvalid = true;
+                    ErrorMessage = "Tracker does not exist.";
+                }
+                else
+                {
+                    ErrorMessage = $"Tracker error: {reason}";
+                }
+
+                joinTcs?.TrySetResult(false);
+                return;
             }
 
-            joinTcs?.TrySetResult(false);
-            _ = DisconnectAsync();
+            // Any other rejected request (wrong edit password, invalid NM id) keeps the connection open.
+            string eventName = requestEvent ?? "request";
+            EurekaSuitePlugin.PluginLog.Warning($"Tracker rejected {eventName}: {reason}");
+            OnRequestRejected?.Invoke(eventName, reason);
             return;
         }
 
@@ -617,14 +717,7 @@ public class EurekaTrackerClient : IDisposable
             ["time"] = killTimeMs,
         };
 
-        EurekaTrackerMessage msg = new(
-            setJoinRef: true,
-            messageId: ++messageId,
-            channel: $"instance:{TrackerId}",
-            @event: "set_kill_time",
-            payload: payload);
-
-        await SendRawAsync(msg.ToMessage());
+        await SendRequestAsync("set_kill_time", payload);
     }
 
     public async Task ResetPopAsync(ushort trackerId)
@@ -636,28 +729,14 @@ public class EurekaTrackerClient : IDisposable
             ["id"] = trackerId,
         };
 
-        EurekaTrackerMessage msg = new(
-            setJoinRef: true,
-            messageId: ++messageId,
-            channel: $"instance:{TrackerId}",
-            @event: "reset_kill",
-            payload: payload);
-
-        await SendRawAsync(msg.ToMessage());
+        await SendRequestAsync("reset_kill", payload);
     }
 
     public async Task ResetAllAsync()
     {
         if (!IsConnected) return;
 
-        EurekaTrackerMessage msg = new(
-            setJoinRef: true,
-            messageId: ++messageId,
-            channel: $"instance:{TrackerId}",
-            @event: "reset_all",
-            payload: new JObject());
-
-        await SendRawAsync(msg.ToMessage());
+        await SendRequestAsync("reset_all", new JObject());
     }
 
     /// <summary>
@@ -683,14 +762,7 @@ public class EurekaTrackerClient : IDisposable
             ["data_center_id"] = dataCenterId.HasValue && dataCenterId.Value > 0 ? dataCenterId.Value : null,
         };
 
-        EurekaTrackerMessage msg = new(
-            setJoinRef: true,
-            messageId: ++messageId,
-            channel: $"instance:{TrackerId}",
-            @event: "set_instance_information",
-            payload: payload);
-
-        await SendRawAsync(msg.ToMessage());
+        await SendRequestAsync("set_instance_information", payload);
         OnTrackerUpdated?.Invoke();
     }
 
@@ -703,50 +775,118 @@ public class EurekaTrackerClient : IDisposable
             ["password"] = password.Trim(),
         };
 
-        EurekaTrackerMessage msg = new(
-            setJoinRef: true,
-            messageId: ++messageId,
-            channel: $"instance:{TrackerId}",
-            @event: "set_password",
-            payload: payload);
-
-        await SendRawAsync(msg.ToMessage());
+        await SendRequestAsync("set_password", payload);
     }
 
-    private async Task SendRawAsync(string message, CancellationToken token = default)
+    /// <summary>
+    /// Sends a channel request on the current session and records its ref so a rejection can be reported.
+    /// </summary>
+    private async Task SendRequestAsync(string @event, JObject payload)
     {
-        if (webSocket?.State != WebSocketState.Open) return;
+        var socket = webSocket;
+        var token = cts?.Token ?? CancellationToken.None;
+        if (socket == null) return;
 
+        int requestRef = Interlocked.Increment(ref messageId);
+        pendingRequests[requestRef] = @event;
+
+        EurekaTrackerMessage msg = new(
+            setJoinRef: true,
+            messageId: requestRef,
+            channel: $"instance:{TrackerId}",
+            @event: @event,
+            payload: payload);
+
+        try
+        {
+            await SendRawAsync(msg.ToMessage(), socket, token);
+        }
+        catch (Exception ex)
+        {
+            pendingRequests.TryRemove(requestRef, out _);
+            EurekaSuitePlugin.PluginLog.Warning($"Failed to send {@event} to tracker: {ex.Message}");
+        }
+    }
+
+    private async Task SendRawAsync(string message, ClientWebSocket socket, CancellationToken token)
+    {
         var bytes = Encoding.UTF8.GetBytes(message);
-        await webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, token);
+        await sendLock.WaitAsync(token);
+        try
+        {
+            if (socket.State != WebSocketState.Open) return;
+            await socket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, token);
+        }
+        finally
+        {
+            sendLock.Release();
+        }
     }
 
     public async Task DisconnectAsync()
     {
+        await connectionLock.WaitAsync();
+        try
+        {
+            await DisconnectCoreAsync();
+        }
+        finally
+        {
+            connectionLock.Release();
+        }
+    }
+
+    /// <summary>
+    /// Tears down the active session. Callers must hold connectionLock.
+    /// </summary>
+    private async Task DisconnectCoreAsync()
+    {
+        // Invalidate the session first so its loops stop touching shared state
+        Interlocked.Increment(ref sessionId);
+
+        bool hadSession = webSocket != null || IsConnected;
+        var socket = webSocket;
+        var sessionCts = cts;
+        webSocket = null;
+        cts = null;
+
         IsConnected = false;
         joinTcs?.TrySetResult(false);
-        cts?.Cancel();
+        joinTcs = null;
+        joinMessageId = -1;
+        pendingRequests.Clear();
+
+        if (socket != null)
+        {
+            try
+            {
+                // CloseOutputAsync does not wait for a receive, so it cannot collide with the pending ReceiveAsync
+                if (socket.State == WebSocketState.Open)
+                {
+                    using var closeCts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+                    await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "disconnecting", closeCts.Token);
+                }
+            }
+            catch { }
+        }
 
         try
         {
-            if (webSocket != null && webSocket.State == WebSocketState.Open)
-            {
-                await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "disconnecting", CancellationToken.None);
-            }
+            sessionCts?.Cancel();
         }
         catch { }
-        finally
-        {
-            webSocket?.Dispose();
-            webSocket = null;
-            cts?.Dispose();
-            cts = null;
-        }
+
+        socket?.Dispose();
+        sessionCts?.Dispose();
 
         ActiveTracker = null;
         IsPublic = false;
         Viewers = 0;
-        OnConnectionStatusChanged?.Invoke();
+
+        if (hadSession)
+        {
+            OnConnectionStatusChanged?.Invoke();
+        }
     }
 
     public void Dispose()

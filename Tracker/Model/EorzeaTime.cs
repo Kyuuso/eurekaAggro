@@ -58,10 +58,11 @@ public class EorzeaTime
     public TimeSpan TimeUntilNight()
     {
         DateTime nextNight;
-        if (EorzeaDateTime.Hour < 19)
-            nextNight = EorzeaDateTime.Date + new TimeSpan(19, 0, 0);
+        // Eorzea night runs from 18:00 to 05:59 ET
+        if (EorzeaDateTime.Hour < 18)
+            nextNight = EorzeaDateTime.Date + new TimeSpan(18, 0, 0);
         else
-            nextNight = EorzeaDateTime.Date + new TimeSpan(1, 19, 0, 0);
+            nextNight = EorzeaDateTime.Date + new TimeSpan(1, 18, 0, 0);
 
         return TimeSpan.FromTicks(Convert.ToInt64((nextNight - EorzeaDateTime).Ticks * 7D / 144D));
     }

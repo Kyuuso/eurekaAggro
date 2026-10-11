@@ -100,49 +100,49 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
         mainWindow = new MainWindow(configuration, mobDatabase, actionDatabase, environmentService, ClientState, dragonWalkService, castAlertWindow, TextureProvider, PluginInterface, bunnyAutomationService, ObjectTable, trackerManager, GameGui);
 
         // Registered commands for Eureka Suite
-        CommandManager.AddHandler(MainCommand, new CommandInfo(OnCommand)
+        RegisterCommand(MainCommand, new CommandInfo(OnCommand)
         {
             HelpMessage = "Open the Eureka Suite main window."
         });
 
-        CommandManager.AddHandler(SuiteShortCommand, new CommandInfo(OnCommand)
+        RegisterCommand(SuiteShortCommand, new CommandInfo(OnCommand)
         {
             HelpMessage = "Short alias to open Eureka Suite."
         });
 
-        CommandManager.AddHandler(EurekaCommand, new CommandInfo(OnCommand)
+        RegisterCommand(EurekaCommand, new CommandInfo(OnCommand)
         {
             HelpMessage = "Open Eureka Suite main overview."
         });
 
-        CommandManager.AddHandler(LegacyMainCommand, new CommandInfo(OnCommand)
+        RegisterCommand(LegacyMainCommand, new CommandInfo(OnCommand)
         {
             HelpMessage = "Legacy alias for Eureka Suite."
         });
 
-        CommandManager.AddHandler(LegacyShortCommand, new CommandInfo(OnCommand)
+        RegisterCommand(LegacyShortCommand, new CommandInfo(OnCommand)
         {
             HelpMessage = "Legacy short alias (/ea) for Eureka Suite."
         });
 
-        CommandManager.AddHandler(AggroCommand, new CommandInfo(OnCommand)
+        RegisterCommand(AggroCommand, new CommandInfo(OnCommand)
         {
             HelpMessage = "Open Eureka Suite aggro radar tab."
         });
 
         // Registered commands for Fate Engine (Bunnies)
-        CommandManager.AddHandler(BfeCommand, new CommandInfo(OnBfeCommand)
+        RegisterCommand(BfeCommand, new CommandInfo(OnBfeCommand)
         {
             HelpMessage = "Eureka bunny fate automation commands (/bfe, /bfe pyros, /bfe stop, /bfe settings)."
         });
 
-        CommandManager.AddHandler(BunniesCommand, new CommandInfo(OnBfeCommand)
+        RegisterCommand(BunniesCommand, new CommandInfo(OnBfeCommand)
         {
             HelpMessage = "Legacy alias for Eureka bunny automation."
         });
 
         // Registered commands for Eureka Tracker
-        CommandManager.AddHandler(TrackerCommand, new CommandInfo(OnTrackerCommand)
+        RegisterCommand(TrackerCommand, new CommandInfo(OnTrackerCommand)
         {
             HelpMessage = "Open the Eureka Tracker live NM window and instance manager (/etracker, /etracker config)."
         });
@@ -153,6 +153,14 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
         Framework.Update += OnFrameworkUpdate;
 
         PluginLog.Info("Eureka Suite initialized successfully.");
+    }
+
+    private static void RegisterCommand(string command, CommandInfo info)
+    {
+        if (!CommandManager.AddHandler(command, info))
+        {
+            PluginLog.Warning($"Command {command} could not be registered (another plugin may already own it).");
+        }
     }
 
     private void OnCommand(string command, string args)
@@ -230,14 +238,38 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
 
     private void OnFrameworkUpdate(IFramework _)
     {
+        // Each subsystem is isolated so one failure does not stop the others
         if (configuration.Enabled)
         {
-            castMonitor.Update();
+            try
+            {
+                castMonitor.Update();
+            }
+            catch (Exception ex)
+            {
+                PluginLog.Error(ex, "CastMonitor update failed.");
+            }
+        }
+
+        // Always runs: it restores run mode by itself when the radar or Auto-Walk is switched off
+        try
+        {
             dragonWalkService.Update();
+        }
+        catch (Exception ex)
+        {
+            PluginLog.Error(ex, "DragonWalkService update failed.");
         }
 
         // The bunny engine processes its tick loops and dependency status
-        bunnyAutomationService.Update();
+        try
+        {
+            bunnyAutomationService.Update();
+        }
+        catch (Exception ex)
+        {
+            PluginLog.Error(ex, "BunnyAutomationService update failed.");
+        }
     }
 
     private void OnDrawUi()
@@ -281,6 +313,9 @@ public sealed class EurekaSuitePlugin : IDalamudPlugin
         PluginInterface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
         PluginInterface.UiBuilder.OpenMainUi -= OnOpenMainUi;
         Framework.Update -= OnFrameworkUpdate;
+
+        // Release any walk mode still held by Auto-Walk
+        dragonWalkService?.Dispose();
 
         // Dispose main window resources
         mainWindow?.Dispose();

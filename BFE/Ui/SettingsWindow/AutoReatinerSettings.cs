@@ -24,10 +24,6 @@ internal class AutoReatinerSettings
             UiGui.TextColored(ImGuiColors.DalamudRed, "AutoRetainer is currently not installed or enabled. Click to copy Repo URL.");
             ImGui.PopTextWrapPos();
 
-            C.enableRetainers = false;
-            C.enableSubs = false;
-            C.enableMulti = false;
-
             if (ImGui.IsItemHovered())
             {
                 var bg = new Vector4(1f, 1f, 1f, 0.15f);
@@ -39,7 +35,15 @@ internal class AutoReatinerSettings
                 }
                 ImGui.GetWindowDrawList().AddRectFilled(ImGui.GetItemRectMin(), ImGui.GetItemRectMax(), ImGui.ColorConvertFloat4ToU32(bg));
             }
-            C.Save();
+
+            // Retainer support cannot run without AutoRetainer, so turn it off once instead of saving every frame
+            if (C.enableRetainers || C.enableSubs || C.enableMulti)
+            {
+                C.enableRetainers = EnableRetainers = false;
+                C.enableSubs = EnableSubs = false;
+                C.enableMulti = EnableMulti = false;
+                C.Save();
+            }
         }
 
         if (PluginInstalled("AutoRetainer"))

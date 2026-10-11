@@ -47,5 +47,10 @@ namespace BFE
         {
             return _lastToast;
         }
+
+        public void ClearLastToast()
+        {
+            _lastToast = null;
+        }
     }
 }

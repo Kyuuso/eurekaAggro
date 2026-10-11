@@ -93,36 +93,33 @@ internal class MainWindow : PositionedWindow
         // BFE title and Bunny Fate Engine subtitle
         var textPos = pos + new Vector2(10f * scale, 0);
         dl.AddText(ImGui.GetFont(), ImGui.GetFontSize() * 1.5f, textPos, ImGui.ColorConvertFloat4ToU32(GoldAccentColor), "BFE");
-        dl.AddText(textPos + new Vector2(0, 22f * scale), 0xFFCCCCCC, "Bunny Fate Engine");
+        dl.AddText(textPos + new Vector2(0, 22f * scale), 0xFFCCCCCC, UiText.T("Bunny Fate Engine"));
 
         // Quick action buttons on the right
-        ImGui.SetCursorScreenPos(pos + new Vector2(width - 370f * scale, 8f * scale));
+        ImGui.SetCursorScreenPos(pos + new Vector2(width - 250f * scale, 8f * scale));
 
-        if (ImGui.SmallButton("Settings"))
+        if (ImGui.SmallButton(UiText.T("Settings") + "###BfeHeaderSettings"))
         {
             P.settingsWindow.IsOpen = !P.settingsWindow.IsOpen;
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton("Ko-fi"))
+        if (ImGui.SmallButton(UiText.T("Ko-fi") + "###BfeHeaderKofi"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.SupportUrl, UseShellExecute = true });
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton("Discord"))
+        if (ImGui.SmallButton(UiText.T("Discord") + "###BfeHeaderDiscord"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.DiscordUrl, UseShellExecute = true });
         }
 
         ImGui.SameLine();
-        if (ImGui.SmallButton("OG Author"))
+        if (ImGui.SmallButton(UiText.T("OG Author") + "###BfeHeaderAuthor"))
         {
             Process.Start(new ProcessStartInfo { FileName = PluginInfo.OriginalAuthorUrl, UseShellExecute = true });
         }
-
-        ImGui.SameLine();
-        P.appearance.DrawSelector(true);
 
         ImGui.SetCursorScreenPos(pos + new Vector2(0, 48f * scale));
     }
@@ -139,7 +136,7 @@ internal class MainWindow : PositionedWindow
         dl.AddCircleFilled(circleCenter, 5f * scale, ImGui.ColorConvertFloat4ToU32(circleColor));
 
         var stateText = isRunning ? "Running" : "Idle";
-        dl.AddText(pos + new Vector2(18f * scale, 0), 0xFFFFFFFF, $"State:  {stateText}");
+        dl.AddText(pos + new Vector2(18f * scale, 0), 0xFFFFFFFF, UiText.F("State: {0}", UiText.T(stateText)));
 
         ImGui.Dummy(new Vector2(100f * scale, 18f * scale));
     }
@@ -217,7 +214,7 @@ internal class MainWindow : PositionedWindow
 
         ImGui.BeginChild("StatsRegionScroll", new Vector2(0, availableHeight), true);
 
-        if (ImGui.CollapsingHeader("Lifetime Overall Statistics", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader(UiText.T("Total Stats") + "###BfeTotalStats", ImGuiTreeNodeFlags.DefaultOpen))
         {
             DrawDictionaryStats(new Dictionary<string, int>
             {
@@ -225,14 +222,14 @@ internal class MainWindow : PositionedWindow
                 { "Gold Coffers", stat.goldCoffer },
                 { "Silver Coffers", stat.silverCoffer },
                 { "Bronze Coffers", stat.bronzeCoffer },
-                { "Eldthurs Horns", stat.eldthursCounter },
+                { "Eldthurs Mount", stat.eldthursCounter },
                 { "Pyros Hairstyles", stat.pyrosHairStyleCounter },
-                { "Copycat Bulb Minion", stat.bulbMinion },
+                { "Copycat Bulb", stat.bulbMinion },
                 { "Petrel Mount", stat.petrelCounter }
             });
         }
 
-        if (ImGui.CollapsingHeader("Pyros Statistics", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader(UiText.T("Pyros Stats") + "###BfePyrosStats", ImGuiTreeNodeFlags.DefaultOpen))
         {
             DrawDictionaryStats(new Dictionary<string, int>
             {
@@ -240,7 +237,7 @@ internal class MainWindow : PositionedWindow
                 { "Gold Coffers", pyrosStat.goldCoffer },
                 { "Silver Coffers", pyrosStat.silverCoffer },
                 { "Bronze Coffers", pyrosStat.bronzeCoffer },
-                { "Eldthurs Horns", pyrosStat.eldthursCounter },
+                { "Eldthurs Mount", pyrosStat.eldthursCounter },
                 { "Pyros Hairstyles", pyrosStat.pyrosHairStyleCounter }
             });
         }
@@ -250,11 +247,11 @@ internal class MainWindow : PositionedWindow
         var isCtrlHeld = ImGui.GetIO().KeyCtrl;
         using (var _ = ImRaii.PushStyle(ImGuiStyleVar.Alpha, 0.5f, !isCtrlHeld))
         {
-            reset = ImGui.Button("RESET STATS (HOLD CTRL)", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && isCtrlHeld;
+            reset = ImGui.Button(UiText.T("RESET STATS") + "###BfeResetStats", new Vector2(ImGui.GetContentRegionAvail().X, buttonHeight)) && isCtrlHeld;
         }
         if (ImGui.IsItemHovered())
         {
-            ImGui.SetTooltip(isCtrlHeld ? "Click to reset statistics." : "Hold Ctrl to enable button.");
+            ImGui.SetTooltip(UiText.T(isCtrlHeld ? "Press to reset your stats." : "Hold Ctrl to enable the button."));
         }
     }
 
@@ -269,7 +266,7 @@ internal class MainWindow : PositionedWindow
             {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.TextUnformatted(label);
+                ImGui.TextUnformatted(UiText.T(label));
 
                 ImGui.TableNextColumn();
                 ImGui.TextColored(GoldAccentColor, val.ToString("N0"));

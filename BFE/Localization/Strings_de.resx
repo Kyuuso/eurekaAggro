@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Community &amp; Externe Links:</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>Abhängigkeit</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repository</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Verfügbar</value>
+  </data>
 </root>

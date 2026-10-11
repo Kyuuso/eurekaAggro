@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>커뮤니티 및 외부 링크:</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>종속성</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>저장소</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>사용 가능</value>
+  </data>
 </root>

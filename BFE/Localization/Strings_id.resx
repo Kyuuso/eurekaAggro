@@ -988,4 +988,13 @@
   <data name="Community &amp; External Links:" xml:space="preserve">
     <value>Tautan Komunitas &amp; Eksternal:</value>
   </data>
+  <data name="Dependency" xml:space="preserve">
+    <value>Dependensi</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repositori</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Tersedia</value>
+  </data>
 </root>
